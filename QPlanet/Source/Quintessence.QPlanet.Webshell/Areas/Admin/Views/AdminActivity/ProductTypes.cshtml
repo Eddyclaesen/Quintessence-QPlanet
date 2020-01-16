@@ -1,0 +1,22 @@
+﻿@model List<Quintessence.QService.QueryModel.Scm.ProductTypeView>
+<table id="ProductTypesDataTable" class="dataTable">
+    <thead>
+        <tr>
+            <th>Product type</th>
+            <th>Description</th>
+            <th>Unit price</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var productType in Model)
+        {
+            <tr>
+                <td>@productType.Name</td>
+                <td>@Html.Raw(productType.Description)</td>
+                <td>@productType.UnitPrice.ToString("C")</td>
+                <td>@Html.ActionLink("Edit", "EditProductType", "AdminActivity", new{area="Admin", Id=productType.Id}, new{target=productType.Id, @class="edit-link", title="Edit"})</td>
+            </tr>
+        }
+    </tbody>
+</table>

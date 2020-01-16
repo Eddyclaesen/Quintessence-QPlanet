@@ -1,0 +1,188 @@
+﻿################################################################################
+# This .tfignore file was automatically created by Microsoft(R) Visual Studio.
+#
+# Local items matching filespecs in this file will not be added to version
+# control. This file can be checked in to share exclusions with others.
+#
+# Wildcard characters are * and ?. Patterns are matched recursively unless the
+# pattern is prefixed by the \ character.
+#
+# You can prepend a path to a pattern to make it more specific. If you do,
+# wildcard characters are not permitted in the path portion.
+#
+# The # character at the beginning of a line indicates a comment.
+#
+# The ! prefix negates a pattern. This can be used to re-include an item after
+# it was excluded by a .tfignore file higher in the tree, or by the Team
+# Project Collection's global exclusions list.
+#
+# The / character is interpreted as a \ character on Windows platforms.
+#
+# Examples:
+#
+#  # Excludes all files ending in .txt in Alpha\Beta and all its subfolders.
+#  Alpha\Beta\*.txt
+#
+#  # Excludes all files ending in .cpp in this folder only.
+#  \*.cpp
+#
+#  # Excludes all files ending in .cpp in this folder and all subfolders.
+#  *.cpp
+#
+#  # If "Contoso" is a folder, then Contoso and all its children are excluded.
+#  # If it is a file, then only the "Contoso" in this folder is excluded.
+#  \Contoso
+#
+#  # If Help.exe is excluded by a higher .tfignore file or by the Team Project
+#  # Collection global exclusions list, then this pattern re-includes it in
+#  # this folder only.
+#  !\Help.exe    
+#
+################################################################################
+
+\packages\AspNetMvc.4.0.20126.16343\AspNetMvc.4.0.20126.16343.nupkg
+\packages\AspNetMvc.4.0.20126.16343\lib\net40\System.Web.Mvc.xml
+\packages\AspNetRazor.Core.2.0.20126.16343\AspNetRazor.Core.2.0.20126.16343.nupkg
+\packages\AspNetRazor.Core.2.0.20126.16343\lib\net40\System.Web.Razor.xml
+\packages\AspNetRazor.Core.2.0.20126.16343\tools\Install.ps1
+\packages\AspNetRazor.Core.2.0.20126.16343\tools\Uninstall.ps1
+\packages\AspNetRazor.Core.2.0.20126.16343\tools\VS.psd1
+\packages\AspNetRazor.Core.2.0.20126.16343\tools\VS.psm1
+\packages\AspNetWebPages.Core.2.0.20126.16343\AspNetWebPages.Core.2.0.20126.16343.nupkg
+\packages\AspNetWebPages.Core.2.0.20126.16343\lib\net40\System.Web.Helpers.xml
+\packages\AspNetWebPages.Core.2.0.20126.16343\lib\net40\System.Web.WebPages.Deployment.xml
+\packages\AspNetWebPages.Core.2.0.20126.16343\lib\net40\System.Web.WebPages.Razor.xml
+\packages\AspNetWebPages.Core.2.0.20126.16343\lib\net40\System.Web.WebPages.xml
+\packages\AspNetWebPages.Core.2.0.20126.16343\tools\Install.ps1
+\packages\AspNetWebPages.Core.2.0.20126.16343\tools\Uninstall.ps1
+\packages\AspNetWebPages.Core.2.0.20126.16343\tools\VS.psd1
+\packages\AspNetWebPages.Core.2.0.20126.16343\tools\VS.psm1
+\packages\AutoMapper.2.1.267\AutoMapper.2.1.267.nupkg
+\packages\AutoMapper.2.1.267\lib\net40\AutoMapper.xml
+\packages\AutoMapper.2.1.267\lib\sl4\AutoMapper.XML
+\packages\CommonServiceLocator.1.0\CommonServiceLocator.1.0.nupkg
+\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.XML
+\packages\CommonServiceLocator.1.0\lib\SL30\Microsoft.Practices.ServiceLocation.XML
+\packages\EnterpriseLibrary.Common.5.0.505.0\EnterpriseLibrary.Common.5.0.505.0.nupkg
+\packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35\Microsoft.Practices.EnterpriseLibrary.Common.xml
+\packages\EnterpriseLibrary.Common.5.0.505.0\lib\SL40\Microsoft.Practices.EnterpriseLibrary.Common.Silverlight.xml
+\packages\EnterpriseLibrary.Common.5.0.505.0\tools\install.ps1
+\packages\EnterpriseLibrary.Common.5.0.505.0\tools\Utils.psm1
+\packages\EnterpriseLibrary.Logging.5.0.505.1\EnterpriseLibrary.Logging.5.0.505.1.nupkg
+\packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35\Microsoft.Practices.EnterpriseLibrary.Logging.xml
+\packages\EnterpriseLibrary.Logging.5.0.505.1\lib\SL40\Microsoft.Practices.EnterpriseLibrary.Logging.Silverlight.XML
+\packages\EnterpriseLibrary.Logging.5.0.505.1\tools\install.ps1
+\packages\EnterpriseLibrary.Logging.5.0.505.1\tools\Utils.psm1
+\packages\EntityFramework.4.3.1\EntityFramework.4.3.1.nupkg
+\packages\EntityFramework.4.3.1\Content\App.config.transform
+\packages\EntityFramework.4.3.1\Content\Web.config.transform
+\packages\EntityFramework.4.3.1\lib\net40\EntityFramework.xml
+\packages\EntityFramework.4.3.1\tools\EF4.3on.NET4.5Readme.txt
+\packages\EntityFramework.4.3.1\tools\EntityFramework.psd1
+\packages\EntityFramework.4.3.1\tools\EntityFramework.psm1
+\packages\EntityFramework.4.3.1\tools\init.ps1
+\packages\EntityFramework.4.3.1\tools\install.ps1
+\packages\jQuery.1.8.2\jQuery.1.8.2.nupkg
+\packages\jQuery.1.8.2\Content\Scripts\jquery-1.8.2.js
+\packages\jQuery.1.8.2\Content\Scripts\jquery-1.8.2.min.js
+\packages\jQuery.1.8.2\Content\Scripts\jquery-1.8.2-vsdoc.js
+\packages\jQuery.1.8.2\Tools\common.ps1
+\packages\jQuery.1.8.2\Tools\install.ps1
+\packages\jQuery.1.8.2\Tools\jquery-1.8.2.intellisense.js
+\packages\jQuery.1.8.2\Tools\uninstall.ps1
+\packages\Microsoft.AspNet.Mvc.4.0.20710.0\Microsoft.AspNet.Mvc.4.0.20710.0.nupkg
+\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.xml
+\packages\Microsoft.AspNet.Razor.2.0.20710.0\Microsoft.AspNet.Razor.2.0.20710.0.nupkg
+\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.xml
+\packages\Microsoft.AspNet.WebApi.4.0.20710.0\Microsoft.AspNet.WebApi.4.0.20710.0.nupkg
+\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\Microsoft.AspNet.WebApi.Client.4.0.20710.0.nupkg
+\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.xml
+\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\Microsoft.AspNet.WebApi.Core.4.0.20710.0.nupkg
+\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\content\web.config.transform
+\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.xml
+\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0.nupkg
+\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.xml
+\packages\Microsoft.AspNet.WebPages.2.0.20710.0\Microsoft.AspNet.WebPages.2.0.20710.0.nupkg
+\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.xml
+\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.xml
+\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.xml
+\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.xml
+\packages\Microsoft.Net.Http.2.0.20710.0\Microsoft.Net.Http.2.0.20710.0.nupkg
+\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.WebRequest.xml
+\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.xml
+\packages\Microsoft.Net.Http.2.0.20710.0\lib\net45\_._
+\packages\Microsoft.Web.Infrastructure.1.0.0.0\Microsoft.Web.Infrastructure.1.0.0.0.nupkg
+\packages\Newtonsoft.Json.4.5.6\Newtonsoft.Json.4.5.6.nupkg
+\packages\Newtonsoft.Json.4.5.6\lib\net20\Newtonsoft.Json.xml
+\packages\Newtonsoft.Json.4.5.6\lib\net35\Newtonsoft.Json.xml
+\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.xml
+\packages\Newtonsoft.Json.4.5.6\lib\sl3-wp\Newtonsoft.Json.xml
+\packages\Newtonsoft.Json.4.5.6\lib\sl4\Newtonsoft.Json.xml
+\packages\Newtonsoft.Json.4.5.6\lib\sl4-windowsphone71\Newtonsoft.Json.xml
+\packages\Newtonsoft.Json.4.5.6\lib\winrt45\Newtonsoft.Json.xml
+\packages\System.Web.Http.Common.4.0.20126.16343\System.Web.Http.Common.4.0.20126.16343.nupkg
+\packages\System.Web.Http.Common.4.0.20126.16343\lib\net40\System.Web.Http.Common.xml
+\packages\Unity.2.1.505.0\Unity.2.1.505.0.nupkg
+\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Configuration.xml
+\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.xml
+\packages\Unity.2.1.505.0\lib\SL30\Microsoft.Practices.Unity.Silverlight.xml
+\packages\Unity.2.1.505.0\tools\install.ps1
+\packages\Unity.2.1.505.0\tools\Utils.psm1
+\packages\Unity.Interception.2.1.505.0\Unity.Interception.2.1.505.0.nupkg
+\packages\Unity.Interception.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Interception.Configuration.xml
+\packages\Unity.Interception.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Interception.xml
+\packages\Unity.Interception.2.1.505.0\lib\SL40\Microsoft.Practices.Unity.Interception.Silverlight.xml
+\packages\Unity.Interception.2.1.505.0\tools\install.ps1
+\packages\Unity.Interception.2.1.505.0\tools\Utils.psm1
+\packages\AspNetWebApi.4.0.20126.16343\AspNetWebApi.4.0.20126.16343.nupkg
+\packages\AspNetWebApi.4.0.20126.16343\lib\net40\System.Web.Http.WebHost.xml
+\packages\AspNetWebApi.Core.4.0.20126.16343\AspNetWebApi.Core.4.0.20126.16343.nupkg
+\packages\AspNetWebApi.Core.4.0.20126.16343\lib\net40\System.Web.Http.xml
+\packages\EntityFramework.4.1.10331.0\EntityFramework.4.1.10331.0.nupkg
+\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.xml
+\packages\EntityFramework.4.1.10331.0\tools\install.ps1
+\packages\jQuery.1.7.2\jQuery.1.7.2.nupkg
+\packages\jQuery.1.7.2\Content\Scripts\jquery-1.7.2.js
+\packages\jQuery.1.7.2\Content\Scripts\jquery-1.7.2.min.js
+\packages\jQuery.1.7.2\Content\Scripts\jquery-1.7.2-vsdoc.js
+\packages\jQuery.1.7.2\Tools\install.ps1
+\packages\jQuery.1.7.2\Tools\jquery-1.7.2.intellisense.js
+\packages\jQuery.1.7.2\Tools\uninstall.ps1
+\packages\jQuery.Ajax.Unobtrusive.2.0.20126.16343\jQuery.Ajax.Unobtrusive.2.0.20126.16343.nupkg
+\packages\jQuery.Ajax.Unobtrusive.2.0.20126.16343\Content\Scripts\jquery.unobtrusive-ajax.js
+\packages\jQuery.Ajax.Unobtrusive.2.0.20126.16343\Content\Scripts\jquery.unobtrusive-ajax.min.js
+\packages\jQuery.Validation.1.9\jQuery.Validation.1.9.nupkg
+\packages\jQuery.Validation.1.9\Content\Scripts\jquery.validate.js
+\packages\jQuery.Validation.1.9\Content\Scripts\jquery.validate.min.js
+\packages\jQuery.Validation.1.9\Content\Scripts\jquery.validate-vsdoc.js
+\packages\jQuery.Validation.Unobtrusive.2.0.20126.16343\jQuery.Validation.Unobtrusive.2.0.20126.16343.nupkg
+\packages\jQuery.Validation.Unobtrusive.2.0.20126.16343\Content\Scripts\jquery.validate.unobtrusive.js
+\packages\jQuery.Validation.Unobtrusive.2.0.20126.16343\Content\Scripts\jquery.validate.unobtrusive.min.js
+\packages\knockoutjs.2.0.0\knockoutjs.2.0.0.nupkg
+\packages\knockoutjs.2.0.0\Content\Scripts\knockout-2.0.0.debug.js
+\packages\knockoutjs.2.0.0\Content\Scripts\knockout-2.0.0.js
+\packages\Microsoft.Web.Optimization.1.0.0-beta\Microsoft.Web.Optimization.1.0.0-beta.nupkg
+\packages\Modernizr.2.0.6\Modernizr.2.0.6.nupkg
+\packages\Modernizr.2.0.6\Content\Scripts\modernizr-2.0.6-development-only.js
+\packages\MvcUtil.1.2.0\MvcUtil.1.2.0.nupkg
+\packages\MvcUtil.1.2.0\NOTICE.txt
+\packages\MvcUtil.1.2.0\lib\net40\MvcUtil.xml
+\packages\MvcUtil.1.2.0\licenses\ASP.NET-MVC-LICENSE.txt
+\packages\MvcUtil.1.2.0\licenses\LICENSE.txt
+\packages\RazorGenerator.MsBuild.1.5.3.0\RazorGenerator.MsBuild.1.5.3.0.nupkg
+\packages\RazorGenerator.MsBuild.1.5.3.0\tools\Install.ps1
+\packages\RazorGenerator.MsBuild.1.5.3.0\tools\NuGet.import.targets
+\packages\RazorGenerator.MsBuild.1.5.3.0\tools\RazorGenerator.targets
+\packages\RazorGenerator.Mvc.1.5.5.0\RazorGenerator.Mvc.1.5.5.0.nupkg
+\packages\RazorGenerator.Mvc.1.5.5.0\Content\App_Start\RazorGeneratorMvcStart.cs.pp
+\packages\RazorGenerator.Mvc.1.5.5.0\tools\init.ps1
+\packages\RazorGenerator.Mvc.1.5.5.0\tools\RazorGenerator.psd1
+\packages\RazorGenerator.Mvc.1.5.5.0\tools\RazorGenerator.psm1
+\packages\System.Json.4.0.20126.16343\System.Json.4.0.20126.16343.nupkg
+\packages\System.Json.4.0.20126.16343\lib\net40\System.Json.xml
+\packages\System.Net.Http.2.0.20126.16343\System.Net.Http.2.0.20126.16343.nupkg
+\packages\System.Net.Http.2.0.20126.16343\lib\net40\System.Net.Http.WebRequest.xml
+\packages\System.Net.Http.2.0.20126.16343\lib\net40\System.Net.Http.xml
+\packages\System.Net.Http.Formatting.4.0.20126.16343\System.Net.Http.Formatting.4.0.20126.16343.nupkg
+\packages\System.Net.Http.Formatting.4.0.20126.16343\lib\net40\System.Net.Http.Formatting.xml
+\packages\WebActivatorEx.2.0.1\WebActivatorEx.2.0.1.nupkg

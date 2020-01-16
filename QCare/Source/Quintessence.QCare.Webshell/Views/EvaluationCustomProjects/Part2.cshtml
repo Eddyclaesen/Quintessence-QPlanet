@@ -1,0 +1,77 @@
+﻿@using Resources
+@model Quintessence.QCare.ViewModel.EvaluationFormCustomProjectsPart2Model
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            InitializeButtons();
+        });
+
+        function InitializeButtons() {
+            //Previous
+            $('a[data-function=previous]').click(function (e) {
+                e.preventDefault();
+                var form = $('#Part2Form');
+                $('#Navigation').val('0');
+                form.submit();
+            });
+
+            //Next
+            $('a[data-function=next]').click(function (e) {
+                e.preventDefault();
+                var form = $('#Part2Form');
+                $('#Navigation').val('1');
+                form.submit();
+            });
+        }
+
+    </script>
+}
+
+@using (Html.BeginForm("Part2", "EvaluationCustomProjects", FormMethod.Post, new { id = "Part2Form" }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    @Html.HiddenFor(m => m.Navigation)
+    <fieldset>
+        <legend>@Global.EvaluationFormCustomProjectsTitleBlock2</legend>
+        <div>
+            <ol>
+                <li value="4">
+                    <p>@Global.EvaluationFormCustomProjectsQuestion04</p>
+                    @Html.TextAreaFor(m => m.Question04, 6, 90, null)
+                </li>
+                <li>
+                    <p>@Global.EvaluationFormCustomProjectsQuestion05</p>
+                    @Html.TextAreaFor(m => m.Question05, 6, 90, null)
+                </li>
+                <li>
+                    <p>@Global.EvaluationFormCustomProjectsQuestion06</p>
+                    @Html.TextAreaFor(m => m.Question06, 6, 90, null)
+                </li>
+                <li>
+                    <p>@Global.EvaluationFormCustomProjectsQuestion07</p>
+                    @Html.TextAreaFor(m => m.Question07, 6, 90, null)
+                </li>
+                <li>
+                    <p>@Global.EvaluationFormCustomProjectsQuestion08</p>
+                    @Html.TextAreaFor(m => m.Question08, 6, 90, null)
+                </li>
+                <li>
+                    <p>@Global.EvaluationFormCustomProjectsQuestion09</p>
+                    @Html.TextAreaFor(m => m.Question09, 6, 90, null)
+                </li>
+            </ol>
+
+            <div class="right-text">
+                <a href="javascript:void(0);" data-function="previous" class="button">@Global.Previous</a>
+                <a href="javascript:void(0);" data-function="next" class="button">@Global.Next</a>
+            </div>
+        </div>
+    </fieldset>
+    
+}

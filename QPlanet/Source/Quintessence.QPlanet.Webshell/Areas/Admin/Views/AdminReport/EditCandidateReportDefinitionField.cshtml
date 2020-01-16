@@ -1,0 +1,28 @@
+﻿@model Quintessence.QPlanet.ViewModel.Rep.EditCandidateReportDefinitionFieldModel
+@using (Html.BeginForm("EditCandidateReportDefinitionField", "AdminReport", FormMethod.Post, new { id = "EditCandidateReportDefinitionFieldForm" }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    @Html.HiddenFor(m => m.CandidateReportDefinitionId)
+    <p>
+        Please enter a name and code.
+    </p>
+    
+    <div class="row">
+        <div>Name</div>
+        <div>@Html.TextBoxFor(m => m.Name)</div>
+    </div>
+    <div class="row">
+        <div>Location</div>
+        <div>@Html.TextBoxFor(m => m.Code)</div>
+    </div>
+    <div class="row">
+        <div>Is active</div>
+        <div>@Html.CheckBoxFor(m => m.IsActive)</div>
+    </div>
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" id="SubmitEditCandidateReportDefinitionFieldForm" title="Add new report definition field."
+            class="button">Save</a>
+    </div>
+}

@@ -1,0 +1,138 @@
+﻿@using Resources
+@model Quintessence.CulturalFit.UI.Webshell.Models.Questionnaire.QuestionnaireModel
+@{
+    ViewBag.Title = "Your questionnaire";
+}
+@section AdditionalScripts
+{
+    <script src="~/Scripts/jquery-1.7.2.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#Questionnaire tr').each(function () {
+                var row = $(this);
+                row.find('input:checkbox').click(function (e) {
+                    if (this.checked) {
+
+                        row.find('input:checkbox').not(this).removeAttr('checked');
+                        var theoremId = $(this).attr('data-theorem-id');
+                        var isLeast = $('input:checkbox[data-type="isLeast"][data-theorem-id="' + theoremId + '"]').is(':checked');
+                        var isMost = $('input:checkbox[data-type="isMost"][data-theorem-id="' + theoremId + '"]').is(':checked');
+
+                        var url = '@Url.Content("~/Questionnaire/RegisterTheoremCheck/")'+theoremId+'/'+isLeast+'/'+isMost;
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            error: function (x,y,z) {
+                                alert(x.responseText);
+                            }
+                        });
+
+                    }
+                    else {
+                        var theoremId = $(this).attr('data-theorem-id');
+                        var isLeast = $('input:checkbox[data-type="isLeast"][data-theorem-id="' + theoremId + '"]').is(':checked');
+                        var isMost = $('input:checkbox[data-type="isMost"][data-theorem-id="'+theoremId+'"]').is(':checked');
+
+                        var url = '@Url.Content("~/Questionnaire/RegisterTheoremCheck/")' + theoremId + '/' + isLeast + '/' + isMost;
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            error: function (x, y, z) {
+                                alert(x.responseText);
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}
+<div class="grid_12">
+    @using (Html.BeginForm("Submit", "Questionnaire", new {requestId = Model.TheoremListRequestId}, FormMethod.Post))
+    {
+        @Html.HiddenFor(m=> m.TheoremListRequestId)
+        @Html.HiddenFor(m => m.ListCode)
+        <fieldset class="login">
+            <legend>
+                @(Model.TheoremListType.ToLower() == "as is" ? Global.AsIsQuestionnaireLegend : Global.ToBeQuestionnaireLegend)
+            </legend>
+            <p class="notice">
+                @(Model.TheoremListType.ToLower() == "as is" ? Global.PleaseFillInYourQuestionnaire : Global.PleaseFillInYourQuestionnaireToBe)
+            </p>
+            @Html.HiddenFor(m => m.IsCompleted)
+            <table id="Questionnaire">
+                <thead>
+                    <tr>
+                        <th class="table-head" style="width: 70%; text-align: center"></th>
+                        <th class="table-head" style="width: 15%; text-align: center">@Global.MostApplicable</th>
+                        <th class="table-head" style="width: 15%; text-align: center">@Global.LeastApplicable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Theorems.Count; i++)
+                    {
+                        if (i % 2 == 0)
+                        {
+                        <tr>
+
+                            <td>
+                                @Html.HiddenFor(m => m.Theorems[i].Id)
+                                @Html.DisplayFor(m => m.Theorems[i].Quote)
+                            </td>
+                            @if (Model.IsCompleted)
+                            {
+                                <td class="IsMostApplicableColumn">
+                                    @Html.HiddenFor(m => m.Theorems[i].IsMost)
+                                    @Html.CheckBoxFor(m => m.Theorems[i].IsMost, new { disabled = "disabled" })
+                                </td>
+                                <td class="IsLeastApplicableColumn">
+                                    @Html.HiddenFor(m => m.Theorems[i].IsLeast)
+                                    @Html.CheckBoxFor(m => m.Theorems[i].IsLeast, new { disabled = "disabled" })
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="IsMostApplicableColumn">@Html.CheckBoxFor(m => m.Theorems[i].IsMost, new { data_type = "isMost", data_theorem_id = Model.Theorems[i].Id })</td>
+                                <td class="IsLeastApplicableColumn">@Html.CheckBoxFor(m => m.Theorems[i].IsLeast, new { data_type = "isLeast", data_theorem_id = Model.Theorems[i].Id })</td>
+                            }
+                        </tr>   
+                        }
+                        else
+                        {
+                        <tr class="odd">
+                            <td>
+                                @Html.HiddenFor(m => m.Theorems[i].Id)
+                                @Html.DisplayFor(m => m.Theorems[i].Quote)</td>
+                            @if (Model.IsCompleted)
+                            {
+                                <td class="IsMostApplicableColumn">
+                                    @Html.HiddenFor(m => m.Theorems[i].IsMost)
+                                    @Html.CheckBoxFor(m => m.Theorems[i].IsMost, new { disabled = "disabled" })
+                                </td>
+                                <td class="IsLeastApplicableColumn">
+                                    @Html.HiddenFor(m => m.Theorems[i].IsLeast)
+                                    @Html.CheckBoxFor(m => m.Theorems[i].IsLeast, new { disabled = "disabled" })
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="IsMostApplicableColumn">@Html.CheckBoxFor(m => m.Theorems[i].IsMost, new { data_type = "isMost", data_theorem_id = Model.Theorems[i].Id })</td>
+                                <td class="IsLeastApplicableColumn">@Html.CheckBoxFor(m => m.Theorems[i].IsLeast, new { data_type = "isLeast", data_theorem_id = Model.Theorems[i].Id })</td>
+                            }
+                        </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            @if (Model.TheoremListType.ToLower() == "as is" && Model.TheoremListCount > 1)
+            {
+                <input type="submit" value="@Global.NextQuestionnaire">
+            }
+            else
+            {
+                <input type="submit" value="@Global.SubmitQuestionnaire">
+            }
+        </fieldset>
+    }
+</div>
+<div class="clear"></div>

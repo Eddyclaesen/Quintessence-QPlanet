@@ -1,0 +1,20 @@
+﻿@model IEnumerable<FileInfo>
+
+<table id="DocumentTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>    
+
+<tbody>
+    @foreach (var file in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(file.Name, "Download", new { FileName = file.Name,  FullPath = file.FullName.ToString() })           
+            </td>
+        </tr>
+    }
+</tbody>
+</table>

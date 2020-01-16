@@ -1,0 +1,258 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Admin.Models.AdminProject.IndexModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Admin - Project";
+}
+@section LeftNavigation
+{
+    <ul id="Tabs">
+        <li>
+            <a href="#AdminProjectRolePanel">Project roles</a>
+        </li>
+        <li>
+            <a href="#AdminProjectSubCategoryPanel">Subcategories</a>
+        </li>
+        <li>
+            <a href="#AdminProjectTypeCategoryUnitPricesPanel">Unit prices</a>
+        </li>
+    </ul>
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script>
+        $(function () {
+            InitializeButtons();
+            InitializeProjectsRolesQuintessenceTable();
+            InitializeProjectsRolesContactsTable();
+            InitializeCopyProjectRoleButton();
+            InitializeCopyProjectRoleDialog();
+            InitializeSubcategoriesTable();
+            InitializeProjectTypeCategoryUnitPricesPanel();
+            InitializeLeftNavigationPersist(true);
+        });
+
+        //Initialize buttons
+        function InitializeButtons() {
+            $('#SubmitCopyProjectRoleButton').click(function () {
+                var form = $('#CopyProjectRoleForm');
+                if ($('input[type=radio][value=Customer]').is(':checked')
+                    && ($('#ContactId').val() == undefined || $('#ContactId').val() == '')) {
+                    var validator = form.validate();
+                    validator.showErrors({ ContactName: '*' });
+                    $('#ContactName').focus();
+                }
+                else {
+                    ShowDetailSaveDialog();
+                    $.ajax({
+                        url: $('#CopyProjectRoleForm').attr('action'),
+                        type: 'POST',
+                        data: $('#CopyProjectRoleForm').serialize(),
+                        dataType: 'JSON',
+                        success: function (data) {
+                            HideDetailSaveDialog();
+                            $('#CopyProjectRoleDialog').dialog('close');
+                            var projectRoleCopyId = data.projectRoleCopyId;
+                            if ($('input[type=radio][value=Customer]').is(':checked'))
+                                window.open('@Url.Action("EditForContact", "AdminProject", new{area="Admin"})/' + projectRoleCopyId, '_blank', '');
+                            else {
+                                window.open('@Url.Action("EditForQuintessence", "AdminProject", new{area="Admin"})/' + projectRoleCopyId, '_blank', '');
+                            }
+                        },
+                        error: function (msg) {
+                            alert(msg.statusText);
+                            HideDetailSaveDialog;
+                        }
+                    });
+
+                }
+
+            });
+
+            $('#SaveProjectTypeCategoryUnitPricesButton').click(function() {
+                ShowDetailSaveDialog();
+                $.ajax({
+                    url: $('#ProjectTypeCategoryUnitPricesForm').attr('action'),
+                    type: 'POST',
+                    data: $('#ProjectTypeCategoryUnitPricesForm').serialize(),
+                    dataType: 'JSON',
+                    success: function (data) {
+                        HideDetailSaveDialog();
+                        InitializeProjectTypeCategoryUnitPricesPanel();
+                        },
+                        error: function (msg) {
+                            alert(msg.statusText);
+                            HideDetailSaveDialog;
+                        }
+                    });
+            });
+        }
+
+        //Initializes the datatable for the project roles for Quintessence
+        function InitializeProjectsRolesQuintessenceTable() {
+            $('#ProjectRolesQuintessenceTable').dataTable();
+        }
+
+        //Initializes the datatable for the project roles for contacts
+        function InitializeProjectsRolesContactsTable() {
+            $('#ProjectRolesContactsTable').dataTable();
+        }
+
+        //Initialize subcategories table
+        function InitializeSubcategoriesTable() {
+            ShowDetailSaveDialog();
+            $('#AdminSubCategoryTablePlaceHolder').load('@Url.Action("Subcategories")', function () {
+                HideDetailSaveDialog();
+                $('#AdminSubCategoryDataTable').dataTable({ "bStateSave": true });
+            });
+        }
+        
+        //Initialize project type category unit prices panel
+        function InitializeProjectTypeCategoryUnitPricesPanel() {
+            $('#AdminProjectTypeCategoryUnitPricesPlaceHolder').loading('Loading unit prices...');
+            $('#AdminProjectTypeCategoryUnitPricesPlaceHolder').load('@Url.Action("ProjectTypeCategoryUnitPrices")');
+        }
+
+        //Initialize copy project role dialog
+        function InitializeCopyProjectRoleDialog() {
+            $('#CopyProjectRoleDialog').dialog({
+                autoOpen: false,
+                modal: true, resizable: false,
+                width: 400,
+                height: 175
+            });
+
+        }
+
+        //Initialize copy project role functionality
+        function InitializeCopyProjectRoleButton() {
+            $(this).on('click', 'a[data-function=CopyProjectRole]', null, function () {
+                $('#CopyProjectRolePlaceholder').html('');
+                var projectRoleToCopyName = $(this).attr('data-role-name');
+                $.ajax({
+                    url: '@Url.Action("CopyProjectRole", "AdminProject", new{area="Admin"})/' + $(this).attr('data-role-id'),
+                    success: function (msg) {
+                        $('#CopyProjectRolePlaceholder').html(msg);
+                        $('#CopyProjectRoleDialog').dialog({
+                            title: 'Copy "' + projectRoleToCopyName + '"'
+                        });
+                        $('#CopyProjectRoleDialog').dialog('open');
+                    }
+                });
+            });
+        }
+
+    </script>
+}
+
+<div id="AdminProjectRolePanel">
+    <fieldset>
+        <legend>Project roles for Quintessence</legend>
+
+        <table id="ProjectRolesQuintessenceTable" style="width: 100%">
+            <thead>
+                <tr>
+                    <th style="width: 80%">Name</th>
+                    <th style="width: 20%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var pr in Model.ProjectRolesForQuintessence)
+                {
+                    <tr>
+                        <td>
+                            @Html.Hidden(pr.Id.ToString())
+                            @Html.Label(pr.Name)
+                        </td>
+                        <td class="center-text">
+                            @Html.ActionLink("Edit", "EditForQuintessence", "AdminProject", new { area = "Admin", id = pr.Id }, new { target = pr.Id, @class="edit-link", title="Edit" })
+                            <a href="javascript:void;" data-function="CopyProjectRole" data-role-id="@pr.Id" data-role-name="@pr.Name" class="copy-link" title="Copy">Copy</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+        <br />
+        <div class="right-text">
+            @Html.ActionLink("Create", "CreateForQuintessence", "AdminProject", new { area = "Admin" }, new { target = "_blank", @class = "button" })
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Project roles for contacts</legend>
+
+        <table id="ProjectRolesContactsTable" style="width: 100%">
+            <thead>
+                <tr>
+                    <th style="width: 60%">Name</th>
+                    <th style="width: 20%">Contact</th>
+                    <th style="width: 20%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var pr in Model.ProjectRolesForContacts)
+                {
+                    <tr>
+                        <td>
+                            @Html.Hidden(pr.Id.ToString())
+                            @Html.Label(pr.Name)
+                        </td>
+                        <td class="center-text">@pr.ContactName</td>
+                        <td class="center-text">
+                            @Html.ActionLink("Edit", "EditForContact", "AdminProject", new { area = "Admin", id = pr.Id }, new { target = pr.Id, @class="edit-link", title="Edit" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+        <br />
+        <div class="right-text">
+            @Html.ActionLink("Create", "CreateForContact", "AdminProject", new { area = "Admin" }, new { target = "_blank", @class = "button" })
+        </div>
+    </fieldset>
+</div>
+
+<div id="CopyProjectRoleDialog">
+    @using (Html.BeginForm("CopyProjectRole", "AdminProject", new { area = "Admin" }, FormMethod.Post, new { id = "CopyProjectRoleForm" }))
+    {
+        <div id="CopyProjectRolePlaceholder">
+        </div>
+        <div class="right-text">
+            <a href="javascript:void;" id="SubmitCopyProjectRoleButton" class="button">Copy</a>
+        </div>
+    }
+</div>
+
+<div id="AdminProjectSubCategoryPanel">
+    <fieldset>
+        <legend>Subcategories
+        </legend>
+        <div id="AdminSubCategoryTablePlaceHolder"></div>
+        <br />
+        <br />
+        <div class="right-text">
+            <a href="@Url.Action("CreateSubcategory")" id="CreateSubcategoryButton" class="button" target="_blank">Create</a>
+        </div>
+    </fieldset>
+
+</div>
+
+<div id="AdminProjectTypeCategoryUnitPricesPanel">
+    <fieldset>
+        <legend>
+            Unit prices
+        </legend>
+        @using (Html.BeginForm("ProjectTypeCategoryUnitPrices", "AdminProject", new { area = "Admin" }, FormMethod.Post, new { id = "ProjectTypeCategoryUnitPricesForm" }))
+        {
+            <div id="AdminProjectTypeCategoryUnitPricesPlaceHolder"></div>
+            <br />
+            <br />
+            <div class="right-text">
+                <a href="javascript:void(0);" id="SaveProjectTypeCategoryUnitPricesButton" class="button">Save</a>
+            </div>
+        }
+    </fieldset>
+
+</div>
+

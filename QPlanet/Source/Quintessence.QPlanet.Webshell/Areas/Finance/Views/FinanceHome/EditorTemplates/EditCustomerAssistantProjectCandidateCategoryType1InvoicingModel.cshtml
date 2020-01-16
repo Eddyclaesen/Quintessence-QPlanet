@@ -1,0 +1,62 @@
+﻿@using Quintessence.QPlanet.Infrastructure.Nullable
+@using Quintessence.QService.QueryModel.Base
+@using Quintessence.QService.QueryModel.Prm
+@model Quintessence.QPlanet.ViewModel.Fin.EditProjectCandidateCategoryType1InvoicingEntryModel
+<td>@Model.CandidateFullName</td>
+<td>
+    @Html.HiddenFor(m => m.DetailType)
+    @Html.HiddenFor(m => m.IsDiry)
+    @Model.ProductName
+</td>
+<td>@Model.ContactName</td>
+<td title="@Model.ConsultantFullName">@Model.ConsultantUserName</td>
+<td>@Model.Date</td>
+@if (Model.InvoiceStatusCode != 100)
+{
+    <td data-isdirty="@Html.IdFor(m => m.IsDiry)">@Html.EditorFor(m => m.InvoiceAmount)</td>
+    <td>@(Model.InvoicedDate == null ? "N/A" : Model.InvoicedDate.GetValueOrDefault().ToShortDateString())</td>
+    <td data-isdirty="@Html.IdFor(m => m.IsDiry)">@Html.DropDownListFor(m => m.InvoiceStatusCode, Model.CreateInvoiceStatusDropDownList(Model.InvoiceStatusCode), new { @class = "dropdown-width" })</td>
+}
+else
+{
+    <td>
+        @Html.HiddenFor(m => m.InvoiceAmount)
+        @Model.InvoiceAmount.ToString("C")
+    </td>
+    <td>
+        @Html.HiddenFor(m => m.InvoicedDate)
+        @(Model.InvoicedDate == null ? "N/A" : Model.InvoicedDate.GetValueOrDefault().ToShortDateString())
+    </td>
+    <td>
+        @Html.HiddenFor(m => m.InvoiceStatusCode)
+        @(EnumMemberNameAttribute.GetName((InvoiceStatusType)Model.InvoiceStatusCode))
+    </td>
+}
+<td data-isdirty="@Html.IdFor(m => m.IsDiry)">@Html.TextBoxFor(m => m.InvoiceRemarks, new { data_function = "InvoiceRemarks" })</td>
+<td>
+    @if (Model.ProposalId.HasValue)
+    {
+        @Html.CheckBox("AddProposal", true, new
+        {            
+            disabled = "disabled"
+        })
+    }
+    else
+    {
+        @Html.CheckBox("AddProposal", false, new
+        {
+            data_function = "ProposalForProjectCandidateCategoryType1", 
+            data_name = "ProposalAdded",
+            data_Id = @Model.Id,
+            data_VersionId = @Model.AuditVersionId,
+            data_ProjectName = @Model.ProjectName,
+            data_CandidateFullName = @Model.CandidateFullName,
+            data_ProductName = @Model.ProductName,
+            data_ContactId = @Model.ContactId,    
+            data_InvoiceAmount = @Model.InvoiceAmount                  
+        })
+    }   
+</td>
+<td data-isdirty="@Html.IdFor(m => m.IsDiry)">@Html.TextBoxFor(m => m.PurchaseOrderNumber)</td>
+<td title="@Model.ProjectManagerFullName">@Model.ProjectManagerUserName</td>
+<td title="@Model.CustomerAssistantFullName">@Model.CustomerAssistantUserName</td>

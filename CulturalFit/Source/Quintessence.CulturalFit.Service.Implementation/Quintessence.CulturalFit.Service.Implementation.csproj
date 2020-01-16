@@ -1,0 +1,460 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D98E023A-C0FA-4FC1-AE9A-B69F96DBDBF6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Quintessence.CulturalFit.Service.Implementation</RootNamespace>
+    <AssemblyName>Quintessence.CulturalFit.Service.Implementation</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Dev\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Test\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Acc|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Acc\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Prod|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Prod\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\packages\EntityFramework.4.3.1\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Activities" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Services" />
+    <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activation" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base\UnityServiceBase.cs" />
+    <Compile Include="Base\ServiceHostFactoryHelper.cs" />
+    <Compile Include="Base\UnityDataServiceHostFactory.cs" />
+    <Compile Include="Base\UnityServiceHostFactory.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="CrmService.cs" />
+    <Compile Include="Service References\ReportExecutionReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ReportServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="TheoremListDataService.cs" />
+    <Compile Include="TheoremListService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="Service References\ReportExecutionReference\Quintessence.CulturalFit.Service.Implementation.ReportExecutionReference.DocumentMapNode.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportExecutionReference\Quintessence.CulturalFit.Service.Implementation.ReportExecutionReference.ExecutionHeader.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportExecutionReference\Quintessence.CulturalFit.Service.Implementation.ReportExecutionReference.ExecutionInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportExecutionReference\Quintessence.CulturalFit.Service.Implementation.ReportExecutionReference.ExecutionInfo2.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportExecutionReference\Quintessence.CulturalFit.Service.Implementation.ReportExecutionReference.Extension.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportExecutionReference\Quintessence.CulturalFit.Service.Implementation.ReportExecutionReference.FindStringResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportExecutionReference\Quintessence.CulturalFit.Service.Implementation.ReportExecutionReference.LoadReport2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportExecutionReference\Quintessence.CulturalFit.Service.Implementation.ReportExecutionReference.LoadReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportExecutionReference\Quintessence.CulturalFit.Service.Implementation.ReportExecutionReference.LogoffResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportExecutionReference\Quintessence.CulturalFit.Service.Implementation.ReportExecutionReference.LogonUserResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportExecutionReference\Quintessence.CulturalFit.Service.Implementation.ReportExecutionReference.Render2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportExecutionReference\Quintessence.CulturalFit.Service.Implementation.ReportExecutionReference.RenderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportExecutionReference\Quintessence.CulturalFit.Service.Implementation.ReportExecutionReference.ServerInfoHeader.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportExecutionReference\Quintessence.CulturalFit.Service.Implementation.ReportExecutionReference.Sort2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportExecutionReference\Quintessence.CulturalFit.Service.Implementation.ReportExecutionReference.SortResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportExecutionReference\Quintessence.CulturalFit.Service.Implementation.ReportExecutionReference.ToggleItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportExecutionReference\Quintessence.CulturalFit.Service.Implementation.ReportExecutionReference.Warning.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportExecutionReference\reportexecution2005.wsdl" />
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ActiveState.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.CancelBatchResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.CancelJobResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.CatalogItem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.CreateBatchResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.CreateFolderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.CreateModelResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.CreateReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.CreateResourceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.CreateRoleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.CreateScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.DataRetrievalPlan.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.DataSetDefinition.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.DataSource.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.DataSourceDefinition.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.DataSourcePrompt.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.DeleteItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.DeleteRoleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.DeleteScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.Event.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ExecuteBatchResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ExecutionSettingEnum.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ExpirationDefinition.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.Extension.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ExtensionParameter.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ExtensionSettings.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.FindItemsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.FireEventResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.FlushCacheResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.GenerateModelResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.GetCacheOptionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.GetItemTypeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.GetPermissionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.GetPoliciesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.GetPropertiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.GetReportLinkResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.GetUserModelResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ItemTypeEnum.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.Job.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ListChildrenResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ListEventsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ListExtensionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ListJobsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ListRolesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ListSchedulesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ListTasksResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.LogoffResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.LogonUserResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ModelCatalogItem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ModelDrillthroughReport.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ModelItem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.MoveItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ParameterValue.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.PauseScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.Policy.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.PrepareQueryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.Property.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.RegenerateModelResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ReportHistorySnapshot.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ReportParameter.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ResumeScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.Role.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.Schedule.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.ServerInfoHeader.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.SetCacheOptionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.SetPoliciesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.SetPropertiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.SetReportLinkResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.Subscription.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.Task.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\Quintessence.CulturalFit.Service.Implementation.ReportServiceReference.Warning.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ReportServiceReference\reportservice2005.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Quintessence.CulturalFit.Business\Quintessence.CulturalFit.Business.csproj">
+      <Project>{BF42FE8F-4377-461C-965C-798CFC53C194}</Project>
+      <Name>Quintessence.CulturalFit.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.CulturalFit.DataModel\Quintessence.CulturalFit.DataModel.csproj">
+      <Project>{7AF10B86-BC8E-4524-8E00-2603D585B5AD}</Project>
+      <Name>Quintessence.CulturalFit.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.CulturalFit.Data\Quintessence.CulturalFit.Data.csproj">
+      <Project>{A7CEDA2A-6E42-4FB2-BC88-4B25CE6B19C0}</Project>
+      <Name>Quintessence.CulturalFit.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.CulturalFit.Infra\Quintessence.CulturalFit.Infra.csproj">
+      <Project>{4CB1AEF4-EF1E-4E7D-82B7-5F941C197830}</Project>
+      <Name>Quintessence.CulturalFit.Infra</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.CulturalFit.Service.Contracts\Quintessence.CulturalFit.Service.Contracts.csproj">
+      <Project>{0AD44F8B-D7E7-4AAD-96D9-62257806878A}</Project>
+      <Name>Quintessence.CulturalFit.Service.Contracts</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ReportExecutionReference\" />
+    <WCFMetadataStorage Include="Service References\ReportServiceReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ReportExecutionReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ReportExecutionReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ReportExecutionReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ReportServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ReportServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ReportServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

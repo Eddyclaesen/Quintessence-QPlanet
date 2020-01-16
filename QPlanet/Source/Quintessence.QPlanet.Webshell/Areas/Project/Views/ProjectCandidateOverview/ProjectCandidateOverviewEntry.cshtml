@@ -1,0 +1,454 @@
+﻿@using System.Text.RegularExpressions
+@using Quintessence.QService.QueryModel.Prm
+@model ProjectCandidateOverviewEntryView
+@{
+    var backgroundColor = "#FFFFFF";
+    if (Model != null)
+    {
+        if (Model.IsCancelled)
+        {
+            backgroundColor = "#C0C0C0";
+        }
+        else if (Model.FollowUpDone.GetValueOrDefault())
+        {
+            backgroundColor = "#" + @Model.ProjectTypeCategoryColor;
+        }
+
+        if (Model.IsReserved)
+        {
+            <tr data-id="@Model.ProjectCandidateCategoryDetailTypeId" style="background-color: white;" data-type="@ProjectCandidateOverviewEntryType.ProjectCandidateCategory"  data-version-id="@Model.AuditVersionId" title="@Model.CandidateFullName (RESERVED)">
+                <td style="width: 1px; background-color: @("#" + Model.ProjectTypeCategoryColor);">
+                    @Html.DisplayTextFor(m => m.ContactName)                    
+                </td>
+                <td><a href="@Url.Action("EditProjectCandidates", "ProjectAssessmentDevelopment", new {id = Model.ProjectId})#candidate-@Model.Id" target="blank">@Model.CandidateFullName</a></td>
+                <td style="width: 1px; background-color: @("#" + Model.ProjectTypeCategoryColor); text-align: center;">
+                    (RESERVED)</td>
+                <td>@Html.DisplayTextFor(m => m.Language)</td>
+                <td></td>
+                <td>
+                    @if (Model.Date != null)
+                    {
+                        @(Model.Date.GetValueOrDefault().ToString("dd/MM/yy"))
+                    }
+                </td>
+                <td>
+                    @if (Model.Date != null)
+                    {
+                        @(Model.Date.GetValueOrDefault().ToShortTimeString())
+                    }
+                </td>
+                <td>@Html.DisplayTextFor(m => m.OfficeName)</td>
+                <td title="@Model.Assessors">@Html.DisplayFor(m => m.AssessorUserNames)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td title="@Model.ProjectManagerFullName">@Html.DisplayTextFor(m => m.ProjectManagerUserName)
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td title="@Model.CustomerAssistantFullName">@Html.DisplayTextFor(m => m.CustomerAssistantUserName)
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+
+            </tr>
+        }
+        else if (Model.IsCancelled)
+        {
+            <tr data-id="@Model.Id" style="background-color: @(backgroundColor)" data-type="@ProjectCandidateOverviewEntryType.ProjectCandidate" data-version-id="@Model.AuditVersionId" title="@Model.CandidateFullName (Cancelled)">
+                <td style="width: 1px; background-color: @(backgroundColor);">@Html.DisplayTextFor(m => m.ContactName)                    
+                </td>
+                <td style="width: 1px;">
+                    <a href="@Url.Action("EditProjectCandidates", "ProjectAssessmentDevelopment", new {id = Model.ProjectId})#candidate-@Model.Id" target="blank">@Model.CandidateFullName</a>
+                    @if (!string.IsNullOrEmpty(Model.Remarks))
+                    {
+                        <span style="color: red;" title="There are remarks for this candidate.">(!!)</span>
+                    }
+                </td>
+                <td style="width: 1px; background-color: @(backgroundColor);">@Html.DisplayTextFor(m => m.Type)
+                </td>
+                <td style="width: 1px;">@Html.DisplayTextFor(m => m.Language)</td>
+                <td style="width: 1px;">@Html.DisplayTextFor(m => m.Function)</td>
+                <td style="width: 1px;">
+                    @if (Model.Date != null)
+                    {
+                        @(Model.Date.GetValueOrDefault().ToString("dd/MM/yy"))
+                    }
+                </td>
+                <td style="width: 1px;">
+                    @if (Model.Date != null)
+                    {
+                        @(Model.Date.GetValueOrDefault().ToShortTimeString())
+                    }
+                </td>               
+                <td style="width: 1px;">@Html.DisplayTextFor(m => m.OfficeName)</td>
+                <td style="width: 1px;" title="@Model.Assessors">@Model.AssessorUserNames</td>
+                <td style="width: 1px;">
+                    @if (Model.OrderConfirmationSentDate != null)
+                    {
+                        @(Model.OrderConfirmationSentDate.GetValueOrDefault().ToString("dd/MM/yy"))<br />
+                        @(Model.OrderConfirmationSentDate.GetValueOrDefault().ToShortTimeString())
+                    }
+                </td>
+                <td style="width: 1px;">
+                    @if (Model.OrderConfirmationSentDate != null)
+                    {
+                        @(Model.OrderConfirmationReceivedDate.GetValueOrDefault().ToString("dd/MM/yy"))<br />
+                        @(Model.OrderConfirmationReceivedDate.GetValueOrDefault().ToShortTimeString())
+                    }
+                </td>
+                <td style="width: 1px;">
+                    @if (Model.InvitationSentDate != null)
+                    {
+                        @(Model.InvitationSentDate.GetValueOrDefault().ToString("dd/MM/yy"))<br />
+                        @(Model.InvitationSentDate.GetValueOrDefault().ToShortTimeString())
+                    }
+                </td>
+                <td style="width: 1px;">@Html.DisplayTextFor(m => m.CulturalFit)</td>
+                <td style="width: 1px;">
+                    @if (Model.DossierReadyDate != null)
+                    {
+                        @(Model.DossierReadyDate.GetValueOrDefault().ToString("dd/MM/yy"))<br />
+                        @(Model.DossierReadyDate.GetValueOrDefault().ToShortTimeString())
+                    }
+
+                </td>
+                <td style="width: 1px;" title="@Model.ProjectManagerFullName">@Html.DisplayTextFor(m => m.ProjectManagerUserName)
+                </td>
+                <!--<td style="width: 1px;">
+                    @if (Model.ReportMailSentDate != null)
+                    {
+                        @(Model.ReportMailSentDate.GetValueOrDefault().ToString("dd/MM/yy"))<br />
+                        @(Model.ReportMailSentDate.GetValueOrDefault().ToShortTimeString())
+                    }
+                </td>-->
+                <td>
+                    @(Model.ReportDeadline.ToString("dd/MM/yy"))
+
+                    <!--@if (Model.ReportDeadline.Date <= DateTime.Now.Date) { <img src="@Url.Content("~/Images/Icons/Warning16.png")" alt="Report deadline is near!" title="Report deadline is near!"/> }-->
+                </td>
+                <td style="width: 1px;">@Html.DisplayTextFor(m => m.ReportRecipients)</td>
+                <td style="width: 1px;">@Model.InvoiceAmount.GetValueOrDefault().ToString("C")</td>
+
+                <td style="width: 1px;" title="@Model.CustomerAssistantFullName">@Html.DisplayTextFor(m => m.CustomerAssistantUserName)
+                </td>
+                <td style="width: auto;">
+                    @if (!string.IsNullOrWhiteSpace(Model.Remarks))
+                    {
+                        <a href="javascript:void(0);" data-name="ProjectCandidateRemarks" data-text="@Model.Id">
+                            @{
+                                var remarks = Regex.Replace(Model.Remarks, @"<[^>]*>", String.Empty);
+                                @(!string.IsNullOrEmpty(remarks) && remarks.Length > 15 ? remarks.Substring(0, 18) + "..." : remarks)
+                            }
+                        </a>
+                        <div style="display: none" data-remarks="@Model.Id">
+                            @Html.Raw(Model.Remarks)
+                        </div>
+                    }
+                </td>
+                <td style="width: 1px;"></td>
+                <td style="width: 1px;"></td>
+                <td></td>
+            </tr>
+        }
+        else if (Model.ProjectCandidateCategoryDetailTypeId == null)
+        {
+
+            <tr data-id="@Model.Id" style="background-color: @(backgroundColor)" data-type="@ProjectCandidateOverviewEntryType.ProjectCandidate" data-version-id="@Model.AuditVersionId" title="@Model.CandidateFullName @Model.Type">
+                <td style="width: 1px; background-color: @(backgroundColor);">@Html.DisplayTextFor(m => m.ContactName)
+                </td>
+                <td style="width: 1px;">
+                    <a href="@Url.Action("EditProjectCandidates", "ProjectAssessmentDevelopment", new {id = Model.ProjectId})#candidate-@Model.Id" target="blank">@Model.CandidateFullName</a>
+                    @if (!string.IsNullOrEmpty(Model.Remarks))
+                    {
+                        <span style="color: red;" title="There are remarks for this candidate.">(!!)</span>
+                    }
+                </td>
+                <td style="width: 1px; background-color: @(backgroundColor);">@Html.DisplayTextFor(m => m.Type)
+                </td>
+                <td style="width: 1px;">@Html.DisplayTextFor(m => m.Language)</td>
+                <td style="width: 1px;">@Html.DisplayTextFor(m => m.Function)</td>
+                <td style="width: 1px;">
+                    @if (Model.Date != null)
+                    {
+                        @(Model.Date.GetValueOrDefault().ToString("dd/MM/yy"))
+                    }
+                </td>
+                <td style="width: 1px;">
+                    @if (Model.Date != null)
+                    {
+                        @(Model.Date.GetValueOrDefault().ToShortTimeString())
+                    }
+                </td>
+                <td style="width: 1px;">@Html.DisplayTextFor(m => m.OfficeName)</td>
+                <td style="width: 1px;" title="@Model.Assessors">@Model.AssessorUserNames</td>
+                <td style="width: 1px;">
+                    @Html.CheckBox("OrderConfirmationSentDateDone", Model.OrderConfirmationSentDateDone.GetValueOrDefault(), new {data_function = "FieldStatusCheck", data_name = "OrderConfirmationSentDateDone"})
+                    @Html.TextBox("OrderConfirmationSentDate", @Model.OrderConfirmationSentDate == null ? "" : Model.OrderConfirmationSentDate.GetValueOrDefault().ToString("dd/MM/yy"), new
+                                                                                                                                                                                         {
+                                                                                                                                                                                             @id = @Model.Id + "-" + "OrderConfirmationSentDate", //Avoid duplicate id's by overriding id.
+                                                                                                                                                                                             data_name = "OrderConfirmationSentDate",
+                                                                                                                                                                                             data_type = "DateTime",
+                                                                                                                                                                                             @style = "background-color:" + (Model.OrderConfirmationSentDateDone.GetValueOrDefault() ? "#" + Model.ProjectTypeCategoryColor : "#fcbfbf")
+                                                                                                                                                                                         })
+                    <a href="javascript:void(0);" data-function="SaveFieldButton">
+                        <img src="@Url.Content("~/Images/Icons/save16.png")" class="icon" alt="Save" />
+                    </a>
+                </td>
+                <td style="width: 1px;">
+                    @Html.CheckBox("OrderConfirmationReceivedDateDone", Model.OrderConfirmationReceivedDateDone.GetValueOrDefault(), new {data_function = "FieldStatusCheck", data_name = "OrderConfirmationReceivedDateDone"})
+                    @Html.TextBox("OrderConfirmationReceivedDate", @Model.OrderConfirmationReceivedDate == null ? "" : Model.OrderConfirmationReceivedDate.GetValueOrDefault().ToString("dd/MM/yy"), new
+                                                                                                                                                                                                     {
+                                                                                                                                                                                                         @id = @Model.Id + "-" + "OrderConfirmationReceivedDate", //Avoid duplicate id's by overriding id.
+                                                                                                                                                                                                         data_name = "OrderConfirmationReceivedDate",
+                                                                                                                                                                                                         data_type = "DateTime",
+                                                                                                                                                                                                         @style = "background-color:" + (Model.OrderConfirmationReceivedDateDone.GetValueOrDefault() ? "#" + Model.ProjectTypeCategoryColor : "#fcbfbf")
+                                                                                                                                                                                                     })
+                    <a href="javascript:void(0);" data-function="SaveFieldButton">
+                        <img src="@Url.Content("~/Images/Icons/save16.png")" class="icon" alt="Save" />
+                    </a>
+                </td>
+                <td style="width: 1px;">
+                    @Html.CheckBox("InvitationSentDateDone", Model.InvitationSentDateDone.GetValueOrDefault(), new {data_function = "FieldStatusCheck", data_name = "InvitationSentDateDone"})
+                    @Html.TextBox("InvitationSentDate", @Model.InvitationSentDate == null ? "" : Model.InvitationSentDate.GetValueOrDefault().ToString("dd/MM/yy"), new
+                                                                                                                                                                    {
+                                                                                                                                                                        @id = @Model.Id + "-" + "InvitationSentDate", //Avoid duplicate id's by overriding id.
+                                                                                                                                                                        data_name = "InvitationSentDate",
+                                                                                                                                                                        data_type = "DateTime",
+                                                                                                                                                                        @style = "background-color:" + (Model.InvitationSentDateDone.GetValueOrDefault() ? "#" + Model.ProjectTypeCategoryColor : "#fcbfbf")
+                                                                                                                                                                    })
+                    <a href="javascript:void(0);" data-function="SaveFieldButton">
+                        <img src="@Url.Content("~/Images/Icons/save16.png")" class="icon" alt="Save" />
+                    </a>
+                </td>
+                <td style="width: 1px;">@if (Model.CulturalFit.HasValue)
+                                        {
+                                            @(Model.CulturalFit.Value ? "OK" : "Open")
+                                        }
+                </td>
+                <td style="width: 1px;">
+                    @Html.CheckBox("DossierReadyDateDone", Model.DossierReadyDateDone.GetValueOrDefault(), new {data_function = "FieldStatusCheck", data_name = "DossierReadyDateDone"})
+                    @Html.TextBox("DossierReadyDate", @Model.DossierReadyDate == null ? "" : Model.DossierReadyDate.GetValueOrDefault().ToString("dd/MM/yy"), new
+                                                                                                                                                              {
+                                                                                                                                                                  @id = @Model.Id + "-" + "DossierReadyDate", //Avoid duplicate id's by overriding id.
+                                                                                                                                                                  data_name = "DossierReadyDate",
+                                                                                                                                                                  data_type = "DateTime",
+                                                                                                                                                                  @style = "background-color:" + (Model.DossierReadyDateDone.GetValueOrDefault() ? "#" + Model.ProjectTypeCategoryColor : "#fcbfbf")
+                                                                                                                                                              })
+                    <a href="javascript:void(0);" data-function="SaveFieldButton">
+                        <img src="@Url.Content("~/Images/Icons/save16.png")" class="icon" alt="Save" />
+                    </a>
+                </td>
+                <td style="width: 1px;" title="@Model.ProjectManagerFullName">@Html.DisplayTextFor(m => m.ProjectManagerUserName)
+                </td>
+                <!--<td style="width: 1px;">
+                    @Html.CheckBox("ReportMailSentDateDone", Model.ReportMailSentDateDone.GetValueOrDefault(), new {data_function = "FieldStatusCheck", data_name = "ReportMailSentDateDone"})
+                    @Html.TextBox("ReportMailSentDate", @Model.ReportMailSentDate == null ? "" : Model.ReportMailSentDate.GetValueOrDefault().ToString("dd/MM/yy"), new
+                                                                                                                                                                    {
+                                                                                                                                                                        @id = @Model.Id + "-" + "ReportMailSentDate", //Avoid duplicate id's by overriding id.
+                                                                                                                                                                        data_name = "ReportMailSentDate",
+                                                                                                                                                                        data_type = "DateTime",
+                                                                                                                                                                        @style = "background-color:" + (Model.ReportMailSentDateDone.GetValueOrDefault() ? "#" + Model.ProjectTypeCategoryColor : "#fcbfbf")
+                                                                                                                                                                    })
+                    <a href="javascript:void(0);" data-function="SaveFieldButton">
+                        <img src="@Url.Content("~/Images/Icons/save16.png")" class="icon" alt="Save" />
+                    </a>
+                </td>-->
+                <td>
+                    @Html.CheckBox("ReportDeadlineDone", Model.ReportDeadlineDone.GetValueOrDefault(), new { data_function = "FieldStatusCheck", data_name = "ReportDeadlineDone" })
+                    @Html.TextBox("ReportDeadline", @Model.ReportDeadline.ToString("dd/MM/yy"), new
+                                                                                                {
+                                                                                                    @id = @Model.Id + "-" + "ReportDeadline", //Avoid duplicate id's by overriding id.
+                                                                                                    data_name = "ReportDeadline",
+                                                                                                    data_type = "DateTime",
+                                                                                                    @style = "background-color:" + (Model.ReportDeadlineDone.GetValueOrDefault() ? "#" + Model.ProjectTypeCategoryColor : "#fcbfbf")
+                                                                                                })
+                    <a href="javascript:void(0);" data-function="SaveFieldButton">
+                        <img src="@Url.Content("~/Images/Icons/save16.png")" class="icon" alt="Save" />
+                    </a>
+                    <!--@if (Model.ReportDeadline.Date <= DateTime.Now.Date) { <img src="@Url.Content("~/Images/Icons/Warning16.png")" alt="Report deadline is near!" title="Report deadline is near!"/> }-->
+                </td>
+                <td style="width: 1px;">@Html.DisplayTextFor(m => m.ReportRecipients)</td>
+                <td style="width: 1px;">@Model.InvoiceAmount.GetValueOrDefault().ToString("C")</td>
+
+                <td style="width: 1px;" title="@Model.CustomerAssistantFullName">@Html.DisplayTextFor(m => m.CustomerAssistantUserName)
+                </td>
+                <td style="width: auto;">
+                    @if (!string.IsNullOrWhiteSpace(Model.Remarks))
+                    {
+                        <a href="javascript:void(0);" data-name="ProjectCandidateRemarks" data-text="@Model.Id">
+                            @{
+                                var remarks = Regex.Replace(Model.Remarks, @"<[^>]*>", String.Empty);
+                                @(!string.IsNullOrEmpty(remarks) && remarks.Length > 15 ? remarks.Substring(0, 18) + "..." : remarks)
+                            }
+                        </a>
+                        <div style="display: none" data-remarks="@Model.Id">
+                            @Html.Raw(Model.Remarks)
+                        </div>
+                    }
+                </td>
+                <td style="width: 1px;">
+                    @Html.CheckBox("Extra1Done", Model.Extra1Done.GetValueOrDefault(), new {data_function = "FieldStatusCheck", data_name = "Extra1Done"})
+                    @Html.TextBox("Extra1", @Model.Extra1, new
+                                                           {
+                                                               @id = @Model.Id + "-" + "Extra1", //Avoid duplicate id's by overriding id.
+                                                               data_name = "Extra1",
+                                                               data_type = "Text",
+                                                               @class = "Extra1",
+                                                               @style = "background-color:" + (Model.Extra1Done.GetValueOrDefault() ? "#" + Model.ProjectTypeCategoryColor : "#fcbfbf")
+                                                           })
+                    <a href="javascript:void(0);" data-function="SaveFieldButton">
+                        <img src="@Url.Content("~/Images/Icons/save16.png")" class="icon" alt="Save" />
+                    </a>
+                </td>
+                <td style="width: 1px;">
+                    @Html.CheckBox("Extra2Done", Model.Extra2Done.GetValueOrDefault(), new {data_function = "FieldStatusCheck", data_name = "Extra2Done"})
+                    @Html.TextBox("Extra2", @Model.Extra2, new
+                                                           {
+                                                               @id = @Model.Id + "-" + "Extra2", //Avoid duplicate id's by overriding id.
+                                                               data_name = "Extra2",
+                                                               data_type = "Text",
+                                                               @class = "Extra2",
+                                                               @style = "background-color:" + (Model.Extra2Done.GetValueOrDefault() ? "#" + Model.ProjectTypeCategoryColor : "#fcbfbf")
+                                                           })
+                    <a href="javascript:void(0);" data-function="SaveFieldButton">
+                        <img src="@Url.Content("~/Images/Icons/save16.png")" class="icon" alt="Save" />
+                    </a>
+                </td>
+                <!--<td>
+                    @if (Model.InvitationSentDateDone.GetValueOrDefault())
+                    {
+                        @:Sent!
+                    }
+                    else
+                    {
+                        <a href="javascript:void(0);" data-id="@Model.Id" data-language-id="@Model.LanguageId" data-function="SendCandidateInvitationMailButton">
+                            Invite</a>
+                    }
+                </td>-->
+                <td>
+                    @Html.CheckBox("FollowUpDone", Model.FollowUpDone.GetValueOrDefault(), new {data_function = "FieldStatusCheck", data_name = "FollowUpDone"})
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr data-id="@Model.ProjectCandidateCategoryDetailTypeId" style="background-color: @(Model.FollowUpDone.GetValueOrDefault() ? "#" + @Model.ProjectTypeCategoryColor : "#FFFFFF")" data-type="@ProjectCandidateOverviewEntryType.ProjectCandidateCategory"  data-version-id="@Model.AuditVersionId" title="@Model.CandidateFullName @Model.Type">
+                <td style="width: 1px; background-color: @("#" + Model.ProjectTypeCategoryColor);">@Html.DisplayTextFor(m => m.ContactName)
+                </td>
+                <td>
+                    <a href="@Url.Action("EditProjectCandidates", "ProjectAssessmentDevelopment", new {id = Model.ProjectId})#candidate-@Model.Id" target="blank">@Model.CandidateFullName</a>
+                    @if (!string.IsNullOrEmpty(Model.Remarks))
+                    {
+                        <span style="color: red;" title="There are remarks for this candidate.">(!!)</span>
+                    }
+                </td>
+                <td style="width: 1px; background-color: @("#" + Model.ProjectTypeCategoryColor);">@Html.DisplayTextFor(m => m.Type)
+                </td>
+                <td>@Html.DisplayTextFor(m => m.Language)</td>
+                <td>@Html.DisplayTextFor(m => m.Function)</td>
+                <td>
+                    @if (Model.Date != null)
+                    {
+                        @(Model.Date.GetValueOrDefault().ToString("dd/MM/yy"))
+                    }
+                </td>
+                <td>
+                    @if (Model.Date != null)
+                    {
+                        @(Model.Date.GetValueOrDefault().ToShortTimeString())
+                    }
+                </td>                
+                <td>@Html.DisplayTextFor(m => m.OfficeName)</td>
+                <td title="@Model.Assessors">@Html.DisplayFor(m => m.AssessorUserNames)</td>
+                <td></td>
+                <td></td>
+                <td>
+                    @Html.CheckBox("InvitationSentDateDone", Model.InvitationSentDateDone.GetValueOrDefault(), new {data_function = "FieldStatusCheck", data_name = "InvitationSentDateDone"})
+                    @Html.TextBox("InvitationSentDate", @Model.InvitationSentDate == null ? "" : Model.InvitationSentDate.GetValueOrDefault().ToString("dd/MM/yy"), new
+                                                                                                                                                                    {
+                                                                                                                                                                        @id = @Model.Id + "-" + "InvitationSentDate", //Avoid duplicate id's by overriding id.
+                                                                                                                                                                        data_name = "InvitationSentDate",
+                                                                                                                                                                        data_type = "DateTime",
+                                                                                                                                                                        @style = "background-color:" + (Model.InvitationSentDateDone.GetValueOrDefault() ? "#" + Model.ProjectTypeCategoryColor : "#fcbfbf")
+                                                                                                                                                                    })
+                    <a href="javascript:void(0);" data-function="SaveFieldButton">
+                        <img src="@Url.Content("~/Images/Icons/save16.png")" class="icon" alt="Save" />
+                    </a>
+                </td>
+                <td></td>
+                <td>
+                    @Html.CheckBox("DossierReadyDateDone", Model.DossierReadyDateDone.GetValueOrDefault(), new {data_function = "FieldStatusCheck", data_name = "DossierReadyDateDone"})
+                    @Html.TextBox("DossierReadyDate", @Model.DossierReadyDate == null ? "" : Model.DossierReadyDate.GetValueOrDefault().ToString("dd/MM/yy"), new
+                                                                                                                                                              {
+                                                                                                                                                                  @id = @Model.Id + "-" + "DossierReadyDate", //Avoid duplicate id's by overriding id.
+                                                                                                                                                                  data_name = "DossierReadyDate",
+                                                                                                                                                                  data_type = "DateTime",
+                                                                                                                                                                  @style = "background-color:" + (Model.DossierReadyDateDone.GetValueOrDefault() ? "#" + Model.ProjectTypeCategoryColor : "#fcbfbf")
+                                                                                                                                                              })
+                    <a href="javascript:void(0);" data-function="SaveFieldButton">
+                        <img src="@Url.Content("~/Images/Icons/save16.png")" class="icon" alt="Save" />
+                    </a>
+                </td>
+                <td title="@Model.ProjectManagerFullName">@Html.DisplayTextFor(m => m.ProjectManagerUserName)
+                </td>
+                <td>
+                    @Html.CheckBox("ReportDeadlineDone", Model.ReportDeadlineDone.GetValueOrDefault(), new { data_function = "FieldStatusCheck", data_name = "ReportDeadlineDone" })
+                    @Html.TextBox("ReportDeadline", @Model.ReportDeadline.ToString("dd/MM/yy"), new
+                                                                                                {
+                                                                                                    @id = @Model.Id + "-" + "ReportDeadline", //Avoid duplicate id's by overriding id.
+                                                                                                    data_name = "ReportDeadline",
+                                                                                                    data_type = "DateTime",
+                                                                                                    @style = "background-color:" + (Model.ReportDeadlineDone.GetValueOrDefault() ? "#" + Model.ProjectTypeCategoryColor : "#fcbfbf")
+                                                                                                })
+                    <a href="javascript:void(0);" data-function="SaveFieldButton">
+                        <img src="@Url.Content("~/Images/Icons/save16.png")" class="icon" alt="Save" />
+                    </a>
+                    <!--@if (Model.ReportDeadline.Date <= DateTime.Now.Date) { <img src="@Url.Content("~/Images/Icons/Warning16.png")" alt="Report deadline is near!" title="Report deadline is near!"/> }-->
+                </td>
+                <td></td>
+                <td>@Model.InvoiceAmount.GetValueOrDefault().ToString("C")</td>
+                <td title="@Model.CustomerAssistantFullName">@Html.DisplayTextFor(m => m.CustomerAssistantUserName)
+                </td>
+                <td>@Html.DisplayTextFor(m => m.Remarks)</td>
+                <td style="width: 1px;">
+                    @Html.CheckBox("Extra1Done", Model.Extra1Done.GetValueOrDefault(), new {data_function = "FieldStatusCheck", data_name = "Extra1Done"})
+                    @Html.TextBox("Extra1", @Model.Extra1, new
+                                                           {
+                                                               @id = @Model.Id + "-" + "Extra1", //Avoid duplicate id's by overriding id.
+                                                               data_name = "Extra1",
+                                                               data_type = "Text",
+                                                               @class = "Extra1",
+                                                               @style = "background-color:" + (Model.Extra1Done.GetValueOrDefault() ? "#" + Model.ProjectTypeCategoryColor : "#fcbfbf")
+                                                           })
+                    <a href="javascript:void(0);" data-function="SaveFieldButton">
+                        <img src="@Url.Content("~/Images/Icons/save16.png")" class="icon" alt="Save" />
+                    </a>
+                </td>
+                <td style="width: 1px;">
+                    @Html.CheckBox("Extra2Done", Model.Extra2Done.GetValueOrDefault(), new {data_function = "FieldStatusCheck", data_name = "Extra2Done"})
+                    @Html.TextBox("Extra2", @Model.Extra2, new
+                                                           {
+                                                               @id = @Model.Id + "-" + "Extra2", //Avoid duplicate id's by overriding id.
+                                                               data_name = "Extra2",
+                                                               data_type = "Text",
+                                                               @class = "Extra2",
+                                                               @style = "background-color:" + (Model.Extra2Done.GetValueOrDefault() ? "#" + Model.ProjectTypeCategoryColor : "#fcbfbf")
+                                                           })
+                    <a href="javascript:void(0);" data-function="SaveFieldButton">
+                        <img src="@Url.Content("~/Images/Icons/save16.png")" class="icon" alt="Save" />
+                    </a>
+                </td>
+                <td>
+                    @Html.CheckBox("FollowUpDone", Model.FollowUpDone.GetValueOrDefault(), new {data_function = "FieldStatusCheck", data_name = "FollowUpDone"})
+                </td>
+
+            </tr>
+        }
+    }
+}

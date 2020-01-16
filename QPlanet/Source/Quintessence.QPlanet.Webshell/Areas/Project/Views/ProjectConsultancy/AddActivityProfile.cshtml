@@ -1,0 +1,52 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectConsultancy.AddActivityProfileActionModel
+<p>
+    Select a profile to link with the activity.
+</p>
+@using (Html.BeginForm("AddActivityProfile", "ProjectConsultancy", FormMethod.Post, new { id = "AddActivityProfileForm" }))
+{
+    <div class="row">
+        <div>Profile</div>
+        <div>
+                @Html.HiddenFor(m => m.ActivityId)
+                @Html.DropDownListFor(m => m.ProfileId, Model.ProfileSelectListItems)
+        </div>
+    </div>
+    <div class="row">
+        <div>Day</div>
+        <div>@Html.EditorFor(m => m.DayRate)</div>
+    </div>
+    <div class="row">
+        <div>Half day</div>
+        <div>@Html.EditorFor(m => m.HalfDayRate)</div>
+    </div>
+    <div class="row">
+        <div>Hour</div>
+        <div>@Html.EditorFor(m => m.HourlyRate)</div>
+    </div>
+    <div class="row">
+        <div>Isolated hour</div>
+        <div>@Html.EditorFor(m => m.IsolatedHourlyRate)</div>
+    </div>
+}
+
+<div style="display: none">
+    @foreach (var profile in Model.Profiles)
+    {
+        <div data-profile-id="@profile.ProfileId" data-rate="@Html.IdFor(m => m.DayRate)">@profile.DayRate</div>
+        <div data-profile-id="@profile.ProfileId" data-rate="@Html.IdFor(m => m.HalfDayRate)">@profile.HalfDayRate</div>
+        <div data-profile-id="@profile.ProfileId" data-rate="@Html.IdFor(m => m.HourlyRate)">@profile.HourlyRate</div>
+        <div data-profile-id="@profile.ProfileId" data-rate="@Html.IdFor(m => m.IsolatedHourlyRate)">@profile.IsolatedHourlyRate</div>
+    }
+</div>
+
+<script>
+    $(function () {
+        $('#ProfileId').change(function () {
+            var profileId = $('#ProfileId').val();
+            $('#@Html.IdFor(m => m.DayRate)').val($('div[data-profile-id=' + profileId + '][data-rate=@Html.IdFor(m => m.DayRate)]').text());
+            $('#@Html.IdFor(m => m.HalfDayRate)').val($('div[data-profile-id=' + profileId + '][data-rate=@Html.IdFor(m => m.HalfDayRate)]').text());
+            $('#@Html.IdFor(m => m.HourlyRate)').val($('div[data-profile-id=' + profileId + '][data-rate=@Html.IdFor(m => m.HourlyRate)]').text());
+            $('#@Html.IdFor(m => m.IsolatedHourlyRate)').val($('div[data-profile-id=' + profileId + '][data-rate=@Html.IdFor(m => m.IsolatedHourlyRate)]').text());
+        });
+    });
+</script>

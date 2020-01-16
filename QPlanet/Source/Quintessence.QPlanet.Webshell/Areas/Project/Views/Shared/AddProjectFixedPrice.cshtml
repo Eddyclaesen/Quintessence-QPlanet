@@ -1,0 +1,25 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.CreateNewProjectFixedPriceModel
+<p>
+    Enter a deadline on which the amount is due.
+</p>
+@using (Html.BeginForm("AddProjectFixedPrice", "ProjectConsultancy", FormMethod.Post, new { id = "AddProjectFixedPriceForm" }))
+{
+    <div class="row">
+        <div>Deadline</div>
+        <div>
+                @Html.HiddenFor(m => m.ProjectId)
+                @Html.TextBox(Html.IdFor(m => m.Deadline).ToString(), Model.Deadline.ToShortDateString())
+        </div>
+    </div>
+    <div class="row">
+        <div>Amount</div>
+        <div>@Html.EditorFor(m => m.Amount)</div>
+    </div>
+    <div class="row">
+        <div>Remarks</div>
+        <div>@Html.TextAreaFor(m => m.InvoiceRemarks, 4, 40, null)</div>
+    </div>
+}
+<script>
+    $('#@Html.IdFor(m => m.Deadline)').datetimepicker({ dateFormat: "dd/mm/yy", showTimepicker: false });
+</script>

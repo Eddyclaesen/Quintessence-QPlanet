@@ -1,0 +1,921 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Finance.Models.FinanceHome.IndexActionModel
+@{
+    Layout = "~/Views/Shared/_FullLayout.cshtml";
+    ViewBag.Title = "Finance - Home";
+}
+
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.treeTable.js")" type="text/javascript"></script>
+    
+    <script>
+        $(function() {
+            InitializeIsDirty();
+        });
+
+        function InitializeIsDirty() {
+            $(this).on('change', 'td[data-isdirty] > input', null, function (event) {
+                $('#' + $(this).parent().attr('data-isdirty')).val('true');
+            });
+            $(this).on('change', 'td[data-isdirty] > select ', null, function (event) {
+                $('#' + $(this).parent().attr('data-isdirty')).val('true');
+            });
+            $(this).on('change', 'td[data-isdirty] > textarea ', null, function (event) {
+                $('#' + $(this).parent().attr('data-isdirty')).val('true');
+            });
+        }
+        
+        function InitializeButtonsAddProposal() {
+
+            $(this).on('change', 'input[type=checkbox][data-function=ProposalForProjectCandidate]', null, function () {
+                var checkbox = $(this);
+                var id = checkbox.attr('data-Id');
+                var auditVersionId = checkbox.attr('data-VersionId');
+                var propertyName = checkbox.attr('data-Name');
+                var projectName = checkbox.attr('data-ProjectName');
+                var candidateFullName = checkbox.attr('data-CandidateFullName');
+                var productName = checkbox.attr('data-ProductName');
+                var contactId = checkbox.attr('data-ContactId');
+                var invoiceAmount = checkbox.attr('data-InvoiceAmount');
+                if (checkbox.is(':checked')) {
+                    AddProposalForProjectCandidate(id, propertyName, auditVersionId, projectName, candidateFullName, productName, contactId, invoiceAmount);
+                }
+            });
+            $(this).on('change', 'input[type=checkbox][data-function=ProposalForProjectCandidateCategoryType1]', null, function () {
+                var checkbox = $(this);
+                var id = checkbox.attr('data-Id');
+                var auditVersionId = checkbox.attr('data-VersionId');
+                var propertyName = checkbox.attr('data-Name');
+                var projectName = checkbox.attr('data-ProjectName');
+                var candidateFullName = checkbox.attr('data-CandidateFullName');
+                var productName = checkbox.attr('data-ProductName');
+                var contactId = checkbox.attr('data-ContactId');
+                var invoiceAmount = checkbox.attr('data-InvoiceAmount');
+                if (checkbox.is(':checked')) {
+                    AddProposalForProjectCandidateCategoryType1(id, propertyName, auditVersionId, projectName, candidateFullName, productName, contactId, invoiceAmount);
+                }
+            });
+            $(this).on('change', 'input[type=checkbox][data-function=ProposalForProjectCandidateCategoryType2]', null, function () {
+                var checkbox = $(this);
+                var id = checkbox.attr('data-Id');
+                var auditVersionId = checkbox.attr('data-VersionId');
+                var propertyName = checkbox.attr('data-Name');
+                var projectName = checkbox.attr('data-ProjectName');
+                var candidateFullName = checkbox.attr('data-CandidateFullName');
+                var productName = checkbox.attr('data-ProductName');
+                var contactId = checkbox.attr('data-ContactId');
+                var invoiceAmount = checkbox.attr('data-InvoiceAmount');
+                if (checkbox.is(':checked')) {
+                    AddProposalForProjectCandidateCategoryType2(id, propertyName, auditVersionId, projectName, candidateFullName, productName, contactId, invoiceAmount);
+                }
+            });
+            $(this).on('change', 'input[type=checkbox][data-function=ProposalForProjectCandidateCategoryType3]', null, function () {
+                var checkbox = $(this);
+                var id = checkbox.attr('data-Id');
+                var auditVersionId = checkbox.attr('data-VersionId');
+                var propertyName = checkbox.attr('data-Name');
+                var projectName = checkbox.attr('data-ProjectName');
+                var candidateFullName = checkbox.attr('data-CandidateFullName');
+                var productName = checkbox.attr('data-ProductName');
+                var contactId = checkbox.attr('data-ContactId');
+                var invoiceAmount = checkbox.attr('data-InvoiceAmount');
+                if (checkbox.is(':checked')) {
+                    AddProposalForProjectCandidateCategoryType3(id, propertyName, auditVersionId, projectName, candidateFullName, productName, contactId, invoiceAmount);
+                }
+            });
+            $(this).on('change', 'input[type=checkbox][data-function=ProposalForProjectProduct]', null, function () {
+                var checkbox = $(this);
+                var id = checkbox.attr('data-Id');
+                var auditVersionId = checkbox.attr('data-VersionId');
+                var propertyName = checkbox.attr('data-Name');
+                var projectName = checkbox.attr('data-ProjectName');
+                var productName = checkbox.attr('data-ProductName');
+                var contactId = checkbox.attr('data-ContactId');
+                var invoiceAmount = checkbox.attr('data-InvoiceAmount');
+                if (checkbox.is(':checked')) {
+                    AddProposalForProjectProduct(id, propertyName, auditVersionId, projectName, productName, contactId, invoiceAmount);
+                }
+            });
+            $(this).on('change', 'input[type=checkbox][data-function=ProposalForTimeSheetEntry]', null, function () {
+                var checkbox = $(this);
+                var id = checkbox.attr('data-Id');
+                var auditVersionId = checkbox.attr('data-VersionId');
+                var propertyName = checkbox.attr('data-Name');
+                var projectName = checkbox.attr('data-ProjectName');
+                var productName = checkbox.attr('data-ProductName');
+                var contactId = checkbox.attr('data-ContactId');
+                var invoiceAmount = checkbox.attr('data-InvoiceAmount');
+                if (checkbox.is(':checked')) {
+                    AddProposalForTimeSheetEntry(id, propertyName, auditVersionId, projectName, productName, contactId, invoiceAmount);
+                }
+            });
+            $(this).on('change', 'input[type=checkbox][data-function=ProposalForProductSheetEntry]', null, function () {
+                var checkbox = $(this);
+                var id = checkbox.attr('data-Id');
+                var auditVersionId = checkbox.attr('data-VersionId');
+                var propertyName = checkbox.attr('data-Name');
+                var projectName = checkbox.attr('data-ProjectName');
+                var productName = checkbox.attr('data-ProductName');
+                var contactId = checkbox.attr('data-ContactId');
+                var invoiceAmount = checkbox.attr('data-InvoiceAmount');
+                if (checkbox.is(':checked')) {
+                    AddProposalForProductSheetEntry(id, propertyName, auditVersionId, projectName, productName, contactId, invoiceAmount);
+                }
+            });
+            $(this).on('change', 'input[type=checkbox][data-function=ProposalForAcdcProjectFixedPrice]', null, function () {
+                var checkbox = $(this);
+                var id = checkbox.attr('data-Id');
+                var auditVersionId = checkbox.attr('data-VersionId');
+                var propertyName = checkbox.attr('data-Name');
+                var projectName = checkbox.attr('data-ProjectName');
+                var productName = checkbox.attr('data-ProductName');
+                var contactId = checkbox.attr('data-ContactId');
+                var invoiceAmount = checkbox.attr('data-InvoiceAmount');
+                if (checkbox.is(':checked')) {
+                    AddProposalForAcdcProjectFixedPrice(id, propertyName, auditVersionId, projectName, productName, contactId, invoiceAmount);
+                }
+            });
+            $(this).on('change', 'input[type=checkbox][data-function=ProposalForConsultancyProjectFixedPrice]', null, function () {
+                var checkbox = $(this);
+                var id = checkbox.attr('data-Id');
+                var auditVersionId = checkbox.attr('data-VersionId');
+                var propertyName = checkbox.attr('data-Name');
+                var projectName = checkbox.attr('data-ProjectName');
+                var productName = checkbox.attr('data-ProductName');
+                var contactId = checkbox.attr('data-ContactId');
+                var invoiceAmount = checkbox.attr('data-InvoiceAmount');
+                if (checkbox.is(':checked')) {
+                    AddProposalForConsultancyProjectFixedPrice(id, propertyName, auditVersionId, projectName, productName, contactId, invoiceAmount);
+                }
+            });
+        }
+
+        function GetActionUrlAddProposalForProjectCandidate() {
+            return '@Url.Action("AddProposalForProjectCandidate")';
+        }
+        function GetActionUrlAddProposalForProjectCandidateCategoryType1() {
+            return '@Url.Action("AddProposalForProjectCandidateCategoryType1")';
+        }
+        function GetActionUrlAddProposalForProjectCandidateCategoryType2() {
+            return '@Url.Action("AddProposalForProjectCandidateCategoryType2")';
+        }
+        function GetActionUrlAddProposalForProjectCandidateCategoryType3() {
+            return '@Url.Action("AddProposalForProjectCandidateCategoryType3")';
+        }
+        function GetActionUrlAddProposalForProjectProduct() {
+            return '@Url.Action("AddProposalForProjectProduct")';
+        }
+        function GetActionUrlAddProposalForTimeSheetEntry() {
+            return '@Url.Action("AddProposalForTimeSheetEntry")';
+        }
+        function GetActionUrlAddProposalForProductSheetEntry() {
+            return '@Url.Action("AddProposalForProductSheetEntry")';
+        }
+        function GetActionUrlAddProposalForAcdcProjectFixedPrice() {
+            return '@Url.Action("AddProposalForAcdcProjectFixedPrice")';
+        }
+        function GetActionUrlAddProposalForConsultancyProjectFixedPrice() {
+            return '@Url.Action("AddProposalForConsultancyProjectFixedPrice")';
+        }
+
+        function AddProposalForProjectCandidate(id, propertyName, auditVersionId, projectName, candidateFullName, productName, contactId, invoiceAmount) {
+            //console.log('AddProposalForProjectCandidate');
+            //console.log(id);
+            //console.log(propertyName);
+            //console.log(auditVersionId);
+            //console.log(projectName);
+            //console.log(candidateFullName);
+            //console.log(productName);
+            //console.log(contactId);
+
+            var selector = 'input[data-Id=' + id + '][data-function=ProposalForProjectCandidate]';
+            var checkbox = $(selector);
+            checkbox.attr("disabled", true);
+            var cell = $(selector).parent();
+            cell.append('<img src="/Images/loading_small.gif" alt="loading" data-name="loader-small"/>');
+
+            var postData = {
+                projectCandidateId: id,
+                projectName: projectName,
+                candidateFullName: candidateFullName,
+                productName: productName,
+                contactId: contactId,
+                auditVersionId: auditVersionId,
+                invoiceAmount: invoiceAmount
+            };
+
+            var url = GetActionUrlAddProposalForProjectCandidate();
+            //console.log(url);
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: postData,
+                success: function (html) {
+                    cell.find('img[data-name=loader-small]').remove();
+                },
+                error: function (err) {
+                    cell.find('img[data-name=loader-small]').remove();
+                    checkbox.removeAttr("disabled");
+                    ShowDetailErrorDialog('Adding Proposal.', err);
+                }
+            });
+        }
+        function AddProposalForProjectCandidateCategoryType1(id, propertyName, auditVersionId, projectName, candidateFullName, productName, contactId, invoiceAmount) {
+            //console.log('AddProposalForProjectCandidateCategoryType1');
+            //console.log(id);
+            //console.log(propertyName);
+            //console.log(auditVersionId);
+            //console.log(projectName);
+            //console.log(candidateFullName);
+            //console.log(productName);
+            //console.log(contactId);
+
+            var selector = 'input[data-Id=' + id + '][data-function=ProposalForProjectCandidateCategoryType1]';
+            var checkbox = $(selector);
+            checkbox.attr("disabled", true);
+            var cell = $(selector).parent();
+            cell.append('<img src="/Images/loading_small.gif" alt="loading" data-name="loader-small"/>');
+
+            var postData = {
+                projectCandidateCategoryType1Id: id,
+                projectName: projectName,
+                candidateFullName: candidateFullName,
+                productName: productName,
+                contactId: contactId,
+                auditVersionId: auditVersionId,
+                invoiceAmount: invoiceAmount
+            };
+
+            var url = GetActionUrlAddProposalForProjectCandidateCategoryType1();
+
+            //console.log(url);
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: postData,
+                success: function (html) {
+                    cell.find('img[data-name=loader-small]').remove();
+                },
+                error: function (err) {
+                    cell.find('img[data-name=loader-small]').remove();
+                    checkbox.removeAttr("disabled");
+                    ShowDetailErrorDialog('Adding Proposal.', err);
+                }
+            });
+        }
+        function AddProposalForProjectCandidateCategoryType2(id, propertyName, auditVersionId, projectName, candidateFullName, productName, contactId, invoiceAmount) {
+            //console.log('AddProposalForProjectCandidateCategoryType2');
+            //console.log(id);
+            //console.log(propertyName);
+            //console.log(auditVersionId);
+            //console.log(projectName);
+            //console.log(candidateFullName);
+            //console.log(productName);
+            //console.log(contactId);
+
+            var selector = 'input[data-Id=' + id + '][data-function=ProposalForProjectCandidateCategoryType2]';
+            var checkbox = $(selector);
+            checkbox.attr("disabled", true);
+            var cell = $(selector).parent();
+            cell.append('<img src="/Images/loading_small.gif" alt="loading" data-name="loader-small"/>');
+
+            var postData = {
+                projectCandidateCategoryType2Id: id,
+                projectName: projectName,
+                candidateFullName: candidateFullName,
+                productName: productName,
+                contactId: contactId,
+                auditVersionId: auditVersionId,
+                invoiceAmount: invoiceAmount
+            };
+
+            var url = GetActionUrlAddProposalForProjectCandidateCategoryType2();
+
+            //console.log(url);
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: postData,
+                success: function (html) {
+                    cell.find('img[data-name=loader-small]').remove();
+                },
+                error: function (err) {
+                    cell.find('img[data-name=loader-small]').remove();
+                    checkbox.removeAttr("disabled");
+                    ShowDetailErrorDialog('Adding Proposal.', err);
+                }
+            });
+        }
+        function AddProposalForProjectCandidateCategoryType3(id, propertyName, auditVersionId, projectName, candidateFullName, productName, contactId, invoiceAmount) {
+            //console.log('AddProposalForProjectCandidateCategoryType3');
+            //console.log(id);
+            //console.log(propertyName);
+            //console.log(auditVersionId);
+            //console.log(projectName);
+            //console.log(candidateFullName);
+            //console.log(productName);
+            //console.log(contactId);
+
+            var selector = 'input[data-Id=' + id + '][data-function=ProposalForProjectCandidateCategoryType3]';
+            var checkbox = $(selector);
+            checkbox.attr("disabled", true);
+            var cell = $(selector).parent();
+            cell.append('<img src="/Images/loading_small.gif" alt="loading" data-name="loader-small"/>');
+
+            var postData = {
+                projectCandidateCategoryType3Id: id,
+                projectName: projectName,
+                candidateFullName: candidateFullName,
+                productName: productName,
+                contactId: contactId,
+                auditVersionId: auditVersionId,
+                invoiceAmount: invoiceAmount
+            };
+
+            var url = GetActionUrlAddProposalForProjectCandidateCategoryType3();
+
+            //console.log(url);
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: postData,
+                success: function (html) {
+                    cell.find('img[data-name=loader-small]').remove();
+                },
+                error: function (err) {
+                    cell.find('img[data-name=loader-small]').remove();
+                    checkbox.removeAttr("disabled");
+                    ShowDetailErrorDialog('Adding Proposal.', err);
+                }
+            });
+        }
+        function AddProposalForProjectProduct(id, propertyName, auditVersionId, projectName, productName, contactId, invoiceAmount) {
+            //console.log('AddProposalForProjectProduct');
+            //console.log(id);
+            //console.log(propertyName);
+            //console.log(auditVersionId);
+            //console.log(projectName);
+            //console.log(productName);
+            //console.log(contactId);
+
+            var selector = 'input[data-Id=' + id + '][data-function=ProposalForProjectProduct]';
+            var checkbox = $(selector);
+            checkbox.attr("disabled", true);
+            var cell = $(selector).parent();
+            cell.append('<img src="/Images/loading_small.gif" alt="loading" data-name="loader-small"/>');
+
+            var postData = {
+                projectProductId: id,
+                projectName: projectName,
+                productName: productName,
+                contactId: contactId,
+                auditVersionId: auditVersionId,
+                invoiceAmount: invoiceAmount
+            };
+
+            var url = GetActionUrlAddProposalForProjectProduct();
+
+            //console.log(url);
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: postData,
+                success: function (html) {
+                    cell.find('img[data-name=loader-small]').remove();
+                },
+                error: function (err) {
+                    cell.find('img[data-name=loader-small]').remove();
+                    checkbox.removeAttr("disabled");
+                    ShowDetailErrorDialog('Adding Proposal.', err);
+                }
+            });
+        }
+        function AddProposalForTimeSheetEntry(id, propertyName, auditVersionId, projectName, productName, contactId, invoiceAmount) {
+            //console.log('AddProposalForProjectProduct');
+            //console.log(id);
+            //console.log(propertyName);
+            //console.log(auditVersionId);
+            //console.log(projectName);
+            //console.log(productName);
+            //console.log(contactId);
+
+            var selector = 'input[data-Id=' + id + '][data-function=ProposalForTimeSheetEntry]';
+            var checkbox = $(selector);
+            checkbox.attr("disabled", true);
+            var cell = $(selector).parent();
+            cell.append('<img src="/Images/loading_small.gif" alt="loading" data-name="loader-small"/>');
+
+            var postData = {
+                timeSheetEntryId: id,
+                projectName: projectName,
+                productName: productName,
+                contactId: contactId,
+                auditVersionId: auditVersionId,
+                invoiceAmount: invoiceAmount
+            };
+
+            var url = GetActionUrlAddProposalForTimeSheetEntry();
+
+            //console.log(url);
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: postData,
+                success: function (html) {
+                    cell.find('img[data-name=loader-small]').remove();
+                },
+                error: function (err) {
+                    cell.find('img[data-name=loader-small]').remove();
+                    checkbox.removeAttr("disabled");
+                    ShowDetailErrorDialog('Adding Proposal.', err);
+                }
+            });
+        }
+        function AddProposalForProductSheetEntry(id, propertyName, auditVersionId, projectName, productName, contactId, invoiceAmount) {
+            //console.log('AddProposalForProductSheetEntry');
+            //console.log(id);
+            //console.log(propertyName);
+            //console.log(auditVersionId);
+            //console.log(projectName);
+            //console.log(productName);
+            //console.log(contactId);
+
+            var selector = 'input[data-Id=' + id + '][data-function=ProposalForProductSheetEntry]';
+            var checkbox = $(selector);
+            checkbox.attr("disabled", true);
+            var cell = $(selector).parent();
+            cell.append('<img src="/Images/loading_small.gif" alt="loading" data-name="loader-small"/>');
+
+            var postData = {
+                productSheetEntryId: id,
+                projectName: projectName,
+                productName: productName,
+                contactId: contactId,
+                auditVersionId: auditVersionId,
+                invoiceAmount: invoiceAmount
+            };
+
+            var url = GetActionUrlAddProposalForProductSheetEntry();
+
+            //console.log(url);
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: postData,
+                success: function (html) {
+                    cell.find('img[data-name=loader-small]').remove();
+                },
+                error: function (err) {
+                    cell.find('img[data-name=loader-small]').remove();
+                    checkbox.removeAttr("disabled");
+                    ShowDetailErrorDialog('Adding Proposal.', err);
+                }
+            });
+        }
+        function AddProposalForAcdcProjectFixedPrice(id, propertyName, auditVersionId, projectName, productName, contactId, invoiceAmount) {
+            //console.log('AddProposalForAcdcProjectFixedPrice');
+            //console.log(id);
+            //console.log(propertyName);
+            //console.log(auditVersionId);
+            //console.log(projectName);
+            //console.log(productName);
+            //console.log(contactId);
+
+            var selector = 'input[data-Id=' + id + '][data-function=ProposalForAcdcProjectFixedPrice]';
+            var checkbox = $(selector);
+            checkbox.attr("disabled", true);
+            var cell = $(selector).parent();
+            cell.append('<img src="/Images/loading_small.gif" alt="loading" data-name="loader-small"/>');
+
+            var postData = {
+                acdcProjectFixedPriceId: id,
+                projectName: projectName,
+                productName: productName,
+                contactId: contactId,
+                auditVersionId: auditVersionId,
+                invoiceAmount: invoiceAmount
+            };
+
+            var url = GetActionUrlAddProposalForAcdcProjectFixedPrice();
+
+            //console.log(url);
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: postData,
+                success: function (html) {
+                    cell.find('img[data-name=loader-small]').remove();
+                },
+                error: function (err) {
+                    cell.find('img[data-name=loader-small]').remove();
+                    checkbox.removeAttr("disabled");
+                    ShowDetailErrorDialog('Adding Proposal.', err);
+                }
+            });
+        }
+        function AddProposalForConsultancyProjectFixedPrice(id, propertyName, auditVersionId, projectName, productName, contactId, invoiceAmount) {
+            //console.log('AddProposalForConsultancyProjectFixedPrice');
+            //console.log(id);
+            //console.log(propertyName);
+            //console.log(auditVersionId);
+            //console.log(projectName);
+            //console.log(productName);
+            //console.log(contactId);
+
+            var selector = 'input[data-Id=' + id + '][data-function=ProposalForConsultancyProjectFixedPrice]';
+            var checkbox = $(selector);
+            checkbox.attr("disabled", true);
+            var cell = $(selector).parent();
+            cell.append('<img src="/Images/loading_small.gif" alt="loading" data-name="loader-small"/>');
+
+            var postData = {
+                consultancyProjectFixedPriceId: id,
+                projectName: projectName,
+                productName: productName,
+                contactId: contactId,
+                auditVersionId: auditVersionId,
+                invoiceAmount: invoiceAmount
+            };
+
+            var url = GetActionUrlAddProposalForConsultancyProjectFixedPrice();
+            //console.log(url);
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: postData,
+                success: function (html) {
+                    cell.find('img[data-name=loader-small]').remove();
+                },
+                error: function (err) {
+                    cell.find('img[data-name=loader-small]').remove();
+                    checkbox.removeAttr("disabled");
+                    ShowDetailErrorDialog('Adding Proposal.', err);
+                }
+            });
+        }
+
+    </script>
+
+    @if (Model.CustomerAssistantId != null && Model.ProjectManagerId == null)
+    {
+        //Customer assistant invoicing
+        <script>
+            $(function() {
+                InitializeButtonsCustomerAssistant();
+                InitializeButtonsAddProposal();
+                InitializeInvoiceRemarks();
+                RefreshCustomerAssistantInvoicing();
+            });
+
+            function InitializeButtonsCustomerAssistant() {
+                $('#FilterCustomerAssistantInvoicingButton').click(function() {
+                    RefreshCustomerAssistantInvoicing();
+                });
+
+                $(this).on('click', '#SaveCustomerAssistantInvoicingEntriesButton', null, function() {
+                    ShowDetailSaveDialog();
+                    var form = $('#SaveCustomerAssistantInvoicingForm');
+                    $.ajax({
+                        url: form.attr('action'),
+                        type: 'POST',
+                        data: $('input, select', $('#CustomerAssistantInvoicingDataTable').dataTable().fnGetNodes()).serialize(), //Serialize data from DataTables.
+                        success: function(data) {
+                            HideDetailSaveDialog();
+                            RefreshCustomerAssistantInvoicing();
+                        },
+                        error: function(err) {
+                            HideDetailSaveDialog();
+                            ShowDetailErrorDialog('Save invoicing entries customer assistant.', err);
+                        }
+                    });
+                });
+            }
+            
+            function InitializeInvoiceRemarks() {
+                $(this).on('focusin', '#CustomerAssistantInvoicingDataTable input[type=text][data-function=InvoiceRemarks]', null, function () {
+                    var textbox = $(this);
+                    var parentCell = textbox.parent();
+                    var textarea = $('<textarea>').val(textbox.val())
+                        .attr('name', textbox.attr('name'))
+                        .attr('cols', '20')
+                        .attr('rows', '4')
+                        .attr('data-function', textbox.attr('data-function'));
+                    parentCell.html(textarea);
+                    $(textarea).focus();
+                });
+
+                $(this).on('focusout', '#CustomerAssistantInvoicingDataTable textarea[data-function=InvoiceRemarks]', null, function () {
+                    var textarea = $(this);
+                    var parentCell = textarea.parent();
+                    var textbox = $('<input type="text">').val(textarea.val())
+                        .attr('name', textarea.attr('name'))
+                        .attr('data-function', textarea.attr('data-function'));
+                    parentCell.html(textbox);
+                });
+            }
+
+            function RefreshCustomerAssistantInvoicing() {
+                $('#FinanceCustomerAssistantInvoicingPlaceholder').loading('Loading invoicing...');
+                var form = $('#FilterCustomerAssistantInvoicingForm');
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function(data) {
+                        $('#FinanceCustomerAssistantInvoicingPlaceholder').html(data);
+                        $('#CustomerAssistantInvoicingDataTable').dataTable({ 'bPaginate': false });
+                    },
+                    error: function(err) {
+                        ShowDetailErrorDialog('Listing customer assistant invoicing.', err);
+                    }
+                });
+            }                       
+            
+        </script>
+    }
+    @if (Model.ProjectManagerId != null && Model.CustomerAssistantId == null)
+    {
+        //Project manager invoicing
+        <script>
+            $(function() {
+                InitializeButtonsProjectManager();
+                InitializeButtonsAddProposal();
+                InitializeInvoiceRemarks();
+                RefreshProjectManagerInvoicing();
+            });
+
+            function InitializeButtonsProjectManager() {
+                $('#FilterProjectManagerInvoicingButton').click(function() {
+                    RefreshProjectManagerInvoicing();
+                });
+
+                $(this).on('click', '#SaveProjectManagerInvoicingEntriesButton', null, function() {
+                    ShowDetailSaveDialog();
+                    var form = $('#SaveProjectManagerInvoicingForm');
+                    $.ajax({
+                        url: form.attr('action'),
+                        type: 'POST',
+                        data: $('input, select', $('#ProjectManagerInvoicingDataTable').dataTable().fnGetNodes()).serialize(), //Serialize data from DataTables.
+                        success: function(data) {
+                            HideDetailSaveDialog();
+                            RefreshProjectManagerInvoicing();
+                        },
+                        error: function(err) {
+                            HideDetailSaveDialog();
+                            ShowDetailErrorDialog('Save invoicing entries project manager.', err);
+                        }
+                    });
+                });
+            }
+            
+            function InitializeInvoiceRemarks() {
+                $(this).on('focusin', '#ProjectManagerInvoicingDataTable input[type=text][data-function=InvoiceRemarks]', null, function () {
+                    var textbox = $(this);
+                    var parentCell = textbox.parent();
+                    var textarea = $('<textarea>').val(textbox.val())
+                        .attr('name', textbox.attr('name'))
+                        .attr('cols', '20')
+                        .attr('rows', '4')
+                        .attr('data-function', textbox.attr('data-function'));
+                    parentCell.html(textarea);
+                    $(textarea).focus();
+                });
+
+                $(this).on('focusout', '#ProjectManagerInvoicingDataTable textarea[data-function=InvoiceRemarks]', null, function () {
+                    var textarea = $(this);
+                    var parentCell = textarea.parent();
+                    var textbox = $('<input type="text">').val(textarea.val())
+                        .attr('name', textarea.attr('name'))
+                        .attr('data-function', textarea.attr('data-function'));
+                    parentCell.html(textbox);
+                });
+            }
+
+            function RefreshProjectManagerInvoicing() {
+                $('#FinanceProjectManagerInvoicingPlaceholder').loading('Loading invoicing...');
+                var form = $('#FilterProjectManagerInvoicingForm');
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function(data) {
+                        $('#FinanceProjectManagerInvoicingPlaceholder').html(data);
+                        $('#ProjectManagerInvoicingDataTable').dataTable({ 'bPaginate': false });
+                    },
+                    error: function(err) {
+                        ShowDetailErrorDialog('Listing project manager invoicing.', err);
+                    }
+                });
+            }
+        </script>
+    }
+
+    @if (Model.ProjectManagerId == null && Model.CustomerAssistantId == null)
+    {
+        //Accountant invoicing
+        <script>
+            $(function() {
+                InitializeButtonsAccountant();
+                InitializeButtonsAddProposal();
+                InitializeInvoiceRemarks();
+                InitializeDialogs();
+                RefreshAccountantInvoicing();
+
+            });
+
+            function InitializeButtonsAccountant() {
+                $('#FilterAccountantInvoicingButton').click(function() {
+                    RefreshAccountantInvoicing();
+                });
+
+                $(this).on('click', 'a[data-function=SaveAccountantInvoicingEntryRowButton]', null, function() {
+                    var button = $(this);
+                    //Show loading icon.
+                    button.removeClass('save-link').addClass('loading-link');
+                    var row = button.parent().parent();
+
+                    var data = $('input, select', row).serialize();
+
+                    $('input, select', row).each(function() {
+                        $(this).prop('disabled', true);
+                    });
+
+                    $.ajax({
+                        url: '@Url.Action("SaveAccountantInvoicingEntry")',
+                        type: 'POST',
+                        data: data,
+                        success: function(html) {
+                            button.removeClass('loading-link').addClass('save-link');
+                            row.html(html);
+                        },
+                        error: function(err) {
+                            button.removeClass('loading-link').addClass('save-link');
+                            $('input, select', row).each(function() {
+                                $(this).prop('disabled', false);
+                            });
+                            if (err.status == 409) {
+                                $('#AccountantInvoicingVersionMismatchDialog').html(err.responseText);
+                                $('#AccountantInvoicingVersionMismatchDialog').dialog('open');
+                            } else {
+                                ShowDetailErrorDialog('Saving accountant invoicing row.', err);
+                            }
+                        }
+                    });
+                });
+
+            }
+
+            function InitializeInvoiceRemarks() {
+                $(this).on('focusin', '#AccountantInvoicingDataTable input[type=text][data-function=InvoiceRemarks]', null, function () {
+                    var textbox = $(this);
+                    var parentCell = textbox.parent();
+                    var textarea = $('<textarea>').val(textbox.val())
+                        .attr('name', textbox.attr('name'))
+                        .attr('cols', '20')
+                        .attr('rows', '4')
+                        .attr('data-function', textbox.attr('data-function'));
+                    parentCell.html(textarea);
+                    $(textarea).focus();
+                });
+
+                $(this).on('focusout', '#AccountantInvoicingDataTable textarea[data-function=InvoiceRemarks]', null, function () {
+                    var textarea = $(this);
+                    var parentCell = textarea.parent();
+                    var textbox = $('<input type="text">').val(textarea.val())
+                        .attr('name', textarea.attr('name'))
+                        .attr('data-function', textarea.attr('data-function'));
+                    parentCell.html(textbox);
+                });
+            }
+
+            function InitializeDialogs() {
+                $('#AccountantInvoicingVersionMismatchDialog').dialog(
+                    {
+                        autoOpen: false,
+                        modal: true,
+                        resizable: false,
+                        width: 300,
+                        height: 200,
+                        title: 'Version mismatch'
+                    });
+            }
+
+            function RefreshAccountantInvoicing() {
+                $('#FinanceAccountantInvoicingPlaceholder').loading('Loading invoicing...');
+                var form = $('#FilterAccountantInvoicingForm');
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function(data) {
+                        $('#FinanceAccountantInvoicingPlaceholder').html(data);
+                        $('#AccountantInvoicingDataTable').dataTable({
+                            "bPaginate": false
+                        });
+                        //$('#AccountantInvoicingDataTable').treeTable({ persist: true });
+                    },
+                    error: function(err) {
+                        ShowDetailErrorDialog('Listing accountant invoicing.', err);
+                    }
+                });
+            }
+        </script>
+    }
+}
+
+@if (Model.CustomerAssistantId != null && Model.ProjectManagerId == null)
+{
+    //Customer assistant invoicing
+    <fieldset>
+        <legend>Invoicing</legend>
+        @using (Html.BeginForm("FilterCustomerAssistantInvoicing", "FinanceHome", FormMethod.Post, new { id = "FilterCustomerAssistantInvoicingForm" }))
+        {
+            <fieldset class="search-filter">
+                <legend>Filter</legend>
+                <div>
+                    <div>@Html.DisplayNameFor(m => m.Date)</div>
+                    <div>@Html.EditorFor(m => m.Date, "DateEditorTemplate")</div>
+                </div>
+                <div>
+                    <div>@Html.DisplayNameFor(m => m.CustomerAssistantId)</div>
+                    <div>@Html.DropDownListFor(m => m.CustomerAssistantId, Model.CreateCustomerAssistantDropDownList())</div>
+                </div>
+                <div>
+                    <a href="javascript:void(0);" id="FilterCustomerAssistantInvoicingButton" class="button">Apply filter</a>
+                </div>
+            </fieldset>
+            
+        }
+        <br />
+        <br />
+        <div id="FinanceCustomerAssistantInvoicingPlaceholder"></div>
+    </fieldset>
+    
+}
+else if (Model.ProjectManagerId != null && Model.CustomerAssistantId == null)
+{
+    //Project manager invoicing
+    <fieldset>
+        <legend>Invoicing</legend>
+        @using (Html.BeginForm("FilterProjectManagerInvoicing", "FinanceHome", FormMethod.Post, new { id = "FilterProjectManagerInvoicingForm" }))
+        {
+            <fieldset class="search-filter">
+                <legend>Filter</legend>
+                <div>
+                    <div>@Html.DisplayNameFor(m => m.Date)</div>
+                    <div>@Html.EditorFor(m => m.Date, "DateEditorTemplate")</div>
+                </div>
+                <div>
+                    <div>@Html.DisplayNameFor(m => m.ProjectManagerId)</div>
+                    <div>@Html.DropDownListFor(m => m.ProjectManagerId, Model.CreateProjectManagerDropDownList())</div>
+                </div>
+                <div>
+                    <a href="javascript:void(0);" id="FilterProjectManagerInvoicingButton" class="button">Apply filter</a>
+                </div>
+            </fieldset>
+            
+        }
+        <br />
+        <br />
+        <div id="FinanceProjectManagerInvoicingPlaceholder"></div>
+
+    </fieldset>
+    
+}
+else if (Model.ProjectManagerId == null && Model.CustomerAssistantId == null)
+{
+    //Accountant invoicing
+    <fieldset>
+        <legend>Invoicing</legend>
+        @using (Html.BeginForm("FilterAccountantInvoicing", "FinanceHome", FormMethod.Post, new { id = "FilterAccountantInvoicingForm" }))
+        {
+            <fieldset class="search-filter">
+                <legend>Filter</legend>
+                <div>
+                    <div>@Html.DisplayNameFor(m => m.Date)</div>
+                    <div>@Html.EditorFor(m => m.Date, "DateEditorTemplate")</div>
+                </div>
+                <div>
+                    <a href="javascript:void(0);" id="FilterAccountantInvoicingButton" class="button">Apply filter</a>
+                </div>
+            </fieldset>
+            
+        }
+        <br />
+        <br />
+        <div id="FinanceAccountantInvoicingPlaceholder"></div>
+
+    </fieldset>
+    <div id="AccountantInvoicingVersionMismatchDialog"></div>    
+}
+

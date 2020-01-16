@@ -1,0 +1,32 @@
+﻿@model List<Quintessence.QPlanet.ViewModel.Scm.EditProductModel>
+<table id="ProductTable" class="dataTable">
+    <thead>
+        <tr>
+            <th style="width: 35%">Type</th>
+            <th style="width: 35%">Product</th>
+            <th style="width: 30%">Unitprice</th>
+            <th style="min-width: 72px">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int x = 0; x < Model.Count; x++)
+        {
+            <tr id="node-Product-@Model[x].Id">
+                <td style="width: 35%">
+                    @Html.EditorFor(m => m[x], "BaseEntityViewTemplate")
+                    @Html.HiddenFor(m => m[x].ProductTypeId)
+                    @Html.DisplayTextFor(m => m[x].ProductTypeName)
+                </td>
+                <td style="width: 35%">@Html.EditorFor(m => m[x].Name)</td>
+                <td style="width: 30%" class="numeric">€ @Html.EditorFor(m => m[x].UnitPrice)</td>
+                <td>
+                    <a href="javascript:void(0);" data-function="DeleteProduct" class="delete-link" data-id="@Model[x].Id" title="Delete product @Model[x].Name"></a>
+                </td>
+            </tr>
+            <tr class="child-of-node-Product-@Model[x].Id">
+                <td class="right-text">Description</td>
+                <td colspan="3">@Html.TextAreaFor(m => m[x].Description, 4, 60, null)</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,69 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Candidate.Models.ProgramHome.DayProgramActionModel
+
+<table style="width: 100%">
+    <tr>
+        <td>
+            <div data-function="AssessorColor" data-assessor-id="null" data-color="#F8F8F8" style="display: none">
+            </div>
+        </td>
+        @for (int i = 0; i < Model.Assessors.Count; i++)
+        {
+            <td style="padding-left: 5px; padding-right: 5px;">
+                <div title="@Model.Assessors[i].FullName" data-function="AssessorColor" data-assessor-id="@Model.Assessors[i].AssessorId" data-color="@Model.Colors[i].Color" style="width: 20px; height: 20px; float: left; background-color: @Model.Colors[i].Color">
+                </div>
+            </td>
+            <td style="min-width: 50px;" title="@Model.Assessors[i].FullName">@Model.Assessors[i].UserName</td>
+        }
+        <td style="width: 100%">
+            <div class="right-text">
+                <a id="zoomIn" href="javascript:void(0);" class="button">Zoom in</a>
+                <a id="zoomOut" href="javascript:void(0);" class="button">Zoom out</a>
+                <a href="javascript:void(0);" data-function="PrintDayProgramButton" class="button">Print</a>
+                <a href="javascript:void(0);" data-function="RefreshDayProgramButton" class="button">Refresh</a>
+                <a href="javascript:void(0);" data-function="ShowEditDayProgramDialog" class="button">Edit</a>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="divDayProgram" style="overflow: auto;">
+    <table>
+        <thead>
+            <tr>
+                @foreach (var room in Model.AssessmentRooms)
+                {
+                    <th>@room.Name</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach (var room in Model.AssessmentRooms)
+                {
+                    <td style="min-width: 300px; max-width: 300px; width: 300px; height: 750px; padding: 5px">
+                        <div id="@room.Id" data-function="Calendar" data-year="@Model.Date.Year" data-month="@Model.Date.Month" data-day="@Model.Date.Day" style="min-width: 300px; max-width: 300px; width: 300px; float: left;">
+                        </div>
+                    </td>
+                }
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var zoom = 1;
+        $("#zoomIn").click(function () {
+            zoom += 0.1;
+            $("#divDayProgram").css("zoom", zoom);
+        });
+
+        $("#zoomOut").click(function () {
+            if (zoom > 0) {
+                zoom += -0.1;
+            }
+            $("#divDayProgram").css("zoom", zoom);
+        });
+    });
+    
+</script>

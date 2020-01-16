@@ -1,0 +1,22 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.CreateNewProjectPriceIndexModel
+<p>
+    Enter a date on which the index is applicable.<br/>
+    Enter a value that represents the change in price (e.g. 102 = +2%).
+</p>
+@using (Html.BeginForm("AddProjectPriceIndex", "ProjectConsultancy", FormMethod.Post, new { id = "AddProjectPriceIndexForm" }))
+{
+    <div class="row">
+        <div>Start date</div>
+        <div>
+                @Html.HiddenFor(m => m.ProjectId)
+                @Html.TextBox(Html.IdFor(m => m.StartDate).ToString(), Model.StartDate.ToShortDateString())
+        </div>
+    </div>
+    <div class="row">
+        <div>Index (default: 100)</div>
+        <div>@Html.EditorFor(m => m.Index)</div>
+    </div>
+}
+<script>
+    $('#@Html.IdFor(m => m.StartDate)').datepicker({ dateFormat: "dd/mm/yy" });
+</script>

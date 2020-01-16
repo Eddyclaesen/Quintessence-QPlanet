@@ -1,0 +1,39 @@
+﻿@model Quintessence.QPlanet.ViewModel.Scm.EditActivityTypeProfileModel
+@using (Html.BeginForm("EditActivityTypeProfile", "AdminActivity", FormMethod.Post, new { id = "EditActivityTypeProfileForm" }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    @Html.HiddenFor(m => m.ActivityTypeId)
+
+    <p>Please select a profile to add to the activity type.</p>
+    <div class="row">
+        <div>Profile</div>
+        <div>
+            @Html.DropDownListFor(m => m.ProfileId, Model.Profiles)
+        </div>
+    </div>
+    <div class="row">
+        <div>Day</div>
+        <div>@Html.EditorFor(m => m.DayRate)</div>
+    </div>
+    <div class="row">
+        <div />
+        <div>@Html.ValidationMessageFor(m => m.DayRate)</div>
+    </div>
+    <div class="row">
+        <div>Half day</div>
+        <div>@Html.EditorFor(m => m.HalfDayRate)</div>
+    </div>
+    <div class="row">
+        <div>Hour</div>
+        <div>@Html.EditorFor(m => m.HourlyRate)</div>
+    </div>
+    <div class="row">
+        <div>Isolated hour</div>
+        <div>@Html.EditorFor(m => m.IsolatedHourlyRate)</div>
+    </div>
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" id="EditActivityTypeProfileButton" title="Add new profile to activity type." class="button">Save</a>
+    </div>
+}

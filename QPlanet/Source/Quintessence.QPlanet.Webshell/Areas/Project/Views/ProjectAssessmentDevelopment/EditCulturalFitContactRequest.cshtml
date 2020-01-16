@@ -1,0 +1,29 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.EditCulturalFitContactRequestModel
+@using (Html.BeginForm("EditCulturalFitContactRequest", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "EditCulturalFitContactRequestForm" }))
+{
+    @Html.EditorFor(m=>m, "BaseEntityViewTemplate")
+    @Html.HiddenFor(m => m.ContactId)
+    @Html.HiddenFor(m => m.ProjectId)
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.CrmEmailId)</div>
+        <div>@Html.DropDownListFor(m => m.CrmEmailId, Model.CreateContactPersonDropDownList(Model.CrmEmailId))</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.TheoremListRequestTypeId)</div>
+        <div>@Html.DropDownListFor(m => m.TheoremListRequestTypeId, Model.CreateTheoremListRequestTypeSelectListItems(Model.TheoremListRequestTypeId), new{disabled="disabled"})</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.Deadline)</div>
+        <div>@Html.EditorFor(m => m.Deadline, "DateTimeEditorTemplate")</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.Description)</div>
+        <div>@Html.TextBoxFor(m => m.Description)</div>
+    </div>
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" class="button" id="EditCulturalFitContactRequestSubmitButton">Save</a>
+    </div>
+
+}

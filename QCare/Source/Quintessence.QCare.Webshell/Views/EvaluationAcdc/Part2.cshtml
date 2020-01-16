@@ -1,0 +1,134 @@
+﻿@using Resources
+@model Quintessence.QCare.ViewModel.EvaluationFormAcdcPart2Model
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            InitializeButtons();
+        });
+
+        function InitializeButtons() {
+            //Previous
+            $('a[data-function=previous]').click(function (e) {
+                e.preventDefault();
+                var form = $('#Part2Form');
+                $('#Navigation').val('0');
+                form.submit();
+            });
+
+            //Next
+            $('a[data-function=next]').click(function (e) {
+                e.preventDefault();
+                var form = $('#Part2Form');
+                $('#Navigation').val('1');
+                form.submit();
+            });
+        }
+
+    </script>
+}
+
+@using (Html.BeginForm("Part2", "EvaluationAcdc", FormMethod.Post, new { id = "Part2Form" }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    @Html.HiddenFor(m => m.Navigation)
+    <fieldset>
+        <legend>@Global.EvaluationFormAcdcTitleBlock2</legend>
+        <div>
+
+            <ol>
+                <li value="9">
+                    <p>@Global.EvaluationFormAcdcQuestion09</p>
+                    @Html.TextAreaFor(m => m.Question09, 6, 90, null)
+                </li>
+                <li>
+                    <p>@Html.Raw(Global.EvaluationFormAcdcQuestion10)</p>
+                    @Html.TextAreaFor(m => m.Question10, 6, 90, null)
+                </li>
+                <li>
+                    <p>@Global.EvaluationFormAcdcQuestion11</p>
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question11, true)
+                        @Global.Yes
+                    </label>
+                    <br />
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question11, false)
+                        @Global.No
+                    </label>
+                </li>
+                <li>
+                    <p>@Global.EvaluationFormAcdcQuestion12</p>
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question12, true)
+                        @Global.Yes
+                    </label>
+                    <br />
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question12, false)
+                        @Global.No
+                    </label>
+                </li>
+                <li>
+                    <p>@Global.EvaluationFormAcdcQuestion13</p>
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question13, true)
+                        @Global.Yes
+                    </label>
+                    <br />
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question13, false)
+                        @Global.No
+                    </label>
+                </li>
+                <li>
+                    <p>@Global.EvaluationFormAcdcQuestion14</p>
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question14, true)
+                        @Global.Yes
+                    </label>
+                    <br />
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question14, false)
+                        @Global.No
+                    </label>
+                </li>
+                <li>
+                    <p>@Global.EvaluationFormAcdcQuestion15</p>
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question15, true)
+                        @Global.Yes
+                    </label>
+                    <br />
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question15, false)
+                        @Global.No
+                    </label>
+                </li>
+                <li>
+                    <p>@Global.EvaluationFormAcdcQuestion16</p>
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question16, true)
+                        @Global.Yes
+                    </label>
+                    <br />
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question16, false)
+                        @Global.No
+                    </label>
+                </li>
+            </ol>
+
+            <div class="right-text">
+                <a href="javascript:void(0);" data-function="previous" class="button">@Global.Previous</a>
+                <a href="javascript:void(0);" data-function="next" class="button">@Global.Next</a>
+            </div>
+        </div>
+    </fieldset>
+    
+}

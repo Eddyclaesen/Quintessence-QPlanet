@@ -1,0 +1,123 @@
+﻿html {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background: #8C8A8A;
+}
+
+body {
+    font-size: 10pt;
+    font-family: Verdana; /*Century Gothic;*/
+    background: white;
+    margin: 0 auto;
+    width: 960px;
+    min-width: 960px;
+    min-height: 500px;
+    border: 1px solid green;
+    margin-top: 20px;
+}
+
+#content {
+    font-family: Century Gothic;
+    min-height: 500px;
+    padding: 5px 10px;
+}
+
+header {
+    width: 100%;
+    display: block;
+}
+
+footer {
+    border-top: 1px solid #bbb;
+    display: block;
+    font-size: x-small;
+    padding: 5px;
+    text-align: center;
+}
+
+#login-fieldset,
+#authentication-failed-fieldset,
+#error-fieldset,
+#intro-fieldset, 
+#completed-fieldset, 
+#final-fieldset{
+    width: 375px;
+    margin: 0 auto;
+}
+
+
+fieldset {
+    text-align: left;
+    margin: 0 auto;
+	border:1px solid #bbb;
+	padding:10px;
+	position:relative;
+	background:transparent;
+	margin-bottom:10px;
+}
+legend {
+	font-size:1.1em;
+	padding:.4em .8em;
+    color: white;
+    background: rgb(86,170,28);/*#003263;*/
+	border:1px solid #bbb;
+}
+
+.auto-width-content {
+    display: inline-block;
+}
+
+h4 {
+    color: white;
+}
+
+.ol-item-title {
+    list-style-type: none;
+}
+
+table.multiple-choice {
+    border-spacing: 0;
+
+}
+
+table.multiple-choice tr {
+    height: 40px;
+}
+
+table.multiple-choice td {
+    border: 1px solid gray;
+}
+
+table.multiple-choice tr:first-child td:first-child {
+    border: none;
+}
+
+table.multiple-choice tr td:not(:first-child) {
+    width: 75px;
+    text-align: center;
+}
+
+
+
+
+
+td.vertical-flipped {
+    border: 1px solid gray;
+    width: auto;
+    font-size: small;
+}
+
+.button {
+    display: inline-block;
+    border: solid grey 1px;
+    padding: 4px 8px;
+    color: white;
+    font-weight: bold;
+    background-color: rgb(86,170,28);
+}
+
+.button:hover {
+    cursor: pointer;
+    background-color: green;
+}

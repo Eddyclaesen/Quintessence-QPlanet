@@ -1,0 +1,13 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+}
+
+<div id="error">
+    <img src="~/Images/errorGuinea.png" alt="Something went wrong"/>
+    <p>
+        @Model.Exception.Message
+    </p>
+</div>
+

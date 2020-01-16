@@ -1,0 +1,60 @@
+﻿@model List<Quintessence.QPlanet.ViewModel.Scm.EditActivityModel>
+<table id="ActivityProfileTable" class="dataTable">
+    <thead>
+        <tr>
+            <th style="width: 40%" colspan="2">Activity/Consultancy profile</th>
+            <th style="width: 15%">1 day</th>
+            <th style="width: 15%">1/2 day</th>
+            <th style="width: 15%">1 hour</th>
+            <th style="width: 15%">1 isol. hour</th>
+            <th style="min-width: 72px">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int x = 0; x < Model.Count; x++)
+        {
+            <tr id="node-Activity-@Model[x].Id" class="expanded">
+                <td style="width: 20%">
+                    @Html.EditorFor(m => m[x], "BaseEntityViewTemplate")
+                    @Html.HiddenFor(m => m[x].ActivityTypeId)
+                    @Html.DisplayTextFor(m => m[x].ActivityTypeName)
+                </td>
+                <td style="width: 20%">
+                    @Html.EditorFor(m => m[x].Name)
+                </td>
+                <td style="width: 15%">&nbsp;</td>
+                <td style="width: 15%">&nbsp;</td>
+                <td style="width: 15%">&nbsp;</td>
+                <td style="width: 15%">&nbsp;</td>
+                <td>
+                    <a href="javascript:void(0);" data-function="AddActivityProfile" data-id="@Model[x].Id" class="add-link" title="Add a profile to @Model[x].Name"></a>
+                    <a href="javascript:void(0);" data-function="CopyActivity" data-id="@Model[x].Id" class="copy-link" title="Copy activity @Model[x].Name"></a>
+                    <a href="javascript:void(0);" data-function="DeleteActivity" data-id="@Model[x].Id" class="delete-link" title="Delete activity @Model[x].Name"></a>
+                </td>
+            </tr>
+        
+            for (int y = 0; y < Model[x].ActivityProfiles.Count; y++)
+            {
+            <tr id="node-ActivityProfile-@Model[x].ActivityProfiles[y].Id" class="child-of-node-Activity-@Model[x].Id">
+                <td style="width: 40%" colspan="2">
+                    @Html.EditorFor(m => m[x].ActivityProfiles[y], "BaseEntityViewTemplate")
+                    @Html.DisplayTextFor(m => m[x].ActivityProfiles[y].ProfileName)
+                </td>
+                <td style="max-width: 15%" class="numeric">
+                    @Html.EditorFor(m => m[x].ActivityProfiles[y].DayRate, new { style = "width:50px" })
+                </td>
+                <td style="max-width: 15%" class="numeric">
+                    @Html.EditorFor(m => m[x].ActivityProfiles[y].HalfDayRate, new { style = "width:50px" })
+                </td>
+                <td style="max-width: 15%" class="numeric">
+                    @Html.EditorFor(m => m[x].ActivityProfiles[y].HourlyRate, new { style = "width:50px" })
+                </td>
+                <td style="max-width: 15%" class="numeric">
+                    @Html.EditorFor(m => m[x].ActivityProfiles[y].IsolatedHourlyRate, new { style = "width:50px" })
+                </td>
+                <td><a href="javascript:void(0);" data-function="DeleteActivityProfile" data-id="@Model[x].ActivityProfiles[y].Id" class="delete-link" title="Remove this profile from @Model[x].Name"></a></td>
+            </tr>
+            }
+        }
+    </tbody>
+</table>

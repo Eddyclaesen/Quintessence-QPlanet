@@ -1,0 +1,111 @@
+﻿@using Quintessence.QPlanet.ViewModel.Prm
+@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectAssessmentDevelopment.SubProjectCategoryDetailsActionModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Candidates - Edit candidate";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">@Model.Project.Name</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li>@Html.ActionLink("Detail", "Edit", "ProjectGeneral", new RouteValueDictionary(new { area = "Project", id = Model.Project.Id }), null)
+            @if (Model.ProjectTypeCategoryId.HasValue)
+            {
+                <li>@Html.ActionLink(Model.ProjectTypeCategoryName, "EditProjectCategoryDetail", "ProjectGeneral", new RouteValueDictionary(new { area = "Project", id = Model.Project.Id }), null)
+                </li>
+            }
+            <li class="current">Subcategories</li>
+            @if (Model.ProjectTypeCategoryId.HasValue)
+            {
+                <li>@Html.ActionLink("Candidates", "EditProjectCandidates", "ProjectAssessmentDevelopment", new RouteValueDictionary(new {area = "Project", id = Model.Project.Id}), null)
+                </li>
+            }
+            <li>@Html.ActionLink("Invoicing", "InvoiceOverview", "ProjectAssessmentDevelopment", new { area = "Project", id = Model.Project.Id }, null)</li>
+        </ul>
+    </nav>
+}
+@section LeftNavigation
+{
+    <ul id="Tabs">
+        @for (int i = 0; i < Model.ProjectSubCategoryDetails.Count; i++)
+        {
+            <li>
+                <a href="#@Model.ProjectSubCategoryDetails[i].Id">
+                    @Html.DisplayFor(m => m.ProjectSubCategoryDetails[i].Name)
+                </a>
+            </li>
+            
+        }
+    </ul>
+}
+@section AdditionalScripts
+{
+    <script>
+        $(function () {
+            InitializeButtons();
+            ValidateProject();
+            CheckUnregisteredCandidatesForProject();
+        });
+
+        //Initializes the buttons
+        function InitializeButtons() {
+            $(this).on('click', 'a[data-function=SubCategoryFormSubmit]', function (e) {
+                e.preventDefault();
+                var form = $(this).parents('form:first');
+                var action = form.attr('action');
+                ShowDetailSaveDialog();
+                //$.post(action, form.serialize());
+
+                $.ajax({
+                    url: action,
+                    type: 'POST',
+                    data: form.serialize(),
+                    dataType: 'JSON',
+                    success: function () {
+                        HideDetailSaveDialog();
+                    },
+                    error: function (x, y, z) {
+                        HideDetailSaveDialog();
+                        alert(x.responseText);
+                    }
+                });
+
+            });
+        }
+
+        function ValidateProject() {
+            RemoveNotification('ValidateProject');
+            $.getJSON('@Url.Action("ValidateProject", new { id = Model.Project.Id })', function (data) {
+                $.each(data, function (key, val) {
+                    if (val.message != 'ok') {
+                        AddNotification('ValidateProject', val.message);
+                    }
+                });
+            });
+        }
+
+        function CheckUnregisteredCandidatesForProject() {
+            RemoveNotification('CheckUnregisteredCandidates');
+            //Check if there are still unregistered candidates for this project
+            $.getJSON('@Url.Action("CheckUnregisteredCandidatesForProject", new { id = Model.Project.Id })', function (data) {
+                $.each(data, function (key, val) {
+                    if (val.message != 'ok') {
+                        AddNotification('CheckUnregisteredCandidates', val.message);
+                    }
+                });
+            });
+        }
+    </script>
+}
+@for (int i = 0; i < Model.ProjectSubCategoryDetails.Count; i++)
+{
+    @Html.EditorFor(m => m.ProjectSubCategoryDetails[i]);
+}

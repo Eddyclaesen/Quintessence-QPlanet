@@ -1,0 +1,70 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectAssessmentDevelopment.CreateProjectProductActionModel
+@using (Html.BeginForm("CreateProjectProduct", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "CreateProjectProductForm" }))
+{
+    if (Model.ProductTypes.Count > 0)
+    {
+        @Html.HiddenFor(m => m.ProjectId)
+        <div class="row">
+            <div>Product</div>
+            <div>
+                @Html.DropDownListFor(m => m.ProductTypeId, Model.CreateProductTypeSelectListItems())
+            </div>
+        </div>
+    
+        <div class="row">
+            <div>Invoice amount</div>
+            <div>@Html.EditorFor(m => m.InvoiceAmount)</div>
+        </div>
+
+        <div class="row">
+            <div>Deadline invoicing</div>
+            <div>
+                @Html.EditorFor(m => m.Deadline, "NullableDateEditorTemplate")
+            </div>
+        </div>
+
+        <div class="row">
+            <div>NoInvoice</div>
+            <div>
+                @Html.EditorFor(m => m.NoInvoice)
+            </div>
+        </div>
+
+        <div class="row">
+            <div>Description</div>
+            <div>@Html.TextAreaFor(m => m.Description, 4, 50, null)</div>
+        </div>
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" class="button" id="AddSelectedProductsSubmitButton">Add</a>
+    </div>
+    }
+    else
+    {
+        <br/>
+        <br/>
+        <div class="center-text">...no products found...</div>
+        <br/>
+        <br/>
+        <div class="right-text">
+            <a href="javascript:void(0);" class="button" id="CloseAddProjectProductsDialog">Close</a>
+        </div>
+    }
+
+}
+
+<div style="display: none">
+    @foreach (var productType in Model.ProductTypes)
+    {
+        <div id="@productType.Id" data-unitprice="@productType.UnitPrice"></div>
+    }
+</div>
+
+<script>
+    $(function () {
+        $('#@Html.IdFor(m => m.ProductTypeId)').change(function (event) {
+            $('#@Html.IdFor(m => m.InvoiceAmount)').val($('#' + $(this).val()).attr('data-unitprice'));
+        });
+    });
+</script>

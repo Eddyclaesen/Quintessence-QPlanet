@@ -1,0 +1,108 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Admin - Dictionaries";
+}
+
+@section LeftNavigation
+{
+    <ul id="Tabs">
+        <li><a href="#Quintessence"></a></li>
+        <li><a href="#Customer"></a></li>
+        <li><a href="#Import"></a></li>
+    </ul>
+}
+@section AdditionalScripts
+{
+    <script>
+        $(function () {
+            InitializeButtons();
+            RefreshQuintessenceDictionaries();
+            RefreshCustomerDictionaries();
+            RefreshImportDictionaries();
+        });
+        
+        function InitializeButtons() {
+            $('a[data-function=RefreshQuintessenceDictionariesButton]').click(function (event) {
+                event.preventDefault();
+                RefreshQuintessenceDictionaries();
+            });
+            $('a[data-function=RefreshCustomerDictionariesButton]').click(function (event) {
+                event.preventDefault();
+                RefreshCustomerDictionaries();
+            });
+            $('a[data-function=RefreshImportDictionariesButton]').click(function (event) {
+                event.preventDefault();
+                RefreshImportDictionaries();
+            });
+        }
+        
+        function RefreshQuintessenceDictionaries() {
+            $('#QuintessenceDictionariesPlaceholder').loading('Retrieving Quintessence dictionaries...');
+            $.ajax({
+                url: '@Url.Action("QuintessenceDictionaries")',
+                success: function(html) {
+                    $('#QuintessenceDictionariesPlaceholder').html(html);
+                },
+                error: function(err) {
+                    ShowDetailErrorDialog('Retrieve Quintessence dictionaries.', err);
+                }
+            });
+        }
+
+        function RefreshCustomerDictionaries() {
+            $('#CustomerDictionariesPlaceholder').loading('Retrieving customer specific dicationaries...');
+            $.ajax({
+                url: '@Url.Action("CustomerDictionaries")',
+                success: function (html) {
+                    $('#CustomerDictionariesPlaceholder').html(html);
+                },
+                error: function (err) {
+                    ShowDetailErrorDialog('Retrieve customer specific dictionaries.', err);
+                }
+            });
+        }
+
+        function RefreshImportDictionaries() {
+            $('#ImportDictionariesPlaceholder').loading('Retrieving customer specific dicationaries...');
+            $.ajax({
+                url: '@Url.Action("ImportDictionaries")',
+                success: function (html) {
+                    $('#ImportDictionariesPlaceholder').html(html);
+                },
+                error: function (err) {
+                    ShowDetailErrorDialog('Retrieve dictionaries to can be imported.', err);
+                }
+            });
+        }
+    </script>
+}
+
+<fieldset id="Quintessence">
+    <legend>Quintessence dictionaries</legend>
+    
+    <div id="QuintessenceDictionariesPlaceholder"></div>
+    
+    <div class="right-text">
+        <a href="javascript:void(0);" data-function="RefreshQuintessenceDictionariesButton" class="button">Refresh</a>
+    </div>
+</fieldset>
+
+<fieldset id="Customer">
+    <legend>Customer dictionaries</legend>
+    
+    <div id="CustomerDictionariesPlaceholder"></div>
+    
+    <div class="right-text">
+        <a href="javascript:void(0);" data-function="RefreshCustomerDictionariesButton" class="button">Refresh</a>
+    </div>
+</fieldset>
+
+<fieldset id="Import">
+    <legend>Dictionaries to import</legend>
+    
+    <div id="ImportDictionariesPlaceholder"></div>
+    
+    <div class="right-text">
+        <a href="javascript:void(0);" data-function="RefreshImportDictionariesButton" class="button">Refresh</a>
+    </div>
+</fieldset>

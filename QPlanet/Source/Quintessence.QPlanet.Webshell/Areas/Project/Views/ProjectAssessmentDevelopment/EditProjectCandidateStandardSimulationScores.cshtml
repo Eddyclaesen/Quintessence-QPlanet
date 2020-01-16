@@ -1,0 +1,228 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectDetailControllerBase.EditProjectCandidateStandardSimulationScoresActionModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Projects - Standard Simulation Scores";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <!--<li class="current"><a href="javascript:void(0);">@Model.ProjectCandidate.CandidateFullName
+            (@Model.ProjectCandidate.Project.Name)</a></li>-->
+            <li class="current">
+    <a href="@Url.Action("Edit", "ProjectGeneral", new { area = "Project", id = Model.ProjectCandidate.ProjectId })" target="_blank">
+        @Model.ProjectCandidate.CandidateFullName <u>@Model.ProjectCandidate.Project.Name</u>
+    </a>
+            </li>
+    </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li class="current">Simulation Scores</li>
+            <li>@Html.ActionLink("Assessors Overview", "EditProjectCandidateScores", new { id = Model.ProjectCandidate.Id })
+            </li>
+            <li>@Html.ActionLink("Product scores", "ProjectCandidateProductScores", new { id = Model.ProjectCandidate.Id })
+            </li>
+            <li>@Html.ActionLink("Resume", "EditProjectCandidateResume", new { id = Model.ProjectCandidate.Id })
+            </li>
+            <li>@Html.ActionLink("Reporting", "ProjectCandidateReporting", new { id = Model.ProjectCandidate.Id })
+            </li>
+        </ul>
+    </nav>
+}
+@section LeftNavigation
+{
+    <ul id="Tabs">
+        @foreach (var simulation in Model.SimulationCombinations)
+        {
+            <li><a href="#@simulation.SimulationId"></a></li>
+        }
+    </ul>
+}
+
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.treeTable.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.cookie.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/persist.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/tiny_mce/jquery.tinymce.js")" type="text/javascript"></script>
+    
+    @if (Model.ProjectCandidate.ProjectCandidateDetail.IsSuperofficeAppointmentDeleted)
+    {
+        if (Model.ProjectCandidate.IsCancelled)
+        {
+            <script>
+                $(function () {
+                    //Remove all buttons
+                    $('a[class=button]').each(function () { $(this).hide(); });
+                    AddNotification('CANCELLED', 'This candidate has been cancelled. Unable to save any changes to this scoring form.');
+                });
+            </script>
+        }
+        else
+        {
+            <script>
+                $(function () {
+                    $('a[class=button]').each(function () { $(this).hide(); });
+                    AddNotification('DELETED', 'This candidate has been deleted from CRM, but has not yet been cancelled in QPlanet. Unable to save any changes to this scoring form.');
+                });
+            </script>
+        }
+    }
+
+    <script>
+        enablePersistStore = true;
+
+        $(function () {
+            $('table[data-tablefunction=SimulationTable]').each(function () {
+                $(this).treeTable({ persist: true });
+            });
+
+            InitializeTextAreas();
+            InitializeButtons();
+            InitializeInputFields();
+        });
+
+        function InitializeTextAreas() {
+            $('textarea').each(function () {
+                $(this).tinymce({
+                    script_url: '@Url.Content("~/Scripts/tiny_mce/tiny_mce.js")',
+                    height: '300',
+                    width: '100%',
+                    theme: 'simple',
+                    valid_styles: { '*': 'font-weight,text-decoration' },
+                    setup: function (editor) {
+                        editor.onKeyUp.add(function (ed, e) {
+                            var cell = $('#' + ed.id).parent();
+
+                            var competenceId = cell.attr('data-parent-competence-id');
+                            var parentCompetenceCell = $('#ScoreForm td[data-competence-id=' + competenceId + ']');
+
+                            var hiddenField = $('input[type=hidden]', cell);
+
+                            if ($(this).val() != undefined || $(this).val() != '') {
+                                hiddenField.val('true');
+
+                                //Set corresponding competence IsChanged value to true
+                                $('input[type=hidden]', parentCompetenceCell).val('true');
+                            }
+                        });
+                    }
+                });
+            });
+        }
+
+        function InitializeButtons() {
+            $(this).on('click', 'a[data-function=SaveCompetenceSimulationScoresButton]', null, function () {
+                ShowDetailSaveDialog();
+
+                var form = $('#ScoreForm');
+
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    datatype: 'JSON',
+                    success: function () {
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        alert(err.statusText);
+                    }
+                });
+            });
+        }
+
+        function InitializeInputFields() {
+            $(this).on('change', 'td[data-function=ScoreInput] input[type=text]', null, function () {
+                var cell = $(this).parent();
+                
+                var competenceId = cell.attr('data-parent-competence-id');
+                var parentCompetenceCell = $('#ScoreForm td[data-competence-id=' + competenceId + ']');
+                
+                var hiddenField = $('input[type=hidden]', cell);
+                
+                if ($(this).val() != undefined || $(this).val() != '') {
+                    hiddenField.val('true');
+                    
+                    //Set corresponding competence IsChanged value to true
+                    $('input[type=hidden]', parentCompetenceCell).val('true');
+                }
+            });
+        }
+    </script>
+}
+
+@using (Html.BeginForm("UpdateCompetenceSimulationStandarScores", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "ScoreForm" }))
+{
+    for (int x = 0; x < Model.SimulationCombinations.Count; x++)
+    {
+        <fieldset id="@Model.SimulationCombinations[x].SimulationId">
+            <legend>@Model.SimulationCombinations[x].SimulationName</legend>
+            <h5>@Model.SimulationCombinations[x].ToString()</h5>
+
+            <table class="dataTable" data-tablefunction="SimulationTable" style="width: 100%">
+                <tbody>
+                    @for (int y = 0; y < Model.SimulationCombinations[x].Competences.Count; y++)
+                    {
+                        <tr id="node-Competence-@Model.SimulationCombinations[x].Competences[y].Id" class="@(Model.IsIndicatorScoringEnabled ? "expanded" : string.Empty)">
+                            <td style="width: 80%">
+                                @Html.HiddenFor(m => Model.SimulationCombinations[x].Competences[y].Id)
+                                @Html.HiddenFor(m => Model.SimulationCombinations[x].Competences[y].AuditCreatedBy)
+                                @Html.HiddenFor(m => Model.SimulationCombinations[x].Competences[y].AuditCreatedOn)
+                                @Html.HiddenFor(m => Model.SimulationCombinations[x].Competences[y].AuditDeletedBy)
+                                @Html.HiddenFor(m => Model.SimulationCombinations[x].Competences[y].AuditDeletedOn)
+                                @Html.HiddenFor(m => Model.SimulationCombinations[x].Competences[y].AuditIsDeleted)
+                                @Html.HiddenFor(m => Model.SimulationCombinations[x].Competences[y].AuditModifiedBy)
+                                @Html.HiddenFor(m => Model.SimulationCombinations[x].Competences[y].AuditModifiedOn)
+                                @Html.HiddenFor(m => Model.SimulationCombinations[x].Competences[y].AuditVersionId)
+                                @Model.SimulationCombinations[x].Competences[y].DictionaryCompetenceName
+                                @if (Model.IsIndicatorScoringEnabled && Model.SimulationCombinations[x].Competences[y].Indicators.Any(i => !i.Score.HasValue))
+                                {
+                                    <img src="@Url.Content("~/Images/Icons/Warning16.png")" class="icon" alt="Missing indicator scores" title="Some indicators don't have a score"/>
+                                }
+                            </td>
+                            <td style="width: 20%" class="CompetenceScore" data-function="ScoreInput" data-competence-id="@Model.SimulationCombinations[x].Competences[y].Id">
+                                @Html.HiddenFor(m => Model.SimulationCombinations[x].Competences[y].IsChanged)
+                                @Html.EditorFor(m => Model.SimulationCombinations[x].Competences[y].Score)
+                            </td>
+                        </tr>
+
+                                for (int i = 0; i < Model.SimulationCombinations[x].Competences[y].Indicators.Count; i++)
+                                {
+                        @Html.EditorFor(m => Model.SimulationCombinations[x].Competences[y].Indicators[i], "BaseEntityViewTemplate")
+                        <tr class="child-of-node-Competence-@Model.SimulationCombinations[x].Competences[y].Id">
+                            <td style="width: 80%">@Model.SimulationCombinations[x].Competences[y].Indicators[i].DictionaryIndicatorName
+                            </td>
+                            <td style="width: 20%"  data-function="ScoreInput" data-parent-competence-id="@Model.SimulationCombinations[x].Competences[y].Id">
+                                @if (Model.IsIndicatorScoringEnabled)
+                                {
+                                    @Html.HiddenFor(m => Model.SimulationCombinations[x].Competences[y].Indicators[i].IsChanged)
+                                    @Html.EditorFor(m => Model.SimulationCombinations[x].Competences[y].Indicators[i].Score)
+                                }
+                            </td>
+                        </tr>
+                                }
+        
+                        <tr id="node-Remarks-@Model.SimulationCombinations[x].Competences[y].Id" class="child-of-node-Competence-@Model.SimulationCombinations[x].Competences[y].Id">
+                            <td colspan="2">Description</td>
+                        </tr>
+                        <tr class="child-of-node-Remarks-@Model.SimulationCombinations[x].Competences[y].Id">
+                            <td data-function="RemarksInput" data-parent-competence-id="@Model.SimulationCombinations[x].Competences[y].Id">@Html.TextAreaFor(m => Model.SimulationCombinations[x].Competences[y].Remarks)
+                            </td>
+                            <td></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="right-text">
+                <a href="javascript:void(0);" class="button" data-function="SaveCompetenceSimulationScoresButton">
+                    Save</a>
+            </div>
+        </fieldset>
+    }
+}

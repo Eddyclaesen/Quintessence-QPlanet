@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Project - Home";    
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            InitializeButtons();
+            InitializeProjectTable();
+        });
+
+        function InitializeButtons() {
+            $('a[data-id=RefreshRecentProjectsButton]').click(function () { $('#ProjectTable').dataTable().fnDraw(); });
+        }
+
+        function InitializeProjectTable() {
+            $('#ProjectTable').dataTable({
+                "bServerSide": true,
+                "sAjaxSource": '@Url.Action("RecentProjects")',
+                "aoColumns": [
+                    {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            return obj.aData[0];
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            return obj.aData[1];
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            return obj.aData[2];
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            return obj.aData[3];
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            return obj.aData[4];
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            var editUrl = '@Url.Action("Edit", "ProjectGeneral", new{area="Project"})/' + obj.aData[5];
+                            var copyUrl = '@Url.Action("Copy", "ProjectGeneral", new{area="Project"})/' + obj.aData[5];
+                            return '<a href="' + editUrl + '" target="' + obj.aData[5] + '" class="edit-link" title="Edit">Edit</a>' +
+                                '<a href="' + copyUrl + '" target="' + obj.aData[5] + '" class="copy-link" title="Copy">Copy</a>';
+                        }
+                    }],
+                "bProcessing": true,
+                "bStateSave": true
+            });
+        }
+    </script>
+}
+<fieldset>
+    <legend>My active projects</legend>
+    <div class="right-text">
+        <a href="javascript:void(0);" data-id="RefreshRecentProjectsButton" class="button">Refresh</a>
+        @Html.ActionLink("Create", "Create", "ProjectGeneral", null, new { target = "_blank", data_id = "CreateProjectLink", @class = "button" })
+    </div>
+    <br />
+    <table id="ProjectTable">
+        <thead>
+            <tr>
+                <th style="width: 30%;">Name</th>
+                <th style="width: 20%;">Type</th>
+                <th style="width: 25%;">Customer</th>
+                <th style="width: 15%;">Status</th>
+                <th style="width: 10%;">Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" data-id="RefreshRecentProjectsButton" class="button">Refresh</a>
+        @Html.ActionLink("Create", "Create", "ProjectGeneral", null, new { target = "_blank", data_id = "CreateProjectLink", @class = "button" })
+    </div>
+</fieldset>

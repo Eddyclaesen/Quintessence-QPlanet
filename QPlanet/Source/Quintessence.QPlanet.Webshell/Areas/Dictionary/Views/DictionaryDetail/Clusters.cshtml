@@ -1,0 +1,68 @@
+﻿@model Quintessence.QPlanet.ViewModel.Dim.DictionaryModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewData["DictionaryId"] = Model.Id;
+    ViewBag.Title = "Dictionaries - Clusters";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">@Model.Name</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li>@Html.ActionLink("Detail", "Edit", new { id = Model.Id })</li>
+            <li class="current">Clusters</li>
+        </ul>
+    </nav>
+}
+@section AdditionalScripts
+{
+    <link href="@Url.Content("~/Content/themes/base/jquery.treeview.css")" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.treeview.js")"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#RefreshDutchDictionaryClusters').click(function () {
+                RetrieveDictionaryDetail(1);
+            });
+            $('#RefreshFrenchDictionaryClusters').click(function () {
+                RetrieveDictionaryDetail(2);
+            });
+            $('#RefreshEnglishDictionaryClusters').click(function () {
+                RetrieveDictionaryDetail(3);
+            });
+            RetrieveDictionaryDetail(1);
+        });
+
+        function RetrieveDictionaryDetail(languageId) {
+            $('#DictionaryDetailPlaceholder').hide().html('<p class="loading"><img src="@Url.Content("~/Images/loading_animation.gif")" /><br />Loading the dictionary clusters...</p>').fadeIn();
+            $.ajax({
+                url: '@Url.Action("DictionaryDetail", new{id=Model.Id})/' + languageId,
+                type: 'GET',
+                success: function (msg) {
+                    $('#DictionaryDetailPlaceholder').hide().html(msg).fadeIn();
+                    $('#DictionaryDetailTreeview').treeview({
+                        animated: "fast",
+                        collapsed: true,
+                    });
+                }
+            });
+        }
+    </script>
+}
+<div class="grid_16">
+    <fieldset>
+        <legend>Dictionary details</legend>
+        <button id="RefreshDutchDictionaryClusters" class="button">Nederlands</button>
+        <button id="RefreshFrenchDictionaryClusters" class="button">Français</button>
+        <button id="RefreshEnglishDictionaryClusters" class="button">English</button>
+        <div id="DictionaryDetailPlaceholder">
+        </div>
+    </fieldset>
+</div>
+<div class="clear"></div>

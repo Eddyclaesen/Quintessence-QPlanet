@@ -1,0 +1,167 @@
+﻿DECLARE @AdminId AS UNIQUEIDENTIFIER
+DECLARE @CustomerAssistantId AS UNIQUEIDENTIFIER
+DECLARE @ConsultantId AS UNIQUEIDENTIFIER
+DECLARE @AccountantId AS UNIQUEIDENTIFIER
+
+SELECT @AdminId =				[Id] FROM [RoleView] WHERE [Code] = 'ADMIN'
+SELECT @CustomerAssistantId =	[Id] FROM [RoleView] WHERE [Code] = 'CUSTA'
+SELECT @ConsultantId =			[Id] FROM [RoleView] WHERE [Code] = 'CONSULT'
+SELECT @AccountantId =			[Id] FROM [RoleView] WHERE [Code] = 'ACCOUNT'
+
+INSERT INTO [dbo].[User] VALUES(NEWID(), 2, NULL, 'tj', 'Jurgen', 'Timmerman', NULL, NULL, 'DXKwSPY9yegLK6NLq8huuQ==', 0, 1, 1, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 50, @ConsultantId, 'wl', 'Linda', 'Wens', NULL, NULL, 'g1hxqHcckvRALy7t3cniAg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 53, @ConsultantId, 'dge', 'Esther', 'de Groot', NULL, NULL, 'I15bCCWQy4scux6Q6ZNOPw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 57, @ConsultantId, 'vbl', 'Lou', 'Van Beirendonck', NULL, NULL, 'AfILAB6jXe0rK2UOue34pQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 58, @ConsultantId, 'vl', 'Lieven', 'Verbrugge', NULL, NULL, 'Kc7zKds6NJHY0UhspR//kA==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 59, @ConsultantId, 'sw', 'Werner', 'Smet', NULL, NULL, 'BniP7Q5I+KPkj75+chyCOw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 60, @ConsultantId, 'lj', 'Jan', 'Luyten', NULL, NULL, 'Akisk15djpyqxZwo/SaDtg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 62, @ConsultantId, 'dl', 'Luc', 'Daniëls', NULL, NULL, 'znoGnLh3Tvg8DJOQpcCwrw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 65, @ConsultantId, 'cs', 'Sabine', 'Claus', NULL, NULL, 'PklZpcLHJRL7KmxxwbLKNg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 67, @ConsultantId, 'rl', 'Luc', 'Roosenbroeck', NULL, NULL, 'FCYmD5mb3NB/Pf+SpQ6jfg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 158, @ConsultantId, 'cr', 'Caroline', 'Rousseau', NULL, NULL, 'DhnWMzD+JeMkaLq9vyd4/Q==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 86, @ConsultantId, 'vm', 'Marjan', 'Verheyden', NULL, NULL, 'EBhZkNTZY9Pq/S/WboxzKg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 87, @ConsultantId, 'de', 'Els', 'Demesmaeker', NULL, NULL, 'nx60e89raeEqDUyn4qeGrw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 90, @ConsultantId, 'vdbi', 'Inge', 'Van den Branden', NULL, NULL, 'FoKUN7aZz31hQTSd8m6QUQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 89, @ConsultantId, 'ca', 'Alessandra', 'Cool', NULL, NULL, '6WD3OvOQOuwe1KH+sJviiA==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 85, @ConsultantId, 'dsp', 'Paul', 'De Schepper', NULL, NULL, 'jjxOsF+T+r6T+X0xo65VZg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 94, @ConsultantId, 'ma', 'Annemie', 'Melis', NULL, NULL, 'GsyGwbHuIxHoSeVQ+Yq7Tg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 101, @ConsultantId, 'vdbc', 'Christel', 'Van den Branden', NULL, NULL, 'dpNSSkpHOiJJqZYtgS9KQQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 110, @AccountantId, 'vhi', 'Ingrid', 'Van Hove', NULL, NULL, 'm1aqO7NXSlN0Vx9m+JTFkg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 95, @CustomerAssistantId, 'vwj', 'Jill', 'Van Weereld', NULL, NULL, 'ZRNvp+/Ba47TEiHrHjdY9A==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 92, @ConsultantId, 've', 'Elke', 'Verbruggen', NULL, NULL, 'oxc5HM4ZuaFpN0DMBPtrbw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 109, @ConsultantId, 'ff', 'Freelancer', 'Freelancer', NULL, NULL, 'RL4T5Y/tOY1WEEtjUOH7yA==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 111, @ConsultantId, 'he', 'Elke', 'Henderickx', NULL, NULL, 'N0fZOpQtUnUkkHJQTLc1pA==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 112, @CustomerAssistantId, 'vs', 'Sigrid', 'Verbeylen', NULL, NULL, 'IOFbK1b6BP2TMZgH+RzFig==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 155, @ConsultantId, 'es', 'Erika', 'Spitaels', NULL, NULL, 'a0TWnRnmhem1rDxK2s9i2w==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 160, @ConsultantId, 'ih', 'Inge', 'Hugo', NULL, NULL, 'PheZvezX+RuXd5aTqRDYbQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 116, @ConsultantId, 'ja', 'Ann', 'Janssens', NULL, NULL, 'u8/dlmroLGjv2mvWVDVjZw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 117, @ConsultantId, 'vml', 'Lieve', 'Van Mechelen', NULL, NULL, 'XLUfasdlIvD6g6Ec7JQE5Q==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 119, @ConsultantId, 'ne', 'Elfriede', 'Neels', NULL, NULL, 'He6IQuB/djSdEs2eMPBZfw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 120, @ConsultantId, 'lc', 'Clement', 'Leemans', NULL, NULL, 'T4RTNyAK6QqACX5xppWXSg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 121, @ConsultantId, 'pv', 'Veerle', 'Put', NULL, NULL, 'UPWY2wwiyKNFWevQ5SaPYQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 125, @ConsultantId, 'gl', 'Luc', 'Groeninckx', NULL, NULL, 'fqM9S//qpn/eFoxVC1uulw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 145, @ConsultantId, 'lle', 'Leen', 'Lenaerts', NULL, NULL, 'AU3qedNsCHvmyqgSlzirpg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 146, @ConsultantId, 'be', 'Elso', 'Bronsema', NULL, NULL, 'PUkNKuPc7LfP4gjdorGggw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 147, @ConsultantId, 'ba', 'Annelies', 'Baeyens', NULL, NULL, 'Pq7gGIkWfzb11EL1obm7bA==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 211, @ConsultantId, 'lkh', 'Leila', 'Khelifa', NULL, NULL, 'IFnz1LwpOvu2wnbbNWR00w==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 152, @ConsultantId, 'at', 'Anne-Mie', 'Truyen', NULL, NULL, 'qtHomu2gzQvQLTPqJwsG9Q==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 154, @ConsultantId, 'vg', 'Victor', 'Guilmain', NULL, NULL, '7NEuwiwvouHSvcPKXuheqw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 159, @ConsultantId, 'oj', 'Olivier', 'Janne', NULL, NULL, 'FddBdMJE2RJWP5REaUD4CA==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 166, @ConsultantId, 'vdva', 'Annemie', 'Van de Vondel', NULL, NULL, 'J2TZBaz974IGtadE2g6a2g==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 167, @ConsultantId, 'lca', 'Caroline', 'Libot', NULL, NULL, 'gmMnmFecgt4MOOegSFE5Dg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 169, @ConsultantId, 'vzd', 'Dette', 'Van Zeeland', NULL, NULL, 'aseXWenucrnOgKsFUeeMbg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 171, @ConsultantId, 'wli', 'Lien', 'Weekers', NULL, NULL, 'gTNA8Kaj5HdIyumjm1Jb9w==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 172, @ConsultantId, 'ms', 'Sandrine', 'Mariaule', NULL, NULL, 'NmU91Q4E1aEwVNUbsXQPZw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 173, @ConsultantId, 'baa', 'Ann', 'Bayart', NULL, NULL, 'RWk6ChbV4uhRszUjebkl9Q==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 174, @ConsultantId, 'vna', 'Natalie', 'Vercouillie', NULL, NULL, 'bJN6XHhhoCN/fazMNQMKcw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 175, @ConsultantId, 'ie', 'Els', 'Ivens', NULL, NULL, 'j0BITMca+Yi0Lp7QSIQ6aw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 180, @ConsultantId, 'vdbm', 'Marc', 'Van den Bossche', NULL, NULL, 'wJA+beAiXaC2sZgfLndncw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 186, @ConsultantId, 'lch', 'Chantal', 'Leyers', NULL, NULL, '3C/yd2x8iBlvBbPEI8hUAQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 182, @ConsultantId, 'sh', 'Hilde', 'Smits', NULL, NULL, 'vjGzcJs13ihnsgJqVp0Y4g==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 183, @ConsultantId, 'dbb', 'Britt', 'De Bie', NULL, NULL, '1msH/pOOfg2bapIwLXH9dA==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 184, @AdminId, 'ss', 'Sandra', 'Schreyers', NULL, NULL, 'OWywCogP2geYsayY8d/8JQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 185, @ConsultantId, 'ce', 'Emanuelle', 'Charlier', NULL, NULL, 'UpYqWnIDSpLEDu7Go7iIjQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 187, NULL, 'dbs', 'Serge', 'De Backer', NULL, NULL, 'ay1pYo8YkArgdU4xk7ePAA==', 0, 1, 1, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 191, @ConsultantId, 'dc', 'Catherine', 'Delvaux', NULL, NULL, 'is3VLAHEKpOSUck+OW8Ycw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 192, @ConsultantId, 'vrs', 'Sébastien', 'Van Rompaey', NULL, NULL, 'JxlM2CNAAFuWCKqJ/wkgUA==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 198, @ConsultantId, 'vb', 'Veronique', 'Bevers', NULL, NULL, 'PsMHB5/v+uG48Piec9y3Tg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 199, @ConsultantId, 'eg', 'Ellen', 'Gillis', NULL, NULL, 'm6s54aYOGdyPiqmW1rc0pw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 200, @ConsultantId, 'kvdw', 'Kristien', 'Vande Weijer', NULL, NULL, '8cnBghsHn49rtYgURTTZkQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 201, @ConsultantId, 'je', 'Eva', 'Jansen', NULL, NULL, 'QJlsJVNCVxbk33rxjSuG3Q==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 202, @ConsultantId, 'sf', 'Sophie', 'Feltrin', NULL, NULL, 'sUFkGO2ji49qcdl6FlmZmA==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 203, @ConsultantId, 'mb', 'Miriam', 'Bouzid', NULL, NULL, 'PK0mGNlY3eCuBC/aN6QUeQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 209, @ConsultantId, 'dgc', 'Charlotte', 'de Groot', NULL, NULL, 'yvTwb3XFVszZe8yfOWOvpA==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 210, @ConsultantId, 'vdba', 'Van Den Bogaert', 'Ariane', NULL, NULL, 'lnc+ufekpHd6ruPoWHQM/Q==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 212, @ConsultantId, 'rc', 'Catherine', 'Rigot', NULL, NULL, '/kYBqo4vOCsjcl8aGipg4A==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 213, @ConsultantId, 'lv', 'Louis', 'Verschueren', NULL, NULL, 'K4Ypww1BiB1wN1tKqHCVkQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 214, @ConsultantId, 'dre', 'Erika', 'De Ryck', NULL, NULL, 'bnFknEnBaWFtGaMcNq//oQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 215, @ConsultantId, 'dmj', 'Jan', 'De Meyer', NULL, NULL, 'xXtU+2ADp7rmpv+8VMr97g==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 216, @ConsultantId, 'vc', 'Chris', 'Verheyde', NULL, NULL, 'ZQOFpdn2pQeOff8BDvx/xg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 217, @ConsultantId, 'hj', 'Joseph', 'Hoquet', NULL, NULL, 'H0qgGKGd6HLkIpgZAPj9OA==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 218, @ConsultantId, 'vi', 'Inge', 'Vanderbiest', NULL, NULL, 'KOxF7YSHlmnbiTcUdds49Q==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 219, @ConsultantId, 'rcarlo', 'Carlo', 'Rubinstein', NULL, NULL, 'xrDfYZ9tCgIHVURhDg6p0w==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 220, @ConsultantId, 'sj', 'Johan', 'Stoop', NULL, NULL, 'lD9wcWy1i2dBL3qzHqSIzQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 221, @AccountantId, 'vli', 'Linda', 'Valencyns', NULL, NULL, 'ddQbKIt07pz1dsVTiIdR+A==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 222, @ConsultantId, 'rh', 'Remko', 'Huysmans', NULL, NULL, 'z4Bj014t5VRhaCRpcwz/KQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 223, @ConsultantId, 'vwh', 'Henri', 'Vander Waeren', NULL, NULL, 'BoUf1Ty80wjetvEt9LOrTQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 224, @ConsultantId, 'rtt', 'Ruth', 'Tessely', NULL, NULL, 'spsE89ZHm7k16rU/yEqtIg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 225, @ConsultantId, 'rs', 'Roland', 'Somville', NULL, NULL, 'C0TBzEeDwQ6CfzPBvylvhQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 226, @ConsultantId, 'pp', 'Petra', 'Peltenburg', NULL, NULL, 'WF4sB2vaiO1V1rNaaKZOxg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 227, @ConsultantId, 'bf', 'France', 'Bidard', NULL, NULL, 'TiDBN6btPYHFKQ161ioZlA==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 228, @ConsultantId, 'cme', 'Christine', 'Meeuws', NULL, NULL, 'nlY0Fy0rJ/i53PA87Q4Y/A==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 230, @ConsultantId, 'as', 'Sarah', 'Aerts', NULL, NULL, 'FUMvEpr9Vljzv9hhFixYSQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 231, @ConsultantId, 'hs', 'Hilde', 'Stroobants', NULL, NULL, '+qQN+Tai9OGMAlUX8f17yQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 232, @ConsultantId, 'tomj', 'Tom', 'Janssen', NULL, NULL, 'ODBG+8FZ5nBr8bng9/BuEQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 235, @CustomerAssistantId, 'di', 'Ingrid', 'Daniëls', NULL, NULL, 'ARckyAUCNpij/hPF2vCrYg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 236, @ConsultantId, 'zp', 'Pieter', 'Zienkowski', NULL, NULL, 'bjbuzODQNTjY6WVbwNihtw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 237, @ConsultantId, 'mm', 'Marleen', 'Malfait', NULL, NULL, '4Fs5SVVhe7RLkiRQA2hXLQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 238, @ConsultantId, 'ddl', 'Loic', 'De Decker', NULL, NULL, 'N4ydAcohoqEb0vHlBQJF8w==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 241, @ConsultantId, 'vgl', 'Liesbeth', 'Van Gulck', NULL, NULL, 'kSLNSDQE+wOGyA36DKTIGw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 242, @ConsultantId, 'dne', 'Eline', 'De Nys', NULL, NULL, 'pqhDg920eWdNXb1YRO4iKQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 243, @ConsultantId, 'sg', 'Greta', 'Soetens', NULL, NULL, 'QJYNzhLgt11PiNhvgsitOw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 244, @ConsultantId, 'wlieze', 'Lieze', 'Wegge', NULL, NULL, 'tIlZ5nwXriUcZqrTa7iyKw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 249, @ConsultantId, 'dsb', 'Britt', 'De Sutter', NULL, NULL, 'vjsZEOYunAXC5hcQsNvItA==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 250, @ConsultantId, 'dv', 'Valerie', 'Deweirdt', NULL, NULL, 'SUJBJ1uotDu6NjzRQSSYkA==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 251, @ConsultantId, 'dbm', 'Marcel', 'Den Broeder', NULL, NULL, 'fZO6vBw+BqgEupcwveAvBQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 252, @ConsultantId, 'mtineke', 'Tineke', 'Meyns', NULL, NULL, 'HhuevV7bNCO/jLe4OCN21Q==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 254, @ConsultantId, 'wa', 'Annemie', 'Willemen', NULL, NULL, '3YVSUaQtemi3pNzzGh1BIA==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 255, @ConsultantId, 'stasf', 'Françoise', 'Stas', NULL, NULL, 'Dw5PlmM4K0bMPdNrtxZ/TQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 256, @ConsultantId, 'mg', 'Gaëtan', 'Moyersoen', NULL, NULL, 'dt32H8RXOuQnQ1Ert+pg3Q==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 257, @CustomerAssistantId, 'll', 'Leen', 'Liekens', NULL, NULL, '30wjt2pl+FlFVkDfDr1YZw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 259, @ConsultantId, 'vv', 'Véronique', 'Vanderbruggen', NULL, NULL, '0+RdmDcsRsjlZz1Rl5/JsQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 261, @ConsultantId, 'vdj', 'Jan-Maarten', 'Van Damme', NULL, NULL, 'SqWgS/YLOLz8Uie01uM0mA==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 262, @ConsultantId, 'ds', 'David', 'Stuvers', NULL, NULL, 'hpFpYsooeSvWs/aCuAyYpA==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 264, @ConsultantId, 'jd', 'Dominique', 'Joye', NULL, NULL, 'I73uMTosxBY4Q8IGx6NPOQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 267, @ConsultantId, 'ed', 'Eddy', 'De Clercq', NULL, NULL, 'Fknvfe7hoYmO/Q/I2+clsg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 268, @ConsultantId, 'sk', 'Katleen', 'Schouterden', NULL, NULL, 'lphxcoS/na53I06d1Zotrw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 269, @ConsultantId, 'gh', 'Gerda', 'Herbots', NULL, NULL, '9x5NoiRUss3GK1z/YUMdyg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 270, @ConsultantId, 'pg', 'Geert', 'Pieters', NULL, NULL, 'pYodP9EsoZDCQFt/yHb3kw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 272, @ConsultantId, 'bp', 'Pieter', 'Billen', NULL, NULL, 'VCwgRCq+xdoYjxYB6VVihw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 275, @ConsultantId, 'da', 'Anouck', 'Debroye', NULL, NULL, 'LunsPkK8cweWf2+1GS2JVQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 277, @ConsultantId, 'dmn', 'Nele', 'De Munter', NULL, NULL, '3YY1LvV1il9Wq63/Fb6rzQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 279, @ConsultantId, 'nb', 'Benoît', 'Nys', NULL, NULL, 'ApGWKRwnsn+kkEIK1rkXpQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 281, @ConsultantId, 'rlaura', 'Laura', 'Rypens', NULL, NULL, 'iIms41pjZUnD+chj+njL5g==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 282, @ConsultantId, 'wm', 'Mannu', 'Wuyts', NULL, NULL, 'wKRF38WaVVifZrNbFigz3g==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 283, @ConsultantId, 'mvero', 'Veronique', 'Marcelis', NULL, NULL, 'on+1msmiFsb2kzzBpBhQEQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 284, @ConsultantId, 'sync', 'Sync', '', NULL, NULL, '994nNpG+PQDrS4T/LlIRSQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 285, @ConsultantId, 'vst', 'Stefanie', 'Versaevel', NULL, NULL, 'lioT8Mt5wEkvvdmKJYxbjg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 286, @ConsultantId, 'sb', 'Bernard', 'Stenier', NULL, NULL, 'ppWm/GfKmVRG9B92nk1Ulg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 287, @ConsultantId, 'cjj', 'Jean Joseph', 'Crampe', NULL, NULL, 'mlXkApdNeWqD/QaCmLygEQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 288, @ConsultantId, 'anassima', 'Nassima', 'AitOumeziane', NULL, NULL, 'seWXozYPdK0tFShD4Navpg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 289, @ConsultantId, 'dpaul', 'Paul', 'Denis', NULL, NULL, 'ocMl4LMXerv1oVmbsAXIog==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 290, @ConsultantId, 'brachid', 'Rachid', 'Bakker', NULL, NULL, 'PW06vcQfRUWfom4fsn9NYg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 294, @AdminId, 'ceddy', 'Eddy', 'Claesen', NULL, NULL, 'G6i0YtDlGl2yrnrIc25hXw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 296, @CustomerAssistantId, 'ae', 'Elke', 'Arnoeyts', NULL, NULL, '+4js5uEMxizZDJzTGC5Lsg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 297, @ConsultantId, 'mvk', 'Katrien', 'Van Malderen', NULL, NULL, 'ZmYKwQnoLRHBtvTGKWEeHQ==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 299, @AdminId, 'tking', 'Thomas', 'King', NULL, NULL, 'jf/B7kKkoF5mZXWAwEDu8g==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 300, @CustomerAssistantId, 'bb', 'Birgit', 'Brack', NULL, NULL, '8Dz1LwNzOVH7FTCgonWBkA==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 301, @AdminId, 'sve', 'Stijn', 'Van Eynde', NULL, NULL, 'KsZ9JWSDCpRYsJgypXmauw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 302, @ConsultantId, 'kl', 'Kaltrina', 'Lloncari', NULL, NULL, 'LHiNUVoiWXYXQ4qAEvqJhw==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), 303, @ConsultantId, 'gs', 'Gilles', 'Schepers', NULL, NULL, '+yerueJyYD6LQcbbWc82eg==', 0, 1, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), -1, @AdminId, 'admin', 'Ad', 'Ministrator', NULL, NULL, 'tOhKewEWNk1H5OAN7SpMsg==', 0, 0, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+INSERT INTO [dbo].[User] VALUES(NEWID(), -1, @AdminId, 'QCare', 'Q', 'Care', NULL, NULL, 'tOhKewEWNk1H5OAN7SpMsg==', 0, 0, 0, (suser_sname()), GETDATE(), NULL, NULL, NULL, NULL, 0, NEWID())
+
+
+INSERT INTO [UserProfile]([Id], [UserId], [LanguageId])
+	SELECT		[User].[Id], 
+				[User].[Id],
+				1 --NL
+
+	FROM		[User]
+
+INSERT INTO [UserProfile2Contact]
+	SELECT		[UserView].[Id],
+				[CrmContactView].[Id]
+	FROM		[CrmContactView]
+	INNER JOIN	[UserView]
+		ON		[UserView].[AssociateId] = [CrmContactView].[CustomerAssistantId]
+
+INSERT INTO	[Employee] ([Id], [HourlyCostRate])
+	SELECT	[Id], 0
+	FROM	[UserView]
+	WHERE	[IsEmployee] = 1
+
+UPDATE	[Employee]
+SET		[HourlyCostRate] = COALESCE((SELECT TOP 1 COALESCE([AssociateCost].[Cost], 0) FROM [$(SUPEROFFICE7SERVER)].[$(SUPEROFFICE7)].[dbo].[AssociateCost] [AssociateCost]
+									INNER JOIN [UserView] ON [UserView].[AssociateId] = [AssociateCost].[Associate_Id] WHERE [UserView].[Id] = [Employee].[Id]), 0)
+FROM	[Employee]

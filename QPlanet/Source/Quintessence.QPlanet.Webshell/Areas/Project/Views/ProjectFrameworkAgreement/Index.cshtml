@@ -1,0 +1,80 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Project - Framework Agreement";    
+}
+
+@section AdditionalScripts
+{
+    <link href="@Url.Content("~/Content/themes/base/ui.slider.extras.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/jquery.ui.slider.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/selectToUISlider.jQuery.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script>
+        $(function () {
+            InitializeButtons();
+
+            RefreshFrameworkAgreementsPlaceHolder();
+
+            //InitializeSlider();
+        });
+
+        function InitializeButtons() {
+            $.getJSON('@Url.Action("ListFrameworkAgreementYears")', function (data) {
+                $.each(data, function (key, value) {
+                    if (value == new Date().getFullYear()) {
+                        $('#FrameworkAgreementYear').append($('<option selected="selected"/>').attr("value", value).text(value));
+                    } else {
+                        $('#FrameworkAgreementYear').append($('<option />').attr("value", value).text(value));
+                    }
+                });
+                InitializeSlider();
+            });
+
+            //$('#FrameworkAgreementYear').change(function() {
+            //    RefreshFrameworkAgreementsPlaceHolder();
+            //});
+        }
+
+        function InitializeSlider() {
+            var years = $('#FrameworkAgreementYear option').size();
+            $('#FrameworkAgreementYear').selectToUISlider({
+                labels: 2,
+                sliderOptions: {
+                    stop: function (e, ui) {
+                        RefreshFrameworkAgreementsPlaceHolder();
+                    }
+                }
+            }).hide();
+        }
+
+        function RefreshFrameworkAgreementsPlaceHolder() {
+            ShowDetailSaveDialog();
+            var selectedYear = $('#FrameworkAgreementYear').val();
+            if (selectedYear == undefined || selectedYear == "")
+                selectedYear = new Date().getFullYear();
+
+            var url = '@Url.Action("FrameworkAgreements")/' + selectedYear;
+            $('#FrameworkAgreementsPlaceHolder').load(url, function () {
+                $('#FrameworkAgreementsDataTable').dataTable({ persist: true });
+                HideDetailSaveDialog();
+            });
+        }
+
+    </script>
+}
+
+<fieldset>
+    <legend>Framework agreements</legend>
+    <div class="prefix_2 grid_12">
+        <select id="FrameworkAgreementYear"></select>
+        <br />
+        <br />
+    </div>
+
+    <div id="FrameworkAgreementsPlaceHolder"></div>
+    <br />
+    <br />
+    <div class="right-text">
+        @Html.ActionLink("Create", "Create", "ProjectFrameworkAgreementDetail", new { area = "Project" }, new { target = "_blank", @class = "button" })
+    </div>
+</fieldset>

@@ -1,0 +1,168 @@
+﻿@model Quintessence.QPlanet.ViewModel.Scm.EditActivityDetailTrainingModel
+@using (Html.BeginForm("EditActivityDetailTraining", "ProjectConsultancy", FormMethod.Post, new { data_form = "EditActivityDetailTrainingForm", data_activitydetailid = Model.Id }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    <h4>Information</h4>
+    <table style="width: 100%">
+        <tr>
+            <td class="label" style="vertical-align: top">@Html.DisplayNameFor(m => m.Description)
+            </td>
+            <td class="value" style="">@Html.TextAreaFor(m => m.Description, 4, 60, null)</td>
+        </tr>
+        <tr>
+            <td class="label" style="vertical-align: top">@Html.DisplayNameFor(m => m.Code)
+            </td>
+            <td class="value">@Html.TextBoxFor(m => m.Code)</td>
+        </tr>
+        <tr>
+            <td class="label" style="vertical-align: top">@Html.DisplayNameFor(m => m.ChecklistLink)
+            </td>
+            <td class="value" style="">@Html.TextAreaFor(m => m.ChecklistLink, 2, 60, null)</td>
+            @if (!string.IsNullOrWhiteSpace(Model.ChecklistLink))
+            {
+                <td><a href="@Model.ChecklistLink" target="_blank">Open</a></td>
+            }
+        </tr>
+        <tr>
+            <td class="label" style="vertical-align: top">@Html.DisplayNameFor(m => m.TargetGroup)
+            </td>
+            <td class="value">@Html.TextAreaFor(m => m.TargetGroup, 4, 60, null)</td>
+        </tr>
+        <tr>
+            <td class="label" style="vertical-align: top">@Html.DisplayNameFor(m => m.Duration)
+            </td>
+            <td class="value">@Html.TextAreaFor(m => m.Duration, 4, 60, null)</td>
+        </tr>
+        <tr>
+            <td class="label" style="vertical-align: top">@Html.DisplayNameFor(m => m.ExtraInfo)
+            </td>
+            <td class="value">@Html.TextAreaFor(m => m.ExtraInfo, 4, 60, null)</td>
+        </tr>
+        <tr>
+            <td class="label" style="vertical-align: top">Training types
+            </td>
+            <td class="value">
+                @for (int i = 0; i < Model.TrainingTypes.Count; i++)
+                {
+                    @Html.HiddenFor(m => m.TrainingTypes[i].Id)
+                    @Html.CheckBoxFor(m => m.TrainingTypes[i].IsChecked)
+                    @Html.LabelFor(m => m.TrainingTypes[i].IsChecked, Model.TrainingTypes[i].Name)
+                    <br />
+                }
+            </td>
+        </tr>
+    </table>
+    <br />
+    <br />
+    <table class="dataTable">
+        <thead>
+            <tr>
+                <th style="width: 40%" colspan="2">Activity/Consultancy profile</th>
+                <th style="width: 15%">1 day</th>
+                <th style="width: 15%">1/2 day</th>
+                <th style="width: 15%">1 hour</th>
+                <th style="width: 15%">1 isol. hour</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.ActivityProfiles.Count; i++)
+            {
+                <tr>
+                    <td style="width: 40%" colspan="2">
+                        @Html.DisplayTextFor(m => m.ActivityProfiles[i].ProfileName)
+                    </td>
+                    <td style="max-width: 15%" class="numeric">@Model.ActivityProfiles[i].DayRate.ToString("C")</td>
+                    <td style="max-width: 15%" class="numeric">@Model.ActivityProfiles[i].HalfDayRate.ToString("C")</td>
+                    <td style="max-width: 15%" class="numeric">@Model.ActivityProfiles[i].HourlyRate.ToString("C")</td>
+                    <td style="max-width: 15%" class="numeric">@Model.ActivityProfiles[i].IsolatedHourlyRate.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+
+    <div class="right-text">
+        <a href="@Url.Action("Edit", "ProjectConsultancy", new{id=@Model.ProjectId})#ActivityProfileInformation" target="_blank" class="button">Edit profiles</a>
+        <a href="javascript:void(0);" class="button" data-function="EditActivityDetailTrainingSubmitButton" data-activitydetailid="@Model.Id">
+            Save</a>
+    </div>
+    
+    
+    <h4>Sessions</h4>
+    <table id="AppointmentTable" class="dataTable">
+        <thead>
+            <tr>
+                <th style="width: 25%">Language</th>
+                <th style="width: 25%">Requested sessions</th>
+                <th style="width: 25%">Planned sessions</th>
+                <th style="width: 25%"></th>
+            </tr>
+        </thead>
+        @for (int i = 0; i < Model.ActivityDetailTrainingLanguages.Count; i++)
+        {
+            var language = Model.ActivityDetailTrainingLanguages[i];
+            <tr id="node-Appointment-@language.Id">
+                <td>
+                    @Html.EditorFor(m => m.ActivityDetailTrainingLanguages[i], "BaseEntityViewTemplate")
+                    @Model.ActivityDetailTrainingLanguages[i].LanguageName
+                </td>
+                <td>@Html.EditorFor(m => m.ActivityDetailTrainingLanguages[i].SessionQuantity)</td>
+                <td>
+                    @{
+            var planned = Model.TrainingAppointments.Count(ta => ta.LanguageId == language.LanguageId);
+
+            if (planned != language.SessionQuantity)
+            {
+                        <img src="@Url.Content("~/Images/Icons/Warning16.png")" title="Number of planned session is not equal to number of requested sessions."/>
+            }
+                    }
+                    @planned
+                </td>
+                <td></td>
+            </tr>
+            if (planned > 0)
+            {
+            <tr class="child-of-node-Appointment-@language.Id">
+                <td colspan="4">
+                    <table class="dataTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 28%">Training</th>
+                                <th style="width: 18%">Start</th>
+                                <th style="width: 18%">End</th>
+                                <th style="width: 18%">Trainer</th>
+                                <th style="width: 18%">Office</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var appointmentTraining in Model.TrainingAppointments.Where(ta => ta.LanguageId == language.LanguageId).OrderBy(ta => ta.StartDate))
+                            {
+                                <tr id="node-Appointment-@appointmentTraining.Id">
+                                    <td>@appointmentTraining.Description</td>
+                                    <td>@appointmentTraining.StartDate</td>
+                                    <td>@appointmentTraining.EndDate</td>
+                                    <td>@appointmentTraining.UserFullName</td>
+                                    <td>@appointmentTraining.OfficeShortName</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <br />
+                </td>
+            </tr>
+            }
+        }
+    </table>
+    <br />
+
+    <div class="right-text">
+        <a href="javascript:void(0);" class="button" data-function="EditActivityDetailTrainingSubmitButton" data-activitydetailid="@Model.Id">
+            Save</a>
+    </div>
+}
+
+<script>
+    $(function () {
+        $('#AppointmentTable').treeTable({ persist: true });
+    })
+</script>

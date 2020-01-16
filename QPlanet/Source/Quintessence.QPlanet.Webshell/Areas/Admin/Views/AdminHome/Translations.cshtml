@@ -1,0 +1,31 @@
+﻿@model List<Quintessence.QService.QueryModel.Rep.ReportParameterView>
+
+<table id="TranslationTable">
+    <thead>
+        <tr>
+            <th style="width: 25%;">Code</th>
+            <th style="width: 75%;">Description</th>
+            <th style="width: 72px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var translation in Model)
+        {
+            <tr>
+                <td>@translation.Code</td>
+                <td>@translation.Description</td>
+                <td>
+                    <a href="javascript:void(0)" data-function="EditTranslationButton" data-id="@translation.Id">Edit</a>
+                    <a href="javascript:void(0)" data-function="DeleteTranslationButton" data-id="@translation.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+<br />
+
+<div class="right-text">
+    <a href="javascript:void(0);" data-function="RefreshTranslationTable" class="button">Refresh</a>
+    <a href="javascript:void(0);" data-function="AddTranslationButton" class="button">Add</a>
+</div>

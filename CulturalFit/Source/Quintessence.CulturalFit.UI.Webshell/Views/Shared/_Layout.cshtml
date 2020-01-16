@@ -1,0 +1,43 @@
+@using Resources
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="pragma" content="no-cache">
+    <title>Quintessence - Cultuurfit - @ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Reset.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Text.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Grid.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Layout.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Nav.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Site.css" media="screen" />
+    @RenderSection("AdditionalScripts", false)
+</head>
+<body>
+    <div class="container_12">
+        <div class="grid_12 alpha omega">
+            <header>
+                <img src="~/Images/banner.jpg" alt="Quintessence - We bring out the best in you" width="960"/>
+            </header>
+        </div>
+        <div class="clear"></div>
+        <div class="grid_12">&nbsp;</div>
+        <div class="clear"></div>
+        <div style="min-height: 500px;">
+            @RenderBody()
+        </div>
+        <div class="clear"></div>
+        <div class="grid_12">
+            <footer>
+                &copy; Quintessence Consulting - @Global.FooterText - <a href="mailto:info@quintessence.be">info@quintessence.be</a> - 0032 (0)3 281 44 88                 
+            </footer>
+        </div>
+        <div class="clear">&nbsp;</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+@using System.Web.Mvc.Html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Quintessence - Cultuurfit - Admin - @ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.7.2.js")"></script>
+    <script>
+        $(function () {
+            var controllerAction = "@ViewContext.RouteData.Values["controller"].ToString()";
+            $('nav a').parent().removeClass('selected');
+            $('nav a[href*="' + controllerAction + '"]').parent().attr('class', 'selected');
+        });
+    </script>
+    @RenderSection("AdditionalStylesheets", false)
+    @RenderSection("AdditionalJavascript", false)
+    
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <div id="title">Cultural Fit - Admin</div>
+            <nav>
+                <ul>
+                    <li>@Html.ActionLink("Customer", "Index", "CustomersAdmin", new {projectId = ViewContext.RouteData.Values["projectId"]}, null)</li>
+                    <li>@Html.ActionLink("Participants", "Index", "ParticipantsAdmin", new {projectId = ViewContext.RouteData.Values["projectId"]}, null)</li>
+                </ul>
+            </nav>
+        </header>
+        <div id="content">
+            @RenderBody()
+        </div>
+    </div>
+</body>
+</html>

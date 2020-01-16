@@ -1,0 +1,318 @@
+﻿@{
+    ViewData["HelpLocation"] = (ViewContext.RouteData.DataTokens.ContainsKey("area")
+                                    ? string.Format("_{0}_{1}_{2}", ViewContext.RouteData.DataTokens["area"], ViewContext.Controller.ValueProvider.GetValue("controller").RawValue, ViewContext.Controller.ValueProvider.GetValue("action").RawValue)
+                                    : string.Format("_{0}_{1}", ViewContext.Controller.ValueProvider.GetValue("controller").RawValue, ViewContext.Controller.ValueProvider.GetValue("action").RawValue));
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="@Url.Content("~/Images/QPlanet.ico")"/>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.7.2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.8.18.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/global.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.ui.touch-punch.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/globalize.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/cultures/globalize.culture.nl-BE.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/persist.js")"></script>
+
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/themes/base/jquery.ui.all.css")"
+        media="screen" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Reset.css")" media="screen" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Grid.css")" media="screen" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Site.css")" media="screen" />
+    @Html.Action("BackgroundStyle", "General", new { area = string.Empty })
+    <script type="text/javascript">
+        $.validator.methods.number = function (value, element) {
+            return !isNaN(Globalize.parseFloat(value));
+        };
+
+        var store = null;
+        var enablePersistStore = false;
+
+        $(function () {
+            CreatePersistStore();
+
+            Globalize.culture('nl-BE');
+            $.ajaxSetup({
+                cache: false,
+                error: function (response, status, error) {
+                    AddNotification('General', response.statusText);
+                }
+            });
+
+            InitializeDetailDialogs();
+            InitializeValidation();
+            InitializeHelpButton();
+            CreateTabs();
+        });
+
+        function CreatePersistStore() {
+            if (enablePersistStore)
+                store = new Persist.Store('QPlanetPageState', { expires: 1 });
+        }
+
+        function InitializeHelpButton() {
+            $('.area > ul').append('<li><a href="javascript:void(0);" data-function="HelpButton">Help</a></li>');
+            $('a[data-function=HelpButton]').click(function (event) {
+                event.preventDefault();
+
+                $('#DetailHelpDialog').loading('Retrieving documentation');
+
+                $('#DetailHelpDialog').dialog('open');
+
+                $.ajax({
+                    url: '@Url.Action("Help", "General", new { area = string.Empty, location = ViewData["HelpLocation"] })',
+                    success: function(html) {
+                        $('#DetailHelpDialog').html(html);
+                    },
+                    error: function(err) {
+                        alert(err.responseText);
+                    }
+                });
+            });
+    }
+
+    function InitializeDetailDialogs() {
+        $('#DetailSaveDialog').dialog({
+            autoOpen: false,
+            modal: true,
+            resizable: false,
+            width: 350,
+            height: 200,
+            position: 'center',
+            title: 'Please wait',
+            closeOnEscape: false,
+            open: function (event, ui) {
+                $(".ui-dialog-titlebar-close", ui.dialog || ui).hide();
+            }
+        });
+
+        $('#DetailErrorDialog').dialog({
+            autoOpen: false,
+            modal: true,
+            resizable: false,
+            width: 600,
+            height: 300,
+            position: 'center',
+            title: 'Unable to perform the operation',
+            closeOnEscape: false,
+            open: function (event, ui) {
+                $(".ui-dialog-titlebar-close", ui.dialog || ui).hide();
+            }
+        });
+
+        $('#DetailHelpDialog').dialog({
+            autoOpen: false,
+            modal: true,
+            resizable: false,
+            width: 800,
+            height: 600,
+            position: 'center',
+            title: 'Help',
+            closeOnEscape: false,
+            open: function (event, ui) {
+                $(".ui-dialog-titlebar-close", ui.dialog || ui).hide();
+            }
+        });
+    }
+
+    function ShowDetailSaveDialog() {
+        $('#DetailSaveDialogLoadingIndicator').attr('src', $('#DetailSaveDialogLoadingIndicator').attr('src'));
+        $('#DetailSaveDialog').dialog('open');
+    }
+
+    function HideDetailSaveDialog() {
+        $('#DetailSaveDialog').dialog('close');
+    }
+
+    function ShowDetailErrorDialog(operation, err) {
+        try {
+            var errorData = $.parseJSON(err.responseText);
+
+            $('#DetailErrorPlaceholder').html('<p>' + operation + '</p><ul><li class="circle">' + errorData.join('</li><li class="circle">') + '</li></ul>');
+            $('#DetailErrorDialog').dialog('open');
+
+        } catch (e) {
+            alert(err.statusText);
+        }
+    }
+
+    function HideDetailErrorDialog() {
+        $('#DetailErrorDialog').dialog('close');
+    }
+
+    function ParseIcon(icon, title) {
+        var imageUrl = '@Url.Content("~/Images/Icons/")' + icon + '.png';
+            return '<img src="' + imageUrl + '" title="' + title + '" class="icon" />';
+        }
+
+        function InitializeValidation() {
+            var required$ = $("input[data-val-required]");
+            $.each(required$, function (i) {
+                try {
+                    var id$ = $(this).attr('name');
+                    var label$ = $("label[for=" + id$ + "]");
+                    label$.html(label$.text() + ' <label class="field-validation-error">*</label>');
+
+                } catch (e) {
+                    //Not necessary to handle the error here
+                }
+            });
+        }
+
+        //'form' parameter is a JQuery selector of the form in which the required fields are to be validated.
+        //Returns true if validation is successful, otherwise false.
+        function ValidateFormInputRequired(form) {
+            var validator = form.validate();
+            var requiredFields = $('input[data-val-required]').toArray();
+            var errorFields = {};
+            for (var i = 0; i < requiredFields.length; i++) {
+                var name = requiredFields[i].name;
+                errorFields[name] = '*';
+            }
+            validator.showErrors(errorFields);
+            if (validator.valid())
+                return true;
+            return false;
+        }
+
+        function CreateTabs() {
+            $('#Tabs li > a').each(function () {
+                if ($(this).text() == undefined || $(this).text() == '')
+                    $(this).text($($(this).attr('href') + ' legend').text());
+
+                $(this).click(function (event) {
+                    event.preventDefault();
+                    $('#Tabs li > a').each(function (index, link) {
+                        $(this).removeClass('selected');
+                        $(link.hash).hide();
+                    });
+                    $(this).addClass('selected');
+
+                    if (store != null) {
+                        store.set('ActiveTab.@Request.Url.AbsoluteUri', $(this).attr('href'));
+                }
+                    $($(this).attr('href')).show();
+                });
+            });
+
+        if (store != null) {
+            var activeTab = store.get('ActiveTab.@Request.Url.AbsoluteUri');
+
+                var hasBeenClicked = false;
+                if (activeTab != undefined) {
+                    $('#Tabs li > a').each(function () {
+                        if ($(this).attr('href') == activeTab) {
+                            $(this).click();
+                            hasBeenClicked = true;
+                        }
+                    });
+                }
+
+                if (hasBeenClicked) {
+                    return;
+                }
+            }
+
+            if (window.location.hash) {
+                $('#Tabs li > a[href=' + window.location.hash + ']').first().click();
+            }
+            else {
+                $('#Tabs li > a').first().click();
+            }
+        }
+
+        function AddNotification(code, message) {
+            if ($('#ValidationSummary > div.validation-summary-errors').length == 0) {
+                $('#ValidationSummary').html('<div class="validation-summary-errors"><ul></ul></div>');
+            }
+            $('#ValidationSummary div.validation-summary-errors ul').append('<li data-code="' + code + '">' + message + '</li>');
+        }
+
+        function RemoveNotification(code) {
+            $('li[data-code=' + code + ']').remove();
+            if ($('#ValidationSummary div.validation-summary-errors > ul > li').length == 0) {
+                $('#ValidationSummary div.validation-summary-errors').remove();
+            }
+        }
+    </script>
+    @RenderSection("AdditionalScripts", false)
+</head>
+<body>
+    <header>
+        <div class="container_16 qplanet-logo">
+            <div class="grid_16">
+                @RenderSection("DetailAreaNavigation")
+                @RenderSection("DetailActionNavigation")
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </header>
+    <div id="ValidationSummary">
+        @Html.ValidationSummary(true)
+    </div>
+    <div style="margin-top:80px;"></div>
+    <div class="container_16">
+        @if (IsSectionDefined("LeftNavigation"))
+        {
+            <div class="grid_4">
+                <fieldset>
+                    <legend>Sections</legend>
+
+                    <nav class="navigation">
+                        @RenderSection("LeftNavigation", false)
+                    </nav>
+                </fieldset>
+            </div>
+            <div class="grid_12">
+                @RenderBody()
+            </div>
+        }
+        else
+        {
+            <div class="grid_16">
+                @RenderBody()
+            </div>
+        }
+    </div>
+
+    <div id="DetailSaveDialog">
+        <table style="display: table; width: 100%">
+            <tr style="display: table-row; vertical-align: middle; width: 100%">
+                <td style="display: table-cell; vertical-align: middle; text-align: center; width: 100%">
+                    The computer is exchanging information with the server.<br />
+                    Please wait.<br />
+                    <br />
+                    <img src="@Url.Content("~/Images/loading_animation.gif")" title="Loading indicator" alt="Loading..." />
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="DetailErrorDialog">
+        <table style="display: table; width: 100%">
+            <tr style="display: table-row;">
+                <td style="display: table-cell; vertical-align: top; text-align: left; min-width: 150px;
+                    padding: 0">
+                    <img src="@Url.Content("~/Images/Error/Error0" + new Random().Next(1, 5) + ".png")"/>
+                </td>
+                <td style="display: table-cell; vertical-align: top; text-align: left; width: 100%">
+                    <p>One or more errors occured during the operation:</p>
+                    <div id="DetailErrorPlaceholder">
+                    </div>
+                    <p>Please review your changes and take appropriate action.</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="DetailHelpDialog">
+    </div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Admin.Models.AdminProject.ProjectTypeCategoryUnitPricesActionModel
+<table id="UnitPricesTable" class="dataTable">
+    <thead>
+        <tr>
+            <th></th>
+            @for (int i = 0; i < Model.ProjectTypeCategoryLevels.Count; i++)
+            {
+                <th>
+                    <span title="@Model.ProjectTypeCategoryLevels[i].Name">@(i + 1)</span>
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="@(Model.ProjectTypeCategoryLevels.Count + 1)" class="center-text">Main categories</td>
+        </tr>
+
+        @for (int x = 0; x < Model.ProjectTypeMainCategories.Count; x++)
+        {
+            <tr>
+                <td colspan="@(Model.ProjectTypeCategoryLevels.Count + 1)" class="center-text">
+                    @Html.EditorFor(m => Model.ProjectTypeMainCategories[x], "BaseEntityViewTemplate")
+                </td>
+            </tr>
+            <tr>
+                <td>@Model.ProjectTypeMainCategories[x].Name</td>
+                @for (int y = 0; y < Model.ProjectTypeMainCategories[x].ProjectTypeCategoryLevels.Count; y++)
+                {
+                    <td>
+                        @Html.EditorFor(m => Model.ProjectTypeMainCategories[x].ProjectTypeCategoryLevels[y], "BaseEntityViewTemplate")
+                        @Html.TextBoxFor(m => Model.ProjectTypeMainCategories[x].ProjectTypeCategoryLevels[y].ProjectTypeCategoryUnitPrice.UnitPrice, new { style = "width:75px" })
+                    </td>
+                }
+            </tr>
+        }
+        
+        <tr>
+            <td colspan="@(Model.ProjectTypeCategoryLevels.Count + 1)" class="center-text">Subcategories</td>
+        </tr>
+
+        @for (int x = 0; x < Model.ProjectTypeSubCategories.Count; x++)
+        {
+            <tr>
+                <td colspan="@(Model.ProjectTypeCategoryLevels.Count + 1)" class="center-text">
+                    @Html.EditorFor(m => Model.ProjectTypeSubCategories[x], "BaseEntityViewTemplate")
+                </td>
+            </tr>
+            <tr>
+                <td>@Model.ProjectTypeSubCategories[x].Name</td>
+                @for (int y = 0; y < Model.ProjectTypeSubCategories[x].ProjectTypeCategoryLevels.Count; y++)
+                {
+                    <td>
+                        @Html.EditorFor(m => Model.ProjectTypeSubCategories[x].ProjectTypeCategoryLevels[y], "BaseEntityViewTemplate")
+                        @Html.TextBoxFor(m => Model.ProjectTypeSubCategories[x].ProjectTypeCategoryLevels[y].ProjectTypeCategoryUnitPrice.UnitPrice, new { style = "width:75px" })
+                    </td>
+                }
+            </tr>
+        }
+
+    </tbody>
+</table>
+<br />
+<br />
+<div>
+    @for (int i = 0; i < Model.ProjectTypeCategoryLevels.Count; i++)
+    {
+        <div>
+            @(string.Format("{0} = {1}", (i + 1), @Model.ProjectTypeCategoryLevels[i].Name))
+        </div>
+    }
+</div>
+

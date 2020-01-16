@@ -1,0 +1,8 @@
+﻿@model Quintessence.QPlanet.ViewModel.Dim.DictionaryModel
+
+<ul id="DictionaryDetailTreeview" class="treeview-gray">
+@for (int i = 0; i < Model.DictionaryClusters.Count; i++)
+{
+    @Html.DisplayFor(m => m.DictionaryClusters[i])
+}
+</ul>

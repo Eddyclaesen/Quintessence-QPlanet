@@ -1,0 +1,269 @@
+﻿@model Quintessence.QPlanet.ViewModel.Dim.EditDictionaryClusterModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Admin - Edit dictionary cluster";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">@Model.Name</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li class="current">Cluster Detail</li>
+        </ul>
+    </nav>
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.treeTable.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.cookie.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/persist.js")" type="text/javascript"></script>
+
+    <script>
+        $(function () {
+            $('#DictionaryTable').treeTable({ persist: true });
+
+            InitializeButtons();
+            InitializeAddCompetenceDialog();
+
+            if (0 != parseInt($('#DictionaryNumberOfUsages').attr('data-value'))) {
+                AddNotification('DICUSAGES', 'There are @(Model.DictionaryNumberOfUsages) project(s) using this dictionary. Editing this cluster may render those project corrupt!');
+            }
+
+            if ('true' == $('#DictionaryIsLive').attr('data-value')) {
+                AddNotification('DICISLIVE', 'The dictionary to which this cluster belongs marked as Live and is being used in production. Editing this cluster may render those project corrupt!');
+            }
+        });
+
+        function InitializeAddCompetenceDialog() {
+            $('#AddDictionaryCompetenceDialog').dialog(
+                {
+                    autoOpen: false,
+                    modal: true,
+                    resizable: false,
+                    width: 650,
+                    height: 500,
+                    title: 'Add new competence'
+                });
+        }
+
+        function InitializeButtons() {
+            $('a[data-function=SaveDictionaryCluster]').click(function (event) {
+                ShowDetailSaveDialog();
+
+                event.preventDefault();
+
+                var form = $('form');
+
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    dataType: 'JSON',
+                    success: function () {
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Save dictionary cluster', err);
+                    }
+                });
+            });
+
+            $(this).on('click', 'a[data-function=DeleteDictionaryCompetenceButton]', null, function (event) {
+                event.preventDefault();
+
+                if (!confirm('Are you sure you want to delete this competence?'))
+                    return;
+
+                ShowDetailSaveDialog();
+
+                $.ajax({
+                    url: '@Url.Action("DeleteDictionaryCompetence")/' + $(this).attr('data-id'),
+                    success: function () {
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Delete dictionary competence', err);
+                    }
+                });
+            });
+
+            $(this).on('click', 'a[data-function=AddDictionaryCompetenceButton]', null, function (event) {
+                event.preventDefault();
+
+                $('#AddDictionaryCompetenceDialog').loading('Prepare new competence.');
+                $('#AddDictionaryCompetenceDialog').dialog('open');
+
+                $.ajax({
+                    url: '@Url.Action("AddDictionaryCompetence", new{id = Model.Id})',
+                    success: function (html) {
+                        $('#AddDictionaryCompetenceDialog').html(html);
+                    },
+                    error: function (err) {
+                        ShowDetailErrorDialog('Prepare new competence', err);
+                    }
+                });
+            });
+
+            $(this).on('click', 'a[data-function=SaveDictionaryCompetence]', null, function (event) {
+                ShowDetailSaveDialog();
+
+                event.preventDefault();
+
+                var form = $('#AddDictionaryCompetenceForm');
+
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    dataType: 'JSON',
+                    success: function () {
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Create dictionary competence', err);
+                    }
+                });
+            });
+
+            $(this).on('click', 'a[data-function=NormalizeOrderButton]', null, function (event) {
+                ShowDetailSaveDialog();
+
+                event.preventDefault();
+
+                $.ajax({
+                    url: '@Url.Action("NormalizeDictionaryCompetenceOrder", new { id = Model.Id })',
+                    success: function () {
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Normalize dictionary competences', err);
+                    }
+                });
+            });
+        }
+    </script>
+}
+
+<div class="grid_8">
+    <fieldset>
+        <legend>@Model.Name</legend>
+
+        <div id="DictionaryNumberOfUsages" data-value="@(Model.DictionaryNumberOfUsages)">
+        </div>
+        <div id="DictionaryIsLive" data-value="@(Model.DictionaryIsLive.ToString().ToLowerInvariant())">
+        </div>
+
+        <div class="row">
+            <div>Dictionary</div>
+            <div>@Html.ActionLink(Model.DictionaryName, "EditDictionary", new { id = Model.DictionaryId }, new { target = Model.DictionaryId, title = "Click to edit" })
+            </div>
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+            <div class="row">
+                <div>@Html.DisplayNameFor(m => m.Name)</div>
+                <div>@Html.EditorFor(m => m.Name)</div>
+            </div>
+            <div class="row">
+                <div>@Html.DisplayNameFor(m => m.Description)</div>
+                <div>@Html.TextAreaFor(m => m.Description, 4, 40, null)</div>
+            </div>
+            <div class="row">
+                <div>@Html.DisplayNameFor(m => m.Color)</div>
+                <div>@Html.EditorFor(m => m.Color)</div>
+            </div>
+            <div class="row">
+                <div>@Html.DisplayNameFor(m => m.Order)</div>
+                <div>@Html.EditorFor(m => m.Order)</div>
+            </div>
+            <div class="row">
+                <div>@Html.DisplayNameFor(m => m.ImageName)</div>
+                <div>@Html.EditorFor(m => m.ImageName)</div>
+            </div>
+            <div class="row"></div>
+    
+            <div class="right-text">
+                <a href="javascript:void();" data-function="SaveDictionaryCluster" class="button">Save</a>
+            </div>
+
+            if (Model.DictionaryClusterTranslations != null)
+            {
+                for (int i = 0; i < Model.DictionaryClusterTranslations.Count; i++)
+                {
+                    @Html.EditorFor(m => m.DictionaryClusterTranslations[i], "BaseEntityViewTemplate")
+                    <b>@Model.DictionaryClusterTranslations[i].LanguageName</b>
+                    <div class="row">
+                        <div>@Html.DisplayNameFor(m => m.DictionaryClusterTranslations[i].Text)</div>
+                        <div>@Html.EditorFor(m => m.DictionaryClusterTranslations[i].Text)</div>
+                    </div>
+                    <div class="row">
+                        <div>@Html.DisplayNameFor(m => m.DictionaryClusterTranslations[i].Description)</div>
+                        <div>@Html.TextAreaFor(m => m.DictionaryClusterTranslations[i].Description, 4, 40, null)
+                        </div>
+                    </div>
+                    <div class="row"></div>
+                }
+            }
+
+            <div class="right-text">
+                <a href="javascript:void();" data-function="SaveDictionaryCluster" class="button">Save</a>
+            </div>
+        }
+    </fieldset>
+</div>
+<div class="grid_8">
+    <fieldset>
+        <legend>Competences</legend>
+        <table id="DictionaryCompetenceTable" class="dataTable">
+            <thead>
+                <tr>
+                    <th style="width: 100%;">Competence</th>
+                    <th style="width: 72px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var competence in Model.DictionaryCompetences.OrderBy(dc => dc.Order))
+                {
+                    <tr id="node-@competence.Id">
+                        <td>
+                            @competence.Order - @competence.Name
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditDictionaryCompetence", new { id = competence.Id }, new { @class = "edit-link", target = competence.DictionaryId })
+                            @if (Model.DictionaryNumberOfUsages == 0 && !Model.DictionaryIsLive)
+                            {
+                                <a href="javascript:void(0);" data-function="DeleteDictionaryCompetenceButton" data-id="@competence.Id" class="delete-link">
+                                    Delete</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+        <br />
+
+        <div class="right-text">
+            <a href="javascript:void();" data-function="AddDictionaryCompetenceButton" class="button">
+                Add</a>
+            <a href="javascript:void();" data-function="NormalizeOrderButton" class="button">Normalize
+                Order</a>
+        </div>
+    </fieldset>
+</div>
+
+<div id="AddDictionaryCompetenceDialog"></div>

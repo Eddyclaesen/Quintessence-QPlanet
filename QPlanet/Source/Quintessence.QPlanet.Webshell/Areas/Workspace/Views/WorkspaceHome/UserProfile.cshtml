@@ -1,0 +1,32 @@
+﻿@model Quintessence.QPlanet.ViewModel.Sim.EditUserProfileModel
+
+@Html.EditorFor(m => m, "BaseEntityViewTemplate")
+<table style="width: 100%" class="properties">
+    <tr>
+        <td class="label">Name:</td>
+        <td class="value">@Model.FullName</td>
+    </tr>
+    <tr>
+        <td class="label">Username:</td>
+        <td class="value">@Model.UserName</td>
+    </tr>
+    <tr>
+        <td class="label">Password:</td>
+        <td class="value">@Html.ActionLink("Change password", "ChangePassword", "Login", new { area = string.Empty }, null)
+        </td>
+    </tr>
+    <tr>
+        <td class="label">Email:</td>
+        <td class="value">
+            @foreach (var email in Model.Emails)
+            {
+                <a href="mailto:@email.Address">@email.Address</a><br />
+            }
+        </td>
+    </tr>
+    <tr>
+        <td class="label">Prefered language:</td>
+        <td class="value">@Html.DropDownListFor(m => m.LanguageId, Model.CreateLanguageDropDownList(Model.LanguageId))
+        </td>
+    </tr>
+</table>

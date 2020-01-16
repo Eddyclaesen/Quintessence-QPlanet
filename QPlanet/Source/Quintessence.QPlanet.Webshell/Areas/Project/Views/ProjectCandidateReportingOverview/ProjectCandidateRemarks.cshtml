@@ -1,0 +1,10 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.EditProjectCandidateRemarksModel
+@using (Html.BeginForm("UpdateProjectCandidateRemarks", "ProjectCandidateReportingOverview", FormMethod.Post, new{id="EditProjectCandidateRemarksForm"}))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    <div class="right-text">
+        @Html.TextAreaFor(m => m.Remarks, 10, 60, null)
+        <a href="javascript:void(0);" data-function="EditProjectCandidateRemarksSubmitButton" class="button">Save</a>
+    </div>
+
+}

@@ -1,0 +1,7 @@
+﻿@model DateTime?
+@Html.TextBoxFor(m => m, new { @Value = Model.HasValue ? Model.Value.ToString("dd/MM/yyyy") : "", data_function="NullableDatePicker" })
+<script>
+    $(function () {
+        $('input[type=text][data-function=NullableDatePicker]').datepicker({ dateFormat: "dd/mm/yy" });
+    })
+</script>

@@ -1,0 +1,104 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectGeneral.ProjectComplaintActionModel
+@using (Html.BeginForm("CreateProjectComplaint", "ProjectGeneral", FormMethod.Post, new { id = "CreateProjectComplaintForm" }))
+{
+    @Html.HiddenFor(m => m.CrmProjectId)
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.Subject)</div>
+        <div>@Html.EditorFor(m => m.Subject)</div>
+    </div>
+    @Html.ValidationMessageFor(m => m.Subject)
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.SubmitterName)</div>
+        <div>@Html.HiddenFor(m => m.SubmitterId)
+             @Html.TextBoxFor(m => m.SubmitterName)
+            <a href="javascript:void(0);" id="ChangeSubmitterNameLink" title="Click on this link to change the Submitter"></a>
+        </div>
+    </div>
+    @Html.ValidationMessageFor(m => m.SubmitterName)  
+        <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ComplaintDate)</div>
+        <div>@Html.TextBoxFor(m => m.ComplaintDate)</div>
+    </div>  
+    @Html.ValidationMessageFor(m => m.ComplaintDate) 
+        <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ComplaintDetails)</div>
+        <div>@Html.TextAreaFor(m => m.ComplaintDetails)</div>
+    </div> 
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ComplaintStatusTypeId)</div>
+        <div>@Html.DropDownListFor(m => m.ComplaintStatusTypeId, Model.CreateComplaintStatusTypeSelectListItems(Model.ComplaintStatusTypeId))</div>
+    </div>
+    @Html.ValidationMessageFor(m => m.ComplaintStatusTypeId)  
+        <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ComplaintSeverityTypeId)</div>
+        <div>@Html.DropDownListFor(m => m.ComplaintSeverityTypeId, Model.CreateComplaintSeverityTypeSelectListItems(Model.ComplaintSeverityTypeId))</div>
+    </div>
+    @Html.ValidationMessageFor(m => m.ComplaintSeverityTypeId) 
+        <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ComplaintTypeId)</div>
+        <div>@Html.DropDownListFor(m => m.ComplaintTypeId, Model.CreateComplaintTypeSelectListItems(Model.ComplaintTypeId))</div>
+    </div>
+    @Html.ValidationMessageFor(m => m.ComplaintTypeId) 
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.FollowUp)</div>
+        <div>@Html.TextAreaFor(m => m.FollowUp)</div>
+    </div>
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" class="button" id="AddProjectComplaintSubmitButton">Add</a>
+    </div>
+}
+<script>
+    $(function () {
+        InitializeProjectManagerNameAutocomplete();
+        InitializeChangeProjectManagerNameLink();
+        if ($('#SubmitterId').val() != null) {
+            HandleProjectManagerSelection($('#SubmitterId').val(), $('#SubmitterName')[0].value);
+        }
+        $('#ComplaintDate').datepicker({ dateFormat: "dd/mm/yy" });
+    });
+
+    function InitializeProjectManagerNameAutocomplete() {
+        $("#SubmitterName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("SearchProjectManager", "ProjectGeneral", new { area = "Project" })/' + request.term,
+                        dataType: 'JSON',
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.label,
+                                    value: item.label,
+                                    id: item.value
+                                };
+                            }));
+                        },
+                        error: function (err) {
+                            ShowDetailErrorDialog('Search submitter.', err);
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    HandleProjectManagerSelection(ui.item.id, ui.item.label);
+                }
+            });
+        }
+
+        function HandleProjectManagerSelection(id, label) {
+            $('#SubmitterId').val(id);
+            $('#SubmitterName').hide();
+            $('#ChangeSubmitterNameLink').text(label);
+            $('#ChangeSubmitterNameLink').show();
+        }
+        
+        function InitializeChangeProjectManagerNameLink() {
+            $('#ChangeSubmitterNameLink').click(function () {
+                $('#SubmitterId').val(null);
+                $('#SubmitterName').val(null);
+                $('#ChangeSubmitterNameLink').hide();
+                $('#SubmitterName').show();
+                $('#SubmitterName').focus();
+            });
+        }
+</script>

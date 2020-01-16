@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[UserProfile]
+	ADD CONSTRAINT [PK_UserProfile] 
+	PRIMARY KEY NONCLUSTERED ([Id])

@@ -1,0 +1,9 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.SearchCrmProjectResultItemModel
+<td>
+    @Html.EditorFor(m => m.IsSelected)
+</td>
+<td>
+    @Html.HiddenFor(m => m.CrmProjectId)
+    @Model.CrmProjectName
+</td>
+<td>@Model.CrmProjectStatusName</td>

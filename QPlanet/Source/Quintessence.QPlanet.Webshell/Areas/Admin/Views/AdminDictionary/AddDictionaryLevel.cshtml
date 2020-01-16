@@ -1,0 +1,43 @@
+﻿@model Quintessence.QPlanet.ViewModel.Dim.CreateNewDictionaryLevelModel
+@using (Html.BeginForm("AddDictionaryLevel", "AdminDictionary", FormMethod.Post, new { id = "AddDictionaryLevelForm" }))
+{
+    @Html.HiddenFor(m => m.DictionaryCompetenceId)
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.DictionaryName)</div>
+        <div>@Html.DisplayTextFor(m => m.DictionaryName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.DictionaryClusterName)</div>
+        <div>@Html.DisplayTextFor(m => m.DictionaryClusterName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.DictionaryCompetenceName)</div>
+        <div>@Html.DisplayTextFor(m => m.DictionaryCompetenceName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.Level)</div>
+        <div>@Html.EditorFor(m => m.Level)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.Name)</div>
+        <div>@Html.EditorFor(m => m.Name)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.LanguageId)</div>
+        <div>@Html.DropDownListFor(m => m.LanguageId, Model.CreateLanguageList())</div>
+    </div>
+    <div class="row">
+        <div>&nbsp;</div>
+        <div>
+            <label>
+                @Html.CheckBoxFor(m => m.ApplyToAllCompetences)
+                @Html.DisplayNameFor(m => m.ApplyToAllCompetences)
+            </label>
+        </div>
+    </div>
+    <div class="row"></div>
+    
+    <div class="right-text">
+        <a href="javascript:void();" data-function="SaveDictionaryLevel" class="button">Save</a>
+    </div>
+}

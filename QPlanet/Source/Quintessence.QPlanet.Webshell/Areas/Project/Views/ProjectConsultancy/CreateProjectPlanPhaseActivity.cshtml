@@ -1,0 +1,69 @@
+﻿@using System.Globalization
+@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectConsultancy.CreateProjectPlanPhaseActivityModel
+
+<div style="height: 300px; overflow: auto;">
+    <table id="AddActivityProfileTable" class="dataTable" style="width: 95%;">
+        <thead>
+            <tr>
+                <th style="width: 15%">Activity/Consultancy Profile</th>
+                <th style="width: 15%">Day</th>
+                <th style="width: 15%">Half day</th>
+                <th style="width: 15%">Hour</th>
+                <th style="width: 15%">Isol. hour</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var i = 0;
+            }
+            @foreach (var activity in Model.Activities)
+            {
+                <tr id="node-Activity-@activity.Id">
+                    <td colspan="5">@activity.Name (@activity.ActivityTypeName)</td>
+                </tr>
+        
+                foreach (var activityProfile in activity.ActivityProfiles)
+                {
+                <tr class="child-of-node-Activity-@activity.Id">
+                    <td style="width: 40%">
+                        @Html.RadioButtonFor(m => m.ActivityProfileId, activityProfile.Id, new { id = i.ToString(CultureInfo.InvariantCulture) })
+                        <label for="@i.ToString(CultureInfo.InvariantCulture)">@activityProfile.ProfileName</label>
+                        @*Html.LabelFor somehow did not work properly :s *@
+                    </td>
+                    <td style="width: 15%">@activityProfile.DayRate</td>
+                    <td style="width: 15%">@activityProfile.HalfDayRate</td>
+                    <td style="width: 15%">@activityProfile.HourlyRate</td>
+                    <td style="width: 15%">@activityProfile.IsolatedHourlyRate</td>
+                </tr>
+                
+                    i++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@Html.HiddenFor(m => m.ProjectPlanPhaseId)
+
+<div class="row">
+    <div>@Html.LabelFor(m => m.Duration)</div>
+    <div>@Html.TextBoxFor(m => m.Duration)</div>
+</div>
+<div class="row">
+    <div>@Html.LabelFor(m => m.Quantity)</div>
+    <div>@Html.TextBoxFor(m => m.Quantity)</div>
+</div>
+<div class="row">
+    <div>@Html.LabelFor(m => m.Deadline)</div>
+    <div>@Html.TextBox(Html.IdFor(m => m.Deadline).ToString(), Model.Deadline.ToShortDateString(), new { data_function = "CreateProjectPlanPhaseActivityModel" })</div>
+</div>
+<div class="row">
+    <div>@Html.LabelFor(m => m.Notes)</div>
+    <div>@Html.TextBoxFor(m => m.Notes)</div>
+</div>
+
+<script>
+    $(function () {
+        $('#@(Html.IdFor(m => m.Deadline))[data-function=CreateProjectPlanPhaseActivityModel]').datetimepicker({ dateFormat: "dd/mm/yy", showTimepicker: false });
+    });
+</script>

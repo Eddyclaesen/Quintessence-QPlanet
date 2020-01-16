@@ -1,0 +1,2 @@
+﻿@model IEnumerable<Quintessence.QService.QueryModel.Sof.CrmActiveProjectView>
+@Html.DropDownList("CrmProjectId", Model.AsSelectListItems(i => i.Id.ToString(), i => i.Name))

@@ -1,0 +1,31 @@
+﻿@using Quintessence.QService.QueryModel.Prm
+@model List<FrameworkAgreementView>
+<table id="FrameworkAgreementsDataTable" class="dataTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Contact</th>
+            <th>Start date</th>
+            <th>End date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (FrameworkAgreementView fwa in Model)
+            {
+            <tr>
+                <td>
+                    @Html.HiddenFor(m => fwa.Id)
+                    @Html.HiddenFor(m => fwa.ContactId)
+                    @(string.IsNullOrEmpty(fwa.Name) ? "--" : fwa.Name)
+                </td>
+                <td>@Html.Raw(string.IsNullOrEmpty(fwa.Description) ? "--" : fwa.Description)</td>
+                <td>@(string.IsNullOrEmpty(fwa.ContactName) ? "--" : fwa.ContactName)</td>
+                <td>@fwa.StartDate.ToShortDateString()</td>
+                <td>@fwa.EndDate.ToShortDateString()</td>
+                <td>@Html.ActionLink("Edit", "Edit", "ProjectFrameworkAgreementDetail", new { area = "Project", id = @fwa.Id }, new { target = @fwa.Id.ToString(), @class="edit-link" })</td>
+            </tr>
+        }
+    </tbody>
+</table>

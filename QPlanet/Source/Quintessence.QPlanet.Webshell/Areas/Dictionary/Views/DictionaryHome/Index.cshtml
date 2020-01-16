@@ -1,0 +1,126 @@
+﻿@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Dictionaries - Home";
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#RefreshQuintessenceDictionariesButton').click(function () { $('#QuintessenceDictionaryTable').dataTable().fnDraw(); });
+            $('#RefreshCustomerDictionariesButton').click(function () { $('#CustomerDictionaryTable').dataTable().fnDraw(); });
+
+            InitializeQuintessenceDictionaryTable();
+            InitializeCustomerDictionaryTable();
+        });
+
+        function InitializeQuintessenceDictionaryTable() {
+            $('#QuintessenceDictionaryTable').dataTable({
+                "bServerSide": true,
+                "sAjaxSource": '@Url.Action("QuintessenceDictionaries")',
+                "aoColumns": [
+                    {
+                        "type": "text",
+                        "fnRender": function(obj) {
+                            return obj.aData[0];
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "fnRender": function(obj) {
+                            return obj.aData[1];
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "fnRender": function(obj) {
+                            return obj.aData[2];
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "fnRender": function(obj) {
+                            var url = '@Url.Action("Edit", "ProjectGeneral", new{area="Project"})/' + obj.aData[3];
+                            return '<a href="' + url + '" target="' + obj.aData[3] + '">Edit</a>';
+                        }
+                    }],
+                "bProcessing": true,
+                "bStateSave": true
+            });
+        }
+
+        function InitializeCustomerDictionaryTable() {
+            $('#CustomerDictionaryTable').dataTable({
+                "bServerSide": true,
+                "sAjaxSource": '@Url.Action("CustomerDictionaries")',
+                "aoColumns": [
+                    {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            return obj.aData[0];
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            return obj.aData[1];
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            return obj.aData[2];
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            var url = '@Url.Action("Edit", "ProjectGeneral", new{area="Project"})/' + obj.aData[3];
+                            return '<a href="' + url + '" target="' + obj.aData[3] + '">Edit</a>';
+                        }
+                    }],
+                "bProcessing": true,
+                "bStateSave": true
+            });
+        }
+    </script>
+}
+<div class="grid_8">
+    <fieldset>
+        <legend>Quintessence Dictionaries</legend>
+        <table id="QuintessenceDictionaryTable">
+            <thead>
+                <tr>
+                    <th style="width: 45%;">Name</th>
+                    <th style="width: 45%;">Name</th>
+                    <th style="width: 10%;">Current</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <br />
+        <br />
+        <button value="Refresh" id="RefreshQuintessenceDictionariesButton" class="button">Refresh</button>
+    </fieldset>
+</div>
+<div class="grid_8">
+    <fieldset>
+        <legend>Customer Dictionaries</legend>
+        <table id="CustomerDictionaryTable">
+            <thead>
+                <tr>
+                    <th style="width: 45%;">Name</th>
+                    <th style="width: 45%;">Name</th>
+                    <th style="width: 10%;">Current</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <br />
+        <br />
+        <button value="Refresh" id="RefreshCustomerDictionariesButton" class="button">Refresh</button>
+    </fieldset>
+</div>
+<div class="clear" />

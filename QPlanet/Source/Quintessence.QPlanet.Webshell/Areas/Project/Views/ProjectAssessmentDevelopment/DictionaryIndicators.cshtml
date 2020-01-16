@@ -1,0 +1,67 @@
+﻿@model List<Quintessence.QPlanet.ViewModel.Dim.DictionaryIndicatorMatrixEntryModel>
+
+@{
+    var clusters = Model.Select(m => new { m.DictionaryClusterId, m.DictionaryClusterName, m.DictionaryClusterOrder }).Distinct().ToList();
+    var competences = Model.Select(m => new { m.DictionaryCompetenceId, m.DictionaryCompetenceName, m.DictionaryCompetenceOrder, m.DictionaryClusterId }).Distinct().ToList();
+    var levels = Model.Select(m => new { m.DictionaryLevelId, m.DictionaryLevelLevel, m.DictionaryLevelName, m.DictionaryCompetenceId }).Distinct().ToList();
+}
+
+<table id="SelectNewIndicatorTable" class="dataTable" style="width: 95%;">
+    <thead>
+        <tr>
+            <th>Cluster - Competence - Level - Indicator</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cluster in clusters.OrderBy(c => c.DictionaryClusterOrder))
+        {
+            <tr id="node-Cluster-@cluster.DictionaryClusterId" class="node-Cluster-@cluster.DictionaryClusterId expanded">
+                <td><font color="darkgreen">@cluster.DictionaryClusterName</font></td>
+            </tr>
+
+            foreach (var competence in competences.Where(c => c.DictionaryClusterId == cluster.DictionaryClusterId).OrderBy(c => c.DictionaryCompetenceOrder))
+            {
+            <tr id="node-Competence-@competence.DictionaryCompetenceId" class="child-of-node-Cluster-@competence.DictionaryClusterId">
+                <td>@competence.DictionaryCompetenceName</td>
+            </tr>
+            
+                foreach (var level in levels.Where(l => l.DictionaryCompetenceId == competence.DictionaryCompetenceId).OrderBy(l => l.DictionaryLevelLevel))
+                {
+            <tr id="node-Level-@level.DictionaryLevelId" class="child-of-node-Competence-@level.DictionaryCompetenceId">
+                <td>
+                    <input type="checkbox" data-function="DictionaryLevelCheckBox" data-id="@level.DictionaryLevelId"/>
+                    @(level.DictionaryLevelLevel). @level.DictionaryLevelName
+                </td>
+            </tr>
+                    foreach (var entry in Model.Where(e => e.DictionaryLevelId == level.DictionaryLevelId).OrderBy(e => e.DictionaryIndicatorOrder))
+                    {
+            <tr class="child-of-node-Level-@level.DictionaryLevelId">
+                <td>
+                    @{var i = Model.IndexOf(entry);}
+                    @Html.HiddenFor(m => m[i].Id)
+                    @if (Model[i].DictionaryIndicatorColor != null)
+                    {
+                        <div style="color: @Model[i].DictionaryIndicatorColor;">
+                            <label>
+                                @Html.CheckBoxFor(m => m[i].IsChecked, new { data_function = "AddDictionaryIndicatorId", data_indicatorid = Model[i].Id, data_levelid = level.DictionaryLevelId })
+                                @Model[i].DictionaryIndicatorName
+                            </label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div style="color: #1e4372;">
+                            <label>
+                                @Html.CheckBoxFor(m => m[i].IsChecked, new { data_function = "AddDictionaryIndicatorId", data_indicatorid = Model[i].Id, data_levelid = level.DictionaryLevelId })
+                                @Model[i].DictionaryIndicatorName
+                            </label>
+                        </div>
+                    }                    
+                </td>
+            </tr>
+                    }
+                }
+            }
+        }
+    </tbody>
+</table>

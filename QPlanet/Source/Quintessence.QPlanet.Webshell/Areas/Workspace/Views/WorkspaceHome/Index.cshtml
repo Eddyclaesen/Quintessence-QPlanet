@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Workspace - Home";
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script>
+        $(function () {
+            InitializeCustomerTable();
+
+            InitializeButtons();
+            RefreshUserProfile();
+        });
+
+        function InitializeCustomerTable() {
+            //$('#CustomerTable').dataTable();
+        }
+
+        function InitializeButtons() {
+            $('#SubmitUserProfileButton').click(function (event) {
+                event.preventDefault();
+
+                var form = $('#UserProfileForm');
+
+                ShowDetailSaveDialog();
+
+                $.ajax({
+                    url: form.attr('action'),
+                    data: form.serialize(),
+                    dataType: 'JSON',
+                    type: 'POST',
+                    success: function () {
+                        HideDetailSaveDialog();
+                        RefreshUserProfile();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Retrieve user profile', err);
+                    }
+                });
+            });
+        }
+
+        function RefreshUserProfile() {
+            $('#UserProfilePlaceholder').loading('Retrieving your profile...');
+            $.ajax({
+                url: '@Url.Action("UserProfile")',
+                success: function (html) {
+                    $('#UserProfilePlaceholder').html(html);
+                },
+                error: function (err) {
+                    $('#UserProfilePlaceholder').html('Unable to retrieve your profile (' + err.statusText + ').');
+                }
+            });
+        }
+    </script>
+}
+@section LeftNavigation
+{
+    <ul id="Tabs">
+        <li><a href="#Profile"></a></li>
+        <li><a href="#MyCustomers"></a></li>
+    </ul>
+}
+
+<fieldset id="Profile">
+    <legend>Profile</legend>
+
+    @using (Html.BeginForm("UserProfile", "WorkspaceHome", FormMethod.Post, new { id = "UserProfileForm" }))
+    {
+        <div id="UserProfilePlaceholder"></div>
+    
+        <div class="right-text">
+            <a href="javascript:voi(0);" id="SubmitUserProfileButton" class="button">Save</a>
+        </div>
+    }
+</fieldset>
+
+<fieldset id="MyCustomers">
+    <legend>My customers</legend>
+</fieldset>

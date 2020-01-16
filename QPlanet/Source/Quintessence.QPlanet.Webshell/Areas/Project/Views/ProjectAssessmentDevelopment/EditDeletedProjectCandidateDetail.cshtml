@@ -1,0 +1,47 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.EditProjectCandidateDetailModel
+@using (Html.BeginForm("EditDeletedProjectCandidateDetail", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "DeletedProjectCandidateDetailsForm", data_id = Model.Id, data_name = Model.FullName }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+
+    <table data-function="CanceledProjectCandidatesTreeTable" class="dataTable">
+        <tr id="node-@Model.Id" class="expanded">
+            <td>@Html.Label(Model.FullName)
+                @if (!Model.IsCancelled)
+                {
+                    <a href="javascript:void;" data-function="CancelCandidate" title="Click here to cancel this candidate." data-project-candidate-id="@Model.Id">
+                        Cancel</a>
+                }
+            </td>
+        </tr>
+        @if (Model.IsCancelled)
+        {
+            <tr class="child-of-node-@Model.Id">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td>@Html.DisplayNameFor(m => Model.CancelledDate)</td>
+                            <td>@Model.CancelledDate.GetValueOrDefault().ToShortDateString()
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(m => Model.CancelledReason)</td>
+                            <td>@Html.TextAreaFor(m => Model.CancelledReason, 7, 40, null)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(m => Model.InvoiceAmount)</td>
+                            <td>@Html.EditorFor(m => Model.InvoiceAmount)</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <br />
+    <br />
+    <div style="text-align: right">
+        <a href="javascript:void(0);" data-function="SubmitDeletedProjectCandidateDetailsButton"
+            class="button">Save</a>
+    </div>
+}

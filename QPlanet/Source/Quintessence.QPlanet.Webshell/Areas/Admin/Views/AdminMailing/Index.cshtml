@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Admin - Mailing";
+}
+
+@section LeftNavigation
+{
+    <ul id="Tabs">
+        <li><a href="#Settings"></a></li>
+        <li><a href="#Templates"></a></li>
+    </ul>
+}
+
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")"></script>
+    <script>
+        $(function() {
+            RefreshMailTemplates();
+        });
+
+        function RefreshMailTemplates() {
+            $('#MailTemplatesPlaceholder').loading('Loading mail templates...');
+            $('#MailTemplatesPlaceholder').load('@Url.Action("ListMailTemplates")', function() {
+                $('#MailTemplatesDataTable').dataTable();
+            });
+        }
+    </script>
+}
+
+<fieldset id="Settings">
+    <legend>Settings</legend>
+    <div id="SettingsPlaceholder"></div>
+</fieldset>
+<fieldset id="Templates">
+    <legend>Mail templates</legend>    
+    <div id="MailTemplatesPlaceholder"></div>
+</fieldset>

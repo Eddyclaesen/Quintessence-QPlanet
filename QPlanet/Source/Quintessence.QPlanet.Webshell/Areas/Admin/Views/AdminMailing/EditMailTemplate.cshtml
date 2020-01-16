@@ -1,0 +1,154 @@
+﻿@model Quintessence.QPlanet.ViewModel.Inf.EditMailTemplateModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Admin - Mailing - Edit template";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">
+                @Model.Name
+            </a>
+            </li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li class="current">Edit</li>
+        </ul>
+    </nav>
+}
+@section AdditionalScripts
+{
+    <link href="@Url.Content("~/Content/themes/base/jquery.treeTable.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/jquery.treeTable.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.cookie.js")"></script>
+    <script src="@Url.Content("~/Scripts/persist.js")"></script>
+    <script src="@Url.Content("~/Scripts/tiny_mce/jquery.tinymce.js")"></script>
+    <script>
+        $(function () {
+            InitializeButtons();
+            InitializeTreeTable();
+            InitializeTextAreas();
+        });
+
+        function InitializeButtons() {
+            $('#SaveMailTemplateButton').click(function () {
+                var form = $('#EditMailTemplateForm');
+                if (form.validate().form()) {
+                    ShowDetailSaveDialog();
+                    $.ajax({
+                        url: form.attr('action'),
+                        type: 'POST',
+                        data: form.serialize(),
+                        success: function (data) {
+                            HideDetailSaveDialog();
+                        },
+                        error: function (x, y, z) {
+                            HideDetailSaveDialog();
+                            alert(x.statusText);
+                        }
+                    });
+                }
+            });
+        }
+        
+        function InitializeTreeTable() {
+            $('#EditMailTemplatesTreeTable').treeTable();
+        }
+
+        function InitializeTextAreas() {
+            $('textarea').each(function () {
+                $(this).tinymce({
+                    script_url: '@Url.Content("~/Scripts/tiny_mce/tiny_mce.js")',
+                    height: '300',
+                    width: '600',
+                    theme: "advanced",
+                    plugins: "emotions,spellchecker,advhr,insertdatetime,preview",
+
+                    // Theme options - button# indicated the row# only
+                    theme_advanced_buttons1: "newdocument,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,fontselect,fontsizeselect,formatselect",
+                    theme_advanced_buttons2: "cut,copy,paste,|,bullist,numlist,|,outdent,indent,|,undo,redo,|,link,unlink,anchor,image,|,code,preview,|,forecolor,backcolor",
+                    theme_advanced_buttons3: "insertdate,inserttime,|,spellchecker,advhr,,removeformat,|,sub,sup,|,charmap,emotions",
+                    theme_advanced_toolbar_location: "top",
+                    theme_advanced_toolbar_align: "left",
+                    theme_advanced_statusbar_location: "bottom",
+                    theme_advanced_resizing: true,
+                    theme_advanced_fonts: "Andale Mono=andale mono,times;" +
+                                          "Arial=arial,helvetica,sans-serif;" +
+                                          "Arial Black=arial black,avant garde;" +
+                                          "Book Antiqua=book antiqua,palatino;" +
+                                          "Comic Sans MS=comic sans ms,sans-serif;" +
+                                          "Courier New=courier new,courier;" +
+                                          "Century Gothic=century gothic;" +
+                                          "Georgia=georgia,palatino;" +
+                                          "Helvetica=helvetica;" +
+                                          "Impact=impact,chicago;" +
+                                          "Symbol=symbol;" +
+                                          "Tahoma=tahoma,arial,helvetica,sans-serif;" +
+                                          "Terminal=terminal,monaco;" +
+                                          "Times New Roman=times new roman,times;" +
+                                          "Trebuchet MS=trebuchet ms,geneva;" +
+                                          "Verdana=verdana,geneva;" +
+                                          "Webdings=webdings;" +
+                                          "Wingdings=wingdings,zapf dingbats"
+                });
+            });
+        }
+    </script>
+}
+<fieldset>
+    <legend>@Model.Name</legend>
+    @using (Html.BeginForm("EditMailTemplate", "AdminMailing", FormMethod.Post, new { id = "EditMailTemplateForm" }))
+    {
+        @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+        <h4>Template:</h4>
+        <div class="row">
+            <div>@Html.DisplayNameFor(m => m.Name)</div>
+            <div>@Html.EditorFor(m => m.Name)</div>
+        </div>
+        @Html.ValidationMessageFor(m=>m.Name)
+        <div class="row">
+            <div>@Html.DisplayNameFor(m => m.FromAddress)</div>
+            <div>@Html.EditorFor(m => m.FromAddress)</div>
+        </div>
+        @Html.ValidationMessageFor(m=>m.FromAddress)
+        <div class="row">
+            <div>@Html.DisplayNameFor(m => m.BccAddress)</div>
+            <div>@Html.EditorFor(m => m.BccAddress)</div>
+        </div>
+        <h4>Language implementations:</h4>
+        <table id="EditMailTemplatesTreeTable">
+            @for (int i = 0; i < Model.MailTemplateTranslations.Count; i++)
+            {
+                var language = Model.Languages.FirstOrDefault(l => l.Id == Model.MailTemplateTranslations[i].LanguageId);
+                <tr id="node-@language.Code">
+                    <td>@language.Name</td>
+                </tr>
+                <tr class="child-of-node-@language.Code">
+                    <td>
+                        @Html.EditorFor(m => m.MailTemplateTranslations[i], "BaseEntityViewTemplate")
+                        <div class="row">
+                            <div>@Html.DisplayNameFor(m => m.MailTemplateTranslations[i].Subject)</div>
+                            <div>@Html.EditorFor(m => m.MailTemplateTranslations[i].Subject)</div>
+                        </div>
+                        <div class="row">
+                            <div>@Html.DisplayNameFor(m => m.MailTemplateTranslations[i].Body)</div>
+                            <div>@Html.TextAreaFor(m => m.MailTemplateTranslations[i].Body, 4, 50, null)</div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+        <br />
+        <br />
+        <div class="right-text">
+            <a href="javascript:void(0);" class="button" id="SaveMailTemplateButton">Save</a>
+        </div>    
+    }
+
+</fieldset>

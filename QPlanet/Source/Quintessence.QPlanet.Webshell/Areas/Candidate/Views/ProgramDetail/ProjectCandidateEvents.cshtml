@@ -1,0 +1,87 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Candidate.Models.ProgramDetail.ProjectCandidateEventsActionModel
+<p>Add the listed Simulations and Categories.</p>
+
+<table id="ProjectCandidateEventsTreeTable" class="dataTable">
+    <thead>
+        <tr>
+            <th colspan="2">Simulation/Category</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.UnplannedProjectCandidateEvents != null && Model.UnplannedProjectCandidateEvents.Count > 0)
+        {
+            foreach (var unplannedProjectCandidateEventGroup in Model.UnplannedProjectCandidateEvents.GroupBy(upce => new { upce.ProjectCandidateId, upce.ProjectCandidateFullName, upce.ContactName }))
+            {
+            <tr id="node-@unplannedProjectCandidateEventGroup.Key.ProjectCandidateId">
+                <td colspan="2">@unplannedProjectCandidateEventGroup.Key.ProjectCandidateFullName (@unplannedProjectCandidateEventGroup.Key.ContactName)
+                </td>
+            </tr>
+                var i = 0;
+                foreach (var unplannedProjectCandidateEvent in unplannedProjectCandidateEventGroup)
+                {
+            <tr id="@unplannedProjectCandidateEvent.Id" class="child-of-node-@unplannedProjectCandidateEventGroup.Key.ProjectCandidateId @(i % 2 == 0 ? "odd" : "even")">
+                <td style="width: 100%">
+                    @if (unplannedProjectCandidateEvent.SimulationCombinationId.HasValue)
+                    {
+                        @unplannedProjectCandidateEvent.SimulationCombinationName
+                    }
+                    else if (unplannedProjectCandidateEvent.ProjectCandidateCategoryDetailTypeId.HasValue)
+                    {
+                        @unplannedProjectCandidateEvent.ProjectCategoryDetailTypeName
+                    }
+                    else if (unplannedProjectCandidateEvent.ProgramComponentSpecialId.HasValue)
+                    {
+                        @unplannedProjectCandidateEvent.ProgramComponentSpecialName
+                    }
+                </td>
+                <td>
+                    @if (unplannedProjectCandidateEvent.SimulationCombinationId.HasValue)
+                    {
+                        <a href="javascript:void(0);" 
+                                   data-id="@unplannedProjectCandidateEvent.Id" 
+                                   data-function="AddUnplannedProjectCandidateSimulation"
+                                   data-project-candidate-id="@unplannedProjectCandidateEvent.ProjectCandidateId"
+                                   data-room-id="@unplannedProjectCandidateEvent.AssessmentRoomId"
+                                   data-simulation-combination-id="@unplannedProjectCandidateEvent.SimulationCombinationId.Value">
+                            Add</a>
+                    }
+                    else if (unplannedProjectCandidateEvent.ProjectCandidateCategoryDetailTypeId.HasValue)
+                    {
+                        <a href="javascript:void(0);" 
+                                   data-id="@unplannedProjectCandidateEvent.Id" 
+                                   data-function="AddUnplannedProjectCandidateCategoryDetail"
+                                   data-project-candidate-id="@unplannedProjectCandidateEvent.ProjectCandidateId"
+                                   data-room-id="@unplannedProjectCandidateEvent.AssessmentRoomId"
+                                   data-category-detail-type-id="@unplannedProjectCandidateEvent.ProjectCandidateCategoryDetailTypeId">
+                            Add</a>
+                    }
+                    else if (unplannedProjectCandidateEvent.ProgramComponentSpecialId.HasValue)
+                    {
+                        <a href="javascript:void(0);" 
+                                   data-id="@unplannedProjectCandidateEvent.Id" 
+                                   data-function="AddUnplannedProgramComponentSpecial"
+                                   data-project-candidate-id="@unplannedProjectCandidateEvent.ProjectCandidateId"
+                                   data-room-id="@unplannedProjectCandidateEvent.AssessmentRoomId"
+                                   data-program-component-special-id="@unplannedProjectCandidateEvent.ProgramComponentSpecialId">
+                            Add</a>
+                    }
+                </td>
+            </tr>
+
+                    i++;
+                }
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2">
+                    <div class="center-text">
+                        There are no unplanned events for @(Model.Date.ToShortDateString())
+                        for this office!
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

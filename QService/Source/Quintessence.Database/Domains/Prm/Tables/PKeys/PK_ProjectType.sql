@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[ProjectType]
+	ADD CONSTRAINT [PK_ProjectType] 
+	PRIMARY KEY NONCLUSTERED ([Id])

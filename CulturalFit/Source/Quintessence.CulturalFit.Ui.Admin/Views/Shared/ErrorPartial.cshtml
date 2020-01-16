@@ -1,0 +1,10 @@
+﻿@model System.Collections.Generic.List<string>
+
+<h2>Something went wrong...</h2>
+<p>Following error(s) occurred:</p>
+<ul>
+    @foreach (var msg in Model.ToList())
+    {
+        <li>@msg</li>
+    }
+</ul>

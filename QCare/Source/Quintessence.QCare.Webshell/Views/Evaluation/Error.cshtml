@@ -1,0 +1,18 @@
+﻿@using Resources
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Error";
+}
+
+<fieldset id="error-fieldset">
+    <legend>@Global.ErrorTitle</legend>
+    <p class="center-text">
+        @Global.ErrorText
+        <br/>
+        <br/>
+        <a href="@Url.Content(Request.UrlReferrer == null ? "~/" : Request.UrlReferrer.ToString())" class="button">Back</a>
+    </p>
+</fieldset>
+
+

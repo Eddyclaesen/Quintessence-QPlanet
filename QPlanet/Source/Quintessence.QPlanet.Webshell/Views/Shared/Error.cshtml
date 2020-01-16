@@ -1,0 +1,18 @@
+﻿@model HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+}
+
+<fieldset>
+    <legend>Error: @Model.Exception.Message</legend>
+
+    <p>
+        An error occured while trying to process your request.
+        The error that we received has the following message: @Model.Exception.Message
+    </p>
+    
+    <p>
+        If this is not the first time you see this error, please contact your system administrator.
+    </p>
+</fieldset>

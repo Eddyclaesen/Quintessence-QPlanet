@@ -1,0 +1,409 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectDetailControllerBase.EditProjectCandidatesModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewData["ProjectId"] = Model.Id;
+    ViewBag.Title = "Projects - Edit Project Candidates";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">@Model.Name</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li>@Html.ActionLink("Detail", "Edit", "ProjectGeneral", new RouteValueDictionary(new { area = "Project", id = Model.Id }), null)
+            @if (Model.ProjectTypeCategoryId.HasValue)
+            {
+                <li>@Html.ActionLink(Model.ProjectTypeCategoryName, "EditProjectCategoryDetail", "ProjectGeneral", new RouteValueDictionary(new { area = "Project", id = Model.Id }), null)
+                </li>
+            }
+            @if (Model.HasSubProjectCategoryDetails)
+            {
+                <li>@Html.ActionLink("Subcategories", "SubProjectCategoryDetails", "ProjectAssessmentDevelopment", new { area = "Project", id = Model.Id }, null)
+                </li>
+            }
+            @if (Model.ProjectTypeCategoryId.HasValue)
+            {
+                <li class="current">Candidates</li>
+            }
+            <li>@Html.ActionLink("Invoicing", "InvoiceOverview", "ProjectAssessmentDevelopment", new { area = "Project", id = Model.Id }, null)
+            </li>
+        </ul>
+    </nav>
+}
+
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.treeTable.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.dataTables.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.cookie.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Persist.js")"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            RefreshCandidateTable();
+            InitializeAddCandidateDialog();
+            InitializeDuplicateCandidatesDialog();
+            InitializeButtons();
+            ValidateProject();
+            CheckUnregisteredCandidatesForProject();
+        });
+
+        //Initialize the buttons
+
+        function InitializeButtons() {
+            $(this).on('click', '#AddCandidateButton', null, function () {
+                $('#UnregisteredCandidatesPlaceHolder').loading('loading unregistered candidates...');
+                $('#AddCandidateDialog').dialog('open');
+                RefreshUnregisteredCandidatesTable();
+            });
+
+            $(this).on('click', 'a[data-function=CreateCulturalFitCandidateRequestButton]', function (e) {
+                var isConfirmed = confirm("You are about to create a cultural fit for this candidate. Do you wish to proceed?");
+                if (isConfirmed) {
+                    var postData = {
+                        projectCandidateId: $(this).attr('data-project-candidate-id')
+                    };
+                    $.ajax({
+                        url: '@Url.Action("CreateCulturalFitCandidateRequest")',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: postData,
+                        success: function (data) {
+                            if (data == undefined || data == '') {
+                                RefreshCandidateTable();
+                            } else {
+                                $.alert(data.message, 'Already exists', 300, 200);
+                            }
+                        },
+                        error: function (err) {
+                            ShowDetailErrorDialog('Create cultural fit candidate.', err);
+                        }
+                    });
+                }
+            });
+
+            $(this).on('click', '#AddDuplicateCandidateSubmitButton', function (e) {
+                e.preventDefault();
+                var form = $('#DuplicateCandidatesForm');
+
+                ShowDetailSaveDialog();
+                $.post('@Url.Action("AddCandidateFromDuplicates")',
+                    form.serialize(),
+                    function (data) {
+                        HideDetailSaveDialog();
+                        $('#DuplicateCandidatesDialog').dialog('close');
+                        RefreshCandidateTable();
+                        RefreshUnregisteredCandidatesTable();
+                        return false;
+                    });
+            });
+
+            $(this).on('click', 'a[data-id=SubmitAddCandidateButton]', function (e) {
+                var form = $(this).parents('form:first');
+                var button = $(this);
+                ShowDetailSaveDialog();
+                $.post('@Url.Action("AddCandidate")',
+                    form.serialize(),
+                    function (data) {
+                        if (data == "Ok") {
+                            HideDetailSaveDialog();
+                            RefreshCandidateTable();
+                            CheckUnregisteredCandidatesForProject();
+                            button.remove();
+                            return false;
+                        } else {
+                            HideDetailSaveDialog();
+                            $('#DuplicateCandidatesDialog').dialog('open');
+                            $('#DuplicateCandidatesPlaceHolder').html(data);
+                            return false;
+                        }
+                    });
+            });
+
+            $(this).on('click', 'a[data-function=SubmitProjectCandidateDetailsButton]', function (e) {
+                e.preventDefault();
+                var form = $('#ProjectCandidateDetailsForm');
+                var projectCandidateId = form.attr('data-id');
+                var projectCandidateFullName = form.attr('data-name');
+                var url = form.attr('action');
+                ShowDetailSaveDialog();
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function () {
+                        HideDetailSaveDialog();
+                        RefreshProjectCandidate(projectCandidateId, projectCandidateFullName);
+                        return false;
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Update project candidates.', err);
+                    }
+                });
+
+            });
+
+            $(this).on('click', 'a[data-function=SubmitDeletedProjectCandidateDetailsButton]', function (e) {
+                e.preventDefault();
+                var form = $('#DeletedProjectCandidateDetailsForm');
+                var projectCandidateId = form.attr('data-id');
+                var projectCandidateFullName = form.attr('data-name');
+                var url = form.attr('action');
+                ShowDetailSaveDialog();
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function () {
+                        HideDetailSaveDialog();
+                        RefreshDeletedProjectCandidate(projectCandidateId, projectCandidateFullName);
+                        return false;
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Update deleted project candidate.', err);
+                    }
+                });
+
+            });
+
+            //Cancel project candidate submit button on ProjectCandidates.cshtml
+            $(this).on('click', '#CancelProjectCandidateSubmitButton', function (e) {
+                e.preventDefault();
+                
+                var form = $('#CancelProjectCandidateForm');
+
+                var projectCandidateId = form.attr('data-id');
+                var projectCandidateFullName = form.attr('data-name');
+                
+                ShowDetailSaveDialog();
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function (data) {
+                        HideDetailSaveDialog();
+                        $('#CancelProjectCandidateDialog').dialog('close');
+
+                        RefreshDeletedProjectCandidate(projectCandidateId, projectCandidateFullName);
+                        return false;
+                    },
+                    error: function (x, y, z) {
+                        alert(x.responseText);
+                    }
+                });
+            });
+
+            $(this).on('click', 'a[data-function=SendCandidateInvitationMailButton]', null, function () {
+                ShowDetailSaveDialog();
+                $.ajax({
+                    url: '@Url.Action("SendCandidateInvitationMail")/' + $(this).attr("data-id") + '/' + $(this).attr("data-language-id"),
+                    success: function (data) {
+                        HideDetailSaveDialog();
+                        $.openOutlook(data.to, '', data.bcc, data.subject, data.body);
+                    },
+                    error: function (x, y, z) {
+                        HideDetailSaveDialog();
+                        alert(x.responseText);
+                    }
+                });
+
+            });
+
+            $(this).on('click', 'a[data-function=AddProjectCandidateReportRecipientsButton]', null, function () {                
+                ShowDetailSaveDialog();
+                $('#AddProjectCandidateReportRecipientsDialog').dialog('open');
+                $('#AddProjectCandidateReportRecipientsForm').attr('data-project-candidate-id', $(this).attr('data-project-candidate-id'));
+                $('#CrmEmailsPlaceholder').load('@Url.Action("ListCrmEmails")/' + $(this).attr('data-contact-id'), function () {
+                    $('#SelectCrmEmailsDataTable').dataTable();
+                    HideDetailSaveDialog();
+                });
+            });
+
+            $(this).on('click', '#AddSelectedProjectCandidateReportRecipientsSubmitButton', function (e) {
+                e.preventDefault();
+                var form = $('#AddProjectCandidateReportRecipientsForm');
+                var sData = $('#SelectCrmEmailsDataTable').dataTable().$('input').serialize();
+                ShowDetailSaveDialog();
+                $.ajax({
+                    url: form.attr('action') + '/' + form.attr('data-project-candidate-id'),
+                    type: 'POST',
+                    data: sData,
+                    success: function (data) {
+                        HideDetailSaveDialog();
+                        $('#AddProjectCandidateReportRecipientsDialog').dialog('close');
+                        RefreshProjectCandidateReportRecipients(form.attr('data-project-candidate-id'));
+                        return false;
+                    },
+                    error: function (x, y, z) {
+                        alert(x.responseText);
+                    }
+                });
+            });
+            
+            //See DeleteProjectCandidateReportRecipient button on ListProjectCandidateReportRecipients.cshtml
+            $(this).on('click', 'a[data-id=DeleteProjectCandidateReportRecipient]', null, function() {
+                ShowDetailSaveDialog();
+                $.get('@Url.Action("DeleteProjectCandidateReportRecipient")/' + $(this).attr('data-report-recipient-id'), function() {
+                    HideDetailSaveDialog();
+                    RefreshProjectCandidateReportRecipients($(this).attr('data-project-candidate-id'));
+                });
+            });
+
+            $(this).on('click', 'a[data-function=CancelCandidate]', null, function () {
+                ShowDetailSaveDialog();
+                var url = '@Url.Action("CancelProjectCandidate")/' + $(this).attr('data-project-candidate-id');
+                $('#CancelProjectCandidateDialogPlaceholder').load(url, function () {
+                    $('#CancelProjectCandidateDialog').dialog('open');
+                    HideDetailSaveDialog();
+                });
+            });
+
+            $(this).on('click', 'a[data-function=EditProjectCandidateDetail]', null, function (event) {
+                event.preventDefault();
+
+                var projectCandidateId = $(this).attr('data-id');
+                var projectCandidateFullName = $(this).attr('data-name');
+
+                RefreshProjectCandidate(projectCandidateId, projectCandidateFullName);
+            });
+
+            $(this).on('click', 'a[data-function=EditDeletedProjectCandidateDetail]', null, function (event) {
+                event.preventDefault();
+
+                var projectCandidateId = $(this).attr('data-id');
+                var projectCandidateFullName = $(this).attr('data-name');
+
+                RefreshDeletedProjectCandidate(projectCandidateId, projectCandidateFullName);
+            });
+        }
+
+        function RefreshProjectCandidate(projectCandidateId, projectCandidateFullName) {
+            $('#ProjectCandidatePlaceholder').loading('Retrieving project candidate.');
+            $('#ProjectCandidateName').text(projectCandidateFullName);
+
+            $.ajax({
+                url: '@Url.Action("EditProjectCandidateDetail")/' + projectCandidateId,
+                success: function (html) {
+                    $('#ProjectCandidatePlaceholder').html(html);
+                    $('table[data-function=CandidateTable]').each(function () {
+                        $(this).treeTable({ persist: true });
+                    });
+                },
+                error: function (err) {
+                    ShowDetailErrorDialog('Retrieve details for project candidate', err);
+                }
+            });
+        }
+
+        function RefreshDeletedProjectCandidate(projectCandidateId, projectCandidateFullName) {
+            $('#ProjectCandidatePlaceholder').loading('Retrieving project candidate.');
+            $('#ProjectCandidateName').text(projectCandidateFullName);
+
+            $.ajax({
+                url: '@Url.Action("EditDeletedProjectCandidateDetail")/' + projectCandidateId,
+                success: function (html) {
+                    $('#ProjectCandidatePlaceholder').html(html);
+                    $('table[data-function=CanceledProjectCandidatesTreeTable]').each(function () {
+                        $(this).treeTable({ persist: true });
+                    });
+                },
+                error: function (err) {
+                    ShowDetailErrorDialog('Retrieve details for deleted project candidate', err);
+                }
+            });
+        }
+
+
+        //Refreshes the candidate table
+        function RefreshCandidateTable() {
+            $('#CandidateTablePlaceholder').loading('Retrieving candidates...');
+
+            $.ajax({
+                url: '@Url.Action("ProjectCandidates", "ProjectAssessmentDevelopment", new { area = "Project", Id = @Model.Id })',
+                success: function (html) {
+                    $('#CandidateTablePlaceholder').html(html);
+                    $('table[data-function=CandidateTable]').each(function () {
+                        $(this).treeTable({ persist: true });
+                    });
+
+                    CreateTabs();
+                },
+                error: function (err) {
+                    ShowDetailErrorDialog('Retrieve project candidates.', err);
+                }
+            });
+        }
+
+        //Refreshes the unregistered candidates table
+        function RefreshUnregisteredCandidatesTable() {
+            $('#UnregisteredCandidatesPlaceHolder').load('@Url.Action("UnregisteredCandidates")/@Model.Id', function () {
+            });
+
+        }
+
+        //Initialize dialog to add candidates
+        function InitializeAddCandidateDialog() {
+            $('#AddCandidateDialog').dialog({
+                autoOpen: false,
+                modal: true,
+                resizable: false,
+                width: 800,
+                height: 600,
+                title: 'Add new candidate'
+            });
+        }
+
+        //Initialize dialog for duplicates candidates
+        function InitializeDuplicateCandidatesDialog() {
+            $('#DuplicateCandidatesDialog').dialog({
+                autoOpen: false,
+                modal: true, resizable: false,
+                width: 800,
+                height: 600,
+                title: 'Duplicate candidates'
+            });
+        }
+
+        function ValidateProject() {
+            RemoveNotification('ValidateProject');
+            $.getJSON('@Url.Action("ValidateProject", new { id = Model.Id })', function (data) {
+                $.each(data, function (key, val) {
+                    if (val.message != 'ok') {
+                        AddNotification('ValidateProject', val.message);
+                    }
+                });
+            });
+        }
+
+        function CheckUnregisteredCandidatesForProject() {
+            RemoveNotification('CheckUnregisteredCandidates');
+            //Check if there are still unregistered candidates for this project
+            $.getJSON('@Url.Action("CheckUnregisteredCandidatesForProject", new { id = Model.Id })', function (data) {
+                $.each(data, function (key, val) {
+                    if (val.message != 'ok') {
+                        AddNotification('CheckUnregisteredCandidates', val.message);
+                    }
+                });
+            });
+        }
+    </script>
+}
+<div id="CandidateTablePlaceholder">
+</div>
+
+<div id="AddCandidateDialog">
+    <div id="UnregisteredCandidatesPlaceHolder"></div>
+</div>
+
+<div id="DuplicateCandidatesDialog">
+    <div id="DuplicateCandidatesPlaceHolder"></div>
+</div>

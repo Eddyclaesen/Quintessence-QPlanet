@@ -1,0 +1,176 @@
+﻿@using System.Globalization
+@model Quintessence.QPlanet.Webshell.Areas.Workspace.Models.WorkspaceTimesheet.IndexActionModel
+@{
+    ViewBag.Title = "Workspace - Timesheet";
+}
+@section AdditionalScripts
+{
+    <link href="@Url.Content("~/Content/themes/base/ui.slider.extras.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/jquery.treeTable.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.ui.slider.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/selectToUISlider.jQuery.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.cookie.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/persist.js")" type="text/javascript"></script>
+    <script>
+    $(function () {
+        InitializeDatepicker();
+
+        InitializeSliders();
+        InitializeUserCombobox();
+
+        //RefreshTimesheets();
+    });
+
+    function InitializeDatepicker() {
+        $('#@Html.IdFor(m => m.Date)').datepicker({ dateFormat: "dd/mm/yy" });
+        $('#@Html.IdFor(m => m.Date)').change(function () {
+            new Persist.Store('QPlanet').set('WorkspaceTimesheet.@Html.IdFor(m => m.Date)', $(this).val());
+            //RefreshTimesheets();
+        });
+
+        var store = new Persist.Store('QPlanet');
+        var date = store.get('WorkspaceTimesheet.@Html.IdFor(m => m.Date)');
+
+        if (date != undefined && date != null)
+            $('#@Html.IdFor(m => m.Date)').val(date);
+    }
+
+    function InitializeSliders() {
+        $('#MonthSlider').selectToUISlider({
+            labels: 12,
+            sliderOptions: {
+                stop: function (e, ui) {
+                    //RefreshTimesheets();
+                }
+            }
+        }).hide();
+
+        $('#YearSlider').selectToUISlider({
+            labels: 5,
+            sliderOptions: {
+                stop: function (e, ui) {
+                    //RefreshTimesheets();
+                }
+            }
+        }).hide();
+    }
+
+    function InitializeUserCombobox() {
+        @*$('#@Html.IdFor(m => m.UserId)').change(function (event) {
+            RefreshTimesheets();
+        });*@
+
+        $('#LoadConsultantTimesheetsButton').click(function (event) {
+            event.preventDefault();
+
+            var id = $('#@Html.IdFor(m => m.UserId)').val();
+            RefreshTimesheets(id, false);
+        });
+
+        $('#LoadProjectManagerTimesheetsButton').click(function (event) {
+            event.preventDefault();
+
+            var id = $('#@Html.IdFor(m => m.ProjectManagerId)').val();
+            var otherid = $('#@Html.IdFor(m => m.UserId)').val();
+            RefreshTimesheets(id, true);
+        });
+    }
+
+        function RefreshTimesheets(id, isProjectManager) {
+            if (id == undefined)
+                return;
+
+            ShowDetailSaveDialog();
+            $('#TimesheetOverviewPlaceholder').html('');
+
+            //var date = $('#@Html.IdFor(m => m.Date)').datepicker('getDate');
+
+        var monthName = $('#MonthSlider').val();
+
+        var month = new Date('1 ' + monthName + ' 2012').getMonth() + 1;
+        var year = $('#YearSlider').val();
+
+        var userId = id;
+
+        $.ajax({
+            url: '@Url.Action("Timesheets")',
+            data: {
+                year: year,
+                month: month,
+                userId: userId,
+                isProjectManager: isProjectManager
+            },
+            success: function (html) {
+                $('#TimesheetOverviewPlaceholder').html(html);
+                $('#TimesheetOverviewTable').treeTable({ persist: true });
+                $('#UnregisteredTimesheetOverviewTable').treeTable({ persist: true });
+                HideDetailSaveDialog();
+            }
+        });
+    }
+    </script>
+}
+
+<fieldset id="TimesheetOverview">
+    <legend>Project timesheets</legend>
+    <br />
+    <table class="dataTable">
+        <tr>
+            <td class="width-45-percent">Projectmanagers</td>
+            <td></td>
+            <td class="width-45-percent">Consultants</td>
+        </tr>
+        <tr>
+            <td class="width-45-percent">
+        @Html.DropDownListFor(m => m.ProjectManagerId, Model.CreateProjectManagerDropDownList())
+        <a href="javascript:voi(0);" id="LoadProjectManagerTimesheetsButton" class="button">GO</a>
+    </td>
+    <td></td>
+            <td class="width-45-percent">
+                @Html.DropDownListFor(m => m.UserId, Model.CreateUserDropDownList())
+                <a href="javascript:voi(0);" id="LoadConsultantTimesheetsButton" class="button">GO</a>
+            </td>
+            <td></td>
+            <td class="width-45-percent"></td>
+        </tr>
+        <tr>
+            <td class="width-45-percent">
+                <select id="MonthSlider">
+                    @for (int i = 1; i <= 12; i++)
+                    {
+                        if (i == @Model.Date.Month)
+                        {
+                            <option value="@(new DateTime(DateTime.Now.Year, i, 1).ToString("MMM", CultureInfo.GetCultureInfo("en")))" selected="selected">@(new DateTime(DateTime.Now.Year, i, 1).ToString("MMMM", CultureInfo.GetCultureInfo("en")))</option>
+                    
+                        }
+                        else
+                        {
+                            <option value="@(new DateTime(DateTime.Now.Year, i, 1).ToString("MMM", CultureInfo.GetCultureInfo("en")))">@(new DateTime(DateTime.Now.Year, i, 1).ToString("MMMM", CultureInfo.GetCultureInfo("en")))</option>
+                        }
+                    }
+                </select>
+            </td>
+            <td></td>
+            <td class="width-45-percent">
+                <select id="YearSlider">
+                    @for (int i = DateTime.Now.Year - 5; i <= DateTime.Now.Year; i++)
+                    {
+                        if (i == @Model.Date.Year)
+                        {
+                            <option value="@i" selected="selected">@i</option>
+                        }
+                        else
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+    </table>
+
+    <br />
+    <br />
+
+    <div id="TimesheetOverviewPlaceholder"></div>
+</fieldset>

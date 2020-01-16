@@ -1,0 +1,48 @@
+﻿@model List<Quintessence.QService.QueryModel.Prm.ProjectCandidateReportRecipientView>
+
+@if (Model.Any())
+{
+    <table data-id="ProjectCandidateReportRecipientsDataTable">
+        <thead>
+            <tr>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th>Direct</th>
+                <th>Mobile</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reportRecipient in Model)
+            {
+                <tr>
+                    <td>@reportRecipient.FirstName</td>
+                    <td>@reportRecipient.LastName</td>
+                    <td>@reportRecipient.Email</td>
+                    <td>@reportRecipient.DirectPhone</td>
+                    <td>@reportRecipient.MobilePhone</td>
+
+                    <td>
+                        @if (reportRecipient.ProjectId == null)
+                        {
+                            <a href="javascript:void(0);" data-id="DeleteProjectCandidateReportRecipient" data-report-recipient-id="@reportRecipient.Id" data-project-candidate-id="@reportRecipient.ProjectCandidateId">Delete
+                            </a>
+                        }
+                        else
+                        {
+                            <i>Project bound</i>
+                        }
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="justify-text">
+        No report recipients added. Click 'Add' to add report recipient(s).
+    </div>
+}

@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0F7C1FD0-D1E4-45D7-BE03-EA2E1ABBEB04}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Quintessence.QJobService.JobDefinitions.TeamLeaderDuplication</RootNamespace>
+    <AssemblyName>Quintessence.QJobService.JobDefinitions.TeamLeaderDuplication</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constants.cs" />
+    <Compile Include="DataAccess\Call.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Company.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Contact.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\ContactCompany.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\ContactProject.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Deal.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\DealPhase.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\DealSource.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\DuplicationDataAccess.cs" />
+    <Compile Include="DataAccess\DuplicationErrorLog.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\DuplicationJobHistory.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\DuplicationSetting.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\IDuplicationDataAccess.cs" />
+    <Compile Include="DataAccess\Meeting.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\MeetingContact.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\MeetingUser.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\PlannedTask.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Product.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Project.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Task.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\TeamLeaderDataModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TeamLeaderDataModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\TeamLeaderDataModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\TeamLeaderDataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TeamLeaderDataModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\TimeTracking.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\User.cs">
+      <DependentUpon>TeamLeaderDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Duplicator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TeamLeaderCallDetailDuplicator.cs" />
+    <Compile Include="TeamLeaderCompanyDetailDuplicator.cs" />
+    <Compile Include="TeamLeaderContactCompanyRelationDuplicator.cs" />
+    <Compile Include="TeamLeaderDuplicator.cs" />
+    <Compile Include="TeamLeaderMeetingDetailDuplicator.cs" />
+    <Compile Include="TeamLeaderMeetingDuplicator.cs" />
+    <Compile Include="TeamLeaderCallDuplicator.cs" />
+    <Compile Include="TeamLeaderDealDuplicator.cs" />
+    <Compile Include="TeamLeaderContactProjectRelationDuplicator.cs" />
+    <Compile Include="TeamLeaderPlannedTaskDuplicator.cs" />
+    <Compile Include="TeamLeaderProductDuplicator.cs" />
+    <Compile Include="TeamLeaderTaskDetailDuplicator.cs" />
+    <Compile Include="TeamLeaderTimeTrackingRelatedTaskDuplicator.cs" />
+    <Compile Include="TeamLeaderTimeTrackingDuplicator.cs" />
+    <Compile Include="TeamLeaderTaskDuplicator.cs" />
+    <Compile Include="TeamLeaderProjectDuplicator.cs" />
+    <Compile Include="TeamLeaderCompanyDuplicator.cs" />
+    <Compile Include="TeamLeaderUserDuplicator.cs" />
+    <Compile Include="TeamLeaderContactDuplicator.cs" />
+    <Compile Include="TeamLeader\Models\RelatedTo.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderCallDetail.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderCompanyDetail.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderDealPhase.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderDealSource.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderMeetingContact.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderMeetingUser.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderMeetingDetail.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderProduct.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderContactProjectRelation.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderContactCompanyRelation.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderMeeting.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderCall.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderTaskDetail.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderTask.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderProject.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderCompany.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderContact.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderPlannedTask.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderTimeTracking.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderDeal.cs" />
+    <Compile Include="TeamLeader\Models\TeamLeaderUser.cs" />
+    <Compile Include="TeamLeader\WebApi\ITeamLeaderAccess.cs" />
+    <Compile Include="TeamLeader\WebApi\TeamLeaderAccess.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Quintessence.QJobService.Interfaces\Quintessence.QJobService.Interfaces.csproj">
+      <Project>{d52dcf73-d4b9-4942-90c5-5ac44b1fd272}</Project>
+      <Name>Quintessence.QJobService.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QJobService.JobDefinitions.Replication\Quintessence.QJobService.JobDefinitions.Replication.csproj">
+      <Project>{1f651452-c5d8-45ef-943c-554dd106967a}</Project>
+      <Name>Quintessence.QJobService.JobDefinitions.Replication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QJobService.JobDefinitions.TeamLeaderCommon\Quintessence.QJobService.JobDefinitions.TeamLeaderCommon.csproj">
+      <Project>{2d3993d6-cfd9-474c-bccf-ec7490d3df06}</Project>
+      <Name>Quintessence.QJobService.JobDefinitions.TeamLeaderCommon</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EntityDeploy Include="DataAccess\TeamLeaderDataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TeamLeaderDataModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DataAccess\TeamLeaderDataModel.edmx.diagram">
+      <DependentUpon>TeamLeaderDataModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DataAccess\TeamLeaderDataModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TeamLeaderDataModel.edmx</DependentUpon>
+      <LastGenOutput>TeamLeaderDataModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataAccess\TeamLeaderDataModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TeamLeaderDataModel.edmx</DependentUpon>
+      <LastGenOutput>TeamLeaderDataModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,39 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectConsultancy.AddProductActionModel
+<p>
+    Select a product.
+</p>
+@using (Html.BeginForm("AddProduct", "ProjectConsultancy", FormMethod.Post, new { id = "AddProductForm" }))
+{
+    <div class="row">
+        <div>Product type</div>
+        <div>
+            @Html.HiddenFor(m => m.ProjectId)
+            @Html.DropDownListFor(m => m.ProductTypeId, Model.ProductTypeSelectListItems)
+        </div>
+    </div>
+    <div class="row">
+        <div>Product name</div>
+        <div>@Html.TextBoxFor(m => m.Name, new { data_name = Html.IdFor(m => m.Name).ToString() })</div>
+    </div>
+    <div class="row">
+        <div>Unit price</div>
+        <div>@Html.EditorFor(m => m.UnitPrice)</div>
+    </div>
+}
+
+<div style="display: none">
+    @foreach (var productType in Model.ProductTypes)
+    {
+        <div id="@productType.Id" data-unitprice="@productType.UnitPrice" data-name="@productType.Name" />
+    }
+</div>
+
+<script>
+    $(function () {
+        $('#@Html.IdFor(m => m.ProductTypeId)').change(function () {
+            var productType = $('#' + $(this).val());
+            $('#@Html.IdFor(m => m.UnitPrice)').val(productType.attr('data-unitprice'));
+            $('input[data-name=@Html.IdFor(m => m.Name).ToString()]').val(productType.attr('data-name'));
+        });
+    });
+</script>

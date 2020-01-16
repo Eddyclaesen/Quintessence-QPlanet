@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[Proposal]
+	ADD CONSTRAINT [PK_Proposal] 
+	PRIMARY KEY NONCLUSTERED ([Id])

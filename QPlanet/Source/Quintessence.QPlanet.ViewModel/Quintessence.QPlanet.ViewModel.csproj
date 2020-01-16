@@ -1,0 +1,431 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{33F76EF6-72FF-4224-BE55-90044A9B1878}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Quintessence.QPlanet.ViewModel</RootNamespace>
+    <AssemblyName>Quintessence.QPlanet.ViewModel</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Pro|AnyCPU'">
+    <OutputPath>bin\Pro\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Dev\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Main|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Main\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Dev01|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Dev01\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Dev02|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Dev02\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Dev03|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Dev03\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Test\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\..\packages\AutoMapper.2.1.267\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\..\packages\AspNetWebPages.Core.2.0.20126.16343\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Common">
+      <HintPath>..\..\..\packages\System.Web.Http.Common.4.0.20126.16343\lib\net40\System.Web.Http.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\AspNetMvc.4.0.20126.16343\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\..\packages\AspNetRazor.Core.2.0.20126.16343\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\..\packages\AspNetWebPages.Core.2.0.20126.16343\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\..\packages\AspNetWebPages.Core.2.0.20126.16343\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\..\packages\AspNetWebPages.Core.2.0.20126.16343\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base\BaseEntityModel.cs" />
+    <Compile Include="Base\GuidSelectListModel.cs" />
+    <Compile Include="Base\NullableGuidSelectListModel.cs" />
+    <Compile Include="Cam\CandidateModel.cs" />
+    <Compile Include="Cam\EditProgramComponentModel.cs" />
+    <Compile Include="Cam\UpdateProgramComponentEnd.cs" />
+    <Compile Include="Cam\UpdateProgramComponentStart.cs" />
+    <Compile Include="Crm\ContactDetailModel.cs" />
+    <Compile Include="Crm\UnsynchronizedEmployeeModel.cs" />
+    <Compile Include="Dim\CreateNewDictionaryClusterModel.cs" />
+    <Compile Include="Dim\CreateNewDictionaryCompetenceModel.cs" />
+    <Compile Include="Dim\CreateNewDictionaryIndicatorModel.cs" />
+    <Compile Include="Dim\CreateNewDictionaryLevelModel.cs" />
+    <Compile Include="Dim\DictionaryClusterModel.cs" />
+    <Compile Include="Dim\DictionaryCompetenceModel.cs" />
+    <Compile Include="Dim\DictionaryIndicatorMatrixEntryModel.cs" />
+    <Compile Include="Dim\DictionaryIndicatorModel.cs" />
+    <Compile Include="Dim\DictionaryLevelModel.cs" />
+    <Compile Include="Dim\DictionaryModel.cs" />
+    <Compile Include="Dim\DictionarySelectListItemModel.cs" />
+    <Compile Include="Dim\EditDictionaryClusterModel.cs" />
+    <Compile Include="Dim\EditDictionaryClusterTranslationModel.cs" />
+    <Compile Include="Dim\EditDictionaryCompetenceTranslationModel.cs" />
+    <Compile Include="Dim\EditDictionaryIndicatorModel.cs" />
+    <Compile Include="Dim\EditDictionaryIndicatorTranslationModel.cs" />
+    <Compile Include="Dim\EditDictionaryLanguageModel.cs" />
+    <Compile Include="Dim\EditDictionaryLevelTranslationModel.cs" />
+    <Compile Include="Dim\EditDictionaryModel.cs" />
+    <Compile Include="Dim\EditDictionaryCompetenceModel.cs" />
+    <Compile Include="Dim\EditDictionaryLevelModel.cs" />
+    <Compile Include="Dim\EditImportDictionaryClusterModel.cs" />
+    <Compile Include="Dim\EditImportDictionaryClusterTranslationModel.cs" />
+    <Compile Include="Dim\EditImportDictionaryCompetenceModel.cs" />
+    <Compile Include="Dim\EditImportDictionaryCompetenceTranslationModel.cs" />
+    <Compile Include="Dim\EditImportDictionaryIndicatorModel.cs" />
+    <Compile Include="Dim\EditImportDictionaryIndicatorTranslationModel.cs" />
+    <Compile Include="Dim\EditImportDictionaryLevelModel.cs" />
+    <Compile Include="Dim\EditImportDictionaryLevelTranslationModel.cs" />
+    <Compile Include="Dim\EditImportDictionaryModel.cs" />
+    <Compile Include="Fin\AddProposalForProjectCandidateModel.cs" />
+    <Compile Include="Fin\AddProposalForTimeSheetEntryModel.cs" />
+    <Compile Include="Fin\AddProposalForProjectCandidateCategoryType1Model.cs" />
+    <Compile Include="Fin\AddProposalForProjectCandidateCategoryType2Model.cs" />
+    <Compile Include="Fin\AddProposalForProjectCandidateCategoryType3Model.cs" />
+    <Compile Include="Fin\AddProposalForProjectProductModel.cs" />
+    <Compile Include="Fin\AddProposalForProductSheetEntryModel.cs" />
+    <Compile Include="Fin\AddProposalForAcdcProjectFixedPriceModel.cs" />
+    <Compile Include="Fin\AddProposalForConsultancyProjectFixedPriceModel.cs" />
+    <Compile Include="Fin\EditAccountantConsultancyProjectFixedPriceInvoicingEntryModel.cs" />
+    <Compile Include="Fin\EditAccountantProductSheetEntryInvoicingEntryModel.cs" />
+    <Compile Include="Fin\EditAccountantProjectCandidateCategoryType1InvoicingEntryModel.cs" />
+    <Compile Include="Fin\EditAccountantProjectCandidateCategoryType2InvoicingEntryModel.cs" />
+    <Compile Include="Fin\EditAccountantProjectCandidateCategoryType3InvoicingEntryModel.cs" />
+    <Compile Include="Fin\EditAccountantProjectCandidateInvoicingEntryModel.cs" />
+    <Compile Include="Fin\EditAccountantAcdcProjectFixedPriceInvoicingEntryModel.cs" />
+    <Compile Include="Fin\EditAccountantProjectProductInvoicingEntryModel.cs" />
+    <Compile Include="Fin\EditAccountantInvoicingBaseEntryModel.cs" />
+    <Compile Include="Fin\EditAccountantTimesheetEntryInvoicingEntryModel.cs" />
+    <Compile Include="Fin\EditConsultancyProjectFixedPriceInvoicingEntryModel.cs" />
+    <Compile Include="Fin\EditInvoicingBaseEntryModel.cs" />
+    <Compile Include="Fin\EditProductSheetEntryInvoicingEntryModel.cs" />
+    <Compile Include="Fin\EditProjectCandidateCategoryType1InvoicingEntryModel.cs" />
+    <Compile Include="Fin\EditProjectCandidateCategoryType2InvoicingEntryModel.cs" />
+    <Compile Include="Fin\EditProjectCandidateCategoryType3InvoicingEntryModel.cs" />
+    <Compile Include="Fin\EditProjectCandidateInvoicingEntryModel.cs" />
+    <Compile Include="Fin\EditAssessmentDevelopmentProjectFixedPriceInvoicingEntryModel.cs" />
+    <Compile Include="Fin\EditProjectProductInvoicingEntryModel.cs" />
+    <Compile Include="Fin\EditTimesheetEntryInvoicingEntryModel.cs" />
+    <Compile Include="Fin\FilterAccountantInvoicingModel.cs" />
+    <Compile Include="Fin\FilterCustomerAssistantInvoicingModel.cs" />
+    <Compile Include="Fin\FilterInvoicingBaseModel.cs" />
+    <Compile Include="Fin\FilterProjectManagerInvoicingModel.cs" />
+    <Compile Include="Fin\GroupedAccountantInvoicingEntryModel.cs" />
+    <Compile Include="Inf\EditMailTemplateModel.cs" />
+    <Compile Include="Inf\EditMailTemplateTranslationModel.cs" />
+    <Compile Include="Prm\AddProjectCandidateModel.cs" />
+    <Compile Include="Prm\AdviceSelectListItemModel.cs" />
+    <Compile Include="Prm\AssociateSelectListItemModel.cs" />
+    <Compile Include="Base\CheckboxItemModelBase.cs" />
+    <Compile Include="Prm\CancelProjectCandidateModel.cs" />
+    <Compile Include="Prm\CandidateReportDefinitionCheckboxItemModel.cs" />
+    <Compile Include="Fin\AddProposalModel.cs" />
+    <Compile Include="Prm\CreateCulturalFitCandidateRequestModel.cs" />
+    <Compile Include="Prm\CreateCulturalFitContactRequestModel.cs" />
+    <Compile Include="Prm\CreateWonProposalModel.cs" />
+    <Compile Include="Prm\CrmProjectRevenueDistributionModel.cs" />
+    <Compile Include="Prm\EditCulturalFitContactRequestModel.cs" />
+    <Compile Include="Prm\EditCustomerFeedbackModel.cs" />
+    <Compile Include="Prm\EditProjectCandidateOverviewEntryFieldModel.cs" />
+    <Compile Include="Prm\EditProjectCandidateRemarksModel.cs" />
+    <Compile Include="Prm\EditProjectCandidateReportingOverviewEntryFieldModel.cs" />
+    <Compile Include="Prm\EditProjectComplaintModel.cs" />
+    <Compile Include="Prm\EditProjectDnaCommercialTranslationModel.cs" />
+    <Compile Include="Prm\EditProjectDnaSelectedContactModel.cs" />
+    <Compile Include="Prm\EditProjectEvaluationModel.cs" />
+    <Compile Include="Prm\EditProjectDnaModel.cs" />
+    <Compile Include="Prm\EditFrameworkAgreementModel.cs" />
+    <Compile Include="Prm\CreateFrameworkAgreementModel.cs" />
+    <Compile Include="Prm\CreateProposalModel.cs" />
+    <Compile Include="Prm\BaseEditInvoiceModel.cs" />
+    <Compile Include="Prm\EditProductInvoiceModel.cs" />
+    <Compile Include="Prm\EditProjectCandidateCategoryInvoiceModel.cs" />
+    <Compile Include="Prm\EditProjectCandidateInvoiceModel.cs" />
+    <Compile Include="Prm\EditProjectCandidateAssessmentRoomModel.cs" />
+    <Compile Include="Prm\EditProjectCandidateResumeFieldModel.cs" />
+    <Compile Include="Prm\EditProjectCandidateResumeModel.cs" />
+    <Compile Include="Prm\EditProjectCandidateClusterScoreModel.cs" />
+    <Compile Include="Prm\EditProjectCandidateCompetenceScoreModel.cs" />
+    <Compile Include="Prm\EditProjectCandidateCompetenceSimulationFocusedScoreModel.cs" />
+    <Compile Include="Prm\EditProjectCandidateIndicatorScoreModel.cs" />
+    <Compile Include="Prm\EditProjectCandidateIndicatorSimulationScoreModel.cs" />
+    <Compile Include="Prm\EditProjectCandidateCompetenceSimulationScoreModel.cs" />
+    <Compile Include="Prm\EditProjectCategoryDetailModel.cs" />
+    <Compile Include="Prm\EditProjectProductModel.cs" />
+    <Compile Include="Prm\EditProjectRoleTranslationModel.cs" />
+    <Compile Include="Prm\EditProjectTypeCategoryLevelModel.cs" />
+    <Compile Include="Prm\EditProjectTypeCategoryModel.cs" />
+    <Compile Include="Prm\EditProjectTypeCategoryUnitPriceModel.cs" />
+    <Compile Include="Prm\EditProjectDnaSelectedTypeModel.cs" />
+    <Compile Include="Prm\EditProposalModel.cs" />
+    <Compile Include="Prm\FilterProjectCandidateOverviewModel.cs" />
+    <Compile Include="Prm\FocusedScoresSimulationCombinationModel.cs" />
+    <Compile Include="Prm\LeaderScoreModel.cs" />
+    <Compile Include="Prm\NeopirScoreModel.cs" />
+    <Compile Include="Prm\ProjectCandidateReportingFiltersModel.cs" />
+    <Compile Include="Prm\StandardScoresSimulationCombinationModel.cs" />
+    <Compile Include="Prm\EditProjectCandidateCategoryDetailType1Model.cs" />
+    <Compile Include="Prm\EditProjectCandidateCategoryDetailType2Model.cs" />
+    <Compile Include="Prm\EditProjectCandidateCategoryDetailType3Model.cs" />
+    <Compile Include="Prm\EditProjectCandidateCategoryDetailTypeModel.cs" />
+    <Compile Include="Prm\EditProjectSubCategoryDetailType3Model.cs" />
+    <Compile Include="Prm\EditProjectSubCategoryDetailType2Model.cs" />
+    <Compile Include="Prm\EditProjectSubCategoryDetailType1Model.cs" />
+    <Compile Include="Prm\CreateNewProductsheetEntryModel.cs" />
+    <Compile Include="Prm\CreateNewProjectFixedPriceModel.cs" />
+    <Compile Include="Prm\CreateNewProjectPriceIndexModel.cs" />
+    <Compile Include="Prm\CreateNewTimesheetEntryModel.cs" />
+    <Compile Include="Prm\EditProductsheetEntryModel.cs" />
+    <Compile Include="Prm\EditProjectFixedPriceModel.cs" />
+    <Compile Include="Prm\EditProjectPlanPhaseEntryDeadlineModel.cs" />
+    <Compile Include="Prm\EditProjectPlanPhaseProductModel.cs" />
+    <Compile Include="Prm\EditProjectPlanPhaseActivityModel.cs" />
+    <Compile Include="Prm\DictionaryLevelCheckboxItemModel.cs" />
+    <Compile Include="Prm\EditProjectPlanPhaseEntryModel.cs" />
+    <Compile Include="Prm\EditProjectPlanPhaseModel.cs" />
+    <Compile Include="Prm\EditProjectPlanModel.cs" />
+    <Compile Include="Prm\EditProjectRoleModel.cs" />
+    <Compile Include="Prm\EditProjectCandidateDetailModel.cs" />
+    <Compile Include="Prm\EditProjectSubCategoryDetailModelBase.cs" />
+    <Compile Include="Prm\EditProjectTypeCategoryDefaultValueModel.cs" />
+    <Compile Include="Prm\EditSubcategoryModel.cs" />
+    <Compile Include="Prm\EditTimesheetEntryModel.cs" />
+    <Compile Include="Prm\EditTimesheetModel.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail\EditProjectCategoryCaDetailModel.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail\EditProjectCategoryCuDetailModel.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail\Interfaces\IRoleSelectionModel.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail\ProjectRoleSelectListItem.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail\UpdateProjectCategoryDetailMatrixRemarks.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail\EditProjectCategoryAcDetailModel.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail\EditProjectCategoryDetailModelBase.cs" />
+    <Compile Include="Prm\EditProjectConsultancyModel.cs" />
+    <Compile Include="Prm\CreateNewProjectModel.cs" />
+    <Compile Include="Prm\CreateProjectModel.cs" />
+    <Compile Include="Prm\CrmProjectLinkModel.cs" />
+    <Compile Include="Prm\EditProjectAssessmentDevelopmentModel.cs" />
+    <Compile Include="Prm\EditProjectModelBase.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail\EditProjectCategoryDcDetailModel.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail\EditProjectCategoryEaDetailModel.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail\EditProjectCategoryFaDetailModel.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail\EditProjectCategoryFdDetailModel.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail\EditProjectCategoryPsDetailModel.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail\EditProjectCategorySoDetailModel.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail\Interfaces\IIndicatorSelectionModel.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail\Interfaces\ISimulationSelectionModel.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail\ProjectCategoryDetailProject.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail\UpdateProjectCategoryDetailSimulationRemarks.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail\UpdateProjectRoleModel.cs" />
+    <Compile Include="Prm\ProjectCategorySelectListItemModel.cs" />
+    <Compile Include="Prm\ProjectStatusTypeSelectListItemModel.cs" />
+    <Compile Include="Prm\ProjectSubCategoryCheckboxItemModel.cs" />
+    <Compile Include="Prm\SearchCrmProjectResultItemModel.cs" />
+    <Compile Include="Prm\SearchCrmProjectsModel.cs" />
+    <Compile Include="Prm\ProjectAssessmentDevelopmentModel.cs" />
+    <Compile Include="Prm\ProjectTypeSelectListItemModel.cs" />
+    <Compile Include="Prm\SearchProjectCandidatesModel.cs" />
+    <Compile Include="Prm\EditProjectPriceIndexModel.cs" />
+    <Compile Include="Prm\UnplannedProjectCandidateEventModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rep\CreateNewReportParameterModel.cs" />
+    <Compile Include="Rep\CreateNewCandidateReportDefinitionFieldModel.cs" />
+    <Compile Include="Rep\CreateNewCandidateReportDefinitionModel.cs" />
+    <Compile Include="Rep\CreateNewReportDefinitionModel.cs" />
+    <Compile Include="Rep\CreateNewReportParameterValueModel.cs" />
+    <Compile Include="Rep\EditCandidateReportDefinitionFieldModel.cs" />
+    <Compile Include="Rep\EditCandidateReportDefinitionModel.cs" />
+    <Compile Include="Rep\EditReportDefinitionModel.cs" />
+    <Compile Include="Rep\EditReportParameterModel.cs" />
+    <Compile Include="Rep\EditReportParameterValueModel.cs" />
+    <Compile Include="Scm\ActivityProfileSelectListItemModel.cs" />
+    <Compile Include="Scm\ActivityProfileSelectListItemModelNullable.cs" />
+    <Compile Include="Scm\ActivityTypeProfileSelectListItemModel.cs" />
+    <Compile Include="Scm\EditActivityDetailTrainingCandidateModel.cs" />
+    <Compile Include="Scm\AddActivityTypeModel.cs" />
+    <Compile Include="Scm\AddActivityTypeProfileModel.cs" />
+    <Compile Include="Scm\EditProductTypeModel.cs" />
+    <Compile Include="Scm\EditProjectCandidateStandardScoresModel.cs" />
+    <Compile Include="Scm\EditProfileModel.cs" />
+    <Compile Include="Scm\EditActivityDetailCoachingModel.cs" />
+    <Compile Include="Scm\EditActivityDetailConsultingModel.cs" />
+    <Compile Include="Scm\EditActivityDetailModel.cs" />
+    <Compile Include="Scm\EditActivityDetailSupportModel.cs" />
+    <Compile Include="Scm\EditActivityDetailTrainingLanguageModel.cs" />
+    <Compile Include="Scm\EditActivityDetailTrainingModel.cs" />
+    <Compile Include="Scm\EditActivityDetailTrainingTypeModel.cs" />
+    <Compile Include="Scm\EditActivityDetailWorkshopLanguageModel.cs" />
+    <Compile Include="Scm\EditActivityDetailWorkshopModel.cs" />
+    <Compile Include="Scm\EditActivityTypeModel.cs" />
+    <Compile Include="Scm\EditActivityTypeProfileModel.cs" />
+    <Compile Include="Scm\ProductSelectListItemModel.cs" />
+    <Compile Include="Scm\EditActivityModel.cs" />
+    <Compile Include="Scm\EditActivityProfileModel.cs" />
+    <Compile Include="Scm\ActivityTypeSelectListItemModel.cs" />
+    <Compile Include="Scm\EditProductModel.cs" />
+    <Compile Include="Scm\ProductTypeSelectListItemModel.cs" />
+    <Compile Include="Scm\ProfileSelectListItemModel.cs" />
+    <Compile Include="Scm\ProjectPlanPhaseSelectListItemModelNullable.cs" />
+    <Compile Include="Sec\AddUserModel.cs" />
+    <Compile Include="Sec\EditEmployeeModel.cs" />
+    <Compile Include="Sec\OperationModel.cs" />
+    <Compile Include="Sec\AuthenticationTokenModel.cs" />
+    <Compile Include="Sec\EditUserModel.cs" />
+    <Compile Include="Sec\RoleModel.cs" />
+    <Compile Include="Sec\UserGroupModel.cs" />
+    <Compile Include="Sec\UserModel.cs" />
+    <Compile Include="Sim\EditSimulationContextModel.cs" />
+    <Compile Include="Sim\EditSimulationContextUserModel.cs" />
+    <Compile Include="Sim\EditSimulationTranslationModel.cs" />
+    <Compile Include="Sim\SimulationLanguageModel.cs" />
+    <Compile Include="Sim\SimulationMatrixEntryModel.cs" />
+    <Compile Include="Sim\SimulationSetSelectListItemModel.cs" />
+    <Compile Include="Sim\SimulationSelectListItemModel.cs" />
+    <Compile Include="Sim\SimulationLevelSelectListItemModel.cs" />
+    <Compile Include="Sim\EditSimulationDepartmentModel.cs" />
+    <Compile Include="Sim\EditSimulationLevelModel.cs" />
+    <Compile Include="Sim\EditSimulationMatrixEntryModel.cs" />
+    <Compile Include="Sim\EditSimulationModel.cs" />
+    <Compile Include="Sim\EditSimulationSetModel.cs" />
+    <Compile Include="Sim\SimulationDepartmentSelectListItemModel.cs" />
+    <Compile Include="Wsm\EditSimulationLevelModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\QService\Source\Quintessence.Infrastructure\Quintessence.Infrastructure.csproj">
+      <Project>{18A071D5-7AE7-4F2F-94DF-4D40DEB81A9C}</Project>
+      <Name>Quintessence.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\QService\Source\Quintessence.QService.QueryModel\Quintessence.QService.QueryModel.csproj">
+      <Project>{C861E521-51A1-4909-9563-A9703FE31917}</Project>
+      <Name>Quintessence.QService.QueryModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QPlanet.Infrastructure\Quintessence.QPlanet.Infrastructure.csproj">
+      <Project>{B86B8142-84E0-44D8-A4F4-E443C6239DBB}</Project>
+      <Name>Quintessence.QPlanet.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

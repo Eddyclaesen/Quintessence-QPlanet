@@ -1,0 +1,28 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectCandidateReportingOverview.ProjectCandidateReportingOverviewVersionMismatchActionModel
+
+<p>
+    The record you were trying to update, has been modified by <b>@(Model.ServerVersion.AuditModifiedBy)</b> on <b>@(Model.ServerVersion.AuditModifiedOn)</b>.
+    <br/>
+    Click 'Confirm' to persist your change. Clicking 'Cancel' will keep the server version.
+</p>
+<div data-name="ProjectCandidateReportingOverviewVersionMismatchValues">
+    @Html.HiddenFor(m => m.ServerVersion.Id, new { data_name = "Id" })
+    @Html.HiddenFor(m => m.ServerVersion.AuditVersionId, new { data_name = "AuditVersionId" })
+    @Html.HiddenFor(m => m.CurrentVersion.PropertyName, new { data_name = "PropertyName" })
+    @Html.Hidden("ProjectCandidateReportingOverviewVersionMismatchServerVersion", Model.GetServerPropertyValue(), new { data_name = "ProjectCandidateReportingOverviewVersionMismatchServerVersion" })
+    @Html.HiddenFor(m => m.CurrentVersion.PropertyValue, new{data_name="ProjectCandidateReportingOverviewVersionMismatchCurrentVersion"})
+</div>
+<div class="row">
+    <div>Server version:</div>
+    <div><span id="ServerVersionMeaningfulValue"></span></div>
+</div>
+<div class="row">
+    <div>Your version:</div>
+    <div><span id="CurrentVersionMeaningfulValue"></span></div>
+</div>
+<br/>
+<br/>
+<div class="right-text">
+    <a href="javascript:void(0);" class="button" id="ProjectCandidateReportingOverviewVersionMismatchConfirmButton">Confirm</a>
+    <a href="javascript:void(0);" class="button" id="ProjectCandidateReportingOverviewVersionMismatchCancelButton">Cancel</a>
+</div>

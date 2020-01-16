@@ -1,0 +1,22 @@
+﻿@model List<Quintessence.QService.QueryModel.Inf.MailTemplateView>
+<table id="MailTemplatesDataTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var mailTemplate in Model)
+        {
+            <tr>
+                <td>@mailTemplate.Name</td>
+                <td>@mailTemplate.Code</td>
+                <td>@Html.ActionLink("Edit", "EditMailTemplate", new { id = mailTemplate.Id }, new { target = mailTemplate.Id, @class="edit-link" })</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

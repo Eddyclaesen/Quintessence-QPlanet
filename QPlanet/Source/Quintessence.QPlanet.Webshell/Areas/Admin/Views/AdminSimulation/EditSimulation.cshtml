@@ -1,0 +1,75 @@
+﻿@model Quintessence.QPlanet.ViewModel.Sim.EditSimulationModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Admin - Simulations - Edit simulation";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">@Model.Name</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li class="current">Detail</li>
+        </ul>
+    </nav>
+}
+@section AdditionalScripts
+{
+    <script type="text/javascript">
+        $(function () {
+            InitializeButtons();
+        });
+
+        function InitializeButtons() {
+            $('#SubmitFormButtonLink').click(function () {
+                ShowDetailSaveDialog();
+                $('form').submit();
+            });
+        }
+    </script>
+}
+
+<div class="grid_8">
+    <fieldset>
+        <legend>Simulation information</legend>
+        @using (Html.BeginForm())
+        {
+            @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+
+            <h4>Detail</h4>
+            <div class="row">
+                <div>@Html.LabelFor(m => m.Name)</div>
+                <div>@Html.EditorFor(m => m.Name)</div>
+            </div>
+            <br />
+            <br />
+            <br />
+
+            if (Model.SimulationTranslations != null && Model.SimulationTranslations.Count > 0)
+            {
+            <h4>Translations</h4>
+                for (int i = 0; i < Model.SimulationTranslations.Count; i++)
+                {
+            @Html.EditorFor(m => m.SimulationTranslations[i], "BaseEntityViewTemplate")
+            <div class="row">
+                <div>@Model.SimulationTranslations[i].LanguageName</div>
+                <div>@Html.EditorFor(m => m.SimulationTranslations[i].Name)</div>
+            </div>
+                }
+            <br />
+            <br />
+            <br />
+            }
+
+            <div class="right-text">
+                <a href="javascript:void(0);" id="SubmitFormButtonLink" class="button">Save</a>
+            </div>
+        }
+    </fieldset>
+</div>

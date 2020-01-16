@@ -1,0 +1,90 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Admin.Models.AdminProject.CopyProjectRoleModel
+@Html.HiddenFor(m => m.ProjectRoleId)
+<table class="dataTable">
+    <tr>
+        <td class="width-30-percent">Copy for:</td>
+        <td class="left-text">
+            <input type="radio" name="copyType" value="Quintessence" checked="checked" />Quintessence
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td class="left-text">
+            <input type="radio" name="copyType" value="Customer" />Customer</td>
+    </tr>
+    <tr id="ContactInput">
+        <td class="width-30-percent">Contact:</td>
+        <td class="left-text">
+            @Html.HiddenFor(m => m.ContactId)
+            @Html.EditorFor(m => m.ContactName)
+            <a href="javascript:void(0);" id="ChangeContactNameLink" title="Click on this link to change the contact"></a>
+        </td>
+    </tr>
+    <tr>
+        <td>@Html.ValidationMessageFor(m => m.ContactName)</td>
+    </tr>
+</table>
+
+<script>
+    $(function () {
+        InitializeContactNameAutocomplete();
+        InitializeContactNameInput();
+        InitializeChangeContactNameLink();
+        InitializeRadioButonsCopyProjectDialog();
+    });
+
+    //Initialize autocomplete for contact name in dialog
+    function InitializeContactNameAutocomplete() {
+        $("#ContactName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("SearchContact", "AdminProject", new { area = "Admin" })/' + request.term,
+                    data: request,
+                    dataType: "json",
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.label,
+                                value: item.label,
+                                id: item.value
+                            };
+                        }));
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
+                });
+            },
+            select: function (event, ui) {
+                $('#ContactId').val(ui.item.id);
+                $('#ContactName').hide();
+                $('#ChangeContactNameLink').text(ui.item.label);
+                $('#ChangeContactNameLink').show();
+            }
+        });
+    }
+
+    //Initialize contact name input
+    function InitializeContactNameInput() {
+        //Hide contact name input
+        $('#ContactInput').hide();
+    }
+
+    //Initialize change contact name link
+    function InitializeChangeContactNameLink() {
+        $('#ChangeContactNameLink').click(function () {
+            $('#ContactId').val(null);
+            $('#ContactName').val(null);
+            $('#ChangeContactNameLink').hide();
+            $('#ContactName').show();
+            $('#ContactName').focus();
+        });
+    }
+
+    //Initialize radiobuttons copy project role dialog
+    function InitializeRadioButonsCopyProjectDialog() {
+        $('input[type=radio]').click(function () {
+            $('#ContactInput').toggle();
+        });
+    }
+</script>

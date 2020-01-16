@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 11
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quintessence.QCore", "Source\Quintessence.QCore\Quintessence.QCore.csproj", "{E23CFC1D-50D6-42C4-A422-955406388BCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quintessence.Core.Tests", "Tests\Quintessence.Core.Tests\Quintessence.Core.Tests.csproj", "{024DD768-C21C-495E-A829-30EB9C26799C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "100 Core", "100 Core", "{64E09E69-2220-4436-A5E9-C11ACC440A51}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "900 Tests", "900 Tests", "{39852559-4A0E-4E85-AEB5-EB0B313A6683}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccLocalPath0 = .
+		SccLocalPath1 = Source\\Quintessence.QCore
+		SccLocalPath2 = Tests\\Quintessence.Core.Tests
+		SccNumberOfProjects = 3
+		SccProjectName1 = Source/Quintessence.QCore
+		SccProjectName2 = Tests/Quintessence.Core.Tests
+		SccProjectTopLevelParentUniqueName1 = Quintessence.QCore.sln
+		SccProjectTopLevelParentUniqueName2 = Quintessence.QCore.sln
+		SccProjectUniqueName1 = Source\\Quintessence.QCore\\Quintessence.QCore.csproj
+		SccProjectUniqueName2 = Tests\\Quintessence.Core.Tests\\Quintessence.Core.Tests.csproj
+		SccTeamFoundationServer = http://vm-quinttfs:8080/tfs/applications
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{024DD768-C21C-495E-A829-30EB9C26799C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{024DD768-C21C-495E-A829-30EB9C26799C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{024DD768-C21C-495E-A829-30EB9C26799C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{024DD768-C21C-495E-A829-30EB9C26799C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E23CFC1D-50D6-42C4-A422-955406388BCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E23CFC1D-50D6-42C4-A422-955406388BCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E23CFC1D-50D6-42C4-A422-955406388BCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E23CFC1D-50D6-42C4-A422-955406388BCC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{024DD768-C21C-495E-A829-30EB9C26799C} = {39852559-4A0E-4E85-AEB5-EB0B313A6683}
+		{E23CFC1D-50D6-42C4-A422-955406388BCC} = {64E09E69-2220-4436-A5E9-C11ACC440A51}
+	EndGlobalSection
+EndGlobal

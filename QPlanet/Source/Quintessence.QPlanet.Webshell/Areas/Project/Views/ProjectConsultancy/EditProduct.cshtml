@@ -1,0 +1,22 @@
+﻿@model Quintessence.QPlanet.ViewModel.Scm.EditProductModel
+@using (Html.BeginForm("EditProduct", "ProjectConsultancy", FormMethod.Post, new {data_form = "EditProductForm", data_productid = Model.Id}))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    @Html.HiddenFor(m => m.ProductTypeId)
+    @Html.HiddenFor(m => m.UnitPrice)
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ProductTypeName)</div>
+        <div>@Html.DisplayTextFor(m => m.ProductTypeName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.Name)</div>
+        <div>@Html.EditorFor(m => m.Name)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.Description)</div>
+        <div>@Html.TextAreaFor(m => m.Description, 4, 60, null)</div>
+    </div>
+}
+<div class="right-text">
+    <a href="javascript:void(0);" class="button" data-function="EditProductSubmitButton" data-productid="@Model.Id">Save</a>
+</div>

@@ -1,0 +1,38 @@
+﻿@using Resources
+@model Quintessence.CulturalFit.UI.Webshell.Models.Questionnaire.QuestionnaireModel
+@{
+    ViewBag.Title = "Submit";
+}
+<div class="grid_6 prefix_3 suffix_3">
+    <fieldset class="login">
+        @if (Model.ErrorMessages.Count > 0)
+        {
+            <table>
+                @foreach (var message in Model.ErrorMessages)
+                {
+                    <tr>
+                        <td>@message.Message</td>
+                    </tr>
+                }
+            </table>
+            <input type="button" name="back" value="@Global.ReturnToYourQuestionnaire." onclick="javascript:history.go(-1);"/>
+        }
+        else if (Model.IsCompleted)
+        {
+            <legend>@Global.QuestionnaireAlreadyCompletedLegend.</legend>
+            <p class="notice">
+                @Global.QuestionnaireAlreadyCompleted
+            </p>
+            @Html.ActionLink("PDF", "GenerateReport", new {requestId = Model.TheoremListRequestId, languageId = Model.SelectedLanguage.Id}, new {@class = "pdfLink", title="Download PDF"})
+        }
+        else
+        {
+        <legend>@Global.YourQuestionnaireHasBeenProcessed.</legend>
+            <p class="notice">
+                @Html.Raw(@Global.SuccessfullyProcessed)
+            </p>
+            @Html.ActionLink("PDF", "GenerateReport", new {requestId = Model.TheoremListRequestId, languageId = Model.SelectedLanguage.Id}, new {@class = "pdfLink", title="Download PDF"})
+        }
+    </fieldset>
+</div>
+<div class="clear"></div>

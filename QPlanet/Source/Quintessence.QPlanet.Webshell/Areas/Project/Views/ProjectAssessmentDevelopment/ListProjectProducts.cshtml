@@ -1,0 +1,54 @@
+﻿@using Quintessence.QService.QueryModel.Base
+@using Quintessence.QService.QueryModel.Prm
+@model List<ProjectProductView>
+<table id="ProjectProductsDataTable">
+    <thead>
+        <tr>
+            <th style="width: 30%">Name</th>
+            <th style="width: 47%">Description</th>
+            <th style="width: 10%">Invoice amount</th>
+            <th style="width: 10%">Invoice status</th>
+            <th style="width: 9%">Deadline invoicing</th>
+            <th style="width: 5%">No invoice</th>
+            <th style="width: 72px">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var projectProduct in Model)
+        {
+            <tr>
+                <td>@projectProduct.ProductTypeName</td>
+                <td>@projectProduct.Description</td>
+                <td>@projectProduct.InvoiceAmount.GetValueOrDefault().ToString("C")</td>
+                <td>@EnumMemberNameAttribute.GetName((InvoiceStatusType)projectProduct.InvoiceStatusCode)</td>
+                <td>
+                    @if (projectProduct.Deadline.HasValue)
+                    {
+                        @projectProduct.Deadline.Value.ToShortDateString()
+                    }
+
+                </td>
+                <td>@Html.CheckBoxFor(m => projectProduct.NoInvoice, new { @disabled = "disabled" })</td>
+                <td>
+                    @if (projectProduct.InvoiceStatusCode == (int) InvoiceStatusType.Invoiced)
+                    {
+                        @(string.Format("Invoiced on {0}", @projectProduct.InvoicedDate.GetValueOrDefault().ToShortDateString()))
+                    }
+                    else
+                    {
+                        <a href="javascript:void(0);" data-function="EditProjectProduct" class="edit-link" data-id="@projectProduct.Id"></a>
+                        <a href="javascript:void(0);" data-function="DeleteProjectProduct" class="delete-link" data-id="@projectProduct.Id"></a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+<br />
+<div class="right-text">
+    <a href="javascript:void(0);" class="button" id="AddProjectProduct">Add</a>
+</div>
+
+

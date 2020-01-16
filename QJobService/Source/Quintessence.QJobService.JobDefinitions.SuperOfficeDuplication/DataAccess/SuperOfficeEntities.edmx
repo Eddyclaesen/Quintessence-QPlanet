@@ -1,0 +1,627 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SuperOfficeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Appointment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="AppointmentId" Type="int" Nullable="false" />
+          <Property Name="MotherId" Type="int" />
+          <Property Name="Type" Type="nvarchar" MaxLength="128" />
+          <Property Name="Associate" Type="nvarchar" MaxLength="64" />
+          <Property Name="AssociateFullName" Type="nvarchar" MaxLength="128" />
+          <Property Name="AssociatePersonId" Type="int" />
+          <Property Name="ContactId" Type="int" />
+          <Property Name="PersonId" Type="int" />
+          <Property Name="ProjectId" Type="int" />
+          <Property Name="SaleId" Type="int" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="DurationMinutes" Type="int" />
+          <Property Name="Text" Type="nvarchar(max)" />
+          <Property Name="Completed" Type="bit" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="128" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="128" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="32" />
+          <Property Name="Language" Type="nvarchar" MaxLength="16" />
+          <Property Name="Email" Type="nvarchar" MaxLength="128" />
+          <Property Name="Code" Type="nvarchar" MaxLength="64" />
+          <Property Name="Reservation" Type="bit" />
+          <Property Name="Location" Type="nvarchar" MaxLength="128" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ContactId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" />
+          <Property Name="StreetAddressLine1" Type="nvarchar" MaxLength="128" />
+          <Property Name="PostAddressLine1" Type="nvarchar" MaxLength="128" />
+          <Property Name="PostAddressZip" Type="nvarchar" MaxLength="32" />
+          <Property Name="PostAddressCity" Type="nvarchar" MaxLength="128" />
+          <Property Name="Country" Type="nvarchar" MaxLength="128" />
+          <Property Name="ContactPhone" Type="nvarchar" MaxLength="128" />
+          <Property Name="ContactFax" Type="nvarchar" MaxLength="128" />
+          <Property Name="UrlAddress" Type="nvarchar" MaxLength="128" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="128" />
+          <Property Name="ContactAssociateFullName" Type="nvarchar" MaxLength="128" />
+          <Property Name="ContactAssociatePersonId" Type="int" />
+          <Property Name="Category" Type="nvarchar" MaxLength="128" />
+          <Property Name="Business" Type="nvarchar" MaxLength="128" />
+          <Property Name="OrgNr" Type="nvarchar" MaxLength="64" />
+          <Property Name="Number" Type="int" />
+          <Property Name="Stop" Type="bit" />
+          <Property Name="ContactNoMail" Type="bit" />
+          <Property Name="Assistent" Type="nvarchar" MaxLength="128" />
+          <Property Name="FidelisationNorm" Type="nvarchar" MaxLength="128" />
+          <Property Name="FocusList" Type="bit" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DuplicationErrorLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogDateUtc" Type="datetime" Nullable="false" />
+          <Property Name="Info" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="DuplicationJobHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="JobName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="Succeeded" Type="bit" />
+          <Property Name="Info" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="DuplicationSettings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Key" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="ContactId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="128" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="128" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="128" />
+          <Property Name="MrMrs" Type="nvarchar" MaxLength="128" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="128" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="64" />
+          <Property Name="Retired" Type="bit" />
+          <Property Name="Inside" Type="bit" />
+          <Property Name="Nps" Type="bit" />
+          <Property Name="CommercialEmail" Type="bit" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ProjectId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="ProjectAssociateFullName" Type="nvarchar" MaxLength="128" />
+          <Property Name="ProjectAssociatePersonId" Type="int" />
+          <Property Name="Type" Type="nvarchar" MaxLength="128" />
+          <Property Name="Status" Type="nvarchar" MaxLength="64" />
+          <Property Name="RegisteredDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="BookYear" Type="nvarchar" MaxLength="32" />
+          <Property Name="NextMileStone" Type="datetime" />
+          <Property Name="Completed" Type="bit" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProjectMember">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ProjectMemberId" Type="int" Nullable="false" />
+          <Property Name="ProjectId" Type="int" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="ProjectMemberTypeId" Type="int" />
+          <Property Name="ProjectMemberTypeName" Type="nvarchar(max)" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="SaleId" Type="int" Nullable="false" />
+          <Property Name="ContactId" Type="int" />
+          <Property Name="ProjectId" Type="int" />
+          <Property Name="Text" Type="nvarchar(max)" />
+          <Property Name="PersonId" Type="int" />
+          <Property Name="AssociateId" Type="nvarchar" MaxLength="128" />
+          <Property Name="AssociateFullName" Type="nvarchar" MaxLength="256" />
+          <Property Name="Type" Type="nvarchar" MaxLength="128" />
+          <Property Name="Stage" Type="nvarchar" MaxLength="128" />
+          <Property Name="SaleStatus" Type="nvarchar" MaxLength="64" />
+          <Property Name="SaleDate" Type="datetime" />
+          <Property Name="Source" Type="nvarchar" MaxLength="128" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalCost" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Earning" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SaleText" Type="nvarchar(max)" />
+          <Property Name="Completed" Type="bit" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="ContactId" Type="int" />
+          <Property Name="PersonId" Type="int" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="128" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="128" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="128" />
+          <Property Name="Title" Type="nvarchar" MaxLength="128" />
+          <Property Name="UserGroup" Type="nvarchar" MaxLength="128" />
+          <Property Name="OtherGroups" Type="nvarchar" MaxLength="128" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Function Name="TruncateDuplicationTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="SuperOfficeModelStoreContainer">
+          <EntitySet Name="Appointment" EntityType="Self.Appointment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DuplicationErrorLog" EntityType="Self.DuplicationErrorLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DuplicationJobHistory" EntityType="Self.DuplicationJobHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DuplicationSettings" EntityType="Self.DuplicationSettings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectMember" EntityType="Self.ProjectMember" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sale" EntityType="Self.Sale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SuperOfficeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SuperOfficeEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="TruncateDuplicationTables" />
+          <EntitySet Name="DuplicationErrorLogs" EntityType="SuperOfficeModel.DuplicationErrorLog" />
+          <EntitySet Name="DuplicationJobHistories" EntityType="SuperOfficeModel.DuplicationJobHistory" />
+          <EntitySet Name="DuplicationSettings" EntityType="SuperOfficeModel.DuplicationSetting" />
+          <EntitySet Name="Users" EntityType="SuperOfficeModel.User" />
+          <EntitySet Name="People" EntityType="SuperOfficeModel.Person" />
+          <EntitySet Name="Projects" EntityType="SuperOfficeModel.Project" />
+          <EntitySet Name="Contacts" EntityType="SuperOfficeModel.Contact" />
+          <EntitySet Name="Sales" EntityType="SuperOfficeModel.Sale" />
+          <EntitySet Name="ProjectMembers" EntityType="SuperOfficeModel.ProjectMember" />
+          <EntitySet Name="Appointments" EntityType="SuperOfficeModel.Appointment" />
+          </EntityContainer>
+        <EntityType Name="DuplicationErrorLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogDateUtc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Info" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="DuplicationJobHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="JobName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="Succeeded" Type="Boolean" />
+          <Property Name="Info" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="DuplicationSetting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="ContactId" Type="Int32" />
+          <Property Name="PersonId" Type="Int32" />
+          <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserGroup" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="OtherGroups" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <Property Name="ContactId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="MrMrs" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmailAddress" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Retired" Type="Boolean" />
+          <Property Name="Inside" Type="Boolean" />
+          <Property Name="Nps" Type="Boolean" />
+          <Property Name="CommercialEmail" Type="Boolean" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectAssociateFullName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectAssociatePersonId" Type="Int32" />
+          <Property Name="Type" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="RegisteredDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="BookYear" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="NextMileStone" Type="DateTime" Precision="3" />
+          <Property Name="Completed" Type="Boolean" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ContactId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="StreetAddressLine1" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PostAddressLine1" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PostAddressZip" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="PostAddressCity" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPhone" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ContactFax" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UrlAddress" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EmailAddress" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ContactAssociateFullName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ContactAssociatePersonId" Type="Int32" />
+          <Property Name="Category" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Business" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="OrgNr" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="Int32" />
+          <Property Name="Stop" Type="Boolean" />
+          <Property Name="ContactNoMail" Type="Boolean" />
+          <Property Name="Assistent" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FidelisationNorm" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FocusList" Type="Boolean" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="SaleId" Type="Int32" Nullable="false" />
+          <Property Name="ContactId" Type="Int32" />
+          <Property Name="ProjectId" Type="Int32" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PersonId" Type="Int32" />
+          <Property Name="AssociateId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="AssociateFullName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Stage" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SaleStatus" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SaleDate" Type="DateTime" Precision="3" />
+          <Property Name="Source" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalCost" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Earning" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SaleText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Completed" Type="Boolean" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="ProjectMember">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ProjectMemberId" Type="Int32" Nullable="false" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <Property Name="ProjectMemberTypeId" Type="Int32" />
+          <Property Name="ProjectMemberTypeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Appointment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="AppointmentId" Type="Int32" Nullable="false" />
+          <Property Name="MotherId" Type="Int32" />
+          <Property Name="Type" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Associate" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="AssociateFullName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="AssociatePersonId" Type="Int32" />
+          <Property Name="ContactId" Type="Int32" />
+          <Property Name="PersonId" Type="Int32" />
+          <Property Name="ProjectId" Type="Int32" />
+          <Property Name="SaleId" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="DurationMinutes" Type="Int32" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Completed" Type="Boolean" />
+          <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Language" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Reservation" Type="Boolean" />
+          <Property Name="Location" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SuperOfficeModelStoreContainer" CdmEntityContainer="SuperOfficeEntities">
+          <FunctionImportMapping FunctionImportName="TruncateDuplicationTables" FunctionName="SuperOfficeModel.Store.TruncateDuplicationTables" />
+          <EntitySetMapping Name="DuplicationErrorLogs">
+            <EntityTypeMapping TypeName="SuperOfficeModel.DuplicationErrorLog">
+              <MappingFragment StoreEntitySet="DuplicationErrorLog">
+                <ScalarProperty Name="Info" ColumnName="Info" />
+                <ScalarProperty Name="LogDateUtc" ColumnName="LogDateUtc" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DuplicationJobHistories">
+            <EntityTypeMapping TypeName="SuperOfficeModel.DuplicationJobHistory">
+              <MappingFragment StoreEntitySet="DuplicationJobHistory">
+                <ScalarProperty Name="Info" ColumnName="Info" />
+                <ScalarProperty Name="Succeeded" ColumnName="Succeeded" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="JobName" ColumnName="JobName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DuplicationSettings">
+            <EntityTypeMapping TypeName="SuperOfficeModel.DuplicationSetting">
+              <MappingFragment StoreEntitySet="DuplicationSettings">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="SuperOfficeModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="OtherGroups" ColumnName="OtherGroups" />
+                <ScalarProperty Name="UserGroup" ColumnName="UserGroup" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="SuperOfficeModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="CommercialEmail" ColumnName="CommercialEmail" />
+                <ScalarProperty Name="Nps" ColumnName="Nps" />
+                <ScalarProperty Name="Inside" ColumnName="Inside" />
+                <ScalarProperty Name="Retired" ColumnName="Retired" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="MrMrs" ColumnName="MrMrs" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="SuperOfficeModel.Project">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
+                <ScalarProperty Name="NextMileStone" ColumnName="NextMileStone" />
+                <ScalarProperty Name="BookYear" ColumnName="BookYear" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="RegisteredDate" ColumnName="RegisteredDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ProjectAssociatePersonId" ColumnName="ProjectAssociatePersonId" />
+                <ScalarProperty Name="ProjectAssociateFullName" ColumnName="ProjectAssociateFullName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="SuperOfficeModel.Contact">
+              <MappingFragment StoreEntitySet="Contact">
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="FocusList" ColumnName="FocusList" />
+                <ScalarProperty Name="FidelisationNorm" ColumnName="FidelisationNorm" />
+                <ScalarProperty Name="Assistent" ColumnName="Assistent" />
+                <ScalarProperty Name="ContactNoMail" ColumnName="ContactNoMail" />
+                <ScalarProperty Name="Stop" ColumnName="Stop" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="OrgNr" ColumnName="OrgNr" />
+                <ScalarProperty Name="Business" ColumnName="Business" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="ContactAssociatePersonId" ColumnName="ContactAssociatePersonId" />
+                <ScalarProperty Name="ContactAssociateFullName" ColumnName="ContactAssociateFullName" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="UrlAddress" ColumnName="UrlAddress" />
+                <ScalarProperty Name="ContactFax" ColumnName="ContactFax" />
+                <ScalarProperty Name="ContactPhone" ColumnName="ContactPhone" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="PostAddressCity" ColumnName="PostAddressCity" />
+                <ScalarProperty Name="PostAddressZip" ColumnName="PostAddressZip" />
+                <ScalarProperty Name="PostAddressLine1" ColumnName="PostAddressLine1" />
+                <ScalarProperty Name="StreetAddressLine1" ColumnName="StreetAddressLine1" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sales">
+            <EntityTypeMapping TypeName="SuperOfficeModel.Sale">
+              <MappingFragment StoreEntitySet="Sale">
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
+                <ScalarProperty Name="SaleText" ColumnName="SaleText" />
+                <ScalarProperty Name="Earning" ColumnName="Earning" />
+                <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
+                <ScalarProperty Name="SaleStatus" ColumnName="SaleStatus" />
+                <ScalarProperty Name="Stage" ColumnName="Stage" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="AssociateFullName" ColumnName="AssociateFullName" />
+                <ScalarProperty Name="AssociateId" ColumnName="AssociateId" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+                <ScalarProperty Name="SaleId" ColumnName="SaleId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectMembers">
+            <EntityTypeMapping TypeName="SuperOfficeModel.ProjectMember">
+              <MappingFragment StoreEntitySet="ProjectMember">
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="ProjectMemberTypeName" ColumnName="ProjectMemberTypeName" />
+                <ScalarProperty Name="ProjectMemberTypeId" ColumnName="ProjectMemberTypeId" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="ProjectMemberId" ColumnName="ProjectMemberId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Appointments">
+            <EntityTypeMapping TypeName="SuperOfficeModel.Appointment">
+              <MappingFragment StoreEntitySet="Appointment">
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Reservation" ColumnName="Reservation" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Language" ColumnName="Language" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="DurationMinutes" ColumnName="DurationMinutes" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="SaleId" ColumnName="SaleId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+                <ScalarProperty Name="AssociatePersonId" ColumnName="AssociatePersonId" />
+                <ScalarProperty Name="AssociateFullName" ColumnName="AssociateFullName" />
+                <ScalarProperty Name="Associate" ColumnName="Associate" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="MotherId" ColumnName="MotherId" />
+                <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

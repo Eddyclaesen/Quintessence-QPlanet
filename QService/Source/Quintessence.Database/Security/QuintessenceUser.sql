@@ -1,0 +1,3 @@
+﻿--IMPORTANT
+---------------------
+--SECURITY IS ADDED TOGTHER WITH POST-DEPLOY SCRIPT!!!!

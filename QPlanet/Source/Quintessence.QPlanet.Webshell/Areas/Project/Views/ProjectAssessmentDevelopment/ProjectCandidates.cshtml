@@ -1,0 +1,613 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectDetailControllerBase.ProjectCandidatesActionModel
+
+<div class="grid_4">
+    <fieldset>
+        <legend>Sections</legend>
+
+        <nav class="navigation">
+            <ul id="Tabs">
+                @if (Model.Candidates.Any())
+                {
+                    foreach (var candidate in Model.Candidates)
+                    {
+                        if (!candidate.ProjectCandidateDetail.IsSuperofficeAppointmentDeleted)
+                        {
+                    <li><a href="javascript:void(0);" data-function="EditProjectCandidateDetail" data-id="@candidate.Id" data-name="@candidate.CandidateFullName">@candidate.CandidateFullName
+                        </a><font color="white" size="1">(@candidate.CrmCandidateInfoId) @candidate.ProjectCandidateDetail.AssessmentStartDate.Value.ToString("dd/MM") </font></li>
+                        }
+                    }
+                }
+                else
+                {
+                    <li class="center-text no-tab">No candidates added...</li>  
+                }
+                <li class="no-tab"></li>
+                <li class="no-tab">
+                    <div class="right-text">
+                        <a href="javascript: void(0);" id="AddCandidateButton" class="button">Add</a>
+                    </div>
+                </li>
+                <li class="no-tab"></li>
+                @if (Model.DeletedAppointments.Any())
+                {
+                    <li class="no-tab">Deleted in SO:</li>
+                    foreach (var deletedAppointment in Model.DeletedAppointments)
+                    {
+                    <li>
+                        <a href="javascript:void(0);" data-function="EditDeletedProjectCandidateDetail" data-id="@deletedAppointment.Id" data-name="@deletedAppointment.CandidateFullName">@deletedAppointment.CandidateFullName</a>
+                    </li>
+                    }
+                }
+            </ul>
+        </nav>
+
+    </fieldset>
+</div>
+
+<script>
+    $(function () {
+        InitializeButtons();
+    });
+
+    function InitializeButtons() {
+    }
+</script>
+
+<div class="grid_12">
+    <fieldset>
+        <legend id="ProjectCandidateName"></legend>
+        <div id="ProjectCandidatePlaceholder">
+        </div>
+    </fieldset>
+</div>
+
+
+@*@if (Model.Candidates.Any())
+{
+    for (int i = 0; i < Model.Candidates.Count; i++)
+    {
+    @Html.HiddenFor(m => m.Candidates[i].ProjectCandidateDetailIsSuperofficeAppointmentDeleted)
+
+        if (!Model.Candidates[i].ProjectCandidateDetailIsSuperofficeAppointmentDeleted)
+        {
+            
+    @Html.EditorFor(m => m.Candidates[i], "BaseEntityViewTemplate")
+            
+    <fieldset id="candidate-@Model.Candidates[i].Id">
+        <legend>@Html.DisplayFor(m => m.Candidates[i].FullName)</legend>
+        <table data-function="CandidateTable">
+
+            <tr id="node-details-@Model.Candidates[i].Id" class="expanded">
+                <td colspan="3">Details</td>
+            </tr>
+            <tr id="node-details-@Model.Candidates[i].Id-detail" class="child-of-node-details-@Model.Candidates[i].Id">
+                <td colspan="3">
+                    <div class="row">
+                        <div>@Html.DisplayNameFor(m => m.Candidates[i].ProjectCandidateDetailAssessmentStartDate):
+                        </div>
+                        <div>
+                            @{
+            var diff = Model.Candidates[i].ProjectCandidateDetailAssessmentEndDate.Subtract(Model.Candidates[i].ProjectCandidateDetailAssessmentStartDate);
+            var linkText = diff.Days >= 1
+                               ? string.Format("{0} - {1}", Model.Candidates[i].ProjectCandidateDetailAssessmentStartDate.ToString("dd/MM/yyyy HH:mm"), Model.Candidates[i].ProjectCandidateDetailAssessmentEndDate.ToString("dd/MM/yyyy HH:mm"))
+                               : Model.Candidates[i].ProjectCandidateDetailAssessmentStartDate.ToString("dd/MM/yyyy HH:mm");
+            var candidate = Model.Candidates[i];
+                            }
+                            @if (candidate.AssessmentRoomId.HasValue)
+                            {
+                                var routeValues = new
+                                    {
+                                        area = "Candidate",
+                                        officeId = Model.RetrieveOfficeId(candidate.AssessmentRoomId.Value),
+                                        year = candidate.ProjectCandidateDetailAssessmentStartDate.Year,
+                                        month = candidate.ProjectCandidateDetailAssessmentStartDate.Month,
+                                        day = candidate.ProjectCandidateDetailAssessmentStartDate.Day
+                                    };
+                                @Html.ActionLink(linkText, "Edit", "ProgramDetail", routeValues, new { target = string.Format("dayprogram{0}", candidate.ProjectCandidateDetailAssessmentStartDate.ToString("yyyyMMdd")) })
+                            }
+                            else
+                            {
+                                var routeValues = new
+                                    {
+                                        area = "Candidate",
+                                        officeId = 1,
+                                        year = candidate.ProjectCandidateDetailAssessmentStartDate.Year,
+                                        month = candidate.ProjectCandidateDetailAssessmentStartDate.Month,
+                                        day = candidate.ProjectCandidateDetailAssessmentStartDate.Day
+                                    };
+                                @Html.ActionLink(linkText, "Edit", "ProgramDetail", routeValues, new { target = string.Format("dayprogram{0}", candidate.ProjectCandidateDetailAssessmentStartDate.ToString("yyyyMMdd")) })
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            @Html.HiddenFor(m => m.Candidates[i].IsCancelled)
+                            @Html.HiddenFor(m => m.Candidates[i].CandidateId)
+                            @Html.HiddenFor(m => m.Candidates[i].Code)
+                            @Html.HiddenFor(m => m.Candidates[i].ProjectCandidateDetailAssessmentStartDate)
+                            @Html.DisplayNameFor(m => m.Candidates[i].ProjectCandidateDetailLeadAssessorFirstName):
+                        </div>
+                        <div>
+                            @(string.Format("{0} {1}", Model.Candidates[i].ProjectCandidateDetailLeadAssessorFirstName, Model.Candidates[i].ProjectCandidateDetailLeadAssessorLastName))
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            @Html.DisplayNameFor(m => Model.Candidates[i].ProjectCandidateDetailCoAssessors):
+                        </div>
+                        <div>@string.Join(", ", Model.Candidates[i].ProjectCandidateDetailCoAssessors.Select(ca => string.Format("{0} {1}", ca.AssessorFirstName, ca.AssessorLastName)))
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>@Html.DisplayNameFor(m => m.Candidates[i].IsAccompaniedByCustomer):</div>
+                        <div>@Html.CheckBoxFor(m => m.Candidates[i].IsAccompaniedByCustomer)</div>
+                    </div>
+                    @if (Model.MainProjectCategoryDetail is ISimulationSelectionModel)
+                    {
+                        <div class="row">
+                            <div>Scores:</div>
+                            <div>@Html.ActionLink("Scores", "EditProjectCandidateSimulationScores", new { id = @Model.Candidates[i].Id }, new { target = @Model.Candidates[i].Id })
+                            </div>
+                        </div>
+                    }
+                    <div class="row">
+                        <div>@Html.DisplayNameFor(m => m.Candidates[i].CandidateLanguageId):</div>
+                        <div>
+                            @Html.DropDownListFor(m => m.Candidates[i].CandidateLanguageId, Model.CreateLanguageSelectListItems(Model.Candidates[i].CandidateLanguageId))
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>@Html.DisplayNameFor(m => m.Candidates[i].CandidateGender):</div>
+                        <div>
+                            @Html.DropDownListFor(m => m.Candidates[i].CandidateGender, Model.CreateGenderSelectListItems(Model.Candidates[i].CandidateGender))
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>@Html.DisplayNameFor(m => m.Candidates[i].CandidateEmail):</div>
+                        <div>
+                            @Html.TextBoxFor(m => m.Candidates[i].CandidateEmail)
+                            <a href="javascript:void(0);" data-function="SendCandidateInvitationMailButton" data-id="@Model.Candidates[i].Id" data-language-id="@Model.Candidates[i].CandidateLanguageId">
+                                Invite</a>
+                        </div>
+                    </div>
+                    @if (Model.Project.PricingModelType == PricingModelType.FixedPrice)
+                    {
+                        <div class="row">
+                            <div>@Html.DisplayNameFor(m => m.Candidates[i].InvoiceAmount):</div>
+                            <div>
+                                @if (Model.Candidates[i].InvoiceStatusCode == (int)InvoiceStatusType.Planned || Model.Candidates[i].InvoiceStatusCode == (int)InvoiceStatusType.ReadyForInvoicing)
+                                {
+                                    @Html.TextBoxFor(m => m.Candidates[i].InvoiceAmount, new { data_id = "CandidateInvoiceAmount" })
+                                }
+                                else
+                                {
+                                    var statusCode = EnumMemberNameAttribute.GetName(Enum.GetValues(typeof(InvoiceStatusType)).OfType<InvoiceStatusType>().FirstOrDefault(invoiceStatusType => (int)invoiceStatusType == Model.Candidates[i].InvoiceStatusCode));
+                                    @(string.Format("{0} ({1})", Model.Candidates[i].InvoiceAmount.ToString("C"), statusCode))
+                                }
+                            </div>
+                        </div>
+                    }
+
+                </td>
+            </tr>
+            <tr id="node-culturalfit-@Model.Candidates[i].Id">
+                <td colspan="3">Cultural fit</td>
+            </tr>
+            <tr id="node-culturalfit-@Model.Candidates[i].Id-detail" class="child-of-node-culturalfit-@Model.Candidates[i].Id">
+                <td colspan="3">
+                    <div>
+                        <br />
+                        <table class="dataTable">
+                            <thead>
+                                <tr>
+                                    <th>Project</th>
+                                    <th>Status</th>
+                                    <th>Request date</th>
+                                    <th>AC Deadline</th>
+                                    <th>Code</th>
+                                    <th>Type</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @if (Model.Candidates[i].TheoremListRequests.Any())
+                                {
+                                    foreach (var request in Model.Candidates[i].TheoremListRequests)
+                                    {
+                                    <tr>
+                                        <td>
+                                            <a href="@Url.Action("Edit", "ProjectAssessmentDevelopment", new { id = request.ProjectId })" target="@request.ProjectId">@request.ProjectName</a>
+                                        </td>
+                                        @{
+                                        var status = "Not completed";
+                                        switch (request.Status)
+                                        {
+                                            case 2:
+                                                status = "In progress";
+                                                break;
+                                            case 99:
+                                                status = "Completed";
+                                                break;
+                                        }
+                                        }
+                                        <td title="@status">@request.Status</td>
+                                        <td>@request.RequestDate.ToShortDateString()</td>
+                                        <td>@Model.Candidates[i].ProjectCandidateDetailAssessmentStartDate.ToShortDateString()
+                                        </td>
+                                        <td>@request.VerificationCode</td>
+                                        <td>@request.TheoremListRequestType</td>
+                                        <td>
+                                            @Html.ActionLink("Nl", "GenerateCulturalFitReport", "ProjectAssessmentDevelopment", new { id = request.Id, languageId = 1 }, null)
+                                            @Html.ActionLink("Fr", "GenerateCulturalFitReport", "ProjectAssessmentDevelopment", new { id = request.Id, languageId = 2 }, null)
+                                            @Html.ActionLink("En", "GenerateCulturalFitReport", "ProjectAssessmentDevelopment", new { id = request.Id, languageId = 3 }, null)
+                                        </td>
+                                    </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="5" class="center-text">...No requests for @Model.Candidates[i].FullName...
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <br />
+                    </div>
+                    <br />
+                    <div class="right-text">
+                        <a href="javascript:void(0);" data-function="CreateCulturalFitCandidateRequestButton" data-project-candidate-id="@Model.Candidates[i].Id" class="button">
+                            Create</a>
+                    </div>
+                </td>
+            </tr>
+            <tr id="node-reporting-@Model.Candidates[i].Id">
+                <td colspan="3">Reporting</td>
+            </tr>
+            <tr id="node-reporting-@Model.Candidates[i].Id-detail" class="child-of-node-reporting-@Model.Candidates[i].Id">
+                <td colspan="3">
+                    <div class="row">
+                        <div>@Html.DisplayNameFor(m => m.Candidates[i].ReportDeadline):</div>
+                        <div>
+                            @Html.EditorFor(m => m.Candidates[i].ReportDeadline)
+                            @Html.ValidationMessageFor(m => m.Candidates[i].ReportDeadline)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>@Html.DisplayNameFor(m => m.Candidates[i].ReportStatusId):</div>
+                        <div>
+                            @Html.DropDownListFor(m => m.Candidates[i].ReportStatusId, Model.CreateReportStatusSelectListItems(Model.Candidates[i].ReportStatusId))
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>@Html.DisplayNameFor(m => m.Candidates[i].ReportLanguageId):</div>
+                        <div>
+                            @Html.DropDownListFor(m => m.Candidates[i].ReportLanguageId, Model.CreateLanguageSelectListItems(Model.Candidates[i].ReportLanguageId))
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>@Html.DisplayNameFor(m => m.Candidates[i].ReportReviewerId):</div>
+                        <div>
+                            @Html.DropDownListFor(m => m.Candidates[i].ReportReviewerId, Model.CreateCustomerAssistantSelectListItems(Model.Candidates[i].ReportReviewerId))
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>Is revision by PM required:</div>
+                        <div>
+                            @Html.CheckBoxFor(m => m.Project.IsRevisionByPmRequired, new { disabled = "disabled" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>Report remarks:</div>
+                        <div>
+                            @if (string.IsNullOrEmpty(Model.Project.ReportRemarks))
+                            {
+                                @:None
+                            }
+                            else
+                            {
+                                @Html.Raw(Model.Project.ReportRemarks)
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>SendReportToParticipantRemarks:</div>
+                        <div>
+                            @if (string.IsNullOrEmpty(Model.Project.SendReportToParticipantRemarks))
+                            {
+                                @:None
+                            }
+                            else
+                            {
+                                @Html.Raw(Model.Project.SendReportToParticipantRemarks)
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>Report recipient(s):</div>
+                        <div>
+                            <div data-id="ProjectCandidateReportRecipientsPlaceholder" data-project-candidate-id="@Model.Candidates[i].Id">
+                            </div>
+                            <div class="right-text">
+                                <a href="javascript:void(0);" data-function="AddProjectCandidateReportRecipientsButton" data-contact-id="@Model.Project.ContactId" data-project-candidate-id="@Model.Candidates[i].Id" class="button">
+                                    Add</a>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            @if (Model.Candidates[i].ProjectCandidateCategoryDetailTypes.Count > 0)
+            {
+                <tr id="node-Categories-@Model.Candidates[i].Id">
+                    <td class="3">Categories</td>
+                </tr>
+                for (int j = 0; j < Model.Candidates[i].ProjectCandidateCategoryDetailTypes.Count; j++)
+                {
+                <tr id="node-@Model.Candidates[i].Id-@Model.Candidates[i].ProjectCandidateCategoryDetailTypes[j].ProjectCategoryDetailTypeId" class="child-of-node-Categories-@Model.Candidates[i].ProjectCandidateCategoryDetailTypes[j].ProjectCandidateId">
+                    <td>
+                        @Model.Candidates[i].ProjectCandidateCategoryDetailTypes[j].ProjectCategoryDetailTypeName
+                        @Html.HiddenFor(m => m.Candidates[i].ProjectCandidateCategoryDetailTypes[j].DetailType)
+                        @Html.HiddenFor(m => m.Candidates[i].ProjectCandidateCategoryDetailTypes[j].Id)
+                        @Html.HiddenFor(m => m.Candidates[i].ProjectCandidateCategoryDetailTypes[j].ProjectCategoryDetailTypeId)
+                        @Html.HiddenFor(m => m.Candidates[i].ProjectCandidateCategoryDetailTypes[j].ProjectCandidateId)
+                        @Html.HiddenFor(m => m.Candidates[i].ProjectCandidateCategoryDetailTypes[j].ProjectCategoryDetailTypeName)
+                        @Html.HiddenFor(m => m.Candidates[i].ProjectCandidateCategoryDetailTypes[j].SurveyPlanningId)
+                    </td>
+                </tr>
+                <tr class="child-of-node-@Model.Candidates[i].Id-@Model.Candidates[i].ProjectCandidateCategoryDetailTypes[j].ProjectCategoryDetailTypeId">
+                    <td colspan="3">
+                        @if (Model.Candidates[i].ProjectCandidateCategoryDetailTypes[j] is EditProjectCandidateCategoryDetailType1Model)
+                        {
+                            @Html.EditorFor(m => m.Candidates[i].ProjectCandidateCategoryDetailTypes[j], "EditProjectCandidateCategoryDetailType1Model")                            
+                        }
+                        else if (Model.Candidates[i].ProjectCandidateCategoryDetailTypes[j] is EditProjectCandidateCategoryDetailType2Model)
+                        {
+                            @Html.EditorFor(m => m.Candidates[i].ProjectCandidateCategoryDetailTypes[j], "EditProjectCandidateCategoryDetailType2Model")                            
+                        }
+                        else if (Model.Candidates[i].ProjectCandidateCategoryDetailTypes[j] is EditProjectCandidateCategoryDetailType3Model)
+                        {
+                            @Html.EditorFor(m => m.Candidates[i].ProjectCandidateCategoryDetailTypes[j], "EditProjectCandidateCategoryDetailType3Model")
+                        }
+                        else
+                        {
+                            @Html.EditorFor(m => m.Candidates[i].ProjectCandidateCategoryDetailTypes[j], "EditProjectCandidateCategoryDetailTypeModel")                            
+                        }
+
+                        <div class="row">
+                            <div>
+                                see <a href="@Url.Action("SubProjectCategoryDetails", "ProjectAssessmentDevelopment", new { id = Model.Project.Id.ToString() })#@Model.Candidates[i].ProjectCandidateCategoryDetailTypes[j].ProjectCategoryDetailTypeId" target="_blank">
+                                    subcategories</a> for more information.
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                }
+            }
+
+            <tr id="node-Projects-@Model.Candidates[i].Id">
+                <td colspan="3">Sub projects</td>
+            </tr>
+
+            @if (Model.Candidates[i].ProjectCandidateProjects.Any())
+            {
+                foreach (var project in Model.Candidates[i].ProjectCandidateProjects)
+                {
+                <tr id="node-@Model.Candidates[i].Id-@project.SubProjectId" class="child-of-node-Projects-@Model.Candidates[i].Id">
+                    <td>@Html.ActionLink(project.ProjectName, "Edit", "ProjectGeneral", new { id = project.SubProjectId }, new { target = "_blank" })
+                    </td>
+                    <td colspan="2">@project.ProjectTypeName</td>
+                </tr>
+                }
+
+            }
+            else
+            {
+                <tr class="child-of-node-Projects-@Model.Candidates[i].Id">
+                    <td colspan="3">No subprojects for this candidate... Press "Create" to create one.
+                    </td>
+                </tr>
+            }
+            <tr class="child-of-node-Projects-@Model.Candidates[i].Id">
+                <td></td>
+                <td colspan="2">
+                    @Html.ActionLink("Create", "Create", "ProjectGeneral", new { id = Model.Candidates[i].ProjectId, projectCandidateId = Model.Candidates[i].Id }, new { target = "_blank", @class = "button" })
+                </td>
+            </tr>
+
+            <tr id="node-remarks-@Model.Candidates[i].Id">
+                <td colspan="3">Remarks</td>
+            </tr>
+            <tr class="child-of-node-remarks-@Model.Candidates[i].Id">
+                <td colspan="3">
+                    @Html.TextAreaFor(m => m.Candidates[i].Remarks, new { data_function = "CandidateRemarks" })
+                </td>
+            </tr>
+
+
+        </table>
+
+        <br />
+        <br />
+        <div style="text-align: right">
+            <a href="javascript:void(0);" data-function="SubmitProjectCandidateDetailsButton"
+                class="button">Save</a>
+        </div>
+    </fieldset>
+        }
+    }
+}
+else
+{
+    <fieldset>
+        <legend>Candidates</legend>
+        <div class="center-text">
+            <p>...No candidates added...</p>
+        </div>
+    </fieldset>
+    
+}
+
+@if (Model.DeletedAppointments.Any())
+{
+    for (int i = 0; i < Model.DeletedAppointments.Count; i++)
+    {
+    <fieldset id="deleted-appointment-@Model.DeletedAppointments[i].Id">
+        <legend>Deleted appointment: @Html.DisplayFor(m => m.DeletedAppointments[i].FullName)</legend>
+        @Html.EditorFor(m => m.DeletedAppointments[i], "BaseEntityViewTemplate")
+
+        <table data-function="CanceledProjectCandidatesTreeTable" class="dataTable">
+            <tr id="node-@Model.DeletedAppointments[i].Id" class="expanded">
+                <td>@Html.Label(Model.DeletedAppointments[i].FullName)
+                    @if (!Model.DeletedAppointments[i].IsCancelled)
+                    {
+                        <a href="javascript:void;" data-function="CancelCandidate" title="Click here to cancel this candidate." data-project-candidate-id="@Model.DeletedAppointments[i].Id">
+                            Cancel</a>
+                    }
+                </td>
+            </tr>
+            @if (Model.DeletedAppointments[i].IsCancelled)
+            {
+                <tr class="child-of-node-@Model.DeletedAppointments[i].Id">
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td>@Html.DisplayNameFor(m => Model.DeletedAppointments[i].CancelledDate)</td>
+                                <td>@Model.DeletedAppointments[i].CancelledDate.GetValueOrDefault().ToShortDateString()
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>@Html.DisplayNameFor(m => Model.DeletedAppointments[i].CancelledReason)</td>
+                                <td>@Html.TextAreaFor(m => Model.DeletedAppointments[i].CancelledReason, 7, 40, null)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>@Html.DisplayNameFor(m => Model.DeletedAppointments[i].InvoiceAmount)</td>
+                                <td>@Html.EditorFor(m => Model.DeletedAppointments[i].InvoiceAmount)</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            }
+        </table>
+    </fieldset>
+    }
+
+}*@
+
+
+<div id="AddProjectCandidateReportRecipientsDialog">
+    @using (Html.BeginForm("AddProjectCandidateReportRecipients", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "AddProjectCandidateReportRecipientsForm" }))
+    {
+        <div id="CrmEmailsPlaceholder">
+        </div>
+    }
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" id="AddSelectedProjectCandidateReportRecipientsSubmitButton"
+            class="button">Add selected</a>
+    </div>
+</div>
+
+<div id="CancelProjectCandidateDialog">
+    <div id="CancelProjectCandidateDialogPlaceholder">
+    </div>
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" id="CancelProjectCandidateSubmitButton" class="button">
+            OK</a>
+    </div>
+</div>
+
+<script src="@Url.Content("~/Scripts/tiny_mce/jquery.tinymce.js")" type="text/javascript"></script>
+<script>
+    $(function () {
+        InitializeDatePickers();
+        InitializeDialogs();
+        InitializeTextAreas();
+        RefreshProjectCandidateReportRecipients();
+        InitializeTreeTables();
+    });
+
+    function InitializeDatePickers() {
+        $('input[id*=ReportDeadline]').datetimepicker({ dateFormat: "dd/mm/yy", timeFormat: "hh:mm" });
+    }
+
+    function InitializeDialogs() {
+
+        $('#AddProjectCandidateReportRecipientsDialog').dialog(
+            {
+                autoOpen: false,
+                modal: true, resizable: false,
+                width: 850,
+                height: 725,
+                title: 'Add report recipients'
+            });
+
+        $('#CancelProjectCandidateDialog').dialog(
+            {
+                autoOpen: false,
+                modal: true,
+                width: 550,
+                height: 350,
+                title: 'Cancel candidate'
+            });
+
+    }
+
+    function InitializeTextAreas() {
+
+        $('textarea[data-function=CandidateRemarks]').each(function () {
+            $(this).tinymce({
+                script_url: '@Url.Content("~/Scripts/tiny_mce/tiny_mce.js")',
+                height: '300',
+                width: '100%',
+                theme: 'simple',
+                valid_styles: { '*': 'font-weight,text-decoration' }
+            });
+        });
+    }
+
+    function RefreshProjectCandidateReportRecipients(projectCandidateId) {
+        if (projectCandidateId == undefined) {
+            $('div[data-id=ProjectCandidateReportRecipientsPlaceholder]').loading('Loading report recipients...');
+            $('div[data-id=ProjectCandidateReportRecipientsPlaceholder]').each(function () {
+                var placeholder = $(this);
+                $.ajax({
+                    url: '@Url.Action("ListProjectCandidateReportRecipients")/' + $(this).attr('data-project-candidate-id'),
+                    success: function (data) { placeholder.html(data); },
+                    error: function (err) {
+                        alert(err.responseText);
+                    }
+                });
+            });
+        }
+        else {
+            var reportRecipientsDataTable = $('div[data-id=ProjectCandidateReportRecipientsPlaceholder][data-project-candidate-id=' + projectCandidateId + ']');
+            reportRecipientsDataTable.loading('Loading report recipients...');
+            $.ajax({
+                url: '@Url.Action("ListProjectCandidateReportRecipients")/' + projectCandidateId,
+                success: function (data) { reportRecipientsDataTable.html(data); },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+        }
+
+    }
+
+    function InitializeTreeTables() {
+
+        $('table[data-function=CanceledProjectCandidatesTreeTable]').each(function () {
+            $(this).treeTable({
+                persist: true
+            });
+        });
+    }
+
+
+</script>

@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>Quintessence.CulturalFit.Database</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{7caeabac-a0ca-40c7-9393-e1ffccae2799}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>Quintessence.CulturalFit.Database</RootNamespace>
+    <AssemblyName>Quintessence.CulturalFit.Database</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\all\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <OutputPath>bin\all\</OutputPath>
+  </PropertyGroup>
+  <!-- VS10 without SP1 will not have VisualStudioVersion set, so do that here -->
+  <PropertyGroup />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="Schemas" />
+    <Folder Include="Schemas\dbo" />
+    <Folder Include="Schemas\dbo\Tables" />
+    <Folder Include="Schemas\dbo\Tables\Keys" />
+    <Folder Include="Schemas\dbo\Tables\Keys\Foreign" />
+    <Folder Include="Schemas\dbo\Tables\Keys\Primary" />
+    <Folder Include="Scripts" />
+    <Folder Include="Scripts\Post-Deployment" />
+    <Folder Include="Scripts\Post-Deployment\Data" />
+    <Folder Include="Schemas\dbo\Views" />
+    <Folder Include="External" />
+    <Folder Include="Security" />
+    <Folder Include="Schemas\dbo\Procedures" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Quintessence.CulturalFit.Database.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Schemas\dbo\Tables\TheoremTemplate.sql" />
+    <Build Include="Schemas\dbo\Tables\TheoremListTemplate.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Primary\PK_TheoremListTemplate.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Primary\PK_TheoremTemplate.sql" />
+    <Build Include="Schemas\dbo\Tables\TheoremTemplateTranslation.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Primary\PK_TheoremTemplateTranslation.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Foreign\FK_TheoremTemplateTranslation_TheoremTemplate.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Foreign\FK_TheoremTemplate_TheoremListTemplate.sql" />
+    <Build Include="Schemas\dbo\Tables\Language.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Primary\PK_Language.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Foreign\FK_TheoremTemplateTranslation_Language.sql" />
+    <Build Include="Schemas\dbo\Tables\Theorem.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Primary\PK_Theorem.sql" />
+    <Build Include="Schemas\dbo\Tables\TheoremList.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Primary\PK_TheoremList.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Foreign\FK_Theorem_TheoremList.sql" />
+    <Build Include="Schemas\dbo\Tables\TheoremListRequest.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Primary\PK_TheoremListRequest.sql" />
+    <Build Include="Schemas\dbo\Tables\TheoremListCandidate.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Primary\PK_TheoremListCandidate.sql" />
+    <Build Include="Schemas\dbo\Tables\TheoremTranslation.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Primary\PK_TheoremTranslation.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Foreign\FK_TheoremTranslation_Theorem.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Foreign\FK_TheoremTranslation_Language.sql" />
+    <Build Include="Schemas\dbo\Tables\TheoremListRequestType.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Primary\PK_TheoremListRequestType.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Foreign\FK_TheoremListRequest_TheoremListRequestType.sql" />
+    <Build Include="Schemas\dbo\Tables\TheoremListType.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Primary\PK_TheoremListType.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Foreign\FK_TheoremList_TheoremListType.sql" />
+    <Build Include="Schemas\dbo\Views\Contact.sql" />
+    <Build Include="Security\CulturalFitUser.sql" />
+    <Build Include="Schemas\dbo\Views\Associate.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Foreign\FK_TheoremListRequest_TheoremListCandidate.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Foreign\FK_TheoremList_TheoremListRequest.sql" />
+    <Build Include="Schemas\dbo\Views\Project.sql" />
+    <Build Include="Schemas\dbo\Tables\ContactPerson.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Primary\PK_ContactPerson.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Foreign\FK_TheoremListRequest_ContactPerson.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Foreign\FK_ContactPerson_Language.sql" />
+    <Build Include="Schemas\dbo\Tables\EmailTemplate.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Primary\PK_EmailTemplate.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Foreign\FK_EmailTemplate_Language.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Foreign\FK_EmailTemplate_TheoremListRequestType.sql" />
+    <Build Include="Schemas\dbo\Tables\Setting.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Primary\PK_Setting.sql" />
+    <Build Include="Schemas\dbo\Procedures\TheoremListRequest_Reporting_GetQuestionnaireOverview.sql" />
+    <Build Include="Schemas\dbo\Views\Participant.sql" />
+    <Build Include="Schemas\dbo\Tables\CulturalFitCandidateLink.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Foreign\FK_CulturalFitCandidateLink_TheoremListCandidate.sql" />
+    <Build Include="Schemas\dbo\Tables\Project2TheoremListRequest.sql" />
+    <Build Include="Schemas\dbo\Tables\Keys\Foreign\FK_Project2TheoremListRequest_TheoremListRequest.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />
+    <None Include="Scripts\Post-Deployment\Data\000.StaticData.sql" />
+    <None Include="Scripts\Post-Deployment\Data\100.TheoremListTemplate.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Quintessence.CulturalFit.Database.Dev.publish.xml" />
+    <None Include="Quintessence.CulturalFit.Database.Test.publish.xml" />
+    <None Include="Quintessence.CulturalFit.Database.publish.xml" />
+    <None Include="Quintessence.CulturalFit.Database.local.publish.xml" />
+    <None Include="Quintessence_1.CulturalFit.Database.publish.xml" />
+    <None Include="Quintessence.CulturalFit.Database.Acc.publish.xml" />
+    <None Include="Quintessence_2.CulturalFit.Database.publish.xml" />
+    <None Include="Quintessence_3.CulturalFit.Database.publish.xml" />
+    <None Include="Quintessence.CulturalFit.Database.Prod.publish.xml" />
+    <None Include="External\Act.dacpac" />
+    <None Include="External\Superoffice7.dacpac" />
+  </ItemGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="Act">
+      <DefaultValue>Act</DefaultValue>
+      <Value>$(SqlCmdVar__2)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="ActServer">
+      <DefaultValue>ACTSERVER</DefaultValue>
+      <Value>$(SqlCmdVar__3)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="Superoffice7">
+      <DefaultValue>Superoffice7</DefaultValue>
+      <Value>$(SqlCmdVar__4)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="Superoffice7Server">
+      <DefaultValue>SUPEROFFICE7SERVER</DefaultValue>
+      <Value>$(SqlCmdVar__5)</Value>
+    </SqlCmdVariable>
+  </ItemGroup>
+  <ItemGroup>
+    <ArtifactReference Include="External\Act.dacpac">
+      <HintPath>External\Act.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+      <DatabaseSqlCmdVariable>Act</DatabaseSqlCmdVariable>
+      <ServerSqlCmdVariable>ActServer</ServerSqlCmdVariable>
+    </ArtifactReference>
+    <ArtifactReference Include="External\Superoffice7.dacpac">
+      <HintPath>External\Superoffice7.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+      <DatabaseSqlCmdVariable>Superoffice7</DatabaseSqlCmdVariable>
+      <ServerSqlCmdVariable>Superoffice7Server</ServerSqlCmdVariable>
+    </ArtifactReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Dev|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <OutputPath>bin\all\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Test|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <OutputPath>bin\all\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Acc|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <OutputPath>bin\all\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Prod|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <OutputPath>bin\all\</OutputPath>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,50 @@
+﻿@model List<Quintessence.QService.QueryModel.Prm.ProjectReportRecipientView>
+
+<table id="ProjectReportRecipientsDataTable">
+    <thead>
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Email</th>
+            <th>Direct</th>
+            <th>Mobile</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reportRecipient in Model)
+        {
+            <tr>
+                <td>@reportRecipient.FirstName</td>
+                <td>@reportRecipient.LastName</td>
+                <td>@reportRecipient.Email</td>
+                <td>@reportRecipient.DirectPhone</td>
+                <td>@reportRecipient.MobilePhone</td>
+
+                <td>
+                    <a href="javascript:void(0);" data-id="DeleteProjectReportRecipient" data-report-recipient-id="@reportRecipient.Id" data-project-id="@reportRecipient.ProjectId">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br/>
+<br/>
+<div class="right-text">
+    <a href="javascript:void(0);" class="button" id="AddProjectReportRecipientsButton">Add</a>
+</div>
+
+<div id="AddProjectReportRecipientsDialog">
+    @using (Html.BeginForm("AddProjectReportRecipients", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "AddProjectReportRecipientsForm" }))
+    {
+        <div id="CrmProjectEmailsPlaceholder">
+        </div>
+    }
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" id="AddSelectedProjectReportRecipientsSubmitButton" class="button">Add selected</a>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+﻿@using Quintessence.CulturalFit.UI.Webshell.Models.Welcome
+@using Resources
+@model Quintessence.CulturalFit.UI.Webshell.Models.Welcome.WelcomeModel
+@{
+    ViewBag.Title = "Welcome";
+}
+@section AdditionalScripts
+{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.7.2.js")"></script>
+    <script>
+        $(function() {
+
+            $('#StartButton').click(function() {
+                window.location.href = '@Url.Content("~/" + Model.LanguageGlobalization+"/Questionnaire/Index/"+Model.RequestCode+"/"+Model.ListCode)';
+            });
+        });
+    </script>
+}
+<div class="grid_6 prefix_3 suffix_3">
+    <fieldset>
+        <legend>
+            @Global.WelcomeTitle
+        </legend>
+        <p>
+            @if (Model.WelcomeTypeText == WelcomeModel.WelcomeType.AsIsParticipant)
+            {
+                @Html.Raw(Global.WelcomeBodyAsIsParticipant)
+            }
+            else if (Model.WelcomeTypeText == WelcomeModel.WelcomeType.AsIsCustomer)
+            {
+                @Html.Raw(Global.WelcomeBodyAsIsCustomer)
+            }
+            else
+            {
+                @Html.Raw(Global.WelcomeBodyAsIsToBe)
+            }
+        </p>
+        <p>
+            <input type="button" id="StartButton" value="Start"/>
+        </p>
+    </fieldset>
+</div>
+<div class="clear"></div>

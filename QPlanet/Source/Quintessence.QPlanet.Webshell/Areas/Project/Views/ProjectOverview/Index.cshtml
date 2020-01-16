@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "Project - Overview";    
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            InitializeButtons();
+            InitializeProjectTable();
+        });
+
+        function InitializeButtons() {
+            $('a[data-id=RefreshRecentProjectsButton]').click(function () { $('#ProjectTable').dataTable().fnDraw(); });
+        }
+
+        function InitializeProjectTable() {
+            $('#ProjectTable').dataTable({
+                "bServerSide": true,
+                "sAjaxSource": '@Url.Action("Projects", "ProjectOverview", new { area = "Project" })',
+                "aoColumns": [
+                    {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            return obj.aData[0];
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            return obj.aData[1];
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            return obj.aData[2];
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            return obj.aData[3];
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            return obj.aData[4];
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            return obj.aData[5];
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            return obj.aData[6];
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            var editUrl = '@Url.Action("Edit", "ProjectGeneral", new{area="Project"})/' + obj.aData[7];
+                            var copyUrl = '@Url.Action("Copy", "ProjectGeneral", new{area="Project"})/' + obj.aData[7];
+                            return '<a href="' + editUrl + '" target="' + obj.aData[6] + '" class="edit-link" title="Edit">Edit</a>' +
+                                '<a href="' + copyUrl + '" target="' + obj.aData[6] + '" class="copy-link" title="Copy">Copy</a>';
+                        }
+                    }],
+                "aLengthMenu": [[25, 50, 100, 200], [25, 50, 100, 200]],
+                "iDisplayLength": 25,
+                "bProcessing": true,
+                "bStateSave": true
+            });
+                }
+    </script>
+}
+<div class="grid_16">
+    <fieldset>
+        <legend>Projects</legend>
+        <div class="right-text">
+            <a href="javascript:void(0);" data-id="RefreshRecentProjectsButton" class="button">Refresh</a>
+            @Html.ActionLink("Create", "Create", "ProjectGeneral", null, new { target = "_blank", data_id = "CreateProjectLink", @class = "button" })
+        </div>
+        <br />
+        <table id="ProjectTable">
+            <thead>
+                <tr>
+                    <th style="width: 20%;">Name</th>
+                    <th style="width: 17%;">Type</th>
+                    <th style="width: 15%;">Customer</th>
+                    <th style="width: 8%;">Status</th>
+                    <th style="width: 15%;">Project Manager</th>
+                    <th style="width: 15%;">Customer Assistant</th>
+                    <th style="width: 10%;">Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <br />
+        <br />
+        <div class="right-text">
+            <a href="javascript:void(0);" data-id="RefreshRecentProjectsButton" class="button">Refresh</a>
+            @Html.ActionLink("Create", "Create", "ProjectGeneral", null, new { target = "_blank", data_id = "CreateProjectLink", @class = "button" })
+        </div>
+    </fieldset>
+</div>
+<div class="clear" />

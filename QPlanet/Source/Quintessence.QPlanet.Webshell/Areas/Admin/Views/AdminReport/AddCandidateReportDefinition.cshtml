@@ -1,0 +1,87 @@
+﻿@model Quintessence.QPlanet.ViewModel.Rep.CreateNewCandidateReportDefinitionModel
+@using (Html.BeginForm("AddCandidateReportDefinition", "AdminReport", FormMethod.Post, new { id = "AddCandidateReportDefinitionForm" }))
+{
+    <p>
+        Please enter a name and location for a new report definition.
+        For a standard report (Quintessence report), leave the customer-field empty.
+    </p>
+    
+    <div class="row">
+        <div>Contact</div>
+        <div>
+            @if (Model.ContactId.HasValue)
+            {
+                @Html.HiddenFor(m => m.ContactId)
+                @Model.ContactName
+            }
+            else
+            {
+                @Html.HiddenFor(m => m.ContactId)
+                @Html.EditorFor(m => m.ContactName)
+                <a href="javascript:void(0);" id="ChangeContactNameLink" title="Click on this link to change the contact">
+                </a>
+                
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div>Name</div>
+        <div>@Html.TextBoxFor(m => m.Name)</div>
+    </div>
+    <div class="row">
+        <div>Location</div>
+        <div>@Html.TextBoxFor(m => m.Location)</div>
+    </div>
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" id="SubmitAddCandidateReportDefinitionForm" title="Add new report definition."
+            class="button">Save</a>
+    </div>
+}
+
+<script>
+    $(function () {
+        InitializeContactNameAutocomplete();
+        InitializeChangeContactNameLink();
+    });
+
+    //Initialize autocomplete for contact name in dialog
+    function InitializeContactNameAutocomplete() {
+        $("#@Html.IdFor(m => m.ContactName)").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("SearchContact", "AdminProject")/' + request.term,
+                    data: request,
+                    dataType: "JSON",
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.label,
+                                value: item.label,
+                                id: item.value
+                            };
+                        }));
+                    }
+                });
+            },
+            select: function (event, ui) {
+                $('#@Html.IdFor(m => m.ContactId)').val(ui.item.id);
+                $('#@Html.IdFor(m => m.ContactName)').hide();
+                $('#ChangeContactNameLink').text(ui.item.label);
+                $('#ChangeContactNameLink').show();
+            }
+        });
+    }
+
+    //Initialize change contact name link
+    function InitializeChangeContactNameLink() {
+        $('#ChangeContactNameLink').click(function () {
+            $('#@Html.IdFor(m => m.ContactId)').val(null);
+            $('#@Html.IdFor(m => m.ContactName)').val(null);
+            $('#ChangeContactNameLink').hide();
+            $('#@Html.IdFor(m => m.ContactName)').show();
+            $('#@Html.IdFor(m => m.ContactName)').focus();
+        });
+    }
+</script>

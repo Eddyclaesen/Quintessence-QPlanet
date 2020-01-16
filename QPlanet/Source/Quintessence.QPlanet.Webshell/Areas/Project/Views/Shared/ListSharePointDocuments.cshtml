@@ -1,0 +1,30 @@
+﻿@model List<Quintessence.QService.QueryModel.Dom.DocumentView>
+<table id="SharePointDocumentTable" class="dataTable">
+    <thead>
+        <tr>
+            <th style="width: 100%">Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count == 0)
+        {
+            <tr>
+                <td colspan="2">No documents found for this customer or project</td>
+            </tr>
+        }
+        else
+        {
+            var documents = Model.OrderByDescending(d => d.IsImportant).ToList();
+            for (int i = 0; i < documents.Count; i++)
+            {
+                var document = documents[i];
+            <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                <td>
+                    @Html.CheckBox(Html.IdFor(m => document.IsImportant).ToString(), document.IsImportant, new { data_function = "MarkDocumentAsImportant", data_uniqueid = document.UniqueId })
+                    <a href="@Url.Content(document.Link)" target="@document.Link">@document.Name</a>
+                </td>
+            </tr>
+            }
+        }
+    </tbody>
+</table>

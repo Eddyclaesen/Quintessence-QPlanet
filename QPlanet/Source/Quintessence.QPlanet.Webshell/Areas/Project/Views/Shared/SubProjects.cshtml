@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Quintessence.QService.QueryModel.Prm.SubProjectView>
+<table id="SubProjectsTable" style="width: 100%;">
+    <thead>
+        <tr>
+            <th style="width: 50%;">Name</th>
+            <th style="width: 50%;">Type</th>
+            <th style="width: 72px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var subProject in Model)
+        {
+            <tr>
+                <td>@subProject.Name</td>
+                <td>@subProject.ProjectTypeName</td>
+                <td>
+                    <a href="@Url.Action("Edit", "ProjectGeneral", new { id = subProject.Id })" class="edit-link" target="@subProject.Id"></a>
+                    <a href="javascript:void(0);" data-function="DeleteQPlanetProject" class="delete-link" data-subprojectid="@subProject.Id"></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    $(function () {
+        $('#SubProjectsTable').dataTable();
+    });
+</script>

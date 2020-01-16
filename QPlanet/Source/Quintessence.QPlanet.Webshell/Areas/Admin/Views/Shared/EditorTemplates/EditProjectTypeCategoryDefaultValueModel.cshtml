@@ -1,0 +1,27 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.EditProjectTypeCategoryDefaultValueModel
+@if (Model.Code != "SURVEYPLANNINGID")
+{
+    <td>
+        @Html.HiddenFor(m => m.Code)
+        @switch (Model.Code)
+        {
+            case "DESCRIPTION":
+            @:Description
+                break;
+            case "MAILTEXTINTEGRATED":
+            @:Text for integrated mail
+                break;
+            case "MAILTEXTSTANDALONE":
+            @:Text for standalone mail
+                break;
+        }
+    </td>
+    <td>@Html.TextAreaFor(m => m.Value, 4, 50, null)</td>
+}
+else
+{
+    <td colspan="2">
+        @Html.HiddenFor(m => m.Code)
+        @Html.HiddenFor(m => m.Value)
+    </td>
+}

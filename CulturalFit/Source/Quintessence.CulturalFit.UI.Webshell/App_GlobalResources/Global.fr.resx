@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ChangeYourLanguage" xml:space="preserve">
+    <value>Changez votre langue</value>
+  </data>
+  <data name="EnterVerificationCode" xml:space="preserve">
+    <value>Entrez votre code de vérification</value>
+  </data>
+  <data name="LeastApplicable" xml:space="preserve">
+    <value>Le moins applicable</value>
+  </data>
+  <data name="MostApplicable" xml:space="preserve">
+    <value>Le plus applicable</value>
+  </data>
+  <data name="PleaseFillInYourQuestionnaire" xml:space="preserve">
+    <value>Sélectionnez les 5 affirmations qui sont le plus applicables et les 5 affirmations qui sont le moins applicables</value>
+  </data>
+  <data name="PleaseSelect5LeastApplicableTheorems" xml:space="preserve">
+    <value>S'il vous plaît sélectionnez 5 affirmations qui sont les moins applicables. Vous avez sélectionné {0}.</value>
+  </data>
+  <data name="PleaseSelecte5MostApplicableTheorems" xml:space="preserve">
+    <value>S'il vous plaît sélectionnez 5 affirmations qui sont les plus applicables. Vous avez sélectionné {0}.</value>
+  </data>
+  <data name="QuestionnaireAlreadyCompleted" xml:space="preserve">
+    <value>Vous avez complété la questionnaire. Nous vous remercions pour votre coopération!</value>
+  </data>
+  <data name="QuestionnaireAlreadyCompletedLegend" xml:space="preserve">
+    <value>Votre questionnaire a déja été complété</value>
+  </data>
+  <data name="ReturnToYourQuestionnaire" xml:space="preserve">
+    <value>Retournez à votre questionnaire</value>
+  </data>
+  <data name="ShowCharacters" xml:space="preserve">
+    <value>Montrer les caractères</value>
+  </data>
+  <data name="SubmitQuestionnaire" xml:space="preserve">
+    <value>Envoyer le questionnaire</value>
+  </data>
+  <data name="SuccessfullyProcessed" xml:space="preserve">
+    <value>Nous avons traité votre questionnaire avec succès.
+Au nom de l'équipe Quintessence, nous vous remercions pour votre participation.&lt;br/&gt;
+Ci-dessous vous pouvez télécharger les résultats en .pdf</value>
+  </data>
+  <data name="ThereWereProblemsWithYourQuestionnaire" xml:space="preserve">
+    <value>Il y eu des problèmes avec votre questionnaire</value>
+  </data>
+  <data name="VerificationTitle" xml:space="preserve">
+    <value>Vérification</value>
+  </data>
+  <data name="WelcomeBodyAsIsParticipant" xml:space="preserve">
+    <value>Bienvenue au  questionnaire "Fit Culturel". Ce questionnaire a pour but d'étudier ce que vous estimez être important dans une organisation. Le questionnaire est composée de différentes affirmations. Vous devez indiquer les 5 affirmations les plus applicables pour vous et les 5 affirmations les moins applicables pour vous. Quand vous aurez rempli le questionnaire, vous pourrez télécharger les résultats en format PDF. A ce moment-là, il ne vous  sera plus possible de changer vos réponses. &lt;/br&gt;&lt;/br&gt;Cliquez "Start" afin de continuer</value>
+  </data>
+  <data name="WelcomeTitle" xml:space="preserve">
+    <value>Bienvenue</value>
+  </data>
+  <data name="WeWereUnableToProcessYourQuestionnaireDueToTheFollowingProblems" xml:space="preserve">
+    <value>Nous n'avons pas pu traiter votre questionnaire en raison du (des) problème(s) suivant(s)</value>
+  </data>
+  <data name="WrongVerificationCode" xml:space="preserve">
+    <value>Code de vérification incorrecte</value>
+  </data>
+  <data name="YourQuestionnaire" xml:space="preserve">
+    <value>Votre questionnaire</value>
+  </data>
+  <data name="YourQuestionnaireHasBeenProcessed" xml:space="preserve">
+    <value>Votre questionnaire a été traité</value>
+  </data>
+  <data name="NextQuestionnaire" xml:space="preserve">
+    <value>Aller à la partie 2</value>
+  </data>
+  <data name="AsIsQuestionnaireLegend" xml:space="preserve">
+    <value>Questionnaire</value>
+  </data>
+  <data name="ToBeQuestionnaireLegend" xml:space="preserve">
+    <value>Questionnaire sur la situation future</value>
+  </data>
+  <data name="PleaseFillInYourQuestionnaireToBe" xml:space="preserve">
+    <value>Sélectionnez les 5 affirmations qui seront le plus applicables dans le futur et les 5 affirmations qui seront le moins applicables dans le futur.</value>
+  </data>
+  <data name="WelcomeBodyAsIsCustomer" xml:space="preserve">
+    <value>Bienvenue au questionnaire "Fit Culturel". Ce questionnaire a pour but d'étudier ce qui est important pour votre organisation. Le questionnaire est composée de différentes affirmations.  Vous devez indiquer les 5 affirmations qui sont le plus applicables pour votre organisation et les 5 affirmations qui sont le moins applicables pour votre organisation. Pensez à la situation actuelle. Quand vous aurez rempli le questionnaire, vous pourrez télécharger les résultats en format PDF. A ce moment-là il ne vous sera plus  possible de changer vos réponses. &lt;/br&gt;&lt;/br&gt;Cliquez "Start" afin de continuer</value>
+  </data>
+  <data name="WelcomeBodyAsIsToBe" xml:space="preserve">
+    <value>Bienvenue au questionnaire Fit Culturel. Ce questionnaire a pour but d'étudier ce qui est important dans votre organisation. Le questionnaire consiste de 2 parties. La première partie vérifie ce qui est en vigueur actuellement et la deuxième partie vérifie dans quelle direction votre organisation veut évoluer. Chaque partie est  composée de différentes affirmations. Dans la première partie du questionnaire vous devez indiquer les 5 affirmations qui sont le plus applicables actuellement dans votre organisation et les 5 affirmations qui sont le moins applicables pour votre organisation. La deuxième partie du questionnaire  a pour but d'étudier ce que vous voulez pour le futur. Vous devez indiquez les 5 affirmations qui selon vous seront applicables pour votre organisation dans le futur et les 5 affirmations qui seront le moins applicables pour votre organisation. Quand vous aurez rempli le questionnaire, vous pourrez télécharger les résultats en format PDF. A ce moment-là, il ne vous sera plus possible de changer vos réponses. &lt;/br&gt;&lt;/br&gt;Cliquez "Start" afin de continuer</value>
+  </data>
+  <data name="FooterText" xml:space="preserve">
+    <value>Anvers | Gand | Bruxelles</value>
+  </data>
+</root>

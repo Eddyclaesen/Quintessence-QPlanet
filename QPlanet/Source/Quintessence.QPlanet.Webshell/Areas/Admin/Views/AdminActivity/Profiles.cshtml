@@ -1,0 +1,18 @@
+﻿@model List<Quintessence.QService.QueryModel.Scm.ProfileView>
+<table id="ProfilesDataTable" class="dataTable">
+    <thead>
+        <tr>
+            <th>Profile</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var profile in Model)
+        {
+            <tr>
+                <td>@profile.Name</td>
+                <td><a href="javascript:void;" data-function="EditProfile" data-profile-id="@profile.Id" class="edit-link" title="Edit">Edit</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

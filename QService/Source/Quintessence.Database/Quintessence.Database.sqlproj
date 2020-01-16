@@ -1,0 +1,1415 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>Quintessence.Database</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{3bfdc3f3-2491-4013-8f82-7cc23c0224cb}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>Quintessence.Database</RootNamespace>
+    <AssemblyName>Quintessence.Database</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <GenerateCreateScript>True</GenerateCreateScript>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <SqlTargetName>Quintessence</SqlTargetName>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <!-- VS10 without SP1 will not have VisualStudioVersion set, so do that here -->
+  <PropertyGroup />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Pro|AnyCPU' ">
+    <OutputPath>bin\Pro\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <OutputPath>bin\Pro\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Dev|AnyCPU' ">
+    <OutputPath>bin\Dev\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <SqlTargetName>Quintessence</SqlTargetName>
+    <OutputPath>bin\Dev\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Build.Main|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <SqlTargetName>Quintessence</SqlTargetName>
+    <OutputPath>bin\BuildMain\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Build.Dev01|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <SqlTargetName>Quintessence</SqlTargetName>
+    <OutputPath>bin\BuildDev01\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Build.Dev02|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <SqlTargetName>Quintessence</SqlTargetName>
+    <OutputPath>bin\BuildDev02\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Build.Dev03|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <SqlTargetName>Quintessence</SqlTargetName>
+    <OutputPath>bin\BuildDev03\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Test|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <SqlTargetName>Quintessence</SqlTargetName>
+    <OutputPath>bin\Test\</OutputPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="External" />
+    <Folder Include="Schemas" />
+    <Folder Include="Domains" />
+    <Folder Include="Domains\Dim" />
+    <Folder Include="Domains\Dim\Tables" />
+    <Folder Include="Domains\Dim\Tables\PKeys" />
+    <Folder Include="Domains\Dim\Tables\FKeys" />
+    <Folder Include="Domains\Prm" />
+    <Folder Include="Domains\Prm\Tables" />
+    <Folder Include="Domains\Prm\Tables\PKeys" />
+    <Folder Include="Domains\Prm\Tables\FKeys" />
+    <Folder Include="Domains\Sim" />
+    <Folder Include="Domains\Sim\Tables" />
+    <Folder Include="Domains\Sim\Tables\FKeys" />
+    <Folder Include="Domains\Sim\Tables\PKeys" />
+    <Folder Include="Domains\Inf" />
+    <Folder Include="Domains\Inf\Tables" />
+    <Folder Include="Domains\Inf\Tables\PKeys" />
+    <Folder Include="Domains\Inf\Tables\FKeys" />
+    <Folder Include="Domains\Crm" />
+    <Folder Include="Domains\Crm\Views" />
+    <Folder Include="Domains\Dim\Views" />
+    <Folder Include="Domains\Inf\Views" />
+    <Folder Include="Scripts" />
+    <Folder Include="Scripts\PostDeploy" />
+    <Folder Include="Scripts\PostDeploy\Data" />
+    <Folder Include="Security" />
+    <Folder Include="Domains\Sec" />
+    <Folder Include="Domains\Sec\Tables" />
+    <Folder Include="Domains\Sec\Tables\PKeys" />
+    <Folder Include="Domains\Sec\Tables\FKeys" />
+    <Folder Include="Domains\Sec\Tables\Constraints" />
+    <Folder Include="Domains\Sec\Views" />
+    <Folder Include="Domains\Sim\Views" />
+    <Folder Include="Domains\Prm\Views" />
+    <Folder Include="Domains\Prm\Procs" />
+    <Folder Include="Domains\Sof\" />
+    <Folder Include="Domains\Sof\Views\" />
+    <Folder Include="Domains\Dim\Procs" />
+    <Folder Include="Domains\Prm\Tables\UKeys" />
+    <Folder Include="Domains\Crm\Tables" />
+    <Folder Include="Domains\Crm\Tables\PKeys" />
+    <Folder Include="Domains\Crm\Tables\UKeys" />
+    <Folder Include="Domains\Sec\Procs" />
+    <Folder Include="Domains\Sim\Procs" />
+    <Folder Include="Domains\Sim\Func" />
+    <Folder Include="Domains\Cam" />
+    <Folder Include="Domains\Cam\Tables" />
+    <Folder Include="Domains\Cam\Views" />
+    <Folder Include="Domains\Cam\Tables\FKeys" />
+    <Folder Include="Domains\Cam\Tables\PKeys" />
+    <Folder Include="Domains\Scm" />
+    <Folder Include="Domains\Scm\Tables" />
+    <Folder Include="Domains\Scm\Views" />
+    <Folder Include="Domains\Scm\Tables\FKeys" />
+    <Folder Include="Domains\Scm\Tables\PKeys" />
+    <Folder Include="Domains\Rep" />
+    <Folder Include="Domains\Rep\Procs" />
+    <Folder Include="Functions" />
+    <Folder Include="Domains\Wsm" />
+    <Folder Include="Domains\Wsm\Table" />
+    <Folder Include="Domains\Wsm\Views" />
+    <Folder Include="Domains\Wsm\Table\FKeys" />
+    <Folder Include="Domains\Wsm\Table\PKeys" />
+    <Folder Include="Domains\Rep\Tables" />
+    <Folder Include="Domains\Rep\Tables\PKeys" />
+    <Folder Include="Domains\Rep\Tables\FKeys" />
+    <Folder Include="Domains\Rep\Views" />
+    <Folder Include="Domains\Crm\Procs" />
+    <Folder Include="Domains\Ext" />
+    <Folder Include="Domains\Ext\Procs" />
+    <Folder Include="Domains\Inf\Procs" />
+    <Folder Include="Domains\Scm\Procs" />
+    <Folder Include="Domains\Fin" />
+    <Folder Include="Domains\Fin\Procs" />
+    <Folder Include="Scripts\Information" />
+    <Folder Include="Scripts\ChangeScripts" />
+    <Folder Include="Scripts\Migration" />
+    <Folder Include="Domains\Sim\Tables\UKeys" />
+    <Folder Include="Domains\Prm\Func" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Functions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="External\Superoffice7.dacpac" />
+    <None Include="External\Act.dacpac" />
+    <None Include="Domains\Sec\Tables\Constraints\UC_Operation_Code.sql" />
+    <None Include="SqlSchemaCompare.Local.scmp" />
+    <None Include="External\Qata.dacpac" />
+    <None Include="SqlSchemaCompare.Dev.scmp" />
+    <None Include="SqlSchemaCompare.Test.scmp" />
+    <None Include="Scripts\Information\Act.ProjectToMigrate.sql" />
+    <None Include="SqlSchemaCompare.Pro.scmp" />
+    <None Include="Scripts\ChangeScripts\002.20150428-001.sql" />
+    <None Include="Scripts\ChangeScripts\002.20150428-002.sql" />
+    <None Include="Scripts\ChangeScripts\002.20150518-001.sql" />
+    <None Include="Scripts\ChangeScripts\002.20150626-001.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="Act">
+      <DefaultValue>Act</DefaultValue>
+      <Value>$(SqlCmdVar__12)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="ActServer">
+      <DefaultValue>ACTSERVER</DefaultValue>
+      <Value>$(SqlCmdVar__13)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="Qata">
+      <DefaultValue>Qata</DefaultValue>
+      <Value>$(SqlCmdVar__14)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="QataServer">
+      <DefaultValue>QataServer</DefaultValue>
+      <Value>$(SqlCmdVar__15)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="Superoffice7">
+      <DefaultValue>Superoffice7</DefaultValue>
+      <Value>$(SqlCmdVar__10)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="Superoffice7Server">
+      <DefaultValue>SUPEROFFICE7SERVER</DefaultValue>
+      <Value>$(SqlCmdVar__11)</Value>
+    </SqlCmdVariable>
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Domains\Dim\Tables\Dictionary.sql" />
+    <Build Include="Domains\Dim\Tables\DictionaryCluster.sql" />
+    <Build Include="Domains\Dim\Tables\DictionaryClusterTranslation.sql" />
+    <Build Include="Domains\Dim\Tables\DictionaryCompetence.sql" />
+    <Build Include="Domains\Dim\Tables\DictionaryCompetenceTranslation.sql" />
+    <Build Include="Domains\Dim\Tables\DictionaryIndicator.sql" />
+    <Build Include="Domains\Dim\Tables\DictionaryIndicatorTranslation.sql" />
+    <Build Include="Domains\Dim\Tables\DictionaryLevel.sql" />
+    <Build Include="Domains\Dim\Tables\DictionaryLevelTranslation.sql" />
+    <Build Include="Domains\Dim\Tables\PKeys\PK_Dictionary.sql" />
+    <Build Include="Domains\Dim\Tables\PKeys\PK_DictionaryCluster.sql" />
+    <Build Include="Domains\Dim\Tables\PKeys\PK_DictionaryClusterTranslation.sql" />
+    <Build Include="Domains\Dim\Tables\PKeys\PK_DictionaryCompetence.sql" />
+    <Build Include="Domains\Dim\Tables\PKeys\PK_DictionaryCompetenceTranslation.sql" />
+    <Build Include="Domains\Dim\Tables\PKeys\PK_DictionaryIndicator.sql" />
+    <Build Include="Domains\Dim\Tables\PKeys\PK_DictionaryIndicatorTranslation.sql" />
+    <Build Include="Domains\Dim\Tables\PKeys\PK_DictionaryLevel.sql" />
+    <Build Include="Domains\Dim\Tables\PKeys\PK_DictionaryLevelTranslation.sql" />
+    <Build Include="Domains\Dim\Tables\FKeys\FK_DictionaryLevelTranslation_DictionaryLevel.sql" />
+    <Build Include="Domains\Dim\Tables\FKeys\FK_DictionaryCluster_Dictionary.sql" />
+    <Build Include="Domains\Dim\Tables\FKeys\FK_DictionaryCompetence_DictionaryCluster.sql" />
+    <Build Include="Domains\Dim\Tables\FKeys\FK_DictionaryCompetenceTranslation_DictionaryCompetence.sql" />
+    <Build Include="Domains\Dim\Tables\FKeys\FK_DictionaryIndicator_DictionaryLevel.sql" />
+    <Build Include="Domains\Dim\Tables\FKeys\FK_DictionaryIndicatorTranslation_DictionaryIndicator.sql" />
+    <Build Include="Domains\Dim\Tables\FKeys\FK_DictionaryLevel_DictionaryCompetence.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_Project.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_Project2CrmProject.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectDna.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectType.sql" />
+    <Build Include="Domains\Sim\Tables\PKeys\PK_Simulation.sql" />
+    <Build Include="Domains\Sim\Tables\PKeys\PK_SimulationDepartment.sql" />
+    <Build Include="Domains\Sim\Tables\PKeys\PK_SimulationLevel.sql" />
+    <Build Include="Domains\Sim\Tables\PKeys\PK_SimulationSet.sql" />
+    <Build Include="Domains\Sim\Tables\PKeys\PK_SimulationSet2CrmContact.sql" />
+    <Build Include="Domains\Sim\Tables\SimulationSet2CrmContact.sql" />
+    <Build Include="Domains\Sim\Tables\Simulation.sql" />
+    <Build Include="Domains\Sim\Tables\SimulationDepartment.sql" />
+    <Build Include="Domains\Sim\Tables\SimulationLevel.sql" />
+    <Build Include="Domains\Sim\Tables\SimulationSet.sql" />
+    <Build Include="Domains\Prm\Tables\Project.sql" />
+    <Build Include="Domains\Prm\Tables\Project2CrmProject.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectDna.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectType.sql" />
+    <Build Include="Domains\Inf\Tables\HistoryIdMapping.sql" />
+    <Build Include="Domains\Inf\Tables\Language.sql" />
+    <Build Include="Domains\Inf\Tables\Translation.sql" />
+    <Build Include="Domains\Inf\Tables\FKeys\FK_Translation_Language.sql" />
+    <Build Include="Domains\Inf\Tables\PKeys\PK_HistoryIdMapping.sql" />
+    <Build Include="Domains\Crm\Views\CrmAssociate.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryClusterTranslationView.sql" />
+    <Build Include="Domains\Inf\Views\TranslationView.sql" />
+    <None Include="Scripts\PostDeploy\Data\005.Declarations.sql" />
+    <None Include="Scripts\PostDeploy\Data\010.ProjectType.sql" />
+    <None Include="Scripts\PostDeploy\Data\020.Category.sql" />
+    <None Include="Scripts\PostDeploy\Data\002.Language.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary.sql" />
+    <None Include="Scripts\PostDeploy\Data\100.Project.AC.sql" />
+    <Build Include="Security\QuintessenceUser.sql" />
+    <Build Include="Domains\Sec\Tables\User.sql" />
+    <Build Include="Domains\Sec\Tables\PKeys\PK_User.sql" />
+    <None Include="Scripts\PostDeploy\Data\050.User.sql" />
+    <Build Include="Domains\Sec\Tables\AuthenticationToken.sql" />
+    <Build Include="Domains\Sec\Tables\UserGroup.sql" />
+    <Build Include="Domains\Sec\Tables\Role.sql" />
+    <Build Include="Domains\Sec\Tables\Operation.sql" />
+    <Build Include="Domains\Sec\Tables\User2UserGroup.sql" />
+    <Build Include="Domains\Sec\Tables\PKeys\PK_UserGroup.sql" />
+    <Build Include="Domains\Sec\Tables\PKeys\PK_Role.sql" />
+    <Build Include="Domains\Sec\Tables\PKeys\PK_Operation.sql" />
+    <Build Include="Domains\Sec\Tables\PKeys\PK_AuthenticationToken.sql" />
+    <Build Include="Domains\Sec\Tables\Role2Operation.sql" />
+    <Build Include="Domains\Sec\Tables\UserGroup2Operation.sql" />
+    <None Include="Scripts\PostDeploy\Data\045.Operation.sql" />
+    <None Include="Scripts\PostDeploy\Data\046.Role.sql" />
+    <Build Include="Domains\Sec\Views\AuthenticationTokenView.sql" />
+    <Build Include="Domains\Sec\Views\RoleView.sql" />
+    <Build Include="Domains\Sec\Views\UserView.sql" />
+    <Build Include="Domains\Inf\Views\LanguageView.sql" />
+    <Build Include="Domains\Prm\Tables\AssessmentDevelopmentProject.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_AssessmentDevelopmentProject.sql" />
+    <Build Include="Domains\Sim\Views\SimulationView.sql" />
+    <Build Include="Domains\Sim\Views\SimulationDepartmentView.sql" />
+    <Build Include="Domains\Sim\Views\SimulationLevelView.sql" />
+    <Build Include="Domains\Sim\Views\SimulationSetView.sql" />
+    <Build Include="Domains\Sim\Views\SimulationSet2CrmContactView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectTypeView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectView.sql" />
+    <Build Include="Domains\Prm\Procs\Project_ListRecentProjects.sql" />
+    <Build Include="Domains\Sof\Views\CrmProjectStatus.sql" />
+    <Build Include="Domains\Crm\Views\CrmActiveProjectView.sql" />
+    <Build Include="Domains\Prm\Views\Project2CrmProjectView.sql" />
+    <Build Include="Domains\Sof\Views\CrmProjectView.sql" />
+    <Build Include="Domains\Crm\Views\CrmAssociateView.sql" />
+    <Build Include="Domains\Crm\Views\CrmContactView.sql" />
+    <Build Include="Domains\Sof\Views\CrmProjectStatusView.sql" />
+    <Build Include="Domains\Sof\Views\CrmUserGroupView.sql" />
+    <Build Include="Domains\Sof\Views\CrmEmployeeView.sql" />
+    <Build Include="Domains\Prm\Procs\Project_SearchCrmProjects.sql" />
+    <Build Include="Domains\Dim\Procs\Dictionary_ListAvailableDictionariesForContact.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectTypeCategory.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectTypeCategory.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectType2ProjectTypeCategory.sql" />
+    <Build Include="Domains\Prm\Views\AssessmentDevelopmentProjectView.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectType2ProjectTypeCategory.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectType2ProjectTypeCategory_ProjectType.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectType2ProjectTypeCategory_ProjectTypeCategory.sql" />
+    <Build Include="Domains\Prm\Views\ProjectTypeCategoryView.sql" />
+    <Build Include="Domains\Prm\Tables\UKeys\UK_ProjectCategory_Code.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetail_Project.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryDetailView.sql" />
+    <Build Include="Domains\Crm\Tables\ContactDetail.sql" />
+    <Build Include="Domains\Crm\Tables\PKeys\PK_ContactDetail.sql" />
+    <Build Include="Domains\Crm\Tables\UKeys\UK_ContactDetail_ContactId.sql" />
+    <Build Include="Domains\Crm\Views\ContactDetailView.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryFaDetail_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryFaDetailView.sql" />
+    <Build Include="Domains\Prm\Tables\ConsultancyProject.sql" />
+    <Build Include="Domains\Prm\Views\ConsultancyProjectView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryAcDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ConsultancyProject_Project.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ConsultancyProject.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryFaDetail.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryPsDetail.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategorySoDetail.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryDcDetail.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryFdDetail.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryEaDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategorySoDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryFaDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryPsDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryDcDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryAcDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryFdDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryEaDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategorySoDetail_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryPsDetail_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDcDetail_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryFdDetail_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryEaDetail_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryAcDetail_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategorySoDetailView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryPsDetailView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryDcDetailView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryFdDetailView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryEaDetailView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryAcDetailView.sql" />
+    <None Include="Scripts\PostDeploy\Data\070.SimulationSet.sql" />
+    <Build Include="Domains\Sim\Tables\SimulationCombination.sql" />
+    <Build Include="Domains\Sim\Views\SimulationCombinationView.sql" />
+    <Build Include="Domains\Sim\Tables\PKeys\PK_SimulationCombination.sql" />
+    <Build Include="Domains\Sim\Tables\FKeys\FK_SimulationCombination_SimulationSet.sql" />
+    <Build Include="Domains\Sim\Tables\FKeys\FK_SimulationCombination_SimulationLevel.sql" />
+    <Build Include="Domains\Sim\Tables\FKeys\FK_SimulationCombination_Simulation.sql" />
+    <Build Include="Domains\Sim\Tables\FKeys\FK_SimulationCombination_SimulationDepartment.sql" />
+    <Build Include="Domains\Sim\Views\SimulationMatrixEntryView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryDetail2DictionaryIndicator.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryDetail2DictionaryIndicator.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetail2DI_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetail2DI_DictionaryIndicator.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryDetailDictionaryIndicatorView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryIndicatorMatrixEntryView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryDetail2SimulationCombination.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryDetail2SimulationCombination.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetail2SC_Simulation.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetail2SC_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryDetailSimulationCombinationView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectRole.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectRole.sql" />
+    <Build Include="Domains\Prm\Views\ProjectRoleView.sql" />
+    <None Include="Scripts\PostDeploy\Data\120.ProjectRole.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryDetail2Competence2Combination.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryDetail2Competence2Combination.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetail2C2C_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetail2C2C_DictionaryCompetence.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetail2C2C_SimulationCombination.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryDetailCompetenceSimulationView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectRole2DictionaryLevel.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectRole2DictionaryLevel.sql" />
+    <Build Include="Domains\Prm\Views\ProjectRoleDictionaryLevelView.sql" />
+    <Build Include="Domains\Cam\Tables\Candidate.sql" />
+    <Build Include="Domains\Cam\Tables\PKeys\PK_Candidate.sql" />
+    <Build Include="Domains\Cam\Views\CandidateView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCandidate.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidate_Project.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidate_Candidate.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCandidate.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCandidateView.sql" />
+    <Build Include="Domains\Cam\Tables\CandidateHistory.sql" />
+    <Build Include="Domains\Cam\Tables\PKeys\PK_CandidateHistory.sql" />
+    <None Include="Scripts\PostDeploy\Data\150.Candidate.sql" />
+    <Build Include="Domains\Scm\Tables\ActivityDetailCoaching.sql" />
+    <Build Include="Domains\Scm\Tables\ActivityType.sql" />
+    <Build Include="Domains\Scm\Tables\PKeys\PK_Activity.sql" />
+    <Build Include="Domains\Scm\Tables\PKeys\PK_ActivityType.sql" />
+    <Build Include="Domains\Scm\Tables\Profile.sql" />
+    <Build Include="Domains\Scm\Tables\ActivityType2Profile.sql" />
+    <None Include="Scripts\PostDeploy\Data\200.ActivityType.sql" />
+    <Build Include="Domains\Scm\Tables\PKeys\PK_ActivityType2Profile.sql" />
+    <Build Include="Domains\Scm\Tables\PKeys\PK_Profile.sql" />
+    <Build Include="Domains\Scm\Views\ActivityTypeProfileView.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_Activity_ActivityType.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_ActivityType2Profile_ActivityType.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_ActivityType2Profile_Profile.sql" />
+    <Build Include="Domains\Scm\Views\ActivityTypeView.sql" />
+    <Build Include="Domains\Scm\Views\ProfileView.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_ActivityProfile_Profile.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_Activity_Project.sql" />
+    <Build Include="Domains\Scm\Views\ActivityView.sql" />
+    <Build Include="Domains\Scm\Tables\ActivityProfile.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_ActivityProfile_Activity.sql" />
+    <Build Include="Domains\Scm\Tables\PKeys\PK_ActivityProfile.sql" />
+    <Build Include="Domains\Scm\Views\ActivityProfileView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectPlan.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectPlan.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ConsultancyProject_ProjectPlan.sql" />
+    <Build Include="Domains\Prm\Views\ProjectPlanView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectPlanPhase.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectPlanPhase.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectPlanPhase_ProjectPlan.sql" />
+    <Build Include="Domains\Prm\Views\ProjectPlanPhaseView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectPlanPhaseEntry.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectPlanPhaseActivity.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectPlanPhaseProduct.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectPlanPhaseEntry.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectPlanPhaseProduct.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectPlanPhaseActivity.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectPlanPhaseEntry_ProjectPlanPhase.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectPlanPhaseActivity_ProjectPlanPhaseEntry.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectPlanPhaseProduct_ProjectPlanPhaseEntry.sql" />
+    <Build Include="Domains\Prm\Views\ProjectPlanPhaseEntryView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectPlanPhaseProductView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectPlanPhaseActivityView.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_ListProjectCompetences.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_ListProjectCompetenceIndicators.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectPriceIndex.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectPriceIndex.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectPriceIndex_Project.sql" />
+    <Build Include="Domains\Prm\Views\ProjectPriceIndexView.sql" />
+    <Build Include="Domains\Prm\Tables\TimesheetEntry.sql" />
+    <Build Include="Domains\Sof\Views\CrmTimesheetEntryView.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_TimesheetEntry.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_TimesheetEntry_Project.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_TimesheetEntry_User.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_TimesheetEntry_ActivityProfile.sql" />
+    <Build Include="Domains\Prm\Views\TimesheetEntryView.sql" />
+    <Build Include="Domains\Sof\Views\CrmTimesheetUnregisteredEntryView.sql" />
+    <Build Include="Domains\Prm\Tables\TimesheetEntryStatus.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_TimesheetEntryStatus.sql" />
+    <Build Include="Domains\Prm\Tables\ProductsheetEntry.sql" />
+    <Build Include="Domains\Scm\Tables\ProductType.sql" />
+    <Build Include="Domains\Scm\Tables\PKeys\PK_ProductType.sql" />
+    <None Include="Scripts\PostDeploy\Data\220.ProductType.sql" />
+    <Build Include="Domains\Scm\Views\ProductTypeView.sql" />
+    <Build Include="Domains\Prm\Views\ProductSheetEntryView.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProductsheetEntry.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProductsheetEntry_Project.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProductsheetEntry_Product.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProductsheetEntry_User.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectPlanPhaseProduct_Product.sql" />
+    <Build Include="Domains\Scm\Tables\Product.sql" />
+    <Build Include="Domains\Scm\Views\ProductView.sql" />
+    <Build Include="Domains\Scm\Tables\PKeys\PK_Product.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_Product_Project.sql" />
+    <None Include="Scripts\PostDeploy\Data\012.TimesheetEntryStatus.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_TimesheetEntry_ProjectPlanPhase.sql" />
+    <Build Include="Domains\Prm\Tables\PricingModel.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_PricingModel.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_Project_PricingModel.sql" />
+    <None Include="Scripts\PostDeploy\Data\047.PricingModel.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectFixedPrice.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectFixedPrice.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectFixedPrice_Project.sql" />
+    <Build Include="Domains\Prm\Views\ProjectFixedPriceView.sql" />
+    <Build Include="Functions\Language_RetrieveLanguageId.sql" />
+    <Build Include="Domains\Inf\Tables\Office.sql" />
+    <Build Include="Domains\Inf\Tables\PKeys\PK_Office.sql" />
+    <Build Include="Functions\Office_RetrieveOfficeId.sql" />
+    <None Include="Scripts\PostDeploy\Data\041.Office.sql" />
+    <Build Include="Domains\Inf\Views\OfficeView.sql" />
+    <Build Include="Functions\Task_RetrieveAssessmentCenterTasks.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryDetailType1.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryDetailType2.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryDetailType3.sql" />
+    <Build Include="Domains\Prm\Tables\SurveyPlanning.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetailType1_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetailType2_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetailType3_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryDetailType1.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryDetailType2.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryDetailType3.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetailType1_SurveyPlanning.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetailType2_SurveyPlanning.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetailType3_SurveyPlanning.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryDetailType1View.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryDetailType2View.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryDetailType3View.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectTypeCategoryDefaultValue.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectTypeCategoryDefaultValue.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectTypeCategoryDefaultValue_ProjectTypeCategory.sql" />
+    <Build Include="Domains\Prm\Views\ProjectTypeCategoryDefaultValueView.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_SurveyPlanning.sql" />
+    <None Include="Scripts\PostDeploy\Data\025.SurveyPlanning.sql" />
+    <Build Include="Domains\Scm\Tables\Activity.sql" />
+    <Build Include="Domains\Scm\Tables\ActivityDetailTraining.sql" />
+    <Build Include="Domains\Scm\Tables\ActivityDetail.sql" />
+    <Build Include="Domains\Scm\Tables\ActivityDetailConsulting.sql" />
+    <Build Include="Domains\Scm\Views\ActivityDetailView.sql" />
+    <Build Include="Domains\Scm\Views\ActivityDetailCoachingView.sql" />
+    <Build Include="Domains\Scm\Views\ActivityDetailConsultingView.sql" />
+    <Build Include="Domains\Scm\Views\ActivityDetailTrainingView.sql" />
+    <Build Include="Domains\Scm\Tables\ActivityDetailWorkshop.sql" />
+    <Build Include="Domains\Scm\Views\ActivityDetailWorkshopView.sql" />
+    <Build Include="Domains\Scm\Views\ActivityDetailSupportView.sql" />
+    <Build Include="Domains\Scm\Tables\ActivityDetailSupport.sql" />
+    <Build Include="Domains\Scm\Tables\PKeys\PK_ActivityDetail.sql" />
+    <Build Include="Domains\Scm\Tables\PKeys\PK_ActivityDetailWorkshop.sql" />
+    <Build Include="Domains\Scm\Tables\PKeys\PK_ActivityDetailCoaching.sql" />
+    <Build Include="Domains\Scm\Tables\PKeys\PK_ActivityDetailTraining.sql" />
+    <Build Include="Domains\Scm\Tables\PKeys\PK_ActivityDetailSupport.sql" />
+    <Build Include="Domains\Scm\Tables\PKeys\PK_ActivityDetailConsulting.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_Activity_ActivityDetail.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_ActivityDetail_ActivityDetailConsulting.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_ActivityDetail_ActivityDetailSupport.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_ActivityDetail_ActivityDetailTraining.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_ActivityDetail_ActivityDetailWorkshop.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_ActivityDetail_ActivityDetailCoaching.sql" />
+    <Build Include="Domains\Scm\Tables\ActivityDetailTrainingLanguage.sql" />
+    <Build Include="Domains\Scm\Tables\PKeys\PK_ActivityDetailTrainingLanguage.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_ActivityDetailTrainingLanguage_ADT.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_ActivityDetailTrainingLanguage_Language.sql" />
+    <Build Include="Domains\Scm\Views\ActivityDetailTrainingLanguageView.sql" />
+    <Build Include="Domains\Scm\Tables\TrainingType.sql" />
+    <Build Include="Domains\Scm\Views\TrainingTypeView.sql" />
+    <Build Include="Domains\Scm\Tables\PKeys\PK_TrainingType.sql" />
+    <Build Include="Domains\Scm\Tables\ActivityDetailTraining2TrainingType.sql" />
+    <Build Include="Domains\Scm\Views\ActivityDetailTrainingTypeView.sql" />
+    <Build Include="Domains\Scm\Tables\PKeys\PK_ActivityDetailTraining2TrainingType.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_ActivityDetailTraining2TrainingType_ADT.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_ActivityDetailTraining2TrainingType_TT.sql" />
+    <Build Include="Domains\Inf\Tables\JobDefinition.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProductsheetEntry_ProjectPlanPhase.sql" />
+    <Build Include="Domains\Wsm\Table\UserProfile.sql" />
+    <Build Include="Domains\Sof\Views\CrmUserEmailView.sql" />
+    <Build Include="Domains\Wsm\Views\UserProfileView.sql" />
+    <Build Include="Domains\Wsm\Table\FKeys\FK_UserProfile_User.sql" />
+    <Build Include="Domains\Wsm\Table\PKeys\PK_UserProfile.sql" />
+    <Build Include="Domains\Wsm\Table\UserProfile2Contact.sql" />
+    <Build Include="Domains\Wsm\Table\PKeys\PK_UserProfile2Contact.sql" />
+    <Build Include="Domains\Wsm\Table\FKeys\FK_UserProfile2Contact_UserProfile.sql" />
+    <Build Include="Domains\Wsm\Views\UserProfileContactView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryCaDetail.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryCuDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryCaDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryCuDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryCaDetail_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryCuDetail_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryCaDetailView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryCuDetailView.sql" />
+    <Build Include="Domains\Prm\Tables\SubProject.sql" />
+    <Build Include="Domains\Prm\Views\SubProjectView.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_SubProject.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_SubProject_Project.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_SubProject_SubProject.sql" />
+    <Build Include="Domains\Scm\Tables\ActivityDetailWorkshopLanguage.sql" />
+    <Build Include="Domains\Scm\Tables\PKeys\PK_ActivityDetailWorkshopLanguage.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_ActivityDetailWorkshopLanguage_Language.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_ActivityDetailWorkshopLanguage_ADW.sql" />
+    <Build Include="Domains\Scm\Views\ActivityDetailWorkshopLanguageView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCandidateCategoryDetailType1.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCandidateCategoryDetailType2.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCandidateCategoryDetailType3.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCandidateCategoryDetailType1.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCandidateCategoryDetailType2.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCandidateCategoryDetailType3.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateCategoryDetailType1_PC.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateCategoryDetailType1_PCDT1.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateCategoryDetailType2_PC.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateCategoryDetailType2_PCDT2.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateCategoryDetailType3_PC.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateCategoryDetailType3_PCDT3.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCandidateCategoryDetailType1View.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCandidateCategoryDetailType2View.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCandidateCategoryDetailType3View.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCandidateCategoryDetailTypeView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCandidateProjectView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCandidateAssessor.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCandidateAssessorView.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCandidateAssessor.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateAssessor_ProjectCandidate.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateAssessor_User.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectHistory.sql" />
+    <None Include="Scripts\PostDeploy\Data\110.ContactDetail.sql" />
+    <None Include="Scripts\PostDeploy\Data\109.CrmProject.sql" />
+    <None Include="Scripts\PostDeploy\Data\100.Project.DC.sql" />
+    <None Include="Scripts\PostDeploy\Data\100.Project.EA.sql" />
+    <None Include="Scripts\PostDeploy\Data\100.Project.FD.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCandidateAssessor.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCandidateAssessorView.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCandidateAssessor.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateAssessor_ProjectCandidate.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateAssessor_User.sql" />
+    <None Include="Scripts\PostDeploy\Data\080.Report.sql" />
+    <Build Include="Domains\Prm\Views\MainProjectView.sql" />
+    <Build Include="Domains\Rep\Tables\CandidateReportDefinition.sql" />
+    <Build Include="Domains\Rep\Tables\CandidateReportDefinitionField.sql" />
+    <Build Include="Domains\Rep\Tables\PKeys\PK_CandidateReportDefinition.sql" />
+    <Build Include="Domains\Rep\Tables\PKeys\PK_CandidateReportDefinitionField.sql" />
+    <Build Include="Domains\Rep\Tables\FKeys\FK_CandidateReportDefinitionField_CRD.sql" />
+    <Build Include="Domains\Rep\Views\CandidateReportDefinitionView.sql" />
+    <Build Include="Domains\Rep\Views\CandidateReportDefinitionFieldView.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_ProjectDetailAcdc.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_ProjectDetailCandidateCategoryDetailTypes3.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_ProjectDetailCandidateCategoryDetailTypes2.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_ProjectDetailCandidateCategoryDetailTypes1.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_AssessmentDevelopmentProject_CRD.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCandidateIndicatorSimulationScore.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCandidateIndicatorSimulationScoreView.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCandidateIndicatorSimulationScore.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateIndSimScore_DI.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateInSimScore_SC.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_ProjectDetailSimulations.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_ProjectDetailSimulationRemarks.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCandidateCompetenceSimulationScore.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateComSimScore_DC.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateComSimScore_SC.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCandidateCompetenceSimulationScore.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCandidateCompetenceSimulationScoreView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectRole2DictionaryIndicator.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCandidateIndicatorSimulationFocusedScoreView.sql" />
+    <Build Include="Domains\Rep\Tables\CandidateScoreReportType.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_AssessmentDevelopmentProject_CSRT.sql" />
+    <Build Include="Domains\Rep\Tables\PKeys\PK_CandidateScoreReportType.sql" />
+    <Build Include="Domains\Rep\Views\CandidateScoreReportTypeView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCandidateIndicatorScore.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCandidateCompetenceScore.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCandidateClusterScore.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCandidateIndicatorScoreView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCandidateCompetenceScoreView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCandidateClusterScoreView.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCandidateIndicatorScore.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCandidateCompetenceScore.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCandidateClusterScore.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateIndicatorScore_PC.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateCompetenceScore_PC.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateClusterScore_PC.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateIndicatorScore_PCCS.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateIndicatorScore_DI.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateCompetenceScore_DC.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateClusterScore_DC.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCandidateResume.sql" />
+    <Build Include="Domains\Prm\Tables\Advice.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCandidateResume.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_Advice.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateResume_ProjectCandidate.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateResume_Advice.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCandidateResumeView.sql" />
+    <Build Include="Domains\Prm\Views\AdviceView.sql" />
+    <Build Include="Functions\FormattedCrmAppointment.sql" />
+    <Build Include="Domains\Crm\Procs\CrmCandidateAppointment_ListUnregisteredCrmCandidateAppointments.sql" />
+    <Build Include="Domains\Crm\Procs\CrmCandidateAppointment_ListCoAssessors.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCandidateDetailView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCandidateResumeField.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCandidateResumeFieldView.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCandidateResumeField.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateResumeField_PCR.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateResumeField_CRDF.sql" />
+    <Build Include="Domains\Prm\Tables\Proposal.sql" />
+    <Build Include="Domains\Prm\Tables\FrameworkAgreement.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_FrameworkAgreement.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_Proposal.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_Proposal_BusinessDeveloper.sql" />
+    <Build Include="Domains\Prm\Views\ProposalView.sql" />
+    <Build Include="Domains\Prm\Views\FrameworkAgreementView.sql" />
+    <Build Include="Domains\Prm\Procs\Proposal_ListYears.sql" />
+    <Build Include="Domains\Prm\Procs\FrameworkAgreement_ListYears.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_ProjectDetailCompetenceMatrix.sql" />
+    <Build Include="Domains\Ext\Procs\External_GenerateType3Code.sql" />
+    <Build Include="Domains\Crm\Procs\CrmCandidateInfo_Create.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_ProjectDetailCompetenceMatrixRemarks.sql" />
+    <Build Include="Domains\Rep\Tables\ReportDefinition.sql" />
+    <Build Include="Domains\Rep\Tables\ReportType.sql" />
+    <Build Include="Domains\Rep\Tables\PKeys\PK_ReportDefinition.sql" />
+    <Build Include="Domains\Rep\Tables\PKeys\PK_ReportType.sql" />
+    <Build Include="Domains\Rep\Tables\FKeys\FK_ReportDefinition_ReportType.sql" />
+    <Build Include="Domains\Rep\Views\ReportDefinitionView.sql" />
+    <Build Include="Domains\Rep\Views\ReportTypeView.sql" />
+    <Build Include="Domains\Crm\Views\CrmAppointmentView.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidate_Language.sql" />
+    <Build Include="Domains\Crm\Views\CrmEmailView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCandidateReportRecipient.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCandidateReportRecipient.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidateReportRecipient_ProjectCandidate.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCandidateReportRecipientView.sql" />
+    <Build Include="Domains\Crm\Procs\CrmCandidateAppointment_RetrieveFormattedCrmAppointment.sql" />
+    <Build Include="Domains\Prm\Tables\ReportStatus.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ReportStatus.sql" />
+    <Build Include="Domains\Prm\Views\ReportStatusView.sql" />
+    <None Include="Scripts\PostDeploy\Data\043.ReportStatus.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCandidate_ReportStatus.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectTypeCategoryUnitPrice.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectTypeCategoryUnitPrice.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectTypeCategoryUnitPrice_ProjectTypeCategory.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectTypeCategoryLevel.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectTypeCategoryLevel.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectTypeCategoryUnitPrice_ProjectTypeCategoryLevel.sql" />
+    <Build Include="Domains\Prm\Views\ProjectTypeCategoryUnitPriceView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectTypeCategoryLevelView.sql" />
+    <None Include="Scripts\PostDeploy\Data\130.ProjectTypeCategoryUnitPrice.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_PCListCompetenceScoresByProjectCandidateId.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_PCListIndicatorScoresByCompetenceScoreId.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_PCListClusterScoresByProjectCandidateId.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_PCListCompetenceScoresByClusterScoreId.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_ProjectCandidateRetrieveScoreReportTypeCode.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectDocumentMetadata.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectDocumentMetadata_Project.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectDocumentMetadata.sql" />
+    <Build Include="Domains\Prm\Views\ProjectDocumentMetadataView.sql" />
+    <None Include="Scripts\PostDeploy\Data\000.Configurations.sql" />
+    <Build Include="Domains\Sim\Procs\Simulation_CreateCombination.sql" />
+    <Build Include="Domains\Cam\Tables\ProgramComponent.sql" />
+    <Build Include="Domains\Cam\Tables\PKeys\PK_ProgramComponent.sql" />
+    <Build Include="Domains\Cam\Tables\FKeys\FK_ProgramComponent_ProjectCandidate.sql" />
+    <Build Include="Domains\Cam\Views\ProgramComponentView.sql" />
+    <Build Include="Domains\Inf\Tables\AssessmentRoom.sql" />
+    <Build Include="Domains\Inf\Tables\PKeys\PK_AssessmentRoom.sql" />
+    <Build Include="Domains\Inf\Tables\FKeys\FK_AssessmentRoom_Office.sql" />
+    <Build Include="Domains\Inf\Views\AssessmentRoomView.sql" />
+    <Build Include="Domains\Inf\Tables\AssessorColor.sql" />
+    <Build Include="Domains\Inf\Views\AssessorColor.sql" />
+    <Build Include="Domains\Cam\Tables\ProgramComponentSpecial.sql" />
+    <Build Include="Domains\Cam\Views\ProgramComponentSpecialView.sql" />
+    <None Include="Scripts\PostDeploy\Data\160.ProgramComponentSpecial.sql" />
+    <Build Include="Domains\Cam\Tables\PKeys\PK_ProgramComponentSpecial.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectDnaType.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectDnaType.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectDna2ProjectDnaType.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectDna2ProjectDnaType.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_PD2PDT_ProjectDna.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_PD2PDT_ProjectDnaType.sql" />
+    <Build Include="Domains\Prm\Views\ProjectDnaView.sql" />
+    <Build Include="Domains\Prm\Tables\UKeys\UK_ProjectDna_CrmProjectId.sql" />
+    <Build Include="Domains\Prm\Views\ProjectDnaTypeView.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectDna_ListProjectDnaTypes.sql" />
+    <Build Include="Domains\Prm\Views\ProjectDna2ProjectDnaTypeView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectProduct.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectProduct.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectProduct_Project.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectProduct_ProductType.sql" />
+    <Build Include="Domains\Prm\Views\ProjectProductView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectEvaluation.sql" />
+    <Build Include="Domains\Prm\Views\ProjectEvaluationView.sql" />
+    <Build Include="Domains\Prm\Tables\EvaluationForm.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectEvaluation.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_EvaluationForm.sql" />
+    <Build Include="Domains\Prm\Tables\MailStatusType.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_MailStatusType.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_EvaluationForm_MailStatusType.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_EvaluationForm_EvaluationFormType.sql" />
+    <Build Include="Domains\Prm\Tables\EvaluationFormType.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_EvaluationFormType.sql" />
+    <None Include="Scripts\PostDeploy\Data\230.MailStatusType.sql" />
+    <None Include="Scripts\PostDeploy\Data\240.EvaluationFormType.sql" />
+    <Build Include="Domains\Prm\Views\MailStatusTypeView.sql" />
+    <Build Include="Domains\Prm\Views\EvaluationFormTypeView.sql" />
+    <Build Include="Domains\Prm\Views\EvaluationFormView.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_ProjectCandidateMainProjectCategoryType.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_ReportCandidateGenericInfo.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_GetCandidateCoAssessor.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectComplaint.sql" />
+    <Build Include="Domains\Prm\Tables\ComplaintStatusType.sql" />
+    <Build Include="Domains\Prm\Tables\ComplaintSeverityType.sql" />
+    <Build Include="Domains\Prm\Tables\ComplaintType.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ComplaintType.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ComplaintSeverityType.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ComplaintStatusType.sql" />
+    <None Include="Scripts\PostDeploy\Data\250.ComplaintType.sql" />
+    <None Include="Scripts\PostDeploy\Data\251.ComplaintStatusType.sql" />
+    <None Include="Scripts\PostDeploy\Data\252.ComplaintSeverityType.sql" />
+    <Build Include="Domains\Prm\Views\ProjectComplaintView.sql" />
+    <Build Include="Domains\Prm\Views\ComplaintTypeView.sql" />
+    <Build Include="Domains\Prm\Views\ComplaintStatusTypeView.sql" />
+    <Build Include="Domains\Prm\Views\ComplaintSeverityTypeView.sql" />
+    <Build Include="Domains\Inf\Tables\MailTemplate.sql" />
+    <Build Include="Domains\Inf\Tables\MailTemplateTranslation.sql" />
+    <Build Include="Domains\Inf\Tables\PKeys\PK_MailTemplate.sql" />
+    <Build Include="Domains\Inf\Tables\PKeys\PK_MailTemplateTranslation.sql" />
+    <Build Include="Domains\Inf\Tables\FKeys\FK_MailTemplateTranslation_MailTemplate.sql" />
+    <Build Include="Domains\Inf\Tables\FKeys\FK_MailTemplateTranslation_Language.sql" />
+    <Build Include="Domains\Inf\Views\MailTemplateTranslationView.sql" />
+    <Build Include="Domains\Inf\Views\MailTemplateView.sql" />
+    <Build Include="Domains\Inf\Procs\ListProjectCandidateMailTags.sql" />
+    <Build Include="Domains\Inf\Views\ProjectCandidateMailingView.sql" />
+    <None Include="Scripts\PostDeploy\Data\260.MailTemplate.sql" />
+    <Build Include="Functions\GenderToSalutation.sql" />
+    <Build Include="Domains\Ext\Procs\External_ListNeopirScores.sql" />
+    <Build Include="Domains\Ext\Procs\External_ListLeiderschapScores.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCategoryDetail_ListProjectRoleDictionaryLevels.sql" />
+    <Build Include="Domains\Dim\Procs\Dictionary_ListDictionaryIndicatorMatrixEntries.sql" />
+    <Build Include="Domains\Sim\Tables\SimulationContext.sql" />
+    <Build Include="Domains\Sim\Tables\SimulationContextUser.sql" />
+    <Build Include="Domains\Sim\Tables\PKeys\PK_SimulationContextUser.sql" />
+    <Build Include="Domains\Sim\Tables\PKeys\PK_SimulationContext.sql" />
+    <Build Include="Domains\Sim\Tables\FKeys\FK_SimulationContextUser_SimulationContext.sql" />
+    <Build Include="Domains\Sim\Views\SimulationContextView.sql" />
+    <Build Include="Domains\Sim\Views\SimulationContextUserView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectReportRecipient.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectReportRecipient.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectReportRecipient_Project.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidate_ListReportRecipients.sql" />
+    <Build Include="Domains\Prm\Views\ProjectReportRecipientView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCandidateStatusType.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidate_AssistantOverview.sql" />
+    <Build Include="Functions\ProjectCandidate_ReportRecipientsAsString.sql" />
+    <Build Include="Functions\Office_RetrieveOfficeName.sql" />
+    <Build Include="Functions\ProjectCandidate_AssessorsAsString.sql" />
+    <Build Include="Functions\ProjectCandidate_AssessorUserNamesAsString.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidateCategoryType2_AssistantOverview.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidateReserved_AssistantOverview.sql" />
+    <Build Include="Domains\Scm\Tables\ActivityDetailTrainingCandidate.sql" />
+    <Build Include="Domains\Scm\Tables\PKeys\PK_ActivityDetailTrainingCandidate.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_ActivityDetailTrainingCandidate_ADT.sql" />
+    <Build Include="Domains\Scm\Tables\FKeys\FK_ActivityDetailTrainingCandidate_Candidate.sql" />
+    <Build Include="Domains\Scm\Views\ActivityDetailTrainingCandidateView.sql" />
+    <Build Include="Domains\Crm\Procs\CrmCandidateAppointment_ListProjectTrainingAppointments.sql" />
+    <Build Include="Domains\Rep\Tables\ReportParameter.sql" />
+    <Build Include="Domains\Rep\Tables\ReportParameterValue.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_RetrieveTranslation.sql" />
+    <Build Include="Domains\Rep\Views\ReportParameterView.sql" />
+    <Build Include="Domains\Rep\Views\ReportParameterValueView.sql" />
+    <Build Include="Domains\Rep\Tables\PKeys\PK_ReportParameter.sql" />
+    <Build Include="Domains\Rep\Tables\PKeys\PK_ReportParameterValue.sql" />
+    <Build Include="Domains\Rep\Tables\FKeys\FK_ReportParameterValue_ReportParameter.sql" />
+    <Build Include="Functions\Office_RetrieveOfficeNameById.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidateCancelled_AssistantOverview.sql" />
+    <Build Include="Domains\Prm\Tables\EvaluationFormCoaching.sql" />
+    <Build Include="Domains\Prm\Tables\EvaluationFormAcdc.sql" />
+    <Build Include="Domains\Prm\Tables\EvaluationFormCustomProjects.sql" />
+    <Build Include="Domains\Prm\Views\EvaluationFormAcdcView.sql" />
+    <Build Include="Domains\Prm\Views\EvaluationFormCoachingView.sql" />
+    <Build Include="Domains\Prm\Views\EvaluationFormCustomProjectsView.sql" />
+    <Build Include="Domains\Prm\Tables\TheoremListRequest.sql" />
+    <Build Include="Domains\Prm\Views\TheoremListRequestView.sql" />
+    <Build Include="Domains\Prm\Tables\TheoremListRequestType.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_TheoremListRequest.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_TheoremListRequestType.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_TheoremListRequest_TheoremListRequestType.sql" />
+    <None Include="Scripts\PostDeploy\Data\270.TheoremListRequestType.sql" />
+    <Build Include="Domains\Prm\Tables\Theorem.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_Theorem.sql" />
+    <Build Include="Domains\Prm\Tables\TheoremList.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_TheoremList.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_Theorem_TheoremList.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_TheoremList_TheoremListRequest.sql" />
+    <Build Include="Domains\Prm\Tables\TheoremListType.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_TheoremList_TheoremListType.sql" />
+    <Build Include="Domains\Prm\Tables\TheoremTemplate.sql" />
+    <Build Include="Domains\Prm\Tables\TheoremTemplateTranslation.sql" />
+    <Build Include="Domains\Prm\Tables\TheoremTranslation.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_TheoremTemplate.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_TheoremTemplateTranslation.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_TheoremTranslation.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_TheoremTemplate_TheoremListTemplate.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_TheoremTemplateTranslation_TheoremTemplate.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_TheoremTranslation_Theorem.sql" />
+    <Build Include="Domains\Prm\Tables\TheoremListTemplate.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_TheoremListTemplate.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_TheoremListType.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_TheoremTranslation_Language.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_TheoremTemplateTranslation_Language.sql" />
+    <None Include="Scripts\PostDeploy\Data\271.TheoremListTemplate.sql" />
+    <Build Include="Domains\Prm\Views\TheoremView.sql" />
+    <Build Include="Domains\Prm\Views\TheoremListView.sql" />
+    <Build Include="Domains\Prm\Views\TheoremListTemplateView.sql" />
+    <Build Include="Domains\Prm\Views\TheoremTemplateView.sql" />
+    <Build Include="Domains\Prm\Views\TheoremTemplateTranslationView.sql" />
+    <Build Include="Domains\Prm\Views\TheoremTranslationView.sql" />
+    <Build Include="Domains\Inf\Views\ProjectProductInvoiceReadyView.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_PCListCompetenceScoresByProjectCandidateIdAndDictionaryClusterId.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_PCListCompetenceScoreClustersByProjectCandidateId.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_PCResumeFieldByCode.sql" />
+    <Build Include="Domains\Sof\Views\CrmUnsynchronizedEmployeeView.sql" />
+    <None Include="Domains\Sec\Tables\Constraints\UC_User_UserName.sql" />
+    <None Include="Scripts\PostDeploy\Data\272.TheoremListType.sql" />
+    <Build Include="Domains\Sec\Views\OperationView.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_PCIncludeInReport.sql" />
+    <Build Include="Domains\Sec\Tables\Employee.sql" />
+    <Build Include="Domains\Sec\Views\EmployeeView.sql" />
+    <Build Include="Domains\Crm\Procs\CrmReplicationAppointment_Sync.sql" />
+    <Build Include="Domains\Crm\Tables\CrmReplicationAppointment.sql" />
+    <None Include="Scripts\PostDeploy\Data\999.Jobs.sql" />
+    <Build Include="Domains\Crm\Tables\CrmReplicationAssociate.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_PCListCompetences.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_PCListFocusedIndicatorsByCompetenceIdAndProjectCandidateId.sql" />
+    <Build Include="Domains\Crm\Procs\CrmReplicationAssociate_Sync.sql" />
+    <Build Include="Domains\Crm\Procs\CrmReplicationContact_Sync.sql" />
+    <Build Include="Domains\Crm\Tables\CrmReplicationContact.sql" />
+    <Build Include="Domains\Crm\Tables\CrmReplicationEmail.sql" />
+    <Build Include="Domains\Crm\Procs\CrmReplicationEmail_Sync.sql" />
+    <Build Include="Domains\Crm\Tables\CrmReplicationAppointmentTraining.sql" />
+    <Build Include="Domains\Crm\Procs\CrmReplicationAppointmentTraining_Sync.sql" />
+    <Build Include="Domains\Inf\Tables\CrmReplicationJobHistory.sql" />
+    <Build Include="Domains\Inf\Tables\CrmReplicationJob.sql" />
+    <Build Include="Domains\Inf\Procs\CrmReplicationJob_StartProcess.sql" />
+    <Build Include="Domains\Inf\Procs\CrmReplicationJob_StopProcess.sql" />
+    <Build Include="Domains\Crm\Tables\CrmReplicationProject.sql" />
+    <Build Include="Domains\Crm\Procs\CrmReplicationProject_Sync.sql" />
+    <Build Include="Domains\Crm\Tables\CrmReplicationProjectStatus.sql" />
+    <Build Include="Domains\Crm\Tables\CrmReplicationAppointmentTimesheet.sql" />
+    <Build Include="Domains\Crm\Procs\CrmReplicationAppointmentTimesheet_Sync.sql" />
+    <Build Include="Domains\Crm\Tables\CrmReplicationEmailAssociate.sql" />
+    <Build Include="Domains\Crm\Procs\CrmReplicationEmailAssociate_Sync.sql" />
+    <Build Include="Domains\Crm\Tables\CrmReplicationUserGroup.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_PCListCompetences.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_PCListFocusedIndicatorsByCompetenceIdAndProjectCandidateId.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectRoleTranslation.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectRoleTranslation.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectRoleTranslation_ProjectRole.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectRoleTranslation_Translation.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_PCProjectRole.sql" />
+    <Build Include="Domains\Prm\Views\ProjectRoleTranslationView.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidateCategoryType1_AssistantOverview.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidateCategoryType3_AssistantOverview.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidate_ReportingOverview.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_PCListCompetences.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_PCListFocusedIndicatorsByCompetenceIdAndProjectCandidateId.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectRoleTranslation.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectRoleTranslation.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectRoleTranslation_ProjectRole.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectRoleTranslation_Translation.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_PCProjectRole.sql" />
+    <Build Include="Domains\Prm\Views\ProjectRoleTranslationView.sql" />
+    <None Include="Scripts\PostDeploy\Data\001.Replication.sql" />
+    <Build Include="Functions\TheoremListRequest_CheckCulturalFitStatus.sql" />
+    <Build Include="Domains\Inf\Tables\JobSchedule.sql" />
+    <Build Include="Domains\Inf\Tables\Job.sql" />
+    <Build Include="Domains\Scm\Procs\ActivityDetailTraining_ListAppointments.sql" />
+    <Build Include="Domains\Inf\Views\JobDefinitionView.sql" />
+    <Build Include="Domains\Inf\Views\JobScheduleView.sql" />
+    <Build Include="Domains\Inf\Views\JobView.sql" />
+    <Build Include="Domains\Fin\Procs\Invoicing_ProjectCandidate.sql" />
+    <Build Include="Domains\Fin\Procs\Invoicing_ProjectCandidateCategoryType1.sql" />
+    <Build Include="Domains\Fin\Procs\Invoicing_ProjectCandidateCategoryType2.sql" />
+    <Build Include="Domains\Fin\Procs\Invoicing_ProjectCandidateCategoryType3.sql" />
+    <Build Include="Domains\Fin\Procs\Invoicing_ProjectProduct.sql" />
+    <Build Include="Domains\Fin\Procs\Invoicing_AssessmentDevelopmentProjectFixedPrice.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_PCGetAssessors.sql" />
+    <Build Include="Domains\Prm\Procs\Project_ValidateInvoiceStatus.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectDnaCommercialTranslation.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectDnaCommercialTranslation.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectDnaCTranslation_ProjectDna.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectDnaCTranslation_Language.sql" />
+    <Build Include="Domains\Prm\Views\ProjectDnaCommercialTranslationView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectDna2CrmPerson.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectDna2CrmPerson.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_PD2CP_ProjectDna.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectDna_ListProjectDnaContactPersons.sql" />
+    <Build Include="Domains\Prm\Views\ProjectDna2CrmPersonView.sql" />
+    <None Include="Scripts\PostDeploy\Data\300.ProjectDna.sql" />
+    <Build Include="Domains\Crm\Tables\CrmReplicationPerson.sql" />
+    <Build Include="Domains\Crm\Procs\CrmReplicationPerson_Sync.sql" />
+    <Build Include="Functions\SplitList.sql" />
+    <Build Include="Domains\Rep\Procs\Reporting_ProjectDnaListProjectDnaTypes.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_033.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_173.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_177.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_027.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_104.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_125.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_144.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_152.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_158.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_159.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_160.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_169.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_041.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_060.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_072.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_073.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_075.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_078.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_087.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_088.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_089.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_102.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_109.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_116.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_117.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_118.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_121.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_122.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidate_ValidateInvoiceStatus.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidateCategoryDetailType1_ValidateInvoiceStatus.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidateCategoryDetailType2_ValidateInvoiceStatus.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidateCategoryDetailType3_ValidateInvoiceStatus.sql" />
+    <Build Include="Domains\Fin\Procs\AccountantInvoicing_ProjectCandidate.sql" />
+    <Build Include="Domains\Fin\Procs\AccountantInvoicing_ProjectCandidateCategoryType1.sql" />
+    <Build Include="Domains\Fin\Procs\AccountantInvoicing_ProjectCandidateCategoryType2.sql" />
+    <Build Include="Domains\Fin\Procs\AccountantInvoicing_ProjectCandidateCategoryType3.sql" />
+    <Build Include="Domains\Fin\Procs\AccountantInvoicing_AssessmentDevelopmentProjectFixedPrice.sql" />
+    <Build Include="Domains\Fin\Procs\AccountantInvoicing_ProjectProduct.sql" />
+    <Build Include="Domains\Fin\Procs\Invoicing_ProductSheetEntry.sql" />
+    <Build Include="Domains\Fin\Procs\Invoicing_ConsultancyProjectFixedPrice.sql" />
+    <Build Include="Domains\Fin\Procs\AccountantInvoicing_ConsultancyProjectFixedPrice.sql" />
+    <Build Include="Domains\Prm\Procs\QCare_ListEvaluationFormAnswers.sql" />
+    <Build Include="Domains\Fin\Procs\Invoicing_TimesheetEntry.sql" />
+    <Build Include="Domains\Fin\Procs\AccountantInvoicing_ProductSheetEntry.sql" />
+    <Build Include="Domains\Fin\Procs\AccountantInvoicing_TimesheetEntry.sql" />
+    <Build Include="Domains\Inf\Procs\ListProjectCandidateCategoryDetailType3MailTags.sql" />
+    <Build Include="Domains\Inf\Tables\OfficeTranslation.sql" />
+    <Build Include="Domains\Inf\Tables\PKeys\PK_OfficeTranslation.sql" />
+    <Build Include="Domains\Inf\Tables\FKeys\FK_OfficeTranslation_Office.sql" />
+    <Build Include="Domains\Inf\Tables\FKeys\FK_OfficeTranslation_Language.sql" />
+    <Build Include="Domains\Inf\Views\OfficeTranslationView.sql" />
+    <Build Include="Domains\Inf\Procs\ListProjectCandidateCategoryDetailType1MailTags.sql" />
+    <Build Include="Domains\Inf\Procs\ListProjectCandidateCulturalFitMailTags.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectTypeCategoryTranslation.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectTypeCategoryTranslation.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectTypeCategoryTranslation_ProjectTypeCategory.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectTypeCategoryTranslation_Translation.sql" />
+    <Build Include="Domains\Prm\Views\ProjectTypeCategoryTranslationView.sql" />
+    <Build Include="Domains\Inf\Procs\ListEvaluationFormMailTags.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary_178.sql" />
+    <None Include="Scripts\Information\Act.CandidateInfo2Appointment.sql" />
+    <Build Include="Domains\Prm\Procs\Project_InvoiceAmountOverview.sql" />
+    <Build Include="Domains\Prm\Views\CulturalFitAssociateView.sql" />
+    <Build Include="Domains\Prm\Tables\Setting.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_Setting.sql" />
+    <None Include="Scripts\ChangeScripts\000.20130225-001.sql" />
+    <Build Include="Domains\Inf\Procs\ListCulturalFitMailTags.sql" />
+    <None Include="Scripts\Migration\Candidate.sql" />
+    <None Include="Scripts\Migration\Project.sql" />
+    <None Include="Scripts\Migration\ProjectCandidate.sql" />
+    <None Include="Scripts\Migration\ProjectCompetence.sql" />
+    <None Include="Scripts\Migration\ProjectSimulation.sql" />
+    <None Include="Scripts\Migration\ProjectMatrix.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidate_ListSimulationContextLogins.sql" />
+    <None Include="Scripts\ChangeScripts\001.20130228-001.sql" />
+    <Build Include="Domains\Rep\Procs\TheoremListRequest_Reporting_GetQuestionnaireOverview.sql" />
+    <None Include="Scripts\Migration\GGI.sql" />
+    <None Include="Scripts\Migration\SubCategories.sql" />
+    <Build Include="Domains\Inf\Procs\ListProjectCandidateCategoryDetailType2MailTags.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryAdminView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryClusterAdminView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryCompetenceAdminView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryIndicatorAdminView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryLevelAdminView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryClusterTranslationAdminView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryCompetenceTranslationAdminView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryIndicatorTranslationAdminView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryLevelTranslationAdminView.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidate_ListSimulationContextLogins.sql" />
+    <None Include="Scripts\ChangeScripts\001.20130228-001.sql" />
+    <Build Include="Domains\Rep\Procs\TheoremListRequest_Reporting_GetQuestionnaireOverview.sql" />
+    <None Include="Scripts\Migration\GGI.sql" />
+    <None Include="Scripts\Migration\SubCategories.sql" />
+    <Build Include="Domains\Inf\Procs\ListProjectCandidateCategoryDetailType2MailTags.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCategoryDetail_ListDictionaryIndicators.sql" />
+    <Build Include="Domains\Sim\Tables\SimulationTranslation.sql" />
+    <Build Include="Domains\Sim\Tables\PKeys\PK_SimulationTranslation.sql" />
+    <Build Include="Domains\Sim\Tables\FKeys\FK_SimulationTranslation_Simulation.sql" />
+    <Build Include="Domains\Sim\Tables\FKeys\FK_SimulationTranslation_Language.sql" />
+    <Build Include="Domains\Sim\Views\SimulationTranslationView.sql" />
+    <Build Include="Domains\Sim\Tables\UKeys\UK_SimulationTranslation_Simulation_Language.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_Product_ProductType.sql" />
+    <Build Include="Security\QUINTDOMAIN_RSUser.sql" />
+    <Build Include="Security\RoleMemberships.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidate_DeleteClusterScores.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidate_DeleteCompetenceScores.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidate_DeleteIndicatorScores.sql" />
+    <None Include="Scripts\ChangeScripts\001.20130409-001.sql" />
+    <Build Include="Domains\Prm\Tables\UKeys\UK_ProjectCandidateIndicatorSimulationScore.sql" />
+    <Build Include="Domains\Prm\Tables\UKeys\UK_ProjectCandidateCompetenceSimulationScore.sql" />
+    <Build Include="Domains\Prm\Tables\UKeys\UK_ProjectCandidateClusterScore.sql" />
+    <Build Include="Domains\Prm\Tables\UKeys\UK_ProjectCandidateCompetenceScore.sql" />
+    <Build Include="Domains\Prm\Tables\UKeys\UK_ProjectCandidateIndicatorScore.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidate_DeleteCompetenceSimulationScore.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidate_DeleteStandardIndicatorSimulationScore.sql" />
+    <Build Include="Domains\Prm\Procs\ProjectCandidate_DeleteFocusedIndicatorSimulationScore.sql" />
+    <Build Include="Domains\Prm\Func\ProjectCandidate_GetLastTheoremListIsCompleted.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectRevenueDistribution_Project.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectRevenueDistribution.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectRevenueDistribution.sql" />
+    <Build Include="Domains\Prm\Views\ProjectRevenueDistributionView.sql" />
+    <Build Include="Domains\Prm\Tables\UKeys\UK_ProjectRevenueDistribution.sql" />
+    <Build Include="dbo\Functions\CountLevels.sql" />
+    <Build Include="Security\QuintessenceUser_1.sql" />
+    <Build Include="Scripts\ChangeScripts\TeamLeader_001_AddPrimaryKeys.sql" />
+    <Build Include="Scripts\ChangeScripts\TeamLeader_002_AlterTables.sql" />
+    <Build Include="Scripts\ChangeScripts\TeamLeader_003_NewTables.sql" />
+    <Build Include="Scripts\ChangeScripts\TeamLeader_004_NewTriggers.sql" />
+    <Build Include="Scripts\ChangeScripts\TeamLeader_005_ExtraData.sql" />
+    <Build Include="Scripts\ChangeScripts\TeamLeader_006_DisableOldJobs.sql" />
+    <Build Include="Scripts\ChangeScripts\TeamLeader_007_NewJobDefinitions.sql" />
+    <Build Include="Scripts\ChangeScripts\TeamLeader_010_DuplicatorCreateTables.sql" />
+    <Build Include="Scripts\ChangeScripts\TeamLeader_011_DuplicatorJobDefinition.sql" />
+    <Build Include="Scripts\ChangeScripts\TeamLeader_012_DeleteOldJobDefinitions.sql" />
+    <Build Include="Scripts\ChangeScripts\TeamLeader_020_Alter_TimeTracking.sql" />
+    <Build Include="Scripts\ChangeScripts\TeamLeader_030_Alter_Task.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Domains\Prm\Tables\FKeys\FK_AssessmentDevelopmentProject_Project.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_Project_ProjectType.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_Project2CrmProject_Project.sql" />
+    <Build Include="Domains\Inf\Tables\PKeys\PK_Language.sql" />
+    <Build Include="Domains\Inf\Tables\PKeys\PK_Translation.sql" />
+    <Build Include="Domains\Crm\Views\CrmContact.sql" />
+    <Build Include="Domains\Sof\Views\CrmProject.sql" />
+    <Build Include="Domains\Sof\Views\CrmUserGroup.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryClusterView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryCompetenceTranslationView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryCompetenceView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryIndicatorTranslationView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryIndicatorView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryLevelTranslationView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryLevelView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryView.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\PostDeploy\Script.PostDeployment.sql" />
+    <Build Include="Domains\Dim\Tables\Dictionary.sql" />
+    <Build Include="Domains\Dim\Tables\DictionaryCluster.sql" />
+    <Build Include="Domains\Dim\Tables\DictionaryClusterTranslation.sql" />
+    <Build Include="Domains\Dim\Tables\DictionaryCompetence.sql" />
+    <Build Include="Domains\Dim\Tables\DictionaryCompetenceTranslation.sql" />
+    <Build Include="Domains\Dim\Tables\DictionaryIndicator.sql" />
+    <Build Include="Domains\Dim\Tables\DictionaryIndicatorTranslation.sql" />
+    <Build Include="Domains\Dim\Tables\DictionaryLevel.sql" />
+    <Build Include="Domains\Dim\Tables\DictionaryLevelTranslation.sql" />
+    <Build Include="Domains\Dim\Tables\PKeys\PK_Dictionary.sql" />
+    <Build Include="Domains\Dim\Tables\PKeys\PK_DictionaryCluster.sql" />
+    <Build Include="Domains\Dim\Tables\PKeys\PK_DictionaryClusterTranslation.sql" />
+    <Build Include="Domains\Dim\Tables\PKeys\PK_DictionaryCompetence.sql" />
+    <Build Include="Domains\Dim\Tables\PKeys\PK_DictionaryCompetenceTranslation.sql" />
+    <Build Include="Domains\Dim\Tables\PKeys\PK_DictionaryIndicator.sql" />
+    <Build Include="Domains\Dim\Tables\PKeys\PK_DictionaryIndicatorTranslation.sql" />
+    <Build Include="Domains\Dim\Tables\PKeys\PK_DictionaryLevel.sql" />
+    <Build Include="Domains\Dim\Tables\PKeys\PK_DictionaryLevelTranslation.sql" />
+    <Build Include="Domains\Dim\Tables\FKeys\FK_DictionaryLevelTranslation_DictionaryLevel.sql" />
+    <Build Include="Domains\Dim\Tables\FKeys\FK_DictionaryCluster_Dictionary.sql" />
+    <Build Include="Domains\Dim\Tables\FKeys\FK_DictionaryCompetence_DictionaryCluster.sql" />
+    <Build Include="Domains\Dim\Tables\FKeys\FK_DictionaryCompetenceTranslation_DictionaryCompetence.sql" />
+    <Build Include="Domains\Dim\Tables\FKeys\FK_DictionaryIndicator_DictionaryLevel.sql" />
+    <Build Include="Domains\Dim\Tables\FKeys\FK_DictionaryIndicatorTranslation_DictionaryIndicator.sql" />
+    <Build Include="Domains\Dim\Tables\FKeys\FK_DictionaryLevel_DictionaryCompetence.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_Project.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_Project2CrmProject.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectDna.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectType.sql" />
+    <Build Include="Domains\Sim\Tables\PKeys\PK_Simulation.sql" />
+    <Build Include="Domains\Sim\Tables\PKeys\PK_SimulationDepartment.sql" />
+    <Build Include="Domains\Sim\Tables\PKeys\PK_SimulationLevel.sql" />
+    <Build Include="Domains\Sim\Tables\PKeys\PK_SimulationSet.sql" />
+    <Build Include="Domains\Sim\Tables\PKeys\PK_SimulationSet2CrmContact.sql" />
+    <Build Include="Domains\Sim\Tables\SimulationSet2CrmContact.sql" />
+    <Build Include="Domains\Sim\Tables\Simulation.sql" />
+    <Build Include="Domains\Sim\Tables\SimulationDepartment.sql" />
+    <Build Include="Domains\Sim\Tables\SimulationLevel.sql" />
+    <Build Include="Domains\Sim\Tables\SimulationSet.sql" />
+    <Build Include="Domains\Prm\Tables\Project.sql" />
+    <Build Include="Domains\Prm\Tables\Project2CrmProject.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectDna.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectType.sql" />
+    <Build Include="Domains\Inf\Tables\HistoryIdMapping.sql" />
+    <Build Include="Domains\Inf\Tables\Language.sql" />
+    <Build Include="Domains\Inf\Tables\Translation.sql" />
+    <Build Include="Domains\Inf\Tables\FKeys\FK_Translation_Language.sql" />
+    <Build Include="Domains\Inf\Tables\PKeys\PK_HistoryIdMapping.sql" />
+    <Build Include="Domains\Crm\Views\CrmAssociate.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryClusterTranslationView.sql" />
+    <Build Include="Domains\Inf\Views\TranslationView.sql" />
+    <None Include="Scripts\PostDeploy\Data\010.ProjectType.sql" />
+    <None Include="Scripts\PostDeploy\Data\020.Category.sql" />
+    <None Include="Scripts\PostDeploy\Data\060.Dictionary.sql" />
+    <Build Include="Security\QuintessenceUser.sql" />
+    <Build Include="Domains\Sec\Tables\User.sql" />
+    <Build Include="Domains\Sec\Tables\PKeys\PK_User.sql" />
+    <None Include="Scripts\PostDeploy\Data\050.User.sql" />
+    <Build Include="Domains\Sec\Tables\AuthenticationToken.sql" />
+    <Build Include="Domains\Sec\Tables\UserGroup.sql" />
+    <Build Include="Domains\Sec\Tables\Role.sql" />
+    <Build Include="Domains\Sec\Tables\User2UserGroup.sql" />
+    <Build Include="Domains\Sec\Tables\PKeys\PK_UserGroup.sql" />
+    <Build Include="Domains\Sec\Tables\PKeys\PK_Role.sql" />
+    <Build Include="Domains\Sec\Tables\PKeys\PK_AuthenticationToken.sql" />
+    <None Include="Scripts\PostDeploy\Data\046.Role.sql" />
+    <Build Include="Domains\Sec\Views\AuthenticationTokenView.sql" />
+    <Build Include="Domains\Sec\Views\RoleView.sql" />
+    <Build Include="Domains\Sec\Views\UserView.sql" />
+    <Build Include="Domains\Inf\Views\LanguageView.sql" />
+    <Build Include="Domains\Prm\Tables\AssessmentDevelopmentProject.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_AssessmentDevelopmentProject.sql" />
+    <Build Include="Domains\Sim\Views\SimulationView.sql" />
+    <Build Include="Domains\Sim\Views\SimulationDepartmentView.sql" />
+    <Build Include="Domains\Sim\Views\SimulationLevelView.sql" />
+    <Build Include="Domains\Sim\Views\SimulationSetView.sql" />
+    <Build Include="Domains\Sim\Views\SimulationSet2CrmContactView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectTypeView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectView.sql" />
+    <Build Include="Domains\Prm\Procs\Project_ListRecentProjects.sql" />
+    <Build Include="Domains\Sof\Views\CrmProjectStatus.sql" />
+    <Build Include="Domains\Crm\Views\CrmActiveProjectView.sql" />
+    <Build Include="Domains\Prm\Views\Project2CrmProjectView.sql" />
+    <Build Include="Domains\Sof\Views\CrmProjectView.sql" />
+    <Build Include="Domains\Crm\Views\CrmAssociateView.sql" />
+    <Build Include="Domains\Crm\Views\CrmContactView.sql" />
+    <Build Include="Domains\Sof\Views\CrmProjectStatusView.sql" />
+    <Build Include="Domains\Sof\Views\CrmUserGroupView.sql" />
+    <Build Include="Domains\Prm\Procs\Project_SearchCrmProjects.sql" />
+    <Build Include="Domains\Dim\Procs\Dictionary_ListAvailableDictionariesForContact.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectTypeCategory.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectTypeCategory.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectType2ProjectTypeCategory.sql" />
+    <Build Include="Domains\Prm\Views\AssessmentDevelopmentProjectView.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectType2ProjectTypeCategory.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectType2ProjectTypeCategory_ProjectType.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectType2ProjectTypeCategory_ProjectTypeCategory.sql" />
+    <Build Include="Domains\Prm\Views\ProjectTypeCategoryView.sql" />
+    <Build Include="Domains\Prm\Tables\UKeys\UK_ProjectCategory_Code.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetail_Project.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryDetailView.sql" />
+    <Build Include="Domains\Crm\Tables\ContactDetail.sql" />
+    <Build Include="Domains\Crm\Tables\PKeys\PK_ContactDetail.sql" />
+    <Build Include="Domains\Crm\Tables\UKeys\UK_ContactDetail_ContactId.sql" />
+    <Build Include="Domains\Crm\Views\ContactDetailView.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryFaDetail_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryFaDetailView.sql" />
+    <Build Include="Domains\Prm\Tables\ConsultancyProject.sql" />
+    <Build Include="Domains\Prm\Views\ConsultancyProjectView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryAcDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ConsultancyProject.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryFaDetail.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryPsDetail.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategorySoDetail.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryDcDetail.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryFdDetail.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryEaDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategorySoDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryFaDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryPsDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryDcDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryAcDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryFdDetail.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryEaDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategorySoDetail_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryPsDetail_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDcDetail_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryFdDetail_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryEaDetail_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryAcDetail_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategorySoDetailView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryPsDetailView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryDcDetailView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryFdDetailView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryEaDetailView.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryAcDetailView.sql" />
+    <None Include="Scripts\PostDeploy\Data\070.SimulationSet.sql" />
+    <Build Include="Domains\Sim\Tables\SimulationCombination.sql" />
+    <Build Include="Domains\Sim\Views\SimulationCombinationView.sql" />
+    <Build Include="Domains\Sim\Tables\PKeys\PK_SimulationCombination.sql" />
+    <Build Include="Domains\Sim\Tables\FKeys\FK_SimulationCombination_SimulationSet.sql" />
+    <Build Include="Domains\Sim\Tables\FKeys\FK_SimulationCombination_SimulationLevel.sql" />
+    <Build Include="Domains\Sim\Tables\FKeys\FK_SimulationCombination_Simulation.sql" />
+    <Build Include="Domains\Sim\Tables\FKeys\FK_SimulationCombination_SimulationDepartment.sql" />
+    <Build Include="Domains\Sim\Views\SimulationMatrixEntryView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryDetail2DictionaryIndicator.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryDetail2DictionaryIndicator.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetail2DI_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetail2DI_DictionaryIndicator.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryDetailDictionaryIndicatorView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryIndicatorMatrixEntryView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryDetail2SimulationCombination.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryDetail2SimulationCombination.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetail2SC_Simulation.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetail2SC_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryDetailSimulationCombinationView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectCategoryDetail2Competence2Combination.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectCategoryDetail2Competence2Combination.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetail2C2C_ProjectCategoryDetail.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetail2C2C_DictionaryCompetence.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_ProjectCategoryDetail2C2C_SimulationCombination.sql" />
+    <Build Include="Domains\Prm\Views\ProjectCategoryDetailCompetenceSimulationView.sql" />
+    <Build Include="Domains\Prm\Tables\ProjectRole.sql" />
+    <Build Include="Domains\Prm\Tables\PKeys\PK_ProjectRole.sql" />
+    <Build Include="Domains\Prm\Views\ProjectRoleView.sql" />
+    <Build Include="Domains\Sim\Tables\SimulationCombination2Language.sql" />
+    <Build Include="Domains\Sim\Tables\PKeys\PK_SimulationCombination2Language.sql" />
+    <Build Include="Domains\Sim\Tables\FKeys\FK_SimulationCombination2Language_Simulation.sql" />
+    <Build Include="Domains\Sim\Tables\FKeys\FK_SimulationCombination2Language_Language.sql" />
+    <Build Include="Domains\Sim\Procs\Simulation_ListSimulationCombinationLanguages.sql" />
+    <Build Include="Domains\Sim\Views\SimulationCombinationLanguageView.sql" />
+    <Build Include="Domains\Sim\Func\SCL_ConcatenateLanguageNames.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Domains\Prm\Tables\FKeys\FK_AssessmentDevelopmentProject_Project.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_Project_ProjectType.sql" />
+    <Build Include="Domains\Prm\Tables\FKeys\FK_Project2CrmProject_Project.sql" />
+    <Build Include="Domains\Inf\Tables\PKeys\PK_Language.sql" />
+    <Build Include="Domains\Inf\Tables\PKeys\PK_Translation.sql" />
+    <Build Include="Domains\Crm\Views\CrmContact.sql" />
+    <Build Include="Domains\Sof\Views\CrmProject.sql" />
+    <Build Include="Domains\Sof\Views\CrmUserGroup.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryClusterView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryCompetenceTranslationView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryCompetenceView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryIndicatorTranslationView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryIndicatorView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryLevelTranslationView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryLevelView.sql" />
+    <Build Include="Domains\Dim\Views\DictionaryView.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ArtifactReference Include="External\Superoffice7.dacpac">
+      <HintPath>External\Superoffice7.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+      <DatabaseSqlCmdVariable>Superoffice7</DatabaseSqlCmdVariable>
+      <ServerSqlCmdVariable>Superoffice7Server</ServerSqlCmdVariable>
+    </ArtifactReference>
+    <ArtifactReference Include="External\Act.dacpac">
+      <HintPath>External\Act.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+      <DatabaseSqlCmdVariable>Act</DatabaseSqlCmdVariable>
+      <ServerSqlCmdVariable>ActServer</ServerSqlCmdVariable>
+    </ArtifactReference>
+    <ArtifactReference Include="External\Qata.dacpac">
+      <HintPath>External\Qata.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+      <DatabaseSqlCmdVariable>Qata</DatabaseSqlCmdVariable>
+      <ServerSqlCmdVariable>QataServer</ServerSqlCmdVariable>
+    </ArtifactReference>
+  </ItemGroup>
+</Project>

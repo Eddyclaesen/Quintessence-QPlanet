@@ -1,0 +1,180 @@
+﻿@using Resources
+@model Quintessence.QCare.ViewModel.EvaluationFormCoachingPart2Model
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            InitializeButtons();
+            InitializeLayout();
+            InitializeRadioButtons();
+        });
+
+        function InitializeButtons() {
+            //Previous
+            $('a[data-function=previous]').click(function (e) {
+                e.preventDefault();
+                var form = $('#Part2Form');
+                $('#Navigation').val('0');
+                form.submit();
+            });
+
+            //Next
+            $('a[data-function=next]').click(function (e) {
+                e.preventDefault();
+                var form = $('#Part2Form');
+                $('#Navigation').val('1');
+                form.submit();
+            });
+        }
+
+        function InitializeLayout() {
+            HideAll();
+            CheckQuestion03State();
+            CheckQuestion04AState();
+        }
+
+        function HideAll() {
+            $('#EvaluationFormCoachingQuestion04A').hide();
+            $('#EvaluationFormCoachingQuestion04B').hide();
+            $('#EvaluationFormCoachingQuestion04AYes').hide();
+            $('#EvaluationFormCoachingQuestion04ANo').hide();
+        }
+
+        function ShowQuestion04A() {
+            $('#EvaluationFormCoachingQuestion04A').fadeIn();
+            $('#EvaluationFormCoachingQuestion04B').hide();
+        }
+
+        function ShowQuestion04B() {
+            $('#EvaluationFormCoachingQuestion04B').fadeIn();
+            $('#EvaluationFormCoachingQuestion04A').hide();
+        }
+
+        function ShowQuestion04AYes() {
+            $('#EvaluationFormCoachingQuestion04AYes').fadeIn();
+            $('#EvaluationFormCoachingQuestion04ANo').hide();
+        }
+
+        function ShowQuestion04ANo() {
+            $('#EvaluationFormCoachingQuestion04ANo').fadeIn();
+            $('#EvaluationFormCoachingQuestion04AYes').hide();
+        }
+
+        function CheckQuestion03State() {
+            if ($('input[name="Question03"][value="True"]').is(':checked')) {
+                ShowQuestion04A();
+            }
+            if ($('input[name="Question03"][value="False"]').is(':checked')) {
+                ShowQuestion04B();
+            }
+        }
+
+        function CheckQuestion04AState() {
+            if ($('input[name="Question04A"][value="True"]').is(':checked')) {
+                ShowQuestion04AYes();
+            }
+            if ($('input[name="Question04A"][value="False"]').is(':checked')) {
+                ShowQuestion04ANo();
+            }
+        }
+
+        function InitializeRadioButtons() {
+            $('input[name="Question03"]').change(function () {
+                CheckQuestion03State();
+            });
+
+            $('input[name="Question04A"]').change(function () {
+                CheckQuestion04AState();
+            });
+        }
+    </script>
+}
+
+@using (Html.BeginForm("Part2", "EvaluationCoaching", FormMethod.Post, new { id = "Part2Form" }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    @Html.HiddenFor(m => m.Navigation)
+    <fieldset>
+        <legend>@Global.EvaluationFormCoachingTitleBlock2</legend>
+        <div>
+            <ol>
+                <li value="3">
+                    <p>@Global.EvaluationFormCoachingQuestion03</p>
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question03, true)
+                        @Global.Yes
+                    </label>
+                    <br />
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question03, false)
+                        @Global.No
+                    </label>
+                </li>
+            </ol>
+            <div id="EvaluationFormCoachingQuestion04A">
+                <ol>
+                    <li value="4">
+                        <p>@Global.EvaluationFormCoachingQuestion04A</p>
+                        <label>
+                            @Html.RadioButtonFor(m => m.Question04A, true)
+                            @Global.ContactpersonPresent
+                        </label>
+
+                        <br />
+                        <label>
+                            @Html.RadioButtonFor(m => m.Question04A, false)
+                            @Global.ContactpersonNotPresent
+                        </label>
+                        <div id="EvaluationFormCoachingQuestion04AYes">
+                            <ul>
+                                <li>
+                                    <p>@Global.EvaluationFormCoachingQuestion04A_41A_411</p>
+                                    @Html.TextAreaFor(m => m.Question04A_41A_411, 6, 90, null)
+                                </li>
+                                <li>
+                                    <p>@Global.EvaluationFormCoachingQuestion04A_41A_412</p>
+                                    @Html.TextAreaFor(m => m.Question04A_41A_412, 6, 90, null)
+                                </li>
+                                <li>
+                                    <p>@Global.EvaluationFormCoachingQuestion04A_41A_413</p>
+                                    @Html.TextAreaFor(m => m.Question04A_41A_413, 6, 90, null)
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="EvaluationFormCoachingQuestion04ANo">
+                            <ul>
+                                <li>
+                                    <p>@Global.EvaluationFormCoachingQuestion04A_41B_411</p>
+                                    @Html.TextAreaFor(m => m.Question04A_41B_411, 6, 90, null)
+                                </li>
+                                <li>
+                                    <p>@Global.EvaluationFormCoachingQuestion04A_41B_412</p>
+                                    @Html.TextAreaFor(m => m.Question04A_41B_412, 6, 90, null)
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                </ol>
+            </div>
+            <div id="EvaluationFormCoachingQuestion04B">
+                <ol>
+                    <li value="4">
+                        <p>@Global.EvaluationFormCoachingQuestion04B</p>
+                        @Html.TextAreaFor(m => m.Question04B, 6, 90, null)
+                    </li>
+                </ol>
+            </div>
+            <div class="right-text">
+                <a href="javascript:void(0);" data-function="previous" class="button">@Global.Previous</a>
+                <a href="javascript:void(0);" data-function="next" class="button">@Global.Next</a>
+            </div>
+        </div>
+    </fieldset>
+    
+}

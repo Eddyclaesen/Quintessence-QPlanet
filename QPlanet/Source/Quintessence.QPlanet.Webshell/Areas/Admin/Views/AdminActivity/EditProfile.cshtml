@@ -1,0 +1,19 @@
+﻿@model Quintessence.QPlanet.ViewModel.Scm.EditProfileModel
+@using (Html.BeginForm("EditProfile", "AdminActivity", FormMethod.Post, new { id = "EditProfileForm" }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.Name)</div>
+        <div>@Html.TextBoxFor(m => m.Name)</div>
+    </div>
+    <div class="row">
+    <div/>
+        <div>@Html.ValidationMessageFor(m => m.Name)</div>
+    </div>
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" id="EditProfileSubmitButton" title="Save profile."
+            class="button">Save</a>
+    </div>
+}      

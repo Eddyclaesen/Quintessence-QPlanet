@@ -1,0 +1,55 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectAssessmentDevelopment.ListCulturalFitContactRequestsModel
+<table id="CulturalFitContactRequestsDataTable" class="dataTable">
+    <thead>
+        <tr>
+            <th>Start<br />Deadline</th>
+            <th title="Contact person">C.P.</th>
+            <th>Type</th>
+            <th>Project</th>
+            <th>Description</th>
+            <th>Code</th>
+            <th>Status</th>
+            <th>Invite</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Requests.Count; i++)
+        {
+            <tr>
+                <td>@Model.Requests[i].RequestDate.ToShortDateString() <br /> @Model.Requests[i].Deadline.GetValueOrDefault().ToShortDateString()</td>
+                <td>@Html.DisplayTextFor(m => m.Requests[i].FullName)</td>
+                <td>@Html.DisplayTextFor(m => m.Requests[i].TheoremListRequestType)</td>
+                <td>@Html.DisplayTextFor(m => m.Requests[i].ProjectName)</td>
+                <td>@Html.DisplayTextFor(m => m.Requests[i].Description)</td>
+                <td>@Html.DisplayTextFor(m => m.Requests[i].VerificationCode)</td>
+                
+                @{
+                        var status = "Not completed";
+                        switch (Model.Requests[i].Status)
+                        {
+                            case 2:
+                                status = "In progress";
+                                break;
+                            case 99:
+                                status = "Completed";
+                                break;
+                        }
+                        
+                    }
+                    
+                <td>
+                    @status
+                </td>
+                <td>
+                    <a href="javascript:void(0);" data-function="SendCulturalFitInvitationMailButton" data-id="@Model.Requests[i].Id">Invite</a>                   
+                </td>
+                <td>
+                    <a href="javascript:void(0);" class="edit-link" data-function="EditCulturalFitContactRequest" data-request-id="@Model.Requests[i].Id" title="Edit">Edit</a>
+                    <a href="javascript:void(0);" class="pdf-link" data-function="PdfCulturalFitContactRequest" data-request-id="@Model.Requests[i].Id" title="Pdf">Pdf</a> 
+                    <a href="javascript:void(0);" class="reopen-link" data-function="ReopenCulturalFitContactRequest" data-request-id="@Model.Requests[i].Id" title="Reopen">Reopen</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

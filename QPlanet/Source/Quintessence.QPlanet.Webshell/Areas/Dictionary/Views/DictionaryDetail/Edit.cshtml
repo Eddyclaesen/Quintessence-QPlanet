@@ -1,0 +1,66 @@
+﻿@model Quintessence.QPlanet.ViewModel.Dim.DictionaryModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewData["DictionaryId"] = Model.Id;
+    ViewBag.Title = "Dictionaries - Edit dictionary";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">@Model.Name</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li class="current">Detail</li>
+            <li>@Html.ActionLink("Clusters", "Clusters", new { id = Model.Id })</li>
+        </ul>
+    </nav>
+}
+<div class="grid_8">
+    <fieldset>
+        <legend>Dictionary information</legend>
+        @using (Html.BeginForm())
+        {
+            @Html.EditorFor(m => m, "BaseEntityViewTemplate");
+                                                          
+            <table class="properties">
+                <tbody>
+                    <tr>
+                        <td class="label">
+                            @Html.LabelFor(m => m.Name)
+                        </td>
+                        <td class="value">
+                            @Html.EditorFor(m => m.Name)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            @Html.LabelFor(m => m.Current)
+                        </td>
+                        <td class="value">
+                            @Html.EditorFor(m => m.Current)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            @Html.LabelFor(m => m.Description)
+                        </td>
+                        <td class="value">
+                            @Html.TextAreaFor(m => m.Description)
+                        </td>
+                    </tr>
+                </tbody>
+            </table> 
+            
+            <div style="text-align: right">
+                <input type="submit" value="Save" class="button" />
+            </div>
+        }
+    </fieldset>
+</div>
+<div class="clear"></div>

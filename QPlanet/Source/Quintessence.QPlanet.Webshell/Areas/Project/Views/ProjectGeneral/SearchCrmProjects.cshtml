@@ -1,0 +1,97 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.SearchCrmProjectsModel
+
+<p>Search for CRM projects that can be linked to this project.</p>
+
+@using (Html.BeginForm("SearchCrmProjects", "ProjectGeneral", FormMethod.Post, new { id = "SearchCrmProjectsForm" }))
+{
+    @Html.HiddenFor(m => m.ProjectId)
+    <table class="dataTable">
+        <tr>
+            <td class="width-25-percent">@Html.LabelFor(m => m.ProjectName)</td>
+            <td class="width-75-percent">@Html.EditorFor(m => m.ProjectName)</td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td>
+                <div class="width-40-percent float-left">
+                    @Html.EditorFor(m => m.IsStatusPlannedChecked)
+                    @Html.LabelFor(m => m.IsStatusPlannedChecked)
+                </div>
+                <div class="width-40-percent float-left">
+                    @Html.EditorFor(m => m.IsStatusDoneChecked)
+                @Html.LabelFor(m => m.IsStatusDoneChecked)
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <div class="width-40-percent float-left">
+                    @Html.EditorFor(m => m.IsStatusRunningChecked)
+                @Html.LabelFor(m => m.IsStatusRunningChecked)
+                </div>
+                <div class="width-40-percent float-left">
+                    @Html.EditorFor(m => m.IsStatusStoppedChecked)
+                @Html.LabelFor(m => m.IsStatusStoppedChecked)
+                </div>
+            </td>
+        </tr>
+        
+        <tr id="LoadingPlaceholder" style="display: none">
+            <td colspan="2" style="width: 100%;">
+                @Html.Partial("~/Views/Shared/LoadingView.cshtml", "Searching for projects...")
+            </td>
+        </tr>
+    </table>
+        
+    <div style="text-align: right">
+        <input type="submit" value="Search" class="button" />
+    </div>
+}
+<br />
+<p>Search results:</p>
+<form id="SelectedCrmProjectsForm" method="POST">
+
+    <table class="dataTable" style="width: 100%">
+        <thead>
+            <tr>
+                <th />
+                <th style="width: 80%;">Project</th>
+                <th style="width: 20%;">Status</th>
+            </tr>
+        </thead>
+        <tbody id="SearchCrmProjectsResult">
+        </tbody>
+    </table>
+
+
+    <br />
+
+    <div class="right-text">
+        <input type="submit" value="Select" class="button" />
+    </div>
+</form>
+
+
+
+<script type="text/javascript">
+    $('#SearchCrmProjectsForm').submit(function (event) {
+        event.preventDefault();
+
+        $('#SearchCrmProjectsResult').hide().html($('#LoadingPlaceholder').html()).fadeIn();
+
+        var form = $(this);
+        $.ajax({
+            url: form.attr('action'),
+            type: 'POST',
+            data: form.serialize(),
+            success: function (data) {
+                $('#SearchCrmProjectsResult').hide().html(data).fadeIn();
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+            },
+            complete: function () {
+            }
+        });
+    });
+</script>

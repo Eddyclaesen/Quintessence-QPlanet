@@ -1,0 +1,221 @@
+﻿@model Quintessence.QPlanet.ViewModel.Dim.EditDictionaryLanguageModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Admin - Edit Quintessence dictionary";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">@Model.Name</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li>@Html.ActionLink("Detail", "EditDictionary", new { id = Model.Id })</li>
+            @foreach (var language in Model.Languages)
+            {
+                if (language.Id == Model.SelectedLanguageId)
+                {
+                <li class="current">@language.Name</li>
+                }
+                else
+                {
+                <li>@Html.ActionLink(language.Name, "EditDictionaryLanguage", new { id = Model.Id, languageId = language.Id })
+                </li>
+                }
+            }
+        </ul>
+    </nav>
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.treeTable.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.cookie.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/persist.js")" type="text/javascript"></script>
+
+    <script>
+        $(function () {
+            $('#DictionaryTable').treeTable({ persist: true });
+
+            InitializeButtons();
+        });
+
+        function InitializeButtons() {
+            $('a[data-function=SaveDictionary]').click(function (event) {
+                ShowDetailSaveDialog();
+
+                event.preventDefault();
+
+                var form = $('form');
+
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    dataType: 'JSON',
+                    success: function () {
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        alert(err.responseText);
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Save dictionary', err);
+                    }
+                });
+            });
+        }
+    </script>
+}
+
+<fieldset>
+    <legend>@Model.Name - @Model.ContactFullName</legend>
+
+    @using (Html.BeginForm())
+    {
+        @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+        <table id="DictionaryTable" class="dataTable">
+            <tbody>
+                @for (int a = 0; a < Model.DictionaryClusters.Count; a++)
+                {
+                    @Html.EditorFor(m => m.DictionaryClusters[a], "BaseEntityViewTemplate")
+                    var cluster = Model.DictionaryClusters[a];
+                    <tr id="node-@cluster.Id">
+                        <td>
+                            @cluster.Name
+                        </td>
+                    </tr>
+                    <tr id="node-details-@cluster.Id" class="child-of-node-@cluster.Id">
+                        <td>
+                            <table class="dataTable">
+                                @for (int at = 0; at < Model.DictionaryClusters[a].DictionaryClusterTranslations.Count; at++)
+                                {
+                                    @Html.EditorFor(m => m.DictionaryClusters[a].DictionaryClusterTranslations[at], "BaseEntityViewTemplate")
+                                    <tr>
+                                        <td style="width: 25%">@Model.DictionaryClusters[a].DictionaryClusterTranslations[at].LanguageName
+                                        </td>
+                                        <td style="width: 75%">@Html.TextAreaFor(m => m.DictionaryClusters[a].DictionaryClusterTranslations[at].Text, 1, 70, null)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 25%"></td>
+                                        <td style="width: 75%">@Html.TextAreaFor(m => m.DictionaryClusters[a].DictionaryClusterTranslations[at].Description, 4, 70, null)
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                    </tr>
+                    <tr id="node-competences-@cluster.Id" class="child-of-node-@cluster.Id">
+                        <td>Competences</td>
+                    </tr>
+
+                    for (int b = 0; b < Model.DictionaryClusters[a].DictionaryCompetences.Count; b++)
+                    {
+                    @Html.EditorFor(m => m.DictionaryClusters[a].DictionaryCompetences[b], "BaseEntityViewTemplate")
+                        var competence = Model.DictionaryClusters[a].DictionaryCompetences[b];
+                            
+                    <tr id="node-@competence.Id" class="child-of-node-competences-@cluster.Id">
+                        <td>
+                            @competence.Name
+                        </td>
+                    </tr>
+                    <tr id="node-details-@competence.Id" class="child-of-node-@competence.Id">
+                        <td>
+                            <table class="dataTable">
+                                @for (int bt = 0; bt < Model.DictionaryClusters[a].DictionaryCompetences[b].DictionaryCompetenceTranslations.Count; bt++)
+                                {
+                                    @Html.EditorFor(m => m.DictionaryClusters[a].DictionaryCompetences[b].DictionaryCompetenceTranslations[bt], "BaseEntityViewTemplate")
+                                    <tr>
+                                        <td style="width: 25%">@Model.DictionaryClusters[a].DictionaryCompetences[b].DictionaryCompetenceTranslations[bt].LanguageName
+                                        </td>
+                                        <td style="width: 75%">@Html.TextAreaFor(m => m.DictionaryClusters[a].DictionaryCompetences[b].DictionaryCompetenceTranslations[bt].Text, 1, 70, null)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 25%"></td>
+                                        <td style="width: 75%">@Html.TextAreaFor(m => m.DictionaryClusters[a].DictionaryCompetences[b].DictionaryCompetenceTranslations[bt].Description, 4, 70, null)
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                    </tr>
+                    <tr id="node-levels-@competence.Id" class="child-of-node-@competence.Id">
+                        <td>Levels</td>
+                    </tr>
+
+                        for (int c = 0; c < Model.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels.Count; c++)
+                        {
+                    @Html.EditorFor(m => m.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c], "BaseEntityViewTemplate")
+                            var level = Model.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c];
+                            
+                    <tr id="node-@level.Id" class="child-of-node-levels-@competence.Id">
+                        <td>
+                            @level.Level - @level.Name
+                        </td>
+                    </tr>
+                    <tr id="node-details-@level.Id" class="child-of-node-@level.Id">
+                        <td>
+                            <table class="dataTable">
+                                @for (int ct = 0; ct < Model.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryLevelTranslations.Count; ct++)
+                                {
+                                    @Html.EditorFor(m => m.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryLevelTranslations[ct], "BaseEntityViewTemplate")
+                                    <tr>
+                                        <td style="width: 25%">@Model.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryLevelTranslations[ct].LanguageName
+                                        </td>
+                                        <td style="width: 75%">@Html.TextAreaFor(m => m.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryLevelTranslations[ct].Text, 4, 70, null)
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                    </tr>
+                
+                    <tr id="node-indicators-@level.Id" class="child-of-node-@level.Id">
+                        <td>Indicators</td>
+                    </tr>
+
+                            for (int d = 0; d < Model.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryIndicators.Count; d++)
+                            {
+                    @Html.EditorFor(m => m.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryIndicators[d], "BaseEntityViewTemplate")
+                                var indicator = Model.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryIndicators[d];
+                    <tr id="node-@indicator.Id" class="child-of-node-indicators-@level.Id">
+                        <td>
+                            @indicator.Name
+                        </td>
+                    </tr>
+                    <tr class="child-of-node-@indicator.Id">
+                        <td>
+                            <table class="dataTable">
+                                @for (int dt = 0; dt < Model.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryIndicators[d].DictionaryIndicatorTranslations.Count; dt++)
+                                {
+                                    @Html.EditorFor(m => m.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryIndicators[d].DictionaryIndicatorTranslations[dt], "BaseEntityViewTemplate")
+                                    <tr>
+                                        <td style="width: 25%">@Model.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryIndicators[d].DictionaryIndicatorTranslations[dt].LanguageName
+                                        </td>
+                                        <td style="width: 75%">@Html.TextAreaFor(m => m.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryIndicators[d].DictionaryIndicatorTranslations[dt].Text, 4, 70, null)
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                    </tr>
+                            }
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+        <br />
+        <br />
+    
+        <div class="right-text">
+            <a href="javascript:void();" data-function="SaveDictionary" class="button">Save</a>
+        </div>
+    }
+</fieldset>

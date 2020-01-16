@@ -1,0 +1,422 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectCandidateReportingOverview.ProjectCandidateReportingOverviewIndexActionModel
+@{
+    Layout = "~/Views/Shared/_FullLayout.cshtml";
+    ViewBag.Title = "Project - Reporting";
+}
+
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.tooltip.js")"></script>
+    <script src="@Url.Content("~/Scripts/persist.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.FixedColumns.js")"></script>
+    <link href="@Url.Content("~/Content/themes/base/jquery.datatable.FixedColumns.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/tiny_mce/jquery.tinymce.js")" type="text/javascript"></script>
+    <script>
+        $(function () {
+            InitializeStartDate();
+            RefreshProjectCandidateReportingOverview();
+            InitializeButtons();
+            InitializeDialogs();
+        });
+
+        function InitializeStartDate() {
+            var store = new Persist.Store('QPlanet');
+            var startDate = store.get('ProjectCandidateReportingOverview.@Html.IdFor(m => m.StartDate)');
+            if (startDate != undefined)
+                $('#StartDate').val(startDate);
+        }
+
+        function RefreshProjectCandidateReportingOverview() {
+            var form = $('#ReportingFiltersForm');
+            $('#ProjectCandidateReportingOverviewPlaceholder').loading('Loading reporting overview...');
+
+
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                success: function (data) {
+                    $('#ProjectCandidateReportingOverviewPlaceholder').html(data);
+                    $('#ProjectCandidateReportingOverviewDataTable').dataTable({
+                        'bPaginate': false,
+                        'fnDestroy': true,
+                        'sScrollY': "100%",
+                        'sScrollX': "100%",
+                        'fnInitComplete': function () {
+                            InitializeDatePickers();
+                            InitializeColors();
+                            InitializeEditFields();
+                            InitializeRemarks();
+                        },
+                        'fnRowCallback': function (nRow, aData, iDisplayIndex) {
+                            $(nRow).find('a[data-function=SaveFieldButton]').hide();
+                            InitializeColors();
+                            InitializeDatePickers($(nRow));
+                            return nRow;
+                        }
+                    });
+
+                },
+                error: function (err) {
+                    ShowDetailErrorDialog('Show project candidate reporting overview.', err);
+                }
+            });
+        }
+
+        function InitializeColors(selector) {
+            if (selector == undefined) {
+                $('input[type=text]').each(function () {
+                    var input = $(this);
+                    var backgroundColor = input.css('backgroundColor');
+                    var hexBackgroundColor = $.rgbToHex(backgroundColor);
+                    var contrastColor = $.getContrastColor(hexBackgroundColor);
+                    input.css('color', contrastColor);
+                });
+            } else {
+                selector.find('input[type=text]').each(function () {
+                    var input = $(this);
+                    var backgroundColor = input.css('backgroundColor');
+                    var hexBackgroundColor = $.rgbToHex(backgroundColor);
+                    var contrastColor = $.getContrastColor(hexBackgroundColor);
+                    if (contrastColor == 'white')
+                    { console.log(contrastColor); }
+
+                    input.css('color', contrastColor);
+                });
+            }
+        }
+
+        function InitializeEditFields() {
+
+            //Initially hide "Save" button.
+            $('a[data-function=SaveFieldButton]').hide();
+            $('a[data-function=SaveFieldButton]').css('text-decoration', 'none');
+
+            $(this).unbind('keyup').on('keyup', '#ProjectCandidateReportingOverviewDataTable input[type=text]', null, function (event) {
+                //Bind Keyup event to edit field to show "Save" button.
+                var saveButton = $(this).parent().find('a[data-function=SaveFieldButton]');
+                saveButton.show();
+                //Click "Save" button next to edit field when pressing enter.
+                if (event.keyCode == 13) {
+                    saveButton.click();
+                }
+            });
+
+            $(this).unbind('change').on('change', '#ProjectCandidateReportingOverviewDataTable select', null, function (event) {
+                //Bind Keyup event to edit field to show "Save" button.
+                var saveButton = $(this).parent().find('a[data-function=SaveFieldButton]');
+                saveButton.show();
+            });
+
+
+        }
+
+        function InitializeButtons() {
+            //Filter button
+            $('#ApplyFiltersToReportingOverviewButton').click(function () {
+                RefreshProjectCandidateReportingOverview();
+                new Persist.Store('QPlanet').set('ProjectCandidateReportingOverview.@Html.IdFor(m => m.StartDate)', $('#StartDate').val());
+            });
+
+            //Save button
+            $(this).on('click', 'a[data-function=SaveFieldButton]', null, function () {
+                var button = $(this);
+                var cell = button.parent();
+                var row = cell.parent();
+                var id = row.attr('data-id');
+                var auditVersionId = row.attr('data-version-id');
+
+                var type = button.attr('data-save-type');
+                var propertyValue = '';
+                var propertyName = '';
+
+                if (cell.has('input[type=text]').size() > 0) {
+                    propertyValue = cell.find('input[type=text]').val();
+                    propertyName = cell.find('input[type=text]').attr('data-name');
+                    SaveField(id, type, propertyValue, propertyName, auditVersionId);
+
+                }
+                else if (cell.has('select').size() > 0) {
+                    propertyValue = cell.find('select').val();
+                    propertyName = cell.find('select').attr('data-name');
+                    SaveField(id, type, propertyValue, propertyName, auditVersionId);
+
+                }
+
+            });
+
+            //Version mismatch confirm button
+            $(this).on('click', '#ProjectCandidateReportingOverviewVersionMismatchConfirmButton', null, function () {
+                ShowDetailSaveDialog();
+                var id = $('div[data-name=ProjectCandidateReportingOverviewVersionMismatchValues] input[type=hidden][data-name=Id]').val();
+                var propertyValue = $('div[data-name=ProjectCandidateReportingOverviewVersionMismatchValues] input[type=hidden][data-name=ProjectCandidateReportingOverviewVersionMismatchCurrentVersion]').val();
+                var propertyName = $('div[data-name=ProjectCandidateReportingOverviewVersionMismatchValues] input[type=hidden][data-name=PropertyName]').val();
+                var auditVersionId = $('div[data-name=ProjectCandidateReportingOverviewVersionMismatchValues] input[type=hidden][data-name=AuditVersionId]').val();
+                SaveField(id, 0, propertyValue, propertyName, auditVersionId);
+            });
+
+            //Version mismatch cancel button
+            $(this).on('click', '#ProjectCandidateReportingOverviewVersionMismatchCancelButton', null, function () {
+                ShowDetailSaveDialog();
+                var id = $('div[data-name=ProjectCandidateReportingOverviewVersionMismatchValues] input[type=hidden][data-name=Id]').val();
+                var propertyValue = $('div[data-name=ProjectCandidateReportingOverviewVersionMismatchValues] input[type=hidden][data-name=ProjectCandidateReportingOverviewVersionMismatchServerVersion]').val();
+                var propertyName = $('div[data-name=ProjectCandidateReportingOverviewVersionMismatchValues] input[type=hidden][data-name=PropertyName]').val();
+                var auditVersionId = $('div[data-name=ProjectCandidateReportingOverviewVersionMismatchValues] input[type=hidden][data-name=AuditVersionId]').val();
+                SaveField(id, 0, propertyValue, propertyName, auditVersionId);
+            });
+
+        }
+
+        function InitializeDatePickers(selector) {
+
+            if (selector == undefined) {
+                $('input[type=Text][data-type=DateTime]').each(function () {
+                    var input = $(this);
+                    input.datetimepicker({
+                        dateFormat: "dd/mm/yy",
+                        showTimepicker: false,
+                        constrainInput: false,
+                        onSelect: function () {
+                            input.keyup();
+                            input.focus();
+                        }
+                    });
+                });
+            } else {
+                selector.find('input[type=Text][data-type=DateTime]').each(function () {
+                    var input = $(this);
+                    input.datetimepicker({
+                        dateFormat: "dd/mm/yy",
+                        showTimepicker: false,
+                        constrainInput: false,
+                        onSelect: function () {
+                            input.keyup();
+                            input.focus();
+                        }
+                    });
+                });
+            }
+
+        }
+
+        function InitializeRemarks() {
+            $('#ReportRemarksDialog').dialog({
+                autoOpen: false,
+                modal: true,
+                resizable: true,
+                width: 500,
+                height: 300,
+                title: 'Remarks'
+            });
+
+            $('#SendReportToParticipantRemarksDialog').dialog({
+                autoOpen: false,
+                modal: true,
+                resizable: true,
+                width: 500,
+                height: 300,
+                title: 'Remarks'
+            });
+
+            $('#CandidateRemarksDialog').dialog({
+                autoOpen: false,
+                modal: true,
+                resizable: true,
+                width: 500,
+                height: 300,
+                title: 'Remarks'
+            });
+
+            $('a[data-name=ReportRemarks]').click(function () {
+                var remarkField = $(this);
+                var dialog = $('#ReportRemarksDialog');
+                dialog.html(remarkField.attr('data-text'));
+                dialog.dialog('open');
+            });
+
+            $(this).on('click', 'a[data-function=EditCandidateRemarksButton]', null, function () {
+                var dialog = $('#CandidateRemarksDialog');
+
+                dialog.dialog('open');
+                $('#CandidateRemarksDialog').loading('Loading candidate remarks...');
+                $.ajax({
+                    url: '@Url.Action("RetrieveProjectCandidateRemarks")/' + $(this).attr('data-project-candidate-id'),
+                    type: 'GET',
+                    success: function (data) {
+                        $('#CandidateRemarksDialog').html(data);
+                        $('#CandidateRemarksDialog').find('textarea').each(function () {
+                            $(this).tinymce({
+                                script_url: '@Url.Content("~/Scripts/tiny_mce/tiny_mce.js")',
+                                height: '200',
+                                width: '460',
+                                theme: 'simple',
+                                valid_styles: { '*': 'font-weight,text-decoration' }
+                            });
+                        });
+
+                    },
+                    error: function (err) {
+                        dialog.dialog('close');
+                        ShowDetailErrorDialog('Editing remarks.', err);
+                    }
+                });
+            });
+
+            $(this).on('click', 'a[data-function=EditProjectCandidateRemarksSubmitButton]', null, function () {
+                var form = $('#EditProjectCandidateRemarksForm');
+
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    dataType: 'json',
+                    data: form.serialize(),
+                    success: function (data) {
+                        $('#CandidateRemarksDialog').dialog('close');
+                        RefreshProjectCandidateReportingOverview();
+                    },
+                    error: function (err) {
+                        alert(err.responseText);
+                        $('#CandidateRemarksDialog').dialog('close');
+                        ShowDetailErrorDialog('Saving remarks.', err);
+                    }
+                });
+
+
+            });
+
+            $('a[data-name=SendReportToParticipantRemarks]').click(function () {
+                var remarkField = $(this);
+                var dialog = $('#SendReportToParticipantRemarksDialog');
+                dialog.html(remarkField.attr('data-text'));
+                dialog.dialog('open');
+            });
+        }
+
+        function SaveField(id, type, propertyValue, propertyName, auditVersionId) {
+            var selector = '#ProjectCandidateReportingOverviewDataTable tr[data-id=' + id + ']';
+            var cell = $(selector).find('input[data-name=' + propertyName + ']').parent();
+            if (cell.size() <= 0) {
+                cell = $(selector).find('select[data-name=' + propertyName + ']').parent();
+            }
+            
+            cell.find('a[data-function=SaveFieldButton]').hide();
+            cell.append('<img src="/Images/loading_small.gif" alt="loading" data-name="loader-small"/>');
+
+            var postData = {
+                id: id,
+                propertyValue: propertyValue,
+                propertyName: propertyName,
+                auditVersionId: auditVersionId
+            };
+
+            var url = '@Url.Action("UpdateProjectCandidateReportingField")';
+
+    if (type == 1) //Field on AssessmentDevelopmentProject
+    {
+        url = '@Url.Action("UpdateProjectCandidateProjectReportingField")';
+                }
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: postData,
+                    success: function (html) {
+                        selector = '#ProjectCandidateReportingOverviewDataTable tr[data-id=' + id + ']';
+                        cell.find('img[data-name=loader-small]').remove();
+                        if ($('#ProjectCandidateReportingOverviewVersionMismatchDialog').dialog('isOpen') == true) //You need to explicitly compare this with true to avoid the dialog being returned as an object.
+                        {
+                            $('#ProjectCandidateReportingOverviewVersionMismatchDialog').dialog('close');
+                            HideDetailSaveDialog();
+                        }
+
+                        var dataTable = $('#ProjectCandidateReportingOverviewDataTable').dataTable();
+
+                        //Get index of row (the filter taken into account).
+                        var correctIndex = dataTable.fnGetPosition($(selector)[0]);
+
+                        //Convert row  to JavaScript object so dataTables can update the row.
+                        var newRow = $(html).tableRowToObject();
+                        dataTable.fnUpdate(newRow, correctIndex, undefined, null, null);
+
+                        //Set VersionId on tr manually because that wasn't updated by dataTables.
+                        var dataRow = dataTable.fnSettings().aoData[correctIndex].nTr;
+                        var dataVersionId = $(html).closest('tr').attr('data-version-id');
+                        var rowStyle = $(html).closest('tr').attr('style');
+                        $.each(dataRow.attributes, function (index, element) {
+                            if (element.name == "data-version-id") {
+                                element.nodeValue = dataVersionId;
+                            }
+                            else if (element.name == "style") {
+                                element.nodeValue = rowStyle;
+                            }
+                        });
+
+                        //Initialize the buttons/datepickers.
+                        $(selector).find('a[data-function=SaveFieldButton]').hide();
+                        InitializeDatePickers($(selector));
+                        InitializeColors($(selector));
+                    },
+                    error: function (err) {
+                        if (err.status == 409) { //Version mismatch
+
+                            var currentText = cell.find('option[value=' + propertyValue + ']').text();
+                            
+                            $('#ProjectCandidateReportingOverviewVersionMismatchDialog').html(err.responseText);
+
+                            var serverValue = $('#ProjectCandidateReportingOverviewVersionMismatchDialog').find('input[type=hidden][data-name=ProjectCandidateReportingOverviewVersionMismatchServerVersion]').val();
+                            var serverText = cell.find('option[value=' + serverValue + ']').text();
+
+                            //Insert meaningful values for users (DropDownList values say nothing to users, the text shown on the other hand does).
+                            $('#ProjectCandidateReportingOverviewVersionMismatchDialog').find('#CurrentVersionMeaningfulValue').text(currentText);
+                            $('#ProjectCandidateReportingOverviewVersionMismatchDialog').find('#ServerVersionMeaningfulValue').text(serverText);
+
+                            $('#ProjectCandidateReportingOverviewVersionMismatchDialog').dialog('open');
+                            cell.find('img[data-name=loader-small]').remove();
+                        } else {
+                            cell.find('img[data-name=loader-small]').remove();
+                            ShowDetailErrorDialog('Updating text field.', err);
+                        }
+                    }
+                });
+            }
+
+            function InitializeDialogs() {
+                $('#ProjectCandidateReportingOverviewVersionMismatchDialog').dialog(
+                    {
+                        autoOpen: false,
+                        modal: true,
+                        resizable: false,
+                        width: 500,
+                        height: 400,
+                        title: 'Version mismatch'
+                    });
+            }
+    </script>
+}
+
+<fieldset>
+    <legend>Reporting overview</legend>
+    @using (Html.BeginForm("ProjectCandidateReportingOverview", "ProjectCandidateReportingOverview", FormMethod.Post, new { id = "ReportingFiltersForm" }))
+    {
+        <fieldset class="search-filter">
+            <legend>Filter</legend>
+            <div>
+                <div>@Html.DisplayNameFor(m => m.CustomerAssistantId)</div>
+                <div>@Html.DropDownListFor(m => m.CustomerAssistantId, Model.CreateCustomerAssistantDropDownList())</div>
+            </div>
+            <div>
+                <div>@Html.DisplayNameFor(m => m.StartDate)</div>
+                <div>@Html.EditorFor(m => m.StartDate, "NullableDateTimeEditorTemplate")</div>
+            </div>
+            <div>
+                <a href="javascript:void(0);" id="ApplyFiltersToReportingOverviewButton" class="button">Apply filter</a>
+            </div>
+        </fieldset>
+    }
+
+    <br />
+    <div id="ProjectCandidateReportingOverviewPlaceholder"></div>
+</fieldset>
+
+<div id="ProjectCandidateReportingOverviewVersionMismatchDialog"></div>

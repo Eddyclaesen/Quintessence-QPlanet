@@ -1,0 +1,56 @@
+﻿@using Quintessence.QService.QueryModel.Base
+@using Quintessence.QService.QueryModel.Prm
+@model Quintessence.QPlanet.ViewModel.Prm.EditProjectProductModel
+
+@using (Html.BeginForm("EditProjectProduct", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "EditProjectProductForm" }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+
+    <div class="row">
+        <div>Product</div>
+        <div>@Model.ProductTypeName</div>
+    </div>
+
+    <div class="row">
+        <div>Invoice status</div>
+        <div>@EnumMemberNameAttribute.GetName((InvoiceStatusType)Model.InvoiceStatusCode)</div>
+    </div>
+
+    <div class="row">
+        <div>Invoice amount</div>
+        <div>
+            @if (Model.InvoiceStatus != InvoiceStatusType.Invoiced)
+            {
+                @Html.EditorFor(m => m.InvoiceAmount)
+            }
+            else
+            {
+                @Model.InvoiceAmount.GetValueOrDefault().ToString("C");
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <div>Deadline invoicing</div>
+        <div>
+            @Html.EditorFor(m => m.Deadline, "NullableDateEditorTemplate")
+        </div>
+    </div>
+
+    <div class="row">
+        <div>NoInvoice</div>
+        <div>
+            @Html.EditorFor(m => m.NoInvoice)
+        </div>
+    </div>
+
+    <div class="row">
+        <div>Description</div>
+        <div>@Html.TextAreaFor(m => m.Description, 4, 50, null)</div>
+    </div>
+}
+<br />
+<br />
+<div class="right-text">
+    <a href="javascript:void(0);" class="button" id="UpdateProjectProductButton">Save</a>
+</div>

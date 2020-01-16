@@ -1,0 +1,7 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.ProjectSubCategoryCheckboxItemModel
+<div class="value">
+    @Html.HiddenFor(m => m.Id)
+    <!--@Html.CheckBoxFor(m => m.IsChecked, Model.IsReadOnly ? new { data_readonly = "true" } : null)-->
+    @Html.CheckBoxFor(m => m.IsChecked, Model.Status)
+    @Html.LabelFor(m => m.IsChecked, Model.Name)
+</div>

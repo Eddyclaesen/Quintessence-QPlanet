@@ -1,0 +1,51 @@
+﻿@using Resources
+@model Quintessence.QCare.Webshell.Models.Login.LoginModel
+@section Scripts
+{
+    <script>
+        $(function () {
+            InitializeButtons();
+        });
+
+        function InitializeButtons() {
+            $('#ShowCharacters').change(function () {
+                if ($('#ShowCharacters').attr('checked')) {
+                    $('#VerificationCode').prop('type', 'text');
+                } else {
+                    $('#VerificationCode').prop('type', 'password');
+                }
+            });
+        }
+    </script>
+}
+@using (Html.BeginForm("Login", "Login", FormMethod.Post, new { id = "LoginForm" }))
+{
+        <fieldset id="login-fieldset">
+            <legend>
+                @Global.LoginCodeLabel
+            </legend>
+            <div class="auto-width-content">
+                <p class="justify-text">
+                    @Global.LoginIntroText
+                </p>
+                <table>
+                    <tr>
+                        <td class="right-text">
+                            @Global.LoginCodeLabel
+                        </td>
+                        <td>
+                            @Html.PasswordFor(m => m.VerificationCode)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label><input id="ShowCharacters" type="checkbox" /><span>@Global.ShowCharacters</span></label>
+                        </td>
+                    </tr>
+                </table>
+                <div class="right-text">
+                    <input type="submit" value="@Global.LoginOkButton" class="button"/>
+                </div>
+            </div>
+        </fieldset>
+}

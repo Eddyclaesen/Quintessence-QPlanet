@@ -1,0 +1,228 @@
+﻿@using Quintessence.QService.QueryModel.Base
+@using Quintessence.QService.QueryModel.Prm
+@model List<ProposalView>
+@{
+    var alternator = 0;
+}
+
+<table id="ProposalTreeTable" class="list">
+    @if (Model.Count == 0)
+    {
+        <tr>
+            <td>No proposals found...</td>
+        </tr>
+    }
+    else
+    {
+        foreach (var proposalGroup in Model.OrderBy(p => p.StatusCode).GroupBy(p => p.StatusCode))
+        {
+        <tr id="node-Proposal-@proposalGroup.Key" class="@(alternator % 2 == 0 ? "even" : "odd")">
+            <td>@(EnumMemberNameAttribute.GetName((ProposalStatusType)proposalGroup.Key))</td>
+        </tr>
+        
+        <tr class="child-of-node-Proposal-@proposalGroup.Key @(alternator % 2 == 0 ? "even" : "odd")">
+            <td>
+                @switch ((ProposalStatusType)proposalGroup.Key)
+                {
+                    case ProposalStatusType.ToEvaluate:
+                    @Html.DisplayFor(m => proposalGroup, "ProposalOverviewToEvaluate")
+                        break;
+
+                    case ProposalStatusType.TurnedDown:
+                    @Html.DisplayFor(m => proposalGroup, "ProposalOverviewTurnedDown")
+                        break;
+
+                    case ProposalStatusType.ToPropose:
+                    @Html.DisplayFor(m => proposalGroup, "ProposalOverviewToPropose")
+                        break;
+
+                    case ProposalStatusType.Won:
+                    @Html.DisplayFor(m => proposalGroup, "ProposalOverviewWon")
+                        break;
+                        
+                    case ProposalStatusType.Lost:
+                    @Html.DisplayFor(m => proposalGroup, "ProposalOverviewLost")
+                        break;
+
+                    default:
+                    @Html.DisplayFor(m => proposalGroup, "ProposalOverviewProposed")
+                        break;
+                }
+            </td>
+        </tr>
+        }
+    }
+
+</table>
+
+<script>
+    $(function () {
+        
+        try {
+            jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+                "currency-pre": function (a) {
+                    a = (a === "-") ? 0 : a.replace(/[^\d\-\,]/g, "");
+                    return parseFloat(a);
+                },
+
+                "currency-asc": function (a, b) {
+                    return a - b;
+                },
+
+                "currency-desc": function (a, b) {
+                    return b - a;
+                }
+            });
+
+            //console.log('Add DataTableSort: date-dd/MM/yy');
+            jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+                "date-dd/MM/yy-pre": function (a) {
+                    var ukDatea = a.split('/');
+                    return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+                },
+
+                "date-dd/MM/yy-asc": function (a, b) {
+                    isNaN(a) ? a = 0 : a = a;
+                    isNaN(b) ? b = 0 : b = b;
+                    return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+                },
+
+                "date-dd/MM/yy-desc": function (a, b) {
+                    isNaN(a) ? a = 0 : a = a;
+                    isNaN(b) ? b = 0 : b = b;
+                    return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+                }
+            });
+            
+            //console.log('Add DataTableSort: date-dd/MM/yy HH:mm');
+            jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+                "date-dd/MM/yy HH:mm-pre": function (a) {
+                    a = a.replace(' ', '/').replace(':', '/');                    
+                    var ukDatea = a.split('/');
+                    return (ukDatea[2] + ukDatea[1] + ukDatea[0] + ukDatea[3] + ukDatea[4]) * 1;
+                },
+
+                "date-dd/MM/yy HH:mm-asc": function (a, b) {
+                    isNaN(a) ? a = 0 : a = a;
+                    isNaN(b) ? b = 0 : b = b;
+                    return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+                },
+
+                "date-dd/MM/yy HH:mm-desc": function (a, b) {
+                    isNaN(a) ? a = 0 : a = a;
+                    isNaN(b) ? b = 0 : b = b;
+                    return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+                }
+            });
+            
+            //console.log('Add DataTableSort: date-dd/MM/yy HH:mm<br>xx/xx/xx xx:xx');
+            jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+                "date-dd/MM/yy HH:mm<br>xx/xx/xx xx:xx-pre": function (a) {
+                    var dates = a.split('<br>');                    
+                    a = dates[0].replace(' ', '/').replace(':', '/');
+                    var ukDatea = a.split('/');
+                    return (ukDatea[2] + ukDatea[1] + ukDatea[0] + ukDatea[3] + ukDatea[4]) * 1;
+                },
+
+                "date-dd/MM/yy HH:mm<br>xx/xx/xx xx:xx-asc": function (a, b) {
+                    isNaN(a) ? a = 0 : a = a;
+                    isNaN(b) ? b = 0 : b = b;
+                    //console.log(a + ' - ' + b + ' : ' + ((a < b) ? -1 : ((a > b) ? 1 : 0)));
+                    return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+                },
+
+                "date-dd/MM/yy HH:mm<br>xx/xx/xx xx:xx-desc": function (a, b) {
+                    isNaN(a) ? a = 0 : a = a;
+                    isNaN(b) ? b = 0 : b = b;
+                    //console.log(a + ' - ' + b + ' : ' + ((a < b) ? -1 : ((a > b) ? 1 : 0)));
+                    return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+                }
+            });
+        } catch(e) {
+            console.log(e);
+        } 
+       
+
+        $('#ProposalTreeTable').treeTable({ persist: true });
+        $('table[data-function=ProposalTableProposed]').each(function () {
+            try {
+                //console.log('Set DataTableSort: ProposalTableProposed');
+                $(this).dataTable({
+                    "aoColumns": [
+                        null,
+                        null,
+                        { "sType": "date-dd/MM/yy HH:mm<br>xx/xx/xx xx:xx" },
+                        null,
+                        null,
+                        { "sType": "currency" },
+                        null
+                    ],
+                    "iDisplayLength": 25
+                });
+            } catch(e) {
+                console.log(e);
+            }             
+        });
+        $('table[data-function=ProposalTableToEvaluate]').each(function () {
+            try {
+                //console.log('Set DataTableSort: ProposalTableToEvaluate');
+                $(this).dataTable({
+                    "aoColumns": [
+                        null,
+                        null,
+                        null,
+                        { "sType": "date-dd/MM/yy HH:mm" },
+                        null
+                    ],
+                    "iDisplayLength": 25
+                });
+            } catch (e) {
+                console.log(e);
+            }            
+        });
+        $('table[data-function=ProposalTableToPropose]').each(function () {
+            try {
+                //console.log('Set DataTableSort: ProposalTableToPropose');
+                $(this).dataTable({
+                    "aoColumns": [
+                        null,
+                        null,
+                        { "sType": "date-dd/MM/yy HH:mm" },
+                        null,
+                        null
+                    ],
+                    "iDisplayLength": 25
+                });
+            } catch (e) {
+                console.log(e);
+            }            
+        });
+        $('table[data-function=ProposalTableTurnedDown]').each(function () {
+            try {
+                //console.log('Set DataTableSort: ProposalTableTurnedDown');
+                $(this).dataTable();
+            } catch (e) {
+                console.log(e);
+            }            
+        });
+        $('table[data-function=ProposalTableWon]').each(function () {
+            try {
+                //console.log('Set DataTableSort: ProposalTableWon');
+                $(this).dataTable({
+                    "aoColumns": [
+                        null,
+                        null,
+                        { "sType": "date-dd/MM/yy" },
+                        null,
+                        { "sType": "currency" },
+                        null
+                    ],
+                    "iDisplayLength": 25
+                });
+            } catch(e) {
+                console.log(e);
+            } 
+            
+        });
+    });
+</script>

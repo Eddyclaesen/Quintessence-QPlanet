@@ -1,0 +1,506 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AcdcCompletedText" xml:space="preserve">
+    <value>U bent aan het einde van de vragenlijst. Gelieve op  "Verzenden" te klikken om uw antwoorden door te sturen.</value>
+  </data>
+  <data name="AuthenticationFailedText" xml:space="preserve">
+    <value>De verificatiecode die u heeft ingevuld, blijkt niet correct te zijn. Probeer opnieuw.</value>
+  </data>
+  <data name="CoachingCompletedText" xml:space="preserve">
+    <value>U bent aan het einde van de vragenlijst. Gelieve op  "Verzenden" te klikken om uw antwoorden door te sturen.</value>
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value>Verzenden</value>
+  </data>
+  <data name="CompletedTitle" xml:space="preserve">
+    <value>Evaluatie afgerond</value>
+  </data>
+  <data name="ContactpersonNotPresent" xml:space="preserve">
+    <value>Contactpersoon was niet aanwezig</value>
+  </data>
+  <data name="ContactpersonPresent" xml:space="preserve">
+    <value>Contactpersoon was aanwezig</value>
+  </data>
+  <data name="CustomProjectsCompletedText" xml:space="preserve">
+    <value>U bent aan het einde van de vragenlijst. Gelieve op  "Verzenden" te klikken om uw antwoorden door te sturen.</value>
+  </data>
+  <data name="Dissatisfied" xml:space="preserve">
+    <value>Ontevreden</value>
+  </data>
+  <data name="ErrorText" xml:space="preserve">
+    <value>Bij het verwerken van het evaluatieformulier liep er iets verkeerd. Klik op de "Terug" knop om terug te gaan naar de vorige pagina of sluit uw browser en probeer het evaluatieformulier terug te openen. Onze verontschuldigingen voor het ongemak.</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Fout</value>
+  </data>
+  <data name="EvaluationFormAcdcIntroText" xml:space="preserve">
+    <value>Quintessence Consulting is continu bezig met het verbeteren van de kwaliteit van onze dienstverlening. Daarom zouden we u graag een aantal vragen willen stellen over de kwaliteit van de activiteiten op het vlak van assessement en development trajecten die u de afgelopen periode bij Quintessence hebt laten doorgaan.</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion01" xml:space="preserve">
+    <value>Bent u tevreden over de termijn waarbinnen  de AC’s worden ingepland?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion02" xml:space="preserve">
+    <value>Bent u tevreden over de informatie die de deelnemers ontvangen als voorbereiding op hun deelname?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion03" xml:space="preserve">
+    <value>Bent u tevreden met de termijn waarop het rapport ontvangt?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion04" xml:space="preserve">
+    <value>Bent u tevreden over de manier waarop het competentieprofiel werd bepaald?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion05" xml:space="preserve">
+    <value>Werden de voor de functie relevante competenties gemeten?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion06" xml:space="preserve">
+    <value>Bent u tevreden over de dienstverlening van de klantassistentes?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion07" xml:space="preserve">
+    <value>Bent u tevreden over het verloop van de facturatie?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion08" xml:space="preserve">
+    <value>In hoeverre is het voor u van belang dat verschillende deelnemers voor éénzelfde functie door dezelfde assesoren worden uitgevoerd?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion09" xml:space="preserve">
+    <value>Wat vindt u over het algemeen van de kwaliteit van de rapporten?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion10" xml:space="preserve">
+    <value>Zijn de rapporten voldoende
+&lt;ul&gt;
+&lt;li&gt;Helder&lt;/li&gt;
+&lt;li&gt;To the point&lt;/li&gt;
+&lt;li&gt;Zijn de observaties in overeenstemming met de score&lt;/li&gt;
+&lt;li&gt;Is de stijl voldoende/teveel/te weinig waarderend&lt;/li&gt;
+&lt;li&gt;Herkenbaar voor de deelnemer&lt;/li&gt;
+&lt;li&gt;Herkenbaar voor de lijnmanager&lt;/li&gt;
+&lt;li&gt;Grammaticaal correct&lt;/li&gt;
+&lt;li&gt;Overzichtelijk&lt;/li&gt;
+&lt;/ul&gt;</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion11" xml:space="preserve">
+    <value>Geven de rapporten u een goed beeld over het (toekomstig) functioneren van de deelnemer ?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion12" xml:space="preserve">
+    <value>Is de motivatie van het advies voldoende duidelijk ?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion13" xml:space="preserve">
+    <value>Vormt de samenvatting aan het begin van het rapport een toegevoegde waarde voor u?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion14" xml:space="preserve">
+    <value>Is de beschrijving van de resultaten van de persoonlijkheidsvragenlijst voldoende helder?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion15" xml:space="preserve">
+    <value>Bent u tevreden over de paragraaf over cultuurfit?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion16" xml:space="preserve">
+    <value>Is er voldoende eenvormigheid tussen de rapporten van de verschillende assessoren</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion17" xml:space="preserve">
+    <value>Werd u daags na het AC gecontacteerd door de assessor voor telefonische feedback over het AC?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion18" xml:space="preserve">
+    <value>Betekent dit gesprek voor u een meerwaarde? Wat weet u te appreciëren aan de telefonische feedback?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion19" xml:space="preserve">
+    <value>Volgt u doorgaans het advies dat wordt gegeven</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion19_19A" xml:space="preserve">
+    <value>Waarom?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion19_19B" xml:space="preserve">
+    <value>Waarom niet?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion20" xml:space="preserve">
+    <value>Welke elementen spelen nog mee in het bepalen van de aanwerving/selectie van een kandidaat?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion21" xml:space="preserve">
+    <value>Welke feedback krijgt u van de deelnemers na het assessment of development center?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion22" xml:space="preserve">
+    <value>Hoe zijn de reacties van de deelnemers na het feedbackgesprek (telefonisch of persoonlijk gesprek)?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion23" xml:space="preserve">
+    <value>Hoe reageren de deelnemers:
+            &lt;ul&gt;
+                &lt;li&gt;In geval van een negatief advies&lt;/li&gt;
+                &lt;li&gt;In geval van een positief advies&lt;/li&gt;
+            &lt;/ul&gt;</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion24" xml:space="preserve">
+    <value>Op welke manier kunnen wij onze dienstverlening volgens u nog verder verbeteren ?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion25" xml:space="preserve">
+    <value>Heeft u specifieke tips wat onze aanpak betreft inzake assessment en development trajecten?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion26" xml:space="preserve">
+    <value>Andere suggesties/bedenkingen?</value>
+  </data>
+  <data name="EvaluationFormAcdcTitleBlock1" xml:space="preserve">
+    <value>Voorbereiding/Nazorg</value>
+  </data>
+  <data name="EvaluationFormAcdcTitleBlock2" xml:space="preserve">
+    <value>Schriftelijke rapportage</value>
+  </data>
+  <data name="EvaluationFormAcdcTitleBlock3" xml:space="preserve">
+    <value>Telefonische feedback klant</value>
+  </data>
+  <data name="EvaluationFormAcdcTitleBlock4" xml:space="preserve">
+    <value>Wat gebeurt er nadien</value>
+  </data>
+  <data name="EvaluationFormAcdcTitleBlock5" xml:space="preserve">
+    <value>feedback aan de deelnemer</value>
+  </data>
+  <data name="EvaluationFormAcdcTitleBlock6" xml:space="preserve">
+    <value>Suggesties/Aanbevelingen</value>
+  </data>
+  <data name="EvaluationFormCoachingIntroText" xml:space="preserve">
+    <value>Quintessence Consulting is continu bezig de kwaliteit van onze dienstverlening te verbeteren en aan te scherpen. Wij hechten daarbij grote waarde aan uw mening. Wij willen u daarom enkele vragen stellen over de kwaliteit van de activiteiten op het vlak van coaching die de afgelopen periode doorgingen met coaches van Quintessence.</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion01" xml:space="preserve">
+    <value>In welke mate kreeg u voorafgaandelijk voldoende informatie over wat coaching is en wat u van dit traject kon verwachten? (offerte, telefonisch contact, persoonlijk contact…)</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion02" xml:space="preserve">
+    <value>Welke informatie was voorafgaandelijk nog nuttig geweest voor u?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion03" xml:space="preserve">
+    <value>Heeft er een intakegesprek plaatsgevonden waarbij ook andere personen aanwezig waren dan de coach en de coachee?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion04A" xml:space="preserve">
+    <value>Wie was er aanwezig bij dit intakegesprek?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion04A_41A_411" xml:space="preserve">
+    <value>In welke mate vormde het bijwonen van dit intakegesprek een meerwaarde voor u?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion04A_41A_412" xml:space="preserve">
+    <value>In welke mate werden er duidelijke afspraken gemaakt rond de verdere stappen in het coachingstraject?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion04A_41A_413" xml:space="preserve">
+    <value>Hebt u nog andere feedback over het intakegesprek?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion04A_41B_411" xml:space="preserve">
+    <value>Welke feedback hebt u gekregen over het intakegesprek?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion04A_41B_412" xml:space="preserve">
+    <value>In welke mate wenst u in de toekomst hier wel bij aanwezig te zijn?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion04B" xml:space="preserve">
+    <value>In welke mate wenst u dat er in de toekomst wel andere personen hierbij aanwezig zijn?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion05" xml:space="preserve">
+    <value>Heeft er een terugkoppelingsgesprek plaatsgevonden?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion05_5A" xml:space="preserve">
+    <value>Wie was er aanwezig bij dit terugkoppelingsgesprek?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion05_5A_51A_511" xml:space="preserve">
+    <value>In welke mate vormde het bijwonen van dit terugkoppelingsgesprek een meerwaarde voor u?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion05_5A_51A_512" xml:space="preserve">
+    <value>In welke mate kreeg u zicht op de stappen die genomen werden tijdens het coachingtraject door de coachee en op de resultaten die bereikt werden tijdens dit coachingtraject?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion05_5A_51A_513" xml:space="preserve">
+    <value>Hebt u nog andere feedback over het terugkoppelingsgesprek?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion05_5A_51B_511" xml:space="preserve">
+    <value>Welke feedback hebt u gekregen over het terugkoppelingsgesprek?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion05_5A_51B_512" xml:space="preserve">
+    <value>In welke mate wenst u in de toekomst hier wel bij aanwezig te zijn?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion05_5B" xml:space="preserve">
+    <value>In welke mate wenst u dat er in de toekomst wel een terugkoppelingsgesprek plaatsvindt?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion06" xml:space="preserve">
+    <value>Onder welke vorm ontving u terugkoppeling tijdens het coachingtraject?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion07" xml:space="preserve">
+    <value>Onder welke vorm ontving u terugkoppeling op het einde van het coachingtraject?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion08" xml:space="preserve">
+    <value>Wat apprecieert u aan deze terugkoppeling?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion09" xml:space="preserve">
+    <value>Wat zou u meer of anders verwachten op het vlak van terugkoppeling?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion10" xml:space="preserve">
+    <value>Vindt u dat het doel dat was vooropgesteld bij het begin van de coaching bereikt is?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion10_10A" xml:space="preserve">
+    <value>Van datgene dat werd gerealiseerd: hoe verloopt dit op dit moment? Is het nuttig om het verder te ondersteunen? Is een vervolg mogelijk/wenselijk?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion10_10B" xml:space="preserve">
+    <value>Wat is daar een mogelijke reden voor volgens u? Waar ligt nog werk en voor wie? Hoe pakken we dit verder op?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion11" xml:space="preserve">
+    <value>Hebt u feedback gekregen van de coachee(s) over het coachingtraject? Welke?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion12" xml:space="preserve">
+    <value>Bent u tevreden over de dienstverlening van de klantassistentes?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion13" xml:space="preserve">
+    <value>Bent u tevreden over het verloop van de facturatie?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion14" xml:space="preserve">
+    <value>Heeft u specifieke tips naar onze aanpak inzake coaching?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion15" xml:space="preserve">
+    <value>Andere suggesties/opmerkingen?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion16" xml:space="preserve">
+    <value>Zou u aan andere medewerkers of collega’s de coach(es) van Quintessence aanbevelen?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion16_16A" xml:space="preserve">
+    <value>Waarom?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion16_16B" xml:space="preserve">
+    <value>Waarom niet?</value>
+  </data>
+  <data name="EvaluationFormCoachingTitleBlock1" xml:space="preserve">
+    <value>Voorafgaandelijke informatie over coaching</value>
+  </data>
+  <data name="EvaluationFormCoachingTitleBlock2" xml:space="preserve">
+    <value>Intakegesprek</value>
+  </data>
+  <data name="EvaluationFormCoachingTitleBlock3" xml:space="preserve">
+    <value>Terugkoppelingsgesprek</value>
+  </data>
+  <data name="EvaluationFormCoachingTitleBlock4" xml:space="preserve">
+    <value>Coachinggesprekken en (tussentijdse) rapportering</value>
+  </data>
+  <data name="EvaluationFormCoachingTitleBlock5" xml:space="preserve">
+    <value>Resultaten</value>
+  </data>
+  <data name="EvaluationFormCoachingTitleBlock6" xml:space="preserve">
+    <value>Administratie</value>
+  </data>
+  <data name="EvaluationFormCoachingTitleBlock7" xml:space="preserve">
+    <value>Suggesties/aanbevelingen</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsIntroText" xml:space="preserve">
+    <value>Quintessence Consulting is continu bezig met het verbeteren van de kwaliteit van onze dienstverlening. Daarom zouden we u graag een aantal vragen willen stellen over de kwaliteit van de consulting activiteiten die Quintessence recent bij u heeft uitgevoerd.</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion01" xml:space="preserve">
+    <value>In hoeverre vindt u dat het doel dat was vooropgesteld bij het begin van de samenwerking, bereikt is? Wat wel en wat niet. </value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion02" xml:space="preserve">
+    <value>Van datgene dat werd gerealiseerd: hoe verloopt dit op dit moment? Leeft het project en bouwt u erop verder? Is het nuttig om het verder te ondersteunen? Is een vervolg mogelijk/wenselijk?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion03" xml:space="preserve">
+    <value>Indien het niet goed loopt: wat is daar een mogelijke reden van volgens u? Waar ligt nog werk en voor wie? Hoe pakken we dit verder op? </value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion04" xml:space="preserve">
+    <value>Hoe heeft u het proces ervaren, hoe blikt u er in het algemeen op terug?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion05" xml:space="preserve">
+    <value>Hoe ervaarde u de communicatie over en de omkadering van het proces? </value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion06" xml:space="preserve">
+    <value>Hoe ervaarde u de participatie van de deelnemers? Hebben we de juiste mensen uitgenodigd om te participeren: konden ze inhoudelijk de juiste bijdrage leveren? Hebben ze inzake draagvlak kunnen bijdragen? Was iedereen van bij de start voldoende mee? Bleef iedereen aan boord?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion07" xml:space="preserve">
+    <value>Hoe ervaarde u de begeleiding tijdens de workshops (tempo, niveau, opbouw, interventies bij moeilijke vragen, materiaal,…)? </value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion08" xml:space="preserve">
+    <value>Indien er een bijsturing gebeurde: was het de juiste, op het juiste moment, goed genomen?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion09" xml:space="preserve">
+    <value>Hoe ervaarde u de tussentijdse communicatie (over de inhoud en het proces) naar de stuurgroep (helder, tijdig, relevant)? Hoe was de steun van de stuurgroep?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion10" xml:space="preserve">
+    <value>Hebben we goed begrepen wat uw vraag was?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion11" xml:space="preserve">
+    <value>Waren we voldoende bereikbaar en beschikbaar?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion12" xml:space="preserve">
+    <value>Kon u bij ons terecht (met vragen, bezorgdheden) wanneer het nodig was?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion13" xml:space="preserve">
+    <value>Kreeg u goede materiële ondersteuning (materiaal, …)?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion14" xml:space="preserve">
+    <value>Verliep de facturatie tijdens het project vlot, correct, helder,...?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion15" xml:space="preserve">
+    <value>Wat zou u bij een volgende samenwerking anders willen zien? </value>
+  </data>
+  <data name="EvaluationFormCustomProjectsTitleBlock1" xml:space="preserve">
+    <value>Resultaat/product</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsTitleBlock2" xml:space="preserve">
+    <value>Proces</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsTitleBlock3" xml:space="preserve">
+    <value>Samenwerking met projectteam/stuurgroep/klantassistentes</value>
+  </data>
+  <data name="FinalText" xml:space="preserve">
+    <value>Het evaluatieformulier werd verstuurd. Bedankt voor uw medewerking.</value>
+  </data>
+  <data name="FinalTitle" xml:space="preserve">
+    <value>Bedankt</value>
+  </data>
+  <data name="FooterText" xml:space="preserve">
+    <value>Antwerpen | Gent | Brussel</value>
+  </data>
+  <data name="IntroLabel" xml:space="preserve">
+    <value>Inleiding</value>
+  </data>
+  <data name="LoginCodeLabel" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="LoginIntroText" xml:space="preserve">
+    <value>Gelieve de code (6 tekens) die u per mail gekregen heeft, in te geven.</value>
+  </data>
+  <data name="LoginOkButton" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Neutral" xml:space="preserve">
+    <value>Neutraal</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Volgende</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Nee</value>
+  </data>
+  <data name="NotApplicable" xml:space="preserve">
+    <value>Niet van toepassing</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Vorige</value>
+  </data>
+  <data name="Satisfied" xml:space="preserve">
+    <value>Tevreden</value>
+  </data>
+  <data name="ShowCharacters" xml:space="preserve">
+    <value>Toon tekens</value>
+  </data>
+  <data name="ToWhatDegree" xml:space="preserve">
+    <value>In welke mate…</value>
+  </data>
+  <data name="VeryDissatisfied" xml:space="preserve">
+    <value>Heel ontevreden</value>
+  </data>
+  <data name="VerySatisfied" xml:space="preserve">
+    <value>Heel tevreden</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+</root>

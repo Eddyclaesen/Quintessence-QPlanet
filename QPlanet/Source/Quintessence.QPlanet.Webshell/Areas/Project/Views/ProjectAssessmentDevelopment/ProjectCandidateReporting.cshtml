@@ -1,0 +1,213 @@
+﻿@using Quintessence.QService.QPlanetService.Contracts.DataContracts.ReportManagement
+@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectAssessmentDevelopment.ProjectCandidateReportingActionModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Projects - Generate reports";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <!--<li class="current"><a href="javascript:void(0);">@Model.ProjectCandidate.CandidateFullName
+                (@Model.Project.Name)</a>
+            </li>-->
+            <li class="current">
+                <a href="@Url.Action("Edit", "ProjectGeneral", new { area = "Project", id = Model.ProjectCandidate.ProjectId })" target="_blank">
+                    @Model.ProjectCandidate.CandidateFullName @Model.ProjectCandidate.Project.Name
+                </a>
+            </li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li>@Html.ActionLink("Simulation Scores", "EditProjectCandidateSimulationScores", new { id = Model.ProjectCandidate.Id })
+            </li>
+            <li>@Html.ActionLink("Assessors Overview", "EditProjectCandidateScores", new { id = Model.ProjectCandidate.Id })
+            </li>
+            <li>@Html.ActionLink("Product scores", "ProjectCandidateProductScores", new { id = Model.ProjectCandidate.Id })
+            </li>
+            <li>@Html.ActionLink("Resume", "EditProjectCandidateResume", new { id = Model.ProjectCandidate.Id })
+            </li>
+            <li class="current">Reporting</li>
+        </ul>
+    </nav>
+}
+@section LeftNavigation
+{
+    <ul id="Tabs">
+        <li><a href="#CandidateReport"></a></li>
+        <li><a href="#GeneralReporting"></a></li>
+    </ul>
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/tiny_mce/jquery.tinymce.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.treeTable.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.cookie.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/persist.js")" type="text/javascript"></script>
+    
+    @if (Model.ProjectCandidate.ProjectCandidateDetail.IsSuperofficeAppointmentDeleted)
+    {
+        if (Model.ProjectCandidate.IsCancelled)
+        {
+            <script>
+                $(function () {
+                    $('a[class=button]').each(function () { $(this).hide(); });
+                    AddNotification('CANCELLED', 'This candidate has been cancelled. Unable to generate the report.');
+                });
+            </script>
+        }
+        else
+        {
+            <script>
+                $(function () {
+                    $('a[class=button]').each(function () { $(this).hide(); });
+                    AddNotification('DELETED', 'This candidate has been deleted from CRM, but has not yet been cancelled in QPlanet. Unable to generate the report.');
+                });
+            </script>
+        }
+    }
+
+    <script>
+        $(function () {
+            InitializeDownloadDialog();
+            InitializeButtons();
+        });
+
+        function InitializeDownloadDialog() {
+            $('#DownloadDialog').dialog({
+                autoOpen: false,
+                modal: true,
+                resizable: false,
+                width: 400,
+                height: 175
+            });
+        }
+
+        function InitializeButtons() {
+            $('#GenerateReportButtonLink').click(function (event) {
+                event.preventDefault();
+
+                $(this).remove();
+                $('#GeneratingReportPlaceholder').html('<br/><p>We are trying to generate the report.<br/>Please wait a minute, then a download dialog should appear.<br/>If the dialog does not appear after a minute, refresh the page and try again.<br/>If the problem is not solved, please contact the system administrator.</p>');
+
+                var form = $('#GenerateReportForm');
+
+                form.submit();
+            });
+
+            $(this).on('click', '#DownloadLink', null, function () {
+                $('#DownloadDialog').dialog('close');
+            });
+        }
+    </script>
+}
+
+<fieldset id="CandidateReport">
+    <legend>Candidate report</legend>
+
+    @if (Model.CandidateReportDefinition == null)
+    {
+        <p>
+            There is no report-type defined on the project of this candidate.
+        </p>
+        <p>
+            Open @Html.ActionLink(Model.Project.Name, "Edit", "ProjectGeneral", new { area = "Project", id = Model.Project.Id }, new { target = Model.Project.Id }),
+            go to the 'Reporting'-section and assign a report.
+        </p>
+    }
+    else
+    {
+        using (Html.BeginForm("GenerateCandidateReport", "ProjectGeneral", FormMethod.Post, new { id = "GenerateReportForm" }))
+        {
+        @Html.Hidden("Id", Model.ProjectCandidate.Id)        
+        @Html.Hidden("AuditVersionId", Model.ProjectCandidate.Audit.VersionId)        
+        @Html.Hidden("CandidateReportDefinitionId", Model.CandidateReportDefinition.Id)        
+        <div class="row">
+            <div>Lead Assessor</div>
+            <div>@Model.ProjectCandidate.ProjectCandidateDetail.LeadAssessorFullName</div>
+        </div>
+        <div class="row">
+            <div>Scoring Co Assessor</div>
+            <div>
+                @if (Model.ProjectCandidate.ProjectCandidateDetail.CoAssessors != null)
+                {
+                    foreach (var coAssessor in Model.ProjectCandidate.ProjectCandidateDetail.CoAssessors)
+                    {
+                    @Html.RadioButton("ScoringCoAssessorId", coAssessor.UserId, coAssessor.UserId == Model.ProjectCandidate.ScoringCoAssessorId)
+                    @(string.Format("{0} {1}", coAssessor.AssessorFirstName, coAssessor.AssessorLastName))
+                    <br />
+                    }
+                }
+                else
+                {
+                }
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="right-text">
+            <div id="GeneratingReportPlaceholder">
+                <a href="javascript:void(0);" id="GenerateReportButtonLink" class="button">Generate</a>
+            </div>
+        </div>
+        }
+    }
+</fieldset>
+
+<fieldset id="GeneralReporting">
+    <legend>General Reporting</legend>
+
+    @if (Model.ReportDefinitions == null || Model.ReportDefinitions.Count == 0)
+    {
+        <p>There are no reports found for candidates.</p>
+    }
+    else
+    {
+        <table class="dataTable">
+            <thead>
+                <tr>
+                    <th>Document</th>
+                    <th>Pdf</th>
+                    <th>Word</th>
+                    <th>Excel</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var reportDefinition in Model.ReportDefinitions)
+                {
+                    <tr>
+                        <td>@reportDefinition.Name</td>
+                        <td>
+                            @if (reportDefinition.ExportAsPdf)
+                            {
+                                @Html.ActionLink("PDF", "GenerateReport", "ProjectGeneral", new { id = Model.ProjectCandidate.Id, code = "CANDIDATE", reportDefinitionId = reportDefinition.Id, outputFormat = ReportOutputFormat.Pdf }, null)
+                            }
+                        </td>
+                        <td>
+                            @if (reportDefinition.ExportAsWord)
+                            {
+                                @Html.ActionLink("Word", "GenerateReport", "ProjectGeneral", new { id = Model.ProjectCandidate.Id, code = "CANDIDATE", reportDefinitionId = reportDefinition.Id, outputFormat = ReportOutputFormat.Word }, null)
+                            }
+                        </td>
+                        <td>
+                            @if (reportDefinition.ExportAsExcel)
+                            {
+                                @Html.ActionLink("Excel", "GenerateReport", "ProjectGeneral", new { id = Model.ProjectCandidate.Id, code = "CANDIDATE", reportDefinitionId = reportDefinition.Id, outputFormat = ReportOutputFormat.Excel }, null)
+                            }
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</fieldset>
+
+<div id="DownloadDialog">
+    <p>The file you requested can be downloaded by clicking on the link below:</p>
+    <div id="DownloadLinkPlaceholder"></div>
+</div>

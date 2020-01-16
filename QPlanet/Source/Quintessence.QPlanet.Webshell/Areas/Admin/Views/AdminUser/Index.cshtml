@@ -1,0 +1,199 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Admin - Users";
+}
+
+@section LeftNavigation
+{
+    <ul id="Tabs">
+        <li><a href="#Users"></a></li>
+        <li><a href="#Roles"></a></li>
+        <li><a href="#Operations"></a></li>
+    </ul>
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            InitializeSynchronizeUsersDialog();
+            InitializeAddUserDialog();
+
+            RefreshUsers();
+            RefreshRoles();
+            RefreshOperations();
+
+            InitializeButtons();
+        });
+        
+        function InitializeSynchronizeUsersDialog() {
+            $('#SynchronizeUsersDialog').dialog({
+                title: 'Synchronize users',
+                autoOpen: false,
+                modal: true,
+                resizable: false,
+                width: 800,
+                height: 600
+            });
+        }
+
+        function InitializeAddUserDialog() {
+            $('#AddUserDialog').dialog({
+                title: 'Add user',
+                autoOpen: false,
+                modal: true,
+                resizable: false,
+                width: 500,
+                height: 300
+            });
+        }
+
+        function RefreshUsers() {
+            $('#UsersPlaceholder').loading('Retrieving users.');
+
+            $.ajax({
+                url: '@Url.Action("Users")',
+                success: function(html) {
+                    $('#UsersPlaceholder').html(html);
+                    $('#UsersTable').dataTable();
+                },
+                error: function(err) {
+                    ShowDetailErrorDialog('Retrieve users.', err);
+                    $('#UsersPlaceholder').html('Error retrieving users. Please contact your system administrator if this problems persists.');
+                }
+            });
+        }
+
+        function RefreshRoles() {
+            $('#RolesPlaceholder').loading('Retrieving roles.');
+
+            $.ajax({
+                url: '@Url.Action("Roles")',
+                success: function (html) {
+                    $('#RolesPlaceholder').html(html);
+                    $('#RolesTable').dataTable();
+                },
+                error: function (err) {
+                    ShowDetailErrorDialog('Retrieve roles.', err);
+                    $('#RolesPlaceholder').html('Error retrieving users. Please contact your system administrator if this problems persists.');
+                }
+            });
+        }
+
+        function RefreshOperations() {
+            $('#OperationsPlaceholder').loading('Retrieving operations.');
+        }
+        
+        function InitializeButtons() {
+            $(this).on('click', 'a[data-function=SynchronizeUsers]', null, function(event) {
+                event.preventDefault();
+
+                ShowDetailSaveDialog();
+
+                $.ajax({
+                    url: '@Url.Action("SynchronizeUsers")',
+                    success: function (html) {
+                        HideDetailSaveDialog();
+                        $('#SynchronizeUsersDialog').html(html);
+                        $('#SynchronizeUsersDialog').dialog('open');
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Retrieve users.', err);
+                    }
+                });
+            });
+
+            $(this).on('click', 'a[data-function=SubmitSynchronizeUsersFormButton]', null, function (event) {
+                event.preventDefault();
+
+                ShowDetailSaveDialog();
+
+                var form = $('#SynchronizeUsersForm');
+
+                $.ajax({
+                    url: form.attr('action'),
+                    data: form.serialize(),
+                    type: 'POST',
+                    success: function () {
+                        $('#SynchronizeUsersDialog').dialog('close');
+                        HideDetailSaveDialog();
+                        RefreshUsers();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Retrieve users.', err);
+                    }
+                });
+            });
+            
+            $(this).on('click', 'a[data-function=AddUsers]', null, function (event) {
+                event.preventDefault();
+
+                ShowDetailSaveDialog();
+
+                $.ajax({
+                    url: '@Url.Action("AddUser")',
+                    success: function (html) {
+                        HideDetailSaveDialog();
+                        $('#AddUserDialog').html(html);
+                        $('#AddUserDialog').dialog('open');
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Prepare user.', err);
+                    }
+                });
+            });
+            
+            $(this).on('click', 'a[data-function=SubmitAddUserFormButton]', null, function (event) {
+                event.preventDefault();
+
+                ShowDetailSaveDialog();
+
+                var form = $('#AddUserForm');
+
+                $.ajax({
+                    url: form.attr('action'),
+                    data: form.serialize(),
+                    type: 'POST',
+                    success: function () {
+                        $('#AddUserDialog').dialog('close');
+                        HideDetailSaveDialog();
+                        RefreshUsers();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Create user.', err);
+                    }
+                });
+            });
+            
+            $(this).on('click', 'a[data-function=RefreshUsers]', null, function (event) {
+                event.preventDefault();
+                RefreshUsers();
+            });
+        }
+    </script>
+}
+<fieldset id="Users">
+    <legend>Users</legend>
+    
+    <div id="UsersPlaceholder"></div>
+</fieldset>
+
+<fieldset id="Roles">
+    <legend>Roles</legend>
+    
+    <div id="RolesPlaceholder"></div>
+</fieldset>
+
+<fieldset id="Operations">
+    <legend>Operation domains</legend>
+    
+    <div id="OperationsPlaceholder"></div>
+</fieldset>
+
+<div id="SynchronizeUsersDialog"></div>
+
+<div id="AddUserDialog"></div>

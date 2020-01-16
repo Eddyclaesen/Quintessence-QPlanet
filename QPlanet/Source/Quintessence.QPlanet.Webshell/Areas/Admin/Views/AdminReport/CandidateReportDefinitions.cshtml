@@ -1,0 +1,100 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Admin.Models.AdminReport.CandidateReportDefinitionsActionModel
+
+<table id="CandidateReportDefinitionTable" class="dataTable">
+    <thead>
+        <tr>
+            <th>Customer/Report</th>
+            <th>Location</th>
+            <th style="width: 10%">Active</th>
+            <th style="width: 108px">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr id="node-Quintessence">
+            <td>Quintessence</td>
+            <td></td>
+            <td></td>
+            <td style="width: 108px"></td>
+        </tr>
+        @foreach (var definition in Model.Definitions.Where(d => !d.ContactId.HasValue))
+        {
+            <tr id="node-@definition.Id" class="child-of-node-Quintessence">
+                <td>@definition.Name</td>
+                <td>@definition.Location</td>
+                <td>@Html.CheckBox(definition.Id.ToString(), definition.IsActive, new { disabled = "disabled" })
+                </td>
+                <td style="width: 108px">
+                    <a href="javascript:void(0);" data-function="AddCandidateReportDefinitionField" data-id="@definition.Id" class="add-link" title="Add a field to this report definition"></a>
+                    <a href="javascript:void(0);" data-function="EditCandidateReportDefinition" data-id="@definition.Id" class="edit-link" title="Edit this report definition"></a>
+                    <a href="javascript:void(0);" data-function="DeleteCandidateReportDefinition" data-id="@definition.Id" class="delete-link" title="Delete this report definition"></a>
+                </td>
+            </tr>
+
+            if (definition.CandidateReportDefinitionFields != null)
+            {
+                foreach (var field in definition.CandidateReportDefinitionFields)
+                {
+            <tr class="child-of-node-@definition.Id">
+                <td>@field.Name</td>
+                <td>@field.Code</td>
+                <td>@Html.CheckBox(field.Id.ToString(), field.IsActive, new { disabled = "disabled" })
+                </td>
+                <td style="width: 108px">
+                    <a href="javascript:void(0);" data-function="EditCandidateReportDefinitionField" data-id="@field.Id" class="edit-link" title="Edit this report definition field"></a>
+                    <a href="javascript:void(0);" data-function="DeleteCandidateReportDefinitionField" data-id="@field.Id" class="delete-link" title="Delete this report definition field"></a>
+                </td>
+            </tr>
+                }
+            }
+        }
+
+        <tr id="node-Other">
+            <td>Customer specific</td>
+            <td></td>
+            <td></td>
+            <td style="width: 108px"></td>
+        </tr>
+        @foreach (var contact in Model.Contacts)
+        {
+            <tr id="node-@contact.Key" class="child-of-node-Other">
+                <td>@contact.Value</td>
+                <td></td>
+                <td></td>
+                <td style="width: 108px">
+                    <a href="javascript:void(0);" data-function="AddCustomerCandidateReportDefinition" class="add-link" data-id="@contact.Key" title="Add a new report definition for '@contact.Value'"></a>
+                </td>
+            </tr>
+            foreach (var definition in Model.Definitions.Where(d => d.ContactId == contact.Key))
+            {
+            <tr id="node-@definition.Id" class="child-of-node-@contact.Key">
+                <td>@definition.Name</td>
+                <td>@definition.Location</td>
+                <td>@Html.CheckBox(definition.Id.ToString(), definition.IsActive, new { disabled = "disabled" })
+                </td>
+                <td style="width: 108px">
+                    <a href="javascript:void(0);" data-function="AddCandidateReportDefinitionField" class="add-link" data-id="@definition.Id" title="Add a field to this report definition"></a>
+                    <a href="javascript:void(0);" data-function="EditCandidateReportDefinition" class="edit-link" data-id="@definition.Id" title="Edit this report definition"></a>
+                    <a href="javascript:void(0);" data-function="DeleteCandidateReportDefinition" class="delete-link" data-id="@definition.Id" title="Delete this report definition"></a>
+                </td>
+            </tr>
+
+                if (definition.CandidateReportDefinitionFields != null)
+                {
+                    foreach (var field in definition.CandidateReportDefinitionFields)
+                    {
+            <tr class="child-of-node-@definition.Id">
+                <td>@field.Name</td>
+                <td>@field.Code</td>
+                <td>@Html.CheckBox(field.Id.ToString(), field.IsActive, new { disabled = "disabled" })
+                </td>
+                <td style="width: 108px">
+                    <a href="javascript:void(0);" data-function="EditCandidateReportDefinitionField" class="edit-link" data-id="@field.Id" title="Edit this report definition field"></a>
+                    <a href="javascript:void(0);" data-function="DeleteCandidateReportDefinitionField" class="delete-link" data-id="@field.Id" title="Delete this report definition field"></a>
+                </td>
+            </tr>
+                    }
+                }
+            }
+        }
+    </tbody>
+</table>

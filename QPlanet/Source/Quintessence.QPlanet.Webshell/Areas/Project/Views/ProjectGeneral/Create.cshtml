@@ -1,0 +1,352 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.CreateProjectModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Project - Create";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">New Project</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li class="current">Detail</li>
+        </ul>
+    </nav>
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/persist.js")" type="text/javascript"></script>
+    <script>
+        var codeNoAssistant = 'NoAssistant';
+        var codeNoSoProject = 'NoSoProject';
+
+        $(function () {
+            $('#ChangeContactNameLink').hide();
+            $('#ChangeProjectManagerNameLink').hide();
+            $('#ChangeCustomerAssistantNameLink').hide();
+
+            var store = new Persist.Store('QPlanet');
+            store.set('crmProjectId', '');
+
+            InitializeContactNameAutocomplete();
+            InitializeProjectManagerNameAutocomplete();
+            InitializeCustomerAssistantNameAutocomplete();
+            InitializeChangeContactNameLink();
+            InitializeChangeProjectManagerNameLink();
+            InitializeChangeCustomerAssistantNameLink();
+            InitializeCreateNewProjectButton();
+
+            if ($('#ProjectManagerUserId').val() != null) {
+                HandleProjectManagerSelection($('#ProjectManagerUserId').val(), $('#ProjectManagerFullName')[0].value);
+            }
+
+            $(window).unload(function () {
+                window.opener.location.reload();
+            });
+
+            $('#@Html.IdFor(m => m.ProjectName)').focus();
+        });
+
+        function InitializeContactNameAutocomplete() {
+
+            //Check if contactId is not null, if it isn't, then show the contact name link
+            var contactId = $('#ContactId').val();
+            if (!(contactId == '' || contactId == undefined)) {
+                ListContactCrmActiveProjects(contactId);
+                $('#ChangeContactNameLink').text($('#ContactName').val());
+                $('#ChangeContactNameLink').show();
+                $('#ContactName').hide();
+            }
+
+            $("#ContactName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("SearchContact", "ProjectGeneral", new { area = "Project" })/' + request.term,
+                        dataType: 'JSON',
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.label,
+                                    value: item.label,
+                                    id: item.value
+                                };
+                            }));
+                        },
+                        error: function(err) {
+                            ShowDetailErrorDialog('Search customer.', err);
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    $('#ContactId').val(ui.item.id);
+                    $('#ContactName').hide();
+                    $('#ChangeContactNameLink').text(ui.item.label);
+                    $('#ChangeContactNameLink').show();
+
+                    ListContactCrmActiveProjects(ui.item.id);
+                    RetrieveCustomerAssistant(ui.item.id);
+                }
+            });
+        }
+
+        function InitializeProjectManagerNameAutocomplete() {
+            $("#ProjectManagerFullName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("SearchProjectManager", "ProjectGeneral", new { area = "Project" })/' + request.term,
+                        dataType: 'JSON',
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.label,
+                                    value: item.label,
+                                    id: item.value
+                                };
+                            }));
+                        },
+                        error: function (err) {
+                            ShowDetailErrorDialog('Search project manager.', err);
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    HandleProjectManagerSelection(ui.item.id, ui.item.label);
+                }
+            });
+        }
+
+        function HandleProjectManagerSelection(id, label) {
+            $('#ProjectManagerUserId').val(id);
+            $('#ProjectManagerFullName').hide();
+            $('#ChangeProjectManagerNameLink').text(label);
+            $('#ChangeProjectManagerNameLink').show();
+        }
+
+        function InitializeCustomerAssistantNameAutocomplete() {
+            $("#CustomerAssistantFullName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("SearchCustomerAssistant", "ProjectGeneral", new { area = "Project" })/' + request.term,
+                        data: request,
+                        dataType: "json",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.label,
+                                    value: item.label,
+                                    id: item.value
+                                };
+                            }));
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    RemoveNotification(codeNoAssistant);
+                    $('#CustomerAssistantUserId').val(ui.item.id);
+                    $('#CustomerAssistantFullName').hide();
+                    $('#ChangeCustomerAssistantNameLink').text(ui.item.label);
+                    $('#ChangeCustomerAssistantNameLink').show();
+                }
+            });
+        }
+
+        function InitializeChangeContactNameLink() {
+            $('#ChangeContactNameLink').click(function () {
+                $('#ContactId').val(null);
+                $('#ContactCrmActiveProjectsPlaceholder').hide();
+                $('#SelectedCrmProjectId').val(null);
+                $('#ContactName').val(null);
+                $('#ChangeContactNameLink').hide();
+                $('#ContactName').show();
+                $('#ContactName').focus();
+            });
+        }
+
+        function InitializeChangeProjectManagerNameLink() {
+            $('#ChangeProjectManagerNameLink').click(function () {
+                $('#ProjectManagerUserId').val(null);
+                $('#ProjectManagerFullName').val(null);
+                $('#ChangeProjectManagerNameLink').hide();
+                $('#ProjectManagerFullName').show();
+                $('#ProjectManagerFullName').focus();
+            });
+        }
+
+        function InitializeChangeCustomerAssistantNameLink() {
+            $('#ChangeCustomerAssistantNameLink').click(function () {
+                $('#CustomerAssistantUserId').val(null);
+                $('#CustomerAssistantFullName').val(null);
+                $('#ChangeCustomerAssistantNameLink').hide();
+                $('#CustomerAssistantFullName').show();
+                $('#CustomerAssistantFullName').focus();
+            });
+        }
+
+        function InitializeChangeProject() {
+            var store = new Persist.Store('QPlanet');
+            if (!(store.get('crmProjectId') == "" || store.get('crmProjectId') == undefined)) {
+                $('#CrmProjectId').val(store.get('crmProjectId'));
+            } else {
+                $('#CrmProjectId').val($("#CrmProjectId option:first").val());
+            }
+            $(this).on('change', '#CrmProjectId', null, function () {
+                store.set('crmProjectId', $(this).val());
+            });
+        }
+
+        function InitializeCreateNewProjectButton() {
+            $('#CreateNewProjectButton').click(function (event) {
+                event.preventDefault();
+
+                var form = $('#CreateProjectForm');
+
+                ShowDetailSaveDialog();
+
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    dataType: 'JSON',
+                    success: function (data) {
+                        //Empty RouteValues before redirecting because of Url parameter append conflict.
+                        window.location.href = '@Url.Action("Edit", "ProjectGeneral", new { id = string.Empty })/' + data;
+                    },
+                    error: function (x, y, z) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Create project.', x);
+                    }
+                });
+            });
+        }
+
+        function ListContactCrmActiveProjects(contactId) {
+            $('#ContactCrmActiveProjectsPlaceholder').html('');
+            RemoveNotification(codeNoSoProject);
+            $.ajax({
+                url: '@Url.Action("CrmActiveProjects", "ProjectGeneral", new { area = "Project" })/' + contactId,
+                success: function (data) {
+                    $('#ContactCrmActiveProjectsPlaceholder').html(data).fadeIn();
+                    InitializeChangeProject();
+                },
+                error: function (response) {
+                    if (response.readyState == 4) {
+                        if (response.status == 404) {
+                            AddNotification(codeNoSoProject, 'There are no active CRM projects found for this customer.');
+                        }
+                    }
+                }
+            });
+        }
+
+        function RetrieveCustomerAssistant(contactId) {
+            RemoveNotification(codeNoAssistant);
+            $.ajax({
+                url: '@Url.Action("ContactCustomerAssistant", "ProjectGeneral", new { area = "Project" })/' + contactId,
+                success: function (data) {
+                    if (data.User != undefined) {
+                        $('#CustomerAssistantUserId').val(data.User.Id);
+                        $('#CustomerAssistantFullName').val(data.User.FullName);
+                        $('#CustomerAssistantFullName').hide();
+                        $('#ChangeCustomerAssistantNameLink').text(data.User.FullName);
+                        $('#ChangeCustomerAssistantNameLink').show();
+                    } else {
+                        AddNotification(codeNoAssistant, 'No customer assistant (KA) found for this contact. Please specify a KA manually.');
+                        $('#CustomerAssistantFullName').focus();
+                    }
+                }
+            });
+        }
+    </script>
+}
+
+<div class="grid_8">
+    <fieldset>
+        <legend>Project information</legend>
+
+        @if (Model.MainProject != null)
+        {
+            using (Html.BeginForm("Create", "ProjectGeneral", FormMethod.Post, new { id = "CreateProjectForm" }))
+            {
+            @Html.HiddenFor(m => m.MainProjectId)
+            @Html.HiddenFor(m => m.ProjectCandidateId)
+
+            <div class="row">
+                <div class="width-30-percent">@Html.LabelFor(m => m.ProjectName)</div>
+                <div>@Html.EditorFor(m => m.ProjectName)</div>
+            </div>
+            <div class="row">
+                <div class="width-30-percent">@Html.LabelFor(m => m.ProjectTypeId)</div>
+                <div>@Html.DropDownListFor(m => m.ProjectTypeId, Model.ProjectTypes)</div>
+            </div>
+            <div class="row">
+                <div class="width-30-percent">@Html.LabelFor(m => m.ContactName)</div>
+                <div>@Model.MainProject.Contact.FullName</div>
+            </div>
+            }
+        }
+        else
+        {
+            using (Html.BeginForm("Create", "ProjectGeneral", FormMethod.Post, new { id = "CreateProjectForm" }))
+            {
+            @Html.HiddenFor(m => m.CopyProjectId)
+                if (Model.CopyProject != null)
+                {
+            <div class="row">
+                <div class="width-30-percent">Copy from</div>
+                <div>@Model.CopyProject.Name</div>
+            </div>   
+                }
+            <div class="row">
+                <div class="width-30-percent">@Html.LabelFor(m => m.ProjectName)</div>
+                <div>@Html.EditorFor(m => m.ProjectName)</div>
+            </div>
+            <div class="row">
+                <div class="width-30-percent">@Html.LabelFor(m => m.ProjectTypeId)</div>
+                <div>@Html.DropDownListFor(m => m.ProjectTypeId, Model.ProjectTypes)</div>
+            </div>              
+            <div class="row">
+                <div class="width-30-percent">@Html.LabelFor(m => m.ContactName)</div>
+                <div>@Html.HiddenFor(m => m.ContactId)
+                    @Html.TextBoxFor(m => m.ContactName)
+                    <a href="javascript:void(0);" id="ChangeContactNameLink" title="Click on this link to change the contact">
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="width-30-percent">@Html.LabelFor(m => m.CrmProjectId)</div>
+                <div id="ContactCrmActiveProjectsPlaceholder"></div>
+            </div>
+            <div class="row">
+                <div class="width-30-percent">@Html.LabelFor(m => m.ProjectManagerFullName)</div>
+                <div>@Html.HiddenFor(m => m.ProjectManagerUserId)
+                    @Html.TextBoxFor(m => m.ProjectManagerFullName)
+                    <a href="javascript:void(0);" id="ChangeProjectManagerNameLink" title="Click on this link to change the Project Manager">
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="width-30-percent">@Html.LabelFor(m => m.CustomerAssistantFullName)</div>
+                <div>@Html.HiddenFor(m => m.CustomerAssistantUserId)
+                    @Html.TextBoxFor(m => m.CustomerAssistantFullName)
+                    <a href="javascript:void(0);" id="ChangeCustomerAssistantNameLink" title="Click on this link to change the Customer Assistant">
+                    </a>
+                </div>
+            </div>
+            }
+        }
+        <br />
+        <br />
+        <div class="right-text">
+            <button id="CreateNewProjectButton" class="button">Create</button>
+        </div>
+    </fieldset>
+</div>
+<div class="grid_8">
+</div>
+<div class="clear"></div>

@@ -1,0 +1,7 @@
+﻿@model DateTime
+@Html.TextBoxFor(m => m, new { @Value = Model.ToString("dd/MM/yyyy") })
+<script>
+    $(function () {
+        $('#@Html.IdFor(m => m)').datepicker({ dateFormat: "dd/mm/yy" });
+    })
+</script>

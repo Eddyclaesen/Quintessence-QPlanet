@@ -1,0 +1,41 @@
+﻿@using Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectCandidateReportingOverview
+@using Quintessence.QService.QueryModel.Prm
+@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectCandidateReportingOverview.ProjectCandidateReportingOverviewActionModel
+<table id="ProjectCandidateReportingOverviewDataTable" class="dataTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Contact</th>
+            <th title="Report language"></th>
+            <th>Deadline</th>
+            <th title="Report status">Status</th>
+            <th title="Candidate remarks">Cand. remarks</th>
+            <th title="Report remarks">Rep. remarks</th>
+            <th title="Revision by PM required">Revision?</th>
+            <th title="Send report to participant">To participant?</th>
+            <th>Remarks to participant</th>
+            <th title="Consultants">Cons</th>
+            <th title="Project manager">P.M.</th>
+            <th title="Report recipient(s)">R.R.</th>
+            <th title="Customer assistant">C.A.</th>
+            <th title="Report reviewer">Reviewer</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ProjectCandidateReportingOverviewEntryView entry in Model.ReportingOverviewEntries)
+        {
+            var model = new ProjectCandidateReportingOverviewRowModel
+                {
+                    ReportingOverviewEntry = entry,
+                    ReportStatuses = Model.ReportStatuses,
+                    Users = Model.Users
+                };
+            Html.RenderPartial("ProjectCandidateReportingOverviewEntry", model);
+        }
+    </tbody>
+
+</table>
+
+<div id="ReportRemarksDialog"></div>
+<div id="CandidateRemarksDialog"></div>
+<div id="SendReportToParticipantRemarksDialog"></div>

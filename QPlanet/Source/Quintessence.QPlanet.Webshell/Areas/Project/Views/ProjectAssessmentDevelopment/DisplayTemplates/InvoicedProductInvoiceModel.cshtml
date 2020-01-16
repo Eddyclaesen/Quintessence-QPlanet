@@ -1,0 +1,19 @@
+﻿@using Quintessence.QService.QueryModel.Base
+@using Quintessence.QService.QueryModel.Prm
+@model Quintessence.QPlanet.ViewModel.Prm.EditProductInvoiceModel
+<td></td>
+<td>
+    @Model.ProductName
+</td>
+
+<td>
+    @Model.InvoiceAmount.ToString("C")
+</td>
+<td>
+    @Model.InvoicedDate.GetValueOrDefault().ToShortDateString()
+</td>
+<td>
+    @Model.InvoiceNumber
+</td>
+
+

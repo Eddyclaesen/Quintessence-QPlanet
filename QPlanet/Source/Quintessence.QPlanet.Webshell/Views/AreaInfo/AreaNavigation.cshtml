@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Quintessence.QPlanet.Webshell.Models.AreaInfo.AreaLink>
+<nav class="area">
+    <ul>
+        @foreach (var link in Model)
+        {
+            if (link.Current)
+            {
+            <li class="current">@Html.ActionLink(link.LinkText, link.Action, link.Controller, new { area = link.Area }, new {title = link.LinkTitle})</li>
+            }
+            else
+            {
+            <li>@Html.ActionLink(link.LinkText, link.Action, link.Controller, new { area = link.Area }, new {title = link.LinkTitle})
+            </li>
+            }
+        }
+    </ul>
+</nav>

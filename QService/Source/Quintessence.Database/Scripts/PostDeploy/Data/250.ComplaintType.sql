@@ -1,0 +1,6 @@
+﻿INSERT INTO	[ComplaintType]([Id], [Name], [Code]) VALUES (10, 'Invoicing', 'INVOICING')
+INSERT INTO	[ComplaintType]([Id], [Name], [Code]) VALUES (20, 'Reports', 'REPORTS')
+INSERT INTO	[ComplaintType]([Id], [Name], [Code]) VALUES (30, 'Various', 'VARIOUS')
+INSERT INTO	[ComplaintType]([Id], [Name], [Code]) VALUES (40, 'Communication', 'COMMUNIC')
+INSERT INTO	[ComplaintType]([Id], [Name], [Code]) VALUES (50, 'Swiftness planning', 'PLANNING')
+INSERT INTO	[ComplaintType]([Id], [Name], [Code]) VALUES (60, 'Quality', 'QUALITY')

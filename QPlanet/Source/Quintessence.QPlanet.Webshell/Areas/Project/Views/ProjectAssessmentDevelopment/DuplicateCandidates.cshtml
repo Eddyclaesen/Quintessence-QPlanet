@@ -1,0 +1,62 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectAssessmentDevelopment.DuplicateCandidatesModel
+<h4>Multiple candidates were found...</h4>
+<h5>Choose the candidate to add or add as a new candidate:</h5>
+@using (Html.BeginForm("AddCandidateFromDuplicates", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "DuplicateCandidatesForm" }))
+{
+    @Html.HiddenFor(m => m.AppointmentId)
+    @Html.HiddenFor(m => m.ProjectId)
+    <fieldset>
+
+        <legend>Choose a candidate</legend>
+        <table id="DuplicateCandidatesTreeTable">
+            @for (int c = 0; c < Model.Candidates.Count; c++)
+            {
+                var candidate = Model.Candidates[c];
+                <tr id="node-DuplicateCandidates-@candidate.Id">
+                    <td>
+                        @Html.RadioButtonFor(m => m.SelectedCandidateId, Model.Candidates[c].Id)
+                        @Html.DisplayFor(m => m.Candidates[c].FullName)
+                        @Html.HiddenFor(m => m.Candidates[c].Id)
+                        @Html.HiddenFor(m => m.Code)
+                        @Html.HiddenFor(m => m.LanguageId)
+                    </td>
+                    <td>@Html.DisplayFor(m => m.Gender)</td>
+                </tr>
+                    
+                for (int pc = 0; pc < candidate.ProjectCandidates.Count; pc++)
+                {
+                    var projectCandidate = candidate.ProjectCandidates[pc];
+                <tr class="child-of-node-DuplicateCandidates-@candidate.Id" id="node-DuplicateCandidates-@projectCandidate.Id">
+                    <td>
+                        @Html.HiddenFor(m => m.Candidates[c].ProjectCandidates[pc].Id)
+                        @Html.ActionLink(projectCandidate.Project.Name, "Edit", "ProjectGeneral", new { area = "Project", id = projectCandidate.ProjectId }, new { target = projectCandidate.ProjectId })
+                    </td>
+                    <td></td>
+                </tr>
+                }
+
+
+            }
+            <tr>
+                <td>
+                    @Html.RadioButtonFor(m => m.SelectedCandidateId, Model.SelectedCandidateId, new { name = "SelectedProjectCandidateId" })
+                    @Html.HiddenFor(m => m.FirstName)
+                    @Html.HiddenFor(m => m.LastName)
+                    <span class="bold">NEW: </span>@string.Format("{0} {1}", Model.FirstName, Model.LastName)
+                </td>
+                <td>@Html.DropDownListFor(m => m.Gender, Model.CreateGenderSelectListItems("M"))</td>
+            </tr>
+        </table>
+    </fieldset>
+    <div class="right-text">
+        <input type="submit" value="Add" class="button" id="AddDuplicateCandidateSubmitButton" />
+    </div>
+}
+
+<script>
+    $(function () {
+        $('#DuplicateCandidatesTreeTable').treeTable({
+            persist: true
+        });
+    })
+</script>

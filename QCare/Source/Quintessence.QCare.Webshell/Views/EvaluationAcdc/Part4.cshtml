@@ -1,0 +1,120 @@
+﻿@using Resources
+@model Quintessence.QCare.ViewModel.EvaluationFormAcdcPart4Model
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            InitializeButtons();
+            InitializeLayout();
+            InitializeRadioButtons();
+        });
+
+        function InitializeButtons() {
+            //Previous
+            $('a[data-function=previous]').click(function (e) {
+                e.preventDefault();
+                var form = $('#Part4Form');
+                $('#Navigation').val('0');
+                form.submit();
+            });
+
+            //Next
+            $('a[data-function=next]').click(function (e) {
+                e.preventDefault();
+                var form = $('#Part4Form');
+                $('#Navigation').val('1');
+                form.submit();
+            });
+        }
+
+        function InitializeLayout() {
+            HideAll();
+            CheckQuestion19State();
+        }
+
+        function HideAll() {
+            $('#EvaluationFormAcdcQuestion19_19A').hide();
+            $('#EvaluationFormAcdcQuestion19_19B').hide();
+        }
+
+        function ShowQuestion19A() {
+            $('#EvaluationFormAcdcQuestion19_19A').fadeIn();
+            $('#EvaluationFormAcdcQuestion19_19B').hide();
+        }
+
+        function ShowQuestion19B() {
+            $('#EvaluationFormAcdcQuestion19_19B').fadeIn();
+            $('#EvaluationFormAcdcQuestion19_19A').hide();
+        }
+
+        function CheckQuestion19State() {
+            if ($('input[name="Question19"][value="True"]').is(':checked')) {
+                ShowQuestion19A();
+            }
+            if ($('input[name="Question19"][value="False"]').is(':checked')) {
+                ShowQuestion19B();
+            }
+        }
+
+        function InitializeRadioButtons() {
+            $('input[name="Question19"]').change(function () {
+                CheckQuestion19State();
+            });
+
+        }
+    </script>
+}
+
+@using (Html.BeginForm("Part4", "EvaluationAcdc", FormMethod.Post, new { id = "Part4Form" }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    @Html.HiddenFor(m => m.Navigation)
+    <fieldset>
+        <legend>@Global.EvaluationFormAcdcTitleBlock4</legend>
+        <div>
+            <ol>
+                <li value="19">
+                    <p>@Global.EvaluationFormAcdcQuestion19</p>
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question19, true)
+                        @Global.Yes
+                    </label>
+                    <br />
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question19, false)
+                        @Global.No
+                    </label>
+                    <ul>
+                        <li id="EvaluationFormAcdcQuestion19_19A">
+                            <p>@Global.EvaluationFormAcdcQuestion19_19A</p>
+                            @Html.TextAreaFor(m => m.Question19_19A, 6, 100, null)
+                        </li>
+                        <li id="EvaluationFormAcdcQuestion19_19B">
+                            <p>@Global.EvaluationFormAcdcQuestion19_19B</p>
+                            @Html.TextAreaFor(m => m.Question19_19B, 6, 100, null)
+                        </li>
+                    </ul>
+                </li>
+                <li value="20">
+                    <p>@Global.EvaluationFormAcdcQuestion20</p>
+                    @Html.TextAreaFor(m => m.Question20, 6, 100, null)
+                </li>
+                <li>
+                    <p>@Global.EvaluationFormAcdcQuestion21</p>
+                    @Html.TextAreaFor(m => m.Question21, 6, 100, null)
+                </li>
+            </ol>
+
+            <div class="right-text">
+                <a href="javascript:void(0);" data-function="previous" class="button">@Global.Previous</a>
+                <a href="javascript:void(0);" data-function="next" class="button">@Global.Next</a>
+            </div>
+        </div>
+    </fieldset>
+    
+}

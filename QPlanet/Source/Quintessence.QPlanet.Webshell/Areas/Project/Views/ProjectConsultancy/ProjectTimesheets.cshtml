@@ -1,0 +1,131 @@
+﻿@using Quintessence.QService.QueryModel.Base
+@using Quintessence.QService.QueryModel.Prm
+@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectConsultancy.ProjectTimesheetsActionModel
+@Html.HiddenFor(m => m.ProjectId)
+<table id="TimesheetOverviewTable" style="width: 100%">
+    @for (int x = 0; x < Model.Timesheets.Count; x++)
+    {
+        @Html.HiddenFor(m => Model.Timesheets[x].User.Id)
+        <tr id="node-@Model.Timesheets[x].User.Id">
+            <td>@Model.Timesheets[x].User.FullName</td>
+        </tr>
+        <tr class="child-of-node-@Model.Timesheets[x].User.Id">
+            <td>
+                <table data-id="TimesheetTable" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Activity/Consultancy Profile</th>
+                            <th>Phase</th>
+                            <th>Duration</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int y = 0; y < Model.Timesheets[x].Entries.Count; y++)
+                        {
+                            <tr id="node-@Model.Timesheets[x].Entries[y].Id">
+                                <td>
+                                    @Html.EditorFor(m => Model.Timesheets[x].Entries[y], "BaseEntityViewTemplate")
+                                    @Html.HiddenFor(m => Model.Timesheets[x].Entries[y].AppointmentId)
+                                    @Html.HiddenFor(m => Model.Timesheets[x].Entries[y].ProjectId)
+                                    @Html.HiddenFor(m => Model.Timesheets[x].Entries[y].UserId)
+                                    @Html.HiddenFor(m => Model.Timesheets[x].Entries[y].Date)
+                                    @Html.HiddenFor(m => Model.Timesheets[x].Entries[y].ActivityProfileId)
+                                    @Html.HiddenFor(m => Model.Timesheets[x].Entries[y].ProjectPlanPhaseId)
+                                    @Html.HiddenFor(m => Model.Timesheets[x].Entries[y].Duration)
+                                    @Model.Timesheets[x].Entries[y].Date.ToShortDateString()
+                                </td>
+                                <td>@Model.Timesheets[x].Entries[y].ActivityName - @Model.Timesheets[x].Entries[y].ProfileName
+                                </td>
+                                <td>@Model.Timesheets[x].Entries[y].ProjectPlanPhaseName</td>
+                                <td>@Model.Timesheets[x].Entries[y].Duration</td>
+                                <td>€ @Html.TextBoxFor(m => Model.Timesheets[x].Entries[y].InvoiceAmount)</td>
+                                <td>@Html.DropDownListFor(m => Model.Timesheets[x].Entries[y].InvoiceStatusCode, Model.CreateInvoiceStatusSelectListItem(Model.Timesheets[x].Entries[y].InvoiceStatusCode), new
+                               {
+                                   data_controlid = "StatusDropDownList",
+                                   data_userid = Model.Timesheets[x].User.Id
+                               })
+                                </td>
+                            </tr>
+                            <tr class="child-of-node-@Model.Timesheets[x].Entries[y].Id">
+                                <td></td>
+                                <td>@Html.TextAreaFor(m => Model.Timesheets[x].Entries[y].Description, 3, 50, null)
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <br />
+                @if (Model.Timesheets[x].Entries != null)
+                {
+                    if (Model.Timesheets[x].Entries.Any(e => e.Status == InvoiceStatusType.ToVerify))
+                    {
+                    <a href="javascript:void(0);" data-function="User@(InvoiceStatusType.ToVerify)To@(InvoiceStatusType.ReadyForApproval)" data-userid="@Model.Timesheets[x].User.Id" class="button">@EnumMemberNameAttribute.GetName(InvoiceStatusType.ToVerify)
+                        => @EnumMemberNameAttribute.GetName(InvoiceStatusType.ReadyForApproval)</a>
+                    <a href="javascript:void(0);" data-function="User@(InvoiceStatusType.ToVerify)To@(InvoiceStatusType.ReadyForInvoicing)" data-userid="@Model.Timesheets[x].User.Id" class="button">@EnumMemberNameAttribute.GetName(InvoiceStatusType.ToVerify)
+                        => @EnumMemberNameAttribute.GetName(InvoiceStatusType.ReadyForInvoicing)</a>
+                    }
+
+                    if (Model.Timesheets[x].Entries.Any(e => e.Status == InvoiceStatusType.ReadyForApproval))
+                    {
+                    <a href="javascript:void(0);" data-function="User@(InvoiceStatusType.ReadyForApproval)To@(InvoiceStatusType.SentForApproval)" data-userid="@Model.Timesheets[x].User.Id" class="button">@EnumMemberNameAttribute.GetName(InvoiceStatusType.ReadyForApproval)
+                        => @EnumMemberNameAttribute.GetName(InvoiceStatusType.SentForApproval)</a>
+                    }
+
+                    if (Model.Timesheets[x].Entries.Any(e => e.Status == InvoiceStatusType.SentForApproval))
+                    {
+                    <a href="javascript:void(0);" data-function="User@(InvoiceStatusType.SentForApproval)To@(InvoiceStatusType.ReadyForInvoicing)" data-userid="@Model.Timesheets[x].User.Id" class="button">@EnumMemberNameAttribute.GetName(InvoiceStatusType.SentForApproval)
+                        => @EnumMemberNameAttribute.GetName(InvoiceStatusType.ReadyForInvoicing)</a>
+                    }
+                }
+                <br />
+                <br />
+                <hr />
+            </td>
+        </tr>
+    }
+</table>
+<br />
+<br />
+<div class="right-text">
+    @if (Model.Timesheets != null)
+    {
+        if (Model.Timesheets.SelectMany(t => t.Entries).Any(e => e.Status == InvoiceStatusType.ToVerify))
+        {
+        <a href="javascript:void(0);" data-function="All@(InvoiceStatusType.ToVerify)To@(InvoiceStatusType.ReadyForApproval)" class="button">@EnumMemberNameAttribute.GetName(InvoiceStatusType.ToVerify)
+            => @EnumMemberNameAttribute.GetName(InvoiceStatusType.ReadyForApproval)</a>
+        <a href="javascript:void(0);" data-function="All@(InvoiceStatusType.ToVerify)To@(InvoiceStatusType.ReadyForInvoicing)" class="button">@EnumMemberNameAttribute.GetName(InvoiceStatusType.ToVerify)
+            => @EnumMemberNameAttribute.GetName(InvoiceStatusType.ReadyForInvoicing)</a>
+        }
+
+        if (Model.Timesheets.SelectMany(t => t.Entries).Any(e => e.Status == InvoiceStatusType.ReadyForApproval))
+        {
+        <a href="javascript:void(0);" data-function="All@(InvoiceStatusType.ReadyForApproval)To@(InvoiceStatusType.SentForApproval)" class="button">@EnumMemberNameAttribute.GetName(InvoiceStatusType.ReadyForApproval)
+            => @EnumMemberNameAttribute.GetName(InvoiceStatusType.SentForApproval)</a>
+        }
+
+        if (Model.Timesheets.SelectMany(t => t.Entries).Any(e => e.Status == InvoiceStatusType.SentForApproval))
+        {
+        <a href="javascript:void(0);" data-function="All@(InvoiceStatusType.SentForApproval)To@(InvoiceStatusType.ReadyForInvoicing)" class="button">@EnumMemberNameAttribute.GetName(InvoiceStatusType.SentForApproval)
+            => @EnumMemberNameAttribute.GetName(InvoiceStatusType.ReadyForInvoicing)</a>
+        }
+    }
+    <a href="javascript:void(0);" data-function="SubmitTimesheets" class="button">Save</a>
+</div>
+
+<script>
+    $(function () {
+        $('#TimesheetOverviewTable').treeTable({ persist: true });
+        $('#table[data-id=TimesheetTable]').each(function () {
+            $(this).dataTable();
+            $(this).treeTable({ persist: true });
+        });
+    });
+</script>
+

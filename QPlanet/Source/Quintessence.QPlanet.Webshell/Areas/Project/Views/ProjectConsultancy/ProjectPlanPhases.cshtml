@@ -1,0 +1,286 @@
+﻿@using Quintessence.QPlanet.ViewModel.Prm
+@using Quintessence.QService.QueryModel.Prm
+@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectConsultancy.ProjectPlanPhasesActionModel
+@if (Model.ProjectPlanPhases.Count > 0)
+{
+    <h4>Summary</h4>
+    <div class="grid_8">
+        @if (Model.Project.PricingModelType == PricingModelType.FixedPrice)
+        {
+            <table class="dataTable">
+                <thead>
+                    <tr>
+                        <th>Deadline</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var fixedPrice in Model.ProjectFixedPrices)
+                    {
+                        <tr>
+                            <td>@fixedPrice.Deadline</td>
+                            <td class="right-text">@fixedPrice.Amount.ToString("C")</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>Total</td>
+                        <td class="right-text">@Model.ProjectFixedPrices.Sum(fp => fp.Amount).ToString("C")
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        }
+        else
+        {
+            <table class="dataTable">
+                <thead>
+                    <tr>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Budget</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Model.ProjectPlanPhases.Min(ppp => ppp.StartDate).Value.ToShortDateString()
+                        </td>
+                        <td>@Model.ProjectPlanPhases.Min(ppp => ppp.EndDate).Value.ToShortDateString()</td>
+                        <td class="right-text">@Model.ProjectPlanPhases.Sum(ppp => ppp.TotalPrice).ToString("C")
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        
+        }
+
+        <br />
+        <br />
+    </div>
+    <div class="clear"></div>
+
+    <h4>Details</h4>
+    <table id="ProjectPlanPhasesTable">
+        <thead>
+            <tr>
+                <th>Phase</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Days</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var phase in Model.ProjectPlanPhases.OrderBy(ppf => ppf.StartDate))
+            {
+                <tr id="node-ProjectPlanPhase-@phase.Id">
+                    <td>@phase.Name</td>
+                    <td>@phase.StartDate.GetValueOrDefault().ToShortDateString()</td>
+                    <td>@phase.EndDate.GetValueOrDefault().ToShortDateString()</td>
+                    <td>@phase.TotalDays</td>
+                    <td>@phase.TotalPrice.ToString("C")</td>
+                    <td>
+                        <a href="javascript:void(0);" data-function="EditProjectPlanPhaseButton" data-id="@phase.Id" class="edit-link">
+                        </a>
+                        @if (((ProjectStatusCodeType)Model.Project.StatusCode) == ProjectStatusCodeType.Draft)
+                        {
+                            <a href="javascript:void(0);" data-function="DeleteProjectPlanPhaseButton" data-id="@phase.Id" class="delete-link">
+                            </a>
+                        }
+                    </td>
+                </tr>
+                <tr class="child-of-node-ProjectPlanPhase-@phase.Id">
+                    <td colspan="5" id="detail-@phase.Id">
+                        @if (((ProjectStatusCodeType)Model.Project.StatusCode) == ProjectStatusCodeType.Draft)
+                        {
+                            <table class="dataTable" data-function="ProjectPlanPhaseEntryTable">
+                                <thead>
+                                    <tr>
+                                        <th>Notes</th>
+                                        <th>Activity/Product</th>
+                                        <th>Consultancy Profile</th>
+                                        <th>Duration</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th style="min-width:80px">Price</th>
+                                        <th>Deadline</th>
+                                        <th>NoInvoice</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var entry in phase.ProjectPlanPhaseEntries)
+                                    {
+                                        var activityEntry = entry as EditProjectPlanPhaseActivityModel;
+                                        if (activityEntry != null)
+                                        {
+                                        <tr id="node-@activityEntry.Id">
+                                            <td>
+                                                @if (!string.IsNullOrWhiteSpace(activityEntry.Notes))
+                                                {
+                                                    @activityEntry.Notes
+                                                    }
+                                            </td>
+                                            <td>
+                                                <a href="@Url.Action("ActivityDetail", new { id = Model.Project.Id })/#@activityEntry.ActivityId">@activityEntry.ActivityName</a>
+                                            </td>
+                                            <td>@activityEntry.ProfileName</td>
+                                            <td>@activityEntry.Duration hrs</td>
+                                            <td>@activityEntry.Quantity</td>
+                                            <td>@activityEntry.Days days</td>
+                                            <td style="text-align: right">@activityEntry.Price.ToString("C")</td>
+                                            <td>@activityEntry.Deadline.ToShortDateString()</td>
+                                            <td></td>
+                                            <td>
+                                                <a href="javascript:void(0);" data-function="EditProjectPlanPhaseActivityDraft" class="edit-link" data-id="@activityEntry.Id" title="Edit this activity">
+                                                </a>
+                                                <a href="javascript:void(0);" data-function="DeleteProjectPlanPhaseActivity" class="delete-link" data-id="@activityEntry.Id" title="Delete this activity">
+                                                </a>
+                                            </td>
+                                        </tr>
+                                                if (!string.IsNullOrWhiteSpace(activityEntry.Notes))
+                                                {
+                                        <tr class="child-of-node-@activityEntry.Id">
+                                            <td colspan="9">@activityEntry.Notes</td>
+                                        </tr>
+                                                }
+                                        }
+
+                                        var productEntry = entry as EditProjectPlanPhaseProductModel;
+                                        if (productEntry != null)
+                                        {
+                                        <tr id="node-@productEntry.Id">
+                                            <td>
+                                                @if (!string.IsNullOrWhiteSpace(productEntry.Notes))
+                                                {
+                                                    @productEntry.Notes
+                                                    }
+                                            </td>
+                                            <td>
+                                                <a href="@Url.Action("ProductDetail", new { id = Model.Project.Id })/#@productEntry.ProductId">@productEntry.ProductName</a>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>@productEntry.Quantity</td>
+                                            <td></td>
+                                            <td style="text-align: right">@productEntry.TotalPrice.ToString("C")</td>
+                                            <td>@productEntry.Deadline.ToShortDateString()</td>
+                                            <td>@Html.CheckBoxFor(x => productEntry.NoInvoice, new {disabled="disabled" })</td>
+                                            <td>
+                                                @*<a href="javascript:void(0);" data-function="EditProjectPlanPhaseProductDraft" class="edit-link" data-id="@productEntry.Id" title="Edit this product">
+                                                </a>*@
+                                                <a href="javascript:void(0);" data-function="DeleteProjectPlanPhaseProduct" class="delete-link" data-id="@productEntry.Id" data-entryid="@productEntry.ProductsheetEntryId" title="Delete this product">
+                                                </a>
+                                            </td>
+                                        </tr>
+                                                if (!string.IsNullOrWhiteSpace(productEntry.Notes))
+                                                {
+                                        <tr class="child-of-node-@productEntry.Id">
+                                            <td colspan="9">@productEntry.Notes</td>
+                                        </tr>
+                                                }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <table class="dataTable">
+                                <thead>
+                                    <tr>
+                                    <th>Notes</th>
+                                        <th>Activity/Product</th>
+                                        <th>Consultancy Profile</th>
+                                        <th>Duration</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th style="min-width:80px">Price</th>
+                                        <th>Deadline</th>
+                                        <th>NoInvoice</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var entry in phase.ConsolidatedProjectPlanPhaseEntries)
+                                    {
+                                        var activityEntry = entry as EditProjectPlanPhaseActivityModel;
+                                        if (activityEntry != null)
+                                        {
+                                            <tr>
+                                                <td>
+                                                @if (!string.IsNullOrWhiteSpace(activityEntry.Notes))
+                                                {
+                                                    @activityEntry.Notes
+                                                    }
+                                            </td>
+                                                <td>
+                                                    <a href="@Url.Action("ActivityDetail", new { id = Model.Project.Id })/#@activityEntry.ActivityId">@activityEntry.ActivityName</a>
+                                                </td>
+                                                <td>@activityEntry.ProfileName</td>
+                                                <td>@activityEntry.Duration hrs</td>
+                                                <td>@activityEntry.Quantity</td>
+                                                <td>@activityEntry.Days days</td>
+                                                <td style="text-align: right">@activityEntry.Price.ToString("C")</td>
+                                                <td>@activityEntry.Deadline.ToShortDateString()</td>
+                                                <td></td>
+                                                <td>
+                                                    <a href="javascript:void(0);" data-function="EditProjectPlanPhaseActivityDeadline" class="edit-link" data-id="@activityEntry.Id" title="Edit this activity">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                        var productEntry = entry as EditProjectPlanPhaseProductModel;
+                                        if (productEntry != null)
+                                        {
+                                            <tr>
+                                                <td>
+                                                @if (!string.IsNullOrWhiteSpace(productEntry.Notes))
+                                                {
+                                                    @productEntry.Notes
+                                                    }
+                                            </td>
+                                                <td>@productEntry.ProductName</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>@productEntry.Quantity</td>
+                                                <td></td>
+                                                <td style="text-align: right">@productEntry.TotalPrice.ToString("C")</td>
+                                                <td>@productEntry.Deadline.ToShortDateString()</td>
+                                                <td>@Html.CheckBoxFor(x => productEntry.NoInvoice, new {disabled="disabled" })</td>
+                                                <td>
+                                                    @*<a href="javascript:void(0);" data-function="EditProjectPlanPhaseProductDeadline" class="edit-link" data-id="@productEntry.Id" title="Edit this product">
+                                                    </a>*@
+                                                    <a href="javascript:void(0);" data-function="DeleteProjectPlanPhaseProduct" class="delete-link" data-id="@productEntry.Id" data-entryid="@productEntry.ProductsheetEntryId" title="Delete this product">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        <br />
+                        <div style="text-align: right">
+                            <a href="javascript:void(0);" data-function="CreateProjectPlanPhaseActivity" data-Phase-id="@phase.Id" class="button" title="Add an activity to '@phase.Name'">
+                                Add Activity</a>
+                            <a href="javascript:void(0);" data-function="CreateProjectPlanPhaseProduct" data-Phase-id="@phase.Id" class="button" title="Add an product to '@phase.Name'">
+                                Add Product</a>
+                        </div>
+                        <br />
+                        <br />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    @:No project phases defined.
+}
+<br />

@@ -1,0 +1,62 @@
+﻿@model Quintessence.QPlanet.ViewModel.Sim.EditSimulationDepartmentModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Admin - Simulations - Edit simulation department";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">@Model.Name</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li class="current">Detail</li>
+        </ul>
+    </nav>
+}
+@section AdditionalScripts
+{
+    <script type="text/javascript">
+        $(function () {
+            InitializeButtons();
+        });
+
+        function InitializeButtons() {
+            $('#SubmitFormButtonLink').click(function () {
+                ShowDetailSaveDialog();
+                $('form').submit();
+            });
+        }
+    </script>
+}
+
+<div class="grid_8">
+    <fieldset>
+        <legend>Simulation department information</legend>
+        @using (Html.BeginForm())
+        {
+            @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+
+            <div class="container_12 nomargin">
+                <div class="grid_5 table">
+                    <div class="label">@Html.LabelFor(m => m.Name)</div>
+                </div>
+                <div class="grid_7 table">
+                    <div class="value">@Html.EditorFor(m => m.Name)</div>
+                </div>
+                <div class="clear"></div>
+                <div class="prefix_5 grid_7">@Html.ValidationMessageFor(m => m.Name)</div>
+                <div class="clear"></div>
+
+                <div class="right-text">
+                    <a href="javascript:void(0);" id="SubmitFormButtonLink" class="button">Save</a>
+                </div>
+            </div>
+        }
+    </fieldset>
+</div>

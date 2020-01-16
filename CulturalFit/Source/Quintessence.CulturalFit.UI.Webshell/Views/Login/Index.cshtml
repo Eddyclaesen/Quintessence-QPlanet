@@ -1,0 +1,98 @@
+﻿@using System.Threading
+@using Resources
+@{
+    ViewBag.Title = "Log in";
+}
+@model Quintessence.CulturalFit.UI.Webshell.Models.Login.LoginModel
+@section AdditionalScripts
+{
+    <script src="~/Scripts/jquery-1.7.2.js" type="text/javascript"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.showpassword.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //Initial language
+            SetLanguage();
+
+            $(this).on("change", '#checkbox', null, function () {
+                if ($('#checkbox').attr('checked')) {
+                    $('#VerificationCode').get(0).type = 'text';
+                } else {
+                    $('#VerificationCode').get(0).type = 'password';
+                }
+            });
+
+            $(this).on("change", '#SelectedLanguage', null, function () {
+                SetLanguage();
+            });
+        });
+
+        function SetLanguage() {
+            var language = $('#SelectedLanguage').val();
+            var url = '@Url.Content("~/{0}/Login/ChangeLanguage/")';
+            url = url.replace('{0}', language);
+
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: null,
+                dataType: "json",
+                success: function (jd) {
+                    $.each(jd, function (i, item) {
+                        $('#' + item.id).html(item.value);
+
+                    });
+                },
+                error: function () {
+                    $('#LoginFormPlaceholder').html("Something went wrong. We apologize for the inconvenience.");
+                }
+            });
+        }
+    </script>
+}
+<div class="grid_6 prefix_3 suffix_3" id="LoginFormPlaceholder">
+
+        @using (Html.BeginForm())
+        {
+        <fieldset>
+            <legend>
+                <span id="LblLegend">
+                    @Global.EnterVerificationCode
+                </span>
+            </legend>
+            <p>
+                <div>
+                    <table>
+                        <tr style="height: 25px;">
+                            <td style="width: 40%;"><span id="LblVerificationCode">@Html.LabelFor(m => m.VerificationCode)</span></td>
+                            <td style="width: 60%;">@Html.PasswordFor(m => m.VerificationCode, new Dictionary<string, object> { { "style", "width: 100px; height: 16px;" } })
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">
+                                <input id="checkbox" type="checkbox" /><label><span id="LblShowChars">@Global.ShowCharacters</span></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>
+                                @Html.DropDownListFor(m => m.SelectedLanguage, Model.Languages.Select(l => new SelectListItem { Text = l.Name, Value = l.GlobalizationName }))
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </p>
+            <input class="login button" type="submit" value="Ok">
+        </fieldset>
+        <div id="loginError">
+            @Html.ValidationMessageFor(m => m.VerificationCode, @Global.WrongVerificationCode, new { id = "VerificationCodeValidation", style = "color:red" })
+        </div>
+
+        
+        }
+        </div>
+    <div class="clear"></div>
+
+

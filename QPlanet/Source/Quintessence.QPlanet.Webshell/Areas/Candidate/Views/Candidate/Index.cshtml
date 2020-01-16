@@ -1,0 +1,45 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Candidates - Home";
+}
+
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            RefreshCandidatesTable();
+            InitializeButtons();
+        });
+
+        function RefreshCandidatesTable() {
+            $('#CandidatesTablePlaceholder').loading('Retrieving candidates');
+            $.ajax({
+                url: '@Url.Action("ListCandidates")',
+                success: function (html) {
+                    $('#CandidatesTablePlaceholder').html(html);
+                    $('#CandidatesTable').dataTable();
+                },
+                error: function (err) {
+                    
+                }
+            });
+        }
+        
+        function InitializeButtons() {
+            $('#RefreshCandidatesTableButton').click(function(event) {
+                event.preventDefault();
+
+                RefreshCandidatesTable();
+            });
+        }
+    </script>
+}
+<fieldset>
+    <legend>Candidates</legend>
+    <div id="CandidatesTablePlaceholder"></div>
+    <br />
+    <br />
+    <a href="javascript:void(0);" id="RefreshCandidatesTableButton" class="button">Refresh</a>
+    @Html.ActionLink("Create", "Create", "Candidate", null, new { target = "_blank", id = "CreateProjectLink", @class="button" })
+</fieldset>

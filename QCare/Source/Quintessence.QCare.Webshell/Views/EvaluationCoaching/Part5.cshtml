@@ -1,0 +1,117 @@
+﻿@using Resources
+@model Quintessence.QCare.ViewModel.EvaluationFormCoachingPart5Model
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            InitializeButtons();
+            InitializeLayout();
+            InitializeRadioButtons();
+        });
+
+        function InitializeButtons() {
+            //Previous
+            $('a[data-function=previous]').click(function (e) {
+                e.preventDefault();
+                var form = $('#Part5Form');
+                $('#Navigation').val('0');
+                form.submit();
+            });
+
+            //Next
+            $('a[data-function=next]').click(function (e) {
+                e.preventDefault();
+                var form = $('#Part5Form');
+                $('#Navigation').val('1');
+                form.submit();
+            });
+        }
+
+        function InitializeLayout() {
+            HideAll();
+            CheckQuestion10State();
+        }
+
+        function HideAll() {
+            $('#EvaluationFormCoachingQuestion10Yes').hide();
+            $('#EvaluationFormCoachingQuestion10No').hide();
+        }
+
+        function ShowQuestion10A() {
+            $('#EvaluationFormCoachingQuestion10Yes').fadeIn();
+            $('#EvaluationFormCoachingQuestion10No').hide();
+        }
+
+        function ShowQuestion10B() {
+            $('#EvaluationFormCoachingQuestion10No').fadeIn();
+            $('#EvaluationFormCoachingQuestion10Yes').hide();
+        }
+
+        function CheckQuestion10State() {
+            if ($('input[name="Question10"][value="True"]').is(':checked')) {
+                ShowQuestion10A();
+            }
+            if ($('input[name="Question10"][value="False"]').is(':checked')) {
+                ShowQuestion10B();
+            }
+        }
+
+        function InitializeRadioButtons() {
+            $('input[name="Question10"]').change(function () {
+                CheckQuestion10State();
+            });
+        }
+    </script>
+}
+
+@using (Html.BeginForm("Part5", "EvaluationCoaching", FormMethod.Post, new { id = "Part5Form" }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    @Html.HiddenFor(m => m.Navigation)
+    <fieldset>
+        <legend>@Global.EvaluationFormCoachingTitleBlock5</legend>
+        <div>
+            <ol>
+                <li class="ol-item-title">
+                    <b></b>
+                </li>
+                <li value="11">
+                    <p>@Global.EvaluationFormCoachingQuestion10</p>
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question10, true)
+                        @Global.Yes
+                    </label>
+                    <br />
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question10, false)
+                        @Global.No
+                    </label>
+                    <ul>
+                        <li id="EvaluationFormCoachingQuestion10Yes">
+                            <p>@Global.EvaluationFormCoachingQuestion10_10A</p>
+                            @Html.TextAreaFor(m => m.Question10_10A, 6, 90, null)
+                        </li>
+                        <li id="EvaluationFormCoachingQuestion10No">
+                            <p>@Global.EvaluationFormCoachingQuestion10_10B</p>
+                            @Html.TextAreaFor(m => m.Question10_10B, 6, 90, null)
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <p>@Global.EvaluationFormCoachingQuestion11</p>
+                    @Html.TextAreaFor(m => m.Question11, 6, 90, null)
+                </li>
+            </ol>
+            <div class="right-text">
+                <a href="javascript:void(0);" data-function="previous" class="button">@Global.Previous</a>
+                <a href="javascript:void(0);" data-function="next" class="button">@Global.Next</a>
+            </div>
+        </div>
+    </fieldset>
+    
+}

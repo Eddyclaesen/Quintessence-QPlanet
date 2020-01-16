@@ -1,0 +1,50 @@
+﻿@model List<Quintessence.QService.QueryModel.Prm.ProjectCandidateView>
+
+<table id="UserProjectCandidatesDataTable" class="dataTable">
+    <thead>
+        <tr>
+            <th class="left-text">Project</th>
+            <th class="left-text">Candidate</th>
+            <th class="left-text">Lead assessor</th>
+            <th class="left-text">Co-assessor</th>
+            <th class="left-text">Scoring</th>
+            <th class="left-text">Overview</th>
+            <th class="left-text">Resume</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model == null || Model.Count < 1)
+        {
+            <tr>
+                <td colspan="7" class="center-text">No candidates found for today (@DateTime.Now.ToString("dd/MM/yyyy"))</td>
+            </tr>
+        }
+        else
+        {
+            for (int i = 0; i < Model.Count; i++)
+            {
+            <tr>
+                <td>
+                    <a href="@Url.Action("Edit", "ProjectGeneral", new { id = @Model[i].Project.Id })" target="@Model[i].Project.Id">@Model[i].Project.Name</a>
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", "Candidate", new { id = @Model[i].Candidate.Id, area = "Candidate" })" target="@Model[i].Candidate.Id">@Model[i].Candidate.FullName</a>
+                </td>
+                <td>
+                    @(string.Format("{0} {1}", Model[i].ProjectCandidateDetail.LeadAssessorFirstName, Model[i].ProjectCandidateDetail.LeadAssessorLastName))
+                </td>
+                <td>@for (int ca = 0; ca < Model[i].ProjectCandidateDetail.CoAssessors.Count; ca++)
+                    {
+                        var coAssessor = Model[i].ProjectCandidateDetail.CoAssessors[ca];
+                    @(ca == Model[i].ProjectCandidateDetail.CoAssessors.Count - 1 ? string.Format("{0} {1}", coAssessor.AssessorFirstName, coAssessor.AssessorLastName) : string.Format("{0} {1}, ", coAssessor.AssessorFirstName, coAssessor.AssessorLastName))
+                    }
+                </td>
+                <td>@Html.ActionLink("Scoring", "EditProjectCandidateSimulationScores", "ProjectAssessmentDevelopment", new { area = "Project", id = @Model[i].Id }, new { target = @Model[i].Id })</td>
+                <td>@Html.ActionLink("Overview", "EditProjectCandidateScores", "ProjectAssessmentDevelopment", new { area = "Project", id = @Model[i].Id }, new { target = @Model[i].Id })</td>
+                <td>@Html.ActionLink("Resume", "EditProjectCandidateResume", "ProjectAssessmentDevelopment", new { area = "Project", id = @Model[i].Id }, new { target = @Model[i].Id })</td>
+            </tr>
+            }
+        }
+
+    </tbody>
+</table>

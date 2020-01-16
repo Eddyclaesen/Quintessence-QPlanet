@@ -1,0 +1,20 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Candidate.Models.ProgramHome.CandidatesActionModel
+
+<table class="dataTable">
+    <thead>
+        <tr>
+            <th>Candidate</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var candidate in Model.Candidates)
+        {
+            <tr>
+                <td>@candidate.FullName</td>
+                <td>@Html.ActionLink("Print", "GenerateDayProgram", new { projectCandidateId = candidate.ProjectCandidateId, year = Model.Date.Year, month = Model.Date.Month, day = Model.Date.Day })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

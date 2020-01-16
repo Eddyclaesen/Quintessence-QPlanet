@@ -1,0 +1,28 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.SearchProjectCandidatesModel
+@using (Html.BeginForm("SearchProjectCandidates", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "SearchProjectCandidatesForm" }))
+{
+    <div class="container_12 nomargin">
+        <div class="grid_5 table">
+            <div class="label">@Html.LabelFor(m => m.FirstName)</div>
+        </div>
+        <div class="grid_7 table">
+            <div class="value">@Html.EditorFor(m => m.FirstName)</div>
+        </div>
+        <div class="clear"></div>
+        <div class="prefix_5 grid_7">@Html.ValidationMessageFor(m => m.FirstName)</div>
+        <div class="clear"></div>
+
+        <div class="grid_5 table">
+            <div class="label">@Html.LabelFor(m => m.LastName)</div>
+        </div>
+        <div class="grid_7 table">
+            <div class="value">@Html.DisplayFor(m => m.LastName)
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+        
+    <div style="text-align: right">
+        <a href="javascript:void(0);" id="SearchProjectCandidatesButton" class="button">Search</a>
+    </div>
+}

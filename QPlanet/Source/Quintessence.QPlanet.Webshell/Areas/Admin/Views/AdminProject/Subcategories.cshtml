@@ -1,0 +1,23 @@
+﻿@model List<Quintessence.QService.QueryModel.Prm.ProjectTypeCategoryView>
+<table id="AdminSubCategoryDataTable" class="dataTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Type</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(int ptc = 0; ptc < Model.Count; ptc++)
+        {
+            <tr>
+                <td>@Model[ptc].Name</td>
+                <td>@Model[ptc].Code</td>
+                <td>@(string.Format("Type {0}",Model[ptc].SubCategoryType))</td>
+                <td>@Html.ActionLink("Edit", "EditSubCategory", new{id=@Model[ptc].Id}, new{target=@Model[ptc].Id, @class="edit-link", title="Edit"})</td>
+            </tr>
+        }
+        
+    </tbody>
+</table>

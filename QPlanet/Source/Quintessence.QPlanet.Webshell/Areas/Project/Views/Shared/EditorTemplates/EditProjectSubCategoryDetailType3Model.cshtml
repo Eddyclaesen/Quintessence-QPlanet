@@ -1,0 +1,38 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.EditProjectSubCategoryDetailType3Model
+@{ViewData.TemplateInfo.HtmlFieldPrefix = "Subcategory"; }
+@using (Html.BeginForm("UpdateSubCategoryType3", "ProjectAssessmentDevelopment", FormMethod.Post, null))
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.AuditCreatedBy)
+    @Html.HiddenFor(m => m.AuditCreatedOn)
+    @Html.HiddenFor(m => m.AuditDeletedBy)
+    @Html.HiddenFor(m => m.AuditDeletedOn)
+    @Html.HiddenFor(m => m.AuditIsDeleted)
+    @Html.HiddenFor(m => m.AuditModifiedBy)
+    @Html.HiddenFor(m => m.AuditModifiedOn)
+    @Html.HiddenFor(m => m.AuditVersionId)  
+    <fieldset id="@Model.Id">
+        <legend>@Html.DisplayFor(m => m.Name)</legend>
+        <table class="dataTable">
+            <tr>
+                <td class="width-25-percent">@Html.DisplayNameFor(m => m.Name)</td>
+                <td>@Model.Name</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => m.Description)</td>
+                <td>@Html.TextAreaFor(m => m.Description, new{cols=50, rows=4})</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => m.SurveyPlanningId)</td>
+                <td>@Html.DropDownListFor(m => m.SurveyPlanningId, Model.CreateSurveyPlanningSelectListItems())</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => m.IncludeInCandidateReport)</td>
+                <td>@Html.CheckBoxFor(m => m.IncludeInCandidateReport)</td>
+            </tr>
+        </table>
+        <div class="right-text">
+            <a href="javascript:void;" class="button" data-function="SubCategoryFormSubmit">Save</a>
+        </div>
+    </fieldset>
+}

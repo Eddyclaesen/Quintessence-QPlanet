@@ -1,0 +1,182 @@
+﻿@using Quintessence.QService.QueryModel.Prm
+@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectAssessmentDevelopment.ProjectCandidateProductScoresActionModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Projects - View product scores";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <!--<li class="current"><a href="javascript:void(0);">@Model.ProjectCandidate.CandidateFullName
+                (@Model.Project.Name)</a>
+            </li>-->
+            <li class="current"><a href="/Project/ProjectGeneral/Edit/@Model.Project.Id" target="_blank">@Model.ProjectCandidate.CandidateFullName <u>@Model.Project.Name</u></a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li>@Html.ActionLink("Simulation Scores", "EditProjectCandidateSimulationScores", new { id = Model.ProjectCandidate.Id })
+            </li>
+            <li>@Html.ActionLink("Assessors Overview", "EditProjectCandidateScores", new { id = Model.ProjectCandidate.Id })
+            </li>
+            <li class="current">Product scores</li>
+            <li>@Html.ActionLink("Resume", "EditProjectCandidateResume", new { id = Model.ProjectCandidate.Id })
+            </li>
+            <li>@Html.ActionLink("Reporting", "ProjectCandidateReporting", new { id = Model.ProjectCandidate.Id })
+            </li>
+        </ul>
+    </nav>
+}
+@section LeftNavigation
+{
+    <ul id="Tabs">
+
+        @if (Model.Project.ProjectCategoryDetails.OfType<ProjectCategoryDetailType3View>().Any(pcdt => pcdt.ProjectTypeCategory.Code.ToUpperInvariant() == "NEOPIR"))
+        {
+            <li><a href="#Neopir"></a></li>
+        }
+        @if (Model.Project.ProjectCategoryDetails.OfType<ProjectCategoryDetailType3View>().Any(pcdt => pcdt.ProjectTypeCategory.Code.ToUpperInvariant() == "LEIDERSTIJ"))
+        {
+            <li><a href="#Leiderschap"></a></li>
+        }
+    </ul>
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/tiny_mce/jquery.tinymce.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.treeTable.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.cookie.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/persist.js")" type="text/javascript"></script>
+
+    <script>
+        $(function () {
+        });
+    </script>
+}
+
+@if (Model.Project.ProjectCategoryDetails.OfType<ProjectCategoryDetailType3View>().Any(pcdt => pcdt.ProjectTypeCategory.Code.ToUpperInvariant() == "NEOPIR"))
+{
+    <fieldset id="Neopir">
+        <legend>Neopir</legend>
+        
+        Please <a href="http://neopir.myquintessence.be">click here</a> for the Neopir score. 
+        This application is not accessible from the internet but can be used when connected with VPN.
+
+       <!-- @if (Model.NeopirScores.Count == 0)
+        {
+            <p>There are no scores found for this candidate.</p>
+        }
+        else
+        {
+            <table class="dataTable">
+                <thead>
+                    <tr>
+                        <th style="min-width: 20px;"></th>
+                        <th style="min-width: 200px;"></th>
+                        @for (int i = 10; i >= 1; i--)
+                        {
+                            <th>@i</th>
+                        }
+                    </tr>
+                </thead>
+                @{
+                        var alternator = 0;
+                }
+
+                @foreach (var score in Model.NeopirScores.OrderBy(s => s.Label))
+                {
+                    <tr class="@(alternator++ % 2 == 0 ? "odd" : "even")">
+                        <td>@score.Scale</td>
+                        <td>@score.Description</td>
+                        @for (int i = 10; i >= 1; i--)
+                        {
+                            if (score.NormScore == i)
+                            {
+                            <td>@i</td>
+                            }
+                            else
+                            {
+                            <td></td>
+                            }
+                        }
+                    </tr>
+                }
+            </table>
+        }-->
+    </fieldset>  
+}
+@if (Model.Project.ProjectCategoryDetails.OfType<ProjectCategoryDetailType3View>().Any(pcdt => pcdt.ProjectTypeCategory.Code.ToUpperInvariant() == "LEIDERSTIJ"))
+{
+    <fieldset id="Leiderschap">
+        <legend>Leiderschap</legend>
+
+        @if (Model.LeaderScores.Count == 0)
+        {
+            <p>There are no scores found for this candidate.</p>
+        }
+        else
+        {
+            var leaderScore = Model.LeaderScores.FirstOrDefault();
+
+            if (leaderScore != null)
+            {
+            <table style="width: 100%">
+                <tr>
+                    <td style="width: 50%"></td>
+                    <td>
+                        <table style="width: 400px;">
+                            <tr style="border-bottom: 1px solid black; height: 200px;">
+                                <td style="border-right: 1px solid black; width: 200px; vertical-align: middle;">
+                                    <div class="center-text">
+                                        Consult<br />
+                                        <span style="font-size: 3em;">@leaderScore.Consult</span>
+                                    </div>
+                                </td>
+                                <td style="border-left: 1px solid black; width: 200px; vertical-align: middle;">
+                                    <div class="center-text">
+                                        Convince<br />
+                                        <span style="font-size: 3em;">@leaderScore.Convince</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="border-top: 1px solid black; height: 200px;">
+                                <td style="border-right: 1px solid black; width: 200px; vertical-align: middle;">
+                                    <div class="center-text">
+                                        Delegate<br />
+                                        <span style="font-size: 3em;">@leaderScore.Delegate</span>
+                                    </div>
+                                </td>
+                                <td style="border-left: 1px solid black; width: 200px; vertical-align: middle;">
+                                    <div class="center-text">
+                                        Instruct<br />
+                                        <span style="font-size: 3em;">@leaderScore.Instruct</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="height: 100px;">
+                                <td style="width: 200px; vertical-align: middle;">
+                                    <div class="center-text">
+                                        Effectivity<br />
+                                        <span style="font-size: 3em;">@leaderScore.Effectivity</span>
+                                    </div>
+                                </td>
+                                <td style="width: 200px; vertical-align: middle;">
+                                    <div class="center-text">
+                                        Decile<br />
+                                        <span style="font-size: 3em;">@leaderScore.Decile</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width: 50%"></td>
+                </tr>
+            </table>
+            }
+        }
+    </fieldset>
+}

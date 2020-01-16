@@ -1,0 +1,152 @@
+﻿@using Quintessence.QService.QueryModel.Prm
+@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectAssessmentDevelopment.InvoiceOverviewActionModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Projects - Invoice overview";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">@Model.Project.Name</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li>@Html.ActionLink("Detail", "Edit", "ProjectGeneral", new RouteValueDictionary(new { area = "Project", id = Model.Project.Id }), null)
+            @if (Model.Project.MainProjectCategoryDetail != null)
+            {
+                <li>@Html.ActionLink(Model.Project.MainProjectCategoryDetail.ProjectTypeCategory.Name, "EditProjectCategoryDetail", "ProjectGeneral", new RouteValueDictionary(new { area = "Project", id = Model.Project.Id }), null)
+                </li>
+            }
+            @if (Model.Project.HasSubProjectCategoryDetails)
+            {
+                <li>@Html.ActionLink("Subcategories", "SubProjectCategoryDetails", "ProjectAssessmentDevelopment", null, new { area = "Project", id = Model.Project.Id })
+                </li>
+            }
+            @if (Model.Project.MainProjectCategoryDetail != null)
+            {
+                <li>@Html.ActionLink("Candidates", "EditProjectCandidates", "ProjectAssessmentDevelopment", new RouteValueDictionary(new { area = "Project", id = Model.Project.Id }), null)
+                </li>
+            }
+            <li class="current">Invoicing</li>
+        </ul>
+    </nav>
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.treeTable.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.cookie.js")"></script>
+    <script src="@Url.Content("~/Scripts/persist.js")"></script>
+
+    <script>
+        $(function () {
+            RefreshOverview();
+            InitializeButtons();
+            InitializeValidateProject();
+            InitializeCheckUnregisteredCandidates();
+        });
+
+        function RefreshOverview() {
+            $('#InvoiceOverview').loading('Loading invoices...');
+            $('#InvoiceOverview').load('@Url.Action("ListInvoices", new { id = Model.Project.Id })', function () {
+                InitializeTreeTables();
+                InitializeDataTables();
+            });
+        }
+
+
+        function InitializeButtons() {
+            //Save invoices
+            $(this).on('click', 'a[data-id=SaveInvoiceOverviewButton]', null, function (e) {
+                ShowDetailSaveDialog();
+                e.preventDefault();
+                var form = $('#InvoiceOverviewForm');
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function (data) {
+                        RefreshOverview();
+                        HideDetailSaveDialog();
+                    },
+                    error: function (x, y, z) {
+                        alert(x.statusText);
+                        HideDetailSaveDialog();
+                    }
+                });
+            });
+
+            //To do => Ready for invoicing          (only on "To verify" table)
+            $(this).on('click', 'a[data-id=@(InvoiceStatusType.ToVerify)To@(InvoiceStatusType.ReadyForInvoicing)]', null, function () {
+                $('#ToVerifyDataTable select[data-control-id=InvoiceStatusType]').each(function () {
+                    $(this).val('@((int)InvoiceStatusType.ReadyForInvoicing)');
+                });
+            });
+
+            //Ready for invoicing => To do          (only on "Ready for invoicing" table)
+            $(this).on('click', 'a[data-id=@(InvoiceStatusType.ReadyForInvoicing)To@(InvoiceStatusType.ToVerify)]', null, function () {
+                $('#ReadyForInvoicingDataTable select[data-control-id=InvoiceStatusType]').each(function () {
+                    $(this).val('@((int)InvoiceStatusType.ToVerify)');
+                });
+            });
+
+            //Ready for invoicing => Invoiced       (only on "Ready for invoicing" table)
+            $(this).on('click', 'a[data-id=@(InvoiceStatusType.ReadyForInvoicing)To@(InvoiceStatusType.Invoiced)]', null, function () {
+                $('#ReadyForInvoicingDataTable select[data-control-id=InvoiceStatusType]').each(function () {
+                    $(this).val('@((int)InvoiceStatusType.Invoiced)');
+                });
+            });
+        }
+
+        function InitializeTreeTables() {
+            $('#InvoiceOverviewTable').treeTable({ persist: true });
+        }
+
+        function InitializeDataTables() {
+            $('#ToVerifyDataTable').dataTable({ "bPaginate": false });
+            $('#ReadyForInvoicingDataTable').dataTable({ "bPaginate": false });
+            $('#InvoicedDataTable').dataTable({ "bPaginate": false });
+            $('#PlannedDataTable').dataTable({ "bPaginate": false });
+        }
+
+        //Initialize validation header
+        function InitializeValidateProject() {
+            $.getJSON('@Url.Action("ValidateProject", new { id = Model.Project.Id })', function (data) {
+                $.each(data, function (key, val) {
+                    if (val.message != 'ok') {
+                        if ($('#validation-summary-errors').length == 0) {
+                            $('#ValidationSummary').html('<div class="validation-summary-errors"><ul><li>' + val.message + '</li><ul></div>');
+                        } else {
+                            $('#ValidationSummary div ul li').last().append('<li>' + val.message + '</li>');
+                        }
+                    }
+                });
+            });
+        }
+
+        function InitializeCheckUnregisteredCandidates() {
+            //Check if there are still unregistered candidates for this project
+            $.getJSON('@Url.Action("CheckUnregisteredCandidatesForProject", new { id = Model.Project.Id })', function (data) {
+                $.each(data, function (key, val) {
+                    if (val.message != 'ok') {
+                        if ($('#validation-summary-errors').length == 0) {
+                            $('#ValidationSummary').html('<div class="validation-summary-errors"><ul><li>' + val.message + '</li><ul></div>');
+                        } else {
+                            $('#ValidationSummary div ul li').last().append('<li>' + val.message + '</li>');
+                        }
+                    }
+                });
+            });
+        }
+    </script>
+}
+<fieldset>
+    <legend>Invoicing for @Model.Project.Name</legend>
+    <div id="InvoiceOverview"></div>
+
+</fieldset>

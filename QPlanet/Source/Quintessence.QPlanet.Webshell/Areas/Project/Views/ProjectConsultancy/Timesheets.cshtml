@@ -1,0 +1,52 @@
+﻿@using Quintessence.QPlanet.Infrastructure.Nullable
+@using Quintessence.QService.QueryModel.Base
+@model IEnumerable<Quintessence.QService.QueryModel.Prm.TimesheetEntryView>
+<table id="TimesheetOverviewTable">
+    @foreach (var entryYearGroup in Model.OrderBy(m => m.Date).GroupBy(m => m.Date.Year))
+    { 
+        <tr id="node-TimesheetYear-@entryYearGroup.Key">
+            <td>@entryYearGroup.Key</td>
+        </tr>
+        
+        foreach (var entryMontGroup in entryYearGroup.GroupBy(m => m.Date.ToString("MMMM")))
+        {   
+        <tr id="node-TimesheetMonth-@string.Format("{0}{1}", entryYearGroup.Key, entryMontGroup.Key)" class="child-of-node-TimesheetYear-@entryYearGroup.Key">
+            <td>@entryMontGroup.Key</td>
+        </tr>
+    
+        <tr class="child-of-node-TimesheetMonth-@string.Format("{0}{1}", entryYearGroup.Key, entryMontGroup.Key)">
+            <td>
+                <table id="@string.Format("{0}{1}", entryYearGroup.Key, entryMontGroup.Key)Table" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Activity</th>
+                            <th>Consultancy Profile</th>
+                            <th>Duration</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var entry in entryMontGroup)
+                        {
+                            <tr>
+                                <td>@entry.Date.ToShortDateString()</td>
+                                <td>@entry.ActivityName</td>
+                                <td>@entry.ProfileName</td>
+                                <td>@entry.Duration</td>
+                                <td>@entry.InvoiceAmount.ToString("C")</td>
+                                <td>@EnumMemberNameAttribute.GetName(entry.Status)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <br />
+                @Html.ActionLink("Edit", "EditTimesheet", new { id = Model.FirstOrDefault().ProjectId, year = entryYearGroup.Key, entryMontGroup.FirstOrDefault().Date.Month }, new { target = "EditTimesheet", @class = "button" })
+                <br />
+                <br />
+            </td>
+        </tr>
+        }
+    }
+</table>

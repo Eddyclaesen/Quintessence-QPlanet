@@ -1,0 +1,6 @@
+﻿@using System.Collections.ObjectModel
+@model Quintessence.QService.QueryModel.Prm.RecentProjectView
+<td>@Html.ActionLink(Model.ProjectName, "Edit", "ProjectGeneral", new RouteValueDictionary(new { area = "Project", id = Model.ProjectId }), new Dictionary<string, object> { { "target", "_blank" } })
+</td>
+<td>@Model.ProjectTypeName</td>
+<td>@Model.ContactName</td>

@@ -1,0 +1,65 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Candidate.Models.ProgramHomeUser.UserDayProgramActionModel
+
+<table style="width: 100%">
+    <tr>
+        <td>
+            <div data-function="AssessorColor" data-assessor-id="null" data-color="#F8F8F8" style="display: none">
+            </div>
+        </td>
+        @for (int i = 0; i < Model.Assessors.Keys.Count; i++)
+        {
+            <td style="padding-left: 5px; padding-right: 5px;">
+                <div data-function="AssessorColor" data-assessor-id="@Model.Assessors.Keys.ElementAt(i)" data-color="@Model.Colors[i].Color" style="width: 20px; height: 20px; float: left; background-color: @Model.Colors[i].Color">
+                </div>
+            </td>
+            <td style="min-width: 150px;">@Model.Assessors.Values.ElementAt(i)</td>
+        }
+        <td style="width: 100%"></td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td>
+            <table>
+                <thead>
+                    <tr>
+                        <td class="center-text">My calendar</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 5px;">
+                            <div style="min-width: 300px; max-width: 300px;" data-function="Calendar" data-calendar-type="UserCalendar">
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td>
+            <table>
+                <thead>
+                    <tr>
+                        @foreach (var candidate in Model.Candidates)
+                        {
+                            <td class="center-text">@Html.ActionLink(candidate.FullName, "EditProjectCandidateSimulationScores", "ProjectAssessmentDevelopment", new { area = "Project", id = candidate.ProjectCandidateId }, new { target = candidate.ProjectCandidateId, title="Click on this candidate to open the scoring." })</td>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        @foreach (var candidate in Model.Candidates)
+                        {
+                            <td style="padding: 5px;">
+                                <div style="min-width: 300px; max-width: 300px;" data-function="Calendar" data-calendar-type="CandidateCalendar" data-candidate-id="@candidate.ProjectCandidateId">
+                                </div>
+                            </td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>
+

@@ -1,0 +1,49 @@
+﻿@model IList<Quintessence.QService.QueryModel.Scm.ActivityTypeView>
+<table id="ActivityTypeTable" class="dataTable">
+    <thead>
+        <tr>
+            <th>Activity type</th>
+            <th>Day rate</th>
+            <th>Half day rate</th>
+            <th>Hourly rate</th>
+            <th>Isolated hourly rate</th>
+            <th style="width: 108px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var activityType in Model)
+        {
+            <tr id="node-ActivityType-@activityType.Id" class="expanded">
+                <td colspan="5">@activityType.Name @(activityType.IsSystem ? "(System)" : string.Empty)
+                </td>
+                <td>
+                    <a href="javascript:void(0);" title="Add profile to activity type '@activityType.Name'" data-function="AddActivityTypeProfile" data-id="@activityType.Id" class="add-link">Add</a>
+                    @if (!activityType.IsSystem)
+                    {
+                        <a href="javascript:void(0);" title="Edit activity type" data-function="EditActivityTypeButton" data-id="@activityType.Id" class="edit-link">Edit</a>
+                        <a href="javascript:void(0);" title="Delete activity type" data-function="DeleteActivityTypeButton" data-id="@activityType.Id" class="delete-link">Delete</a>
+                    }
+                </td>
+            </tr>
+                    foreach (var activityTypeProfile in activityType.ActivityTypeProfiles)
+                    {
+            <tr class="child-of-node-ActivityType-@activityType.Id">
+                <td>@activityTypeProfile.ProfileName</td>
+                <td class="right-text">@activityTypeProfile.DayRate.ToString("C")</td>
+                <td class="right-text">@activityTypeProfile.HalfDayRate.ToString("C")</td>
+                <td class="right-text">@activityTypeProfile.HourlyRate.ToString("C")</td>
+                <td class="right-text">@activityTypeProfile.IsolatedHourlyRate.ToString("C")</td>
+                <td>
+                    <a href="javascript:void(0);" title="Edit activity type profile '@activityTypeProfile.ProfileName'" data-function="EditActivityTypeProfile" data-id="@activityTypeProfile.Id" class="edit-link">Edit</a>
+                    <a href="javascript:void(0);" title="Delete activity type profile '@activityTypeProfile.ProfileName'" data-function="DeleteActivityTypeProfile" data-id="@activityTypeProfile.Id" class="delete-link">Delete</a>
+                </td>
+            </tr>
+                    }
+        }
+    </tbody>
+</table>
+<script>
+    $(function () {
+        $('#ActivityTypeTable').treeTable({ persist: true });
+    });
+</script>

@@ -1,0 +1,25 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Admin.Models.AdminActivity.ApplyPriceIndexActionModel
+@using (Html.BeginForm("ApplyPriceIndex", "AdminActivity", FormMethod.Post, new { id = "IndexActivityTypesForm" }))
+{
+    <table class="properties">
+        <tr>
+            <td colspan="2">Please enter the index by which to alter all the default rates.<br />
+                If you want to increase the rates with 2%, enter 102.<br />
+                Decrease the rates with 2% by enterring 98.
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="right-text">&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="label">Index</td>
+            <td class="value">@Html.TextBoxFor(m => m.Index)</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="right-text">
+                <a href="javascript:void(0);" id="SubmitIndexAmountButton" title="Confirm the index change."
+                    class="button">Confirm</a>
+            </td>
+        </tr>
+    </table> 
+}

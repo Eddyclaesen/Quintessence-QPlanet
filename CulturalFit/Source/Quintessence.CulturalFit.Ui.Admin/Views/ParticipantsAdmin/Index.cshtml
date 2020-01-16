@@ -1,0 +1,247 @@
+﻿@model Quintessence.CulturalFit.UI.Admin.Models.Admin.CandidateOverviewModel
+@{
+    ViewBag.Title = "Candidates";
+}
+@section AdditionalStylesheets
+{
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/jquery-ui-dialog.css")" />
+}
+@section AdditionalJavascript
+{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.dataTables.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.8.20.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-dialog.js")"></script>
+    <script>
+        $(function () {
+            InitDialog();
+            SetDataTableLayout();
+            CheckAll();
+            RefreshPage();
+            ShowSavingScreen();
+            InitFormSubmit();
+            ShowExistingRequestsWarningDiv();
+        });
+
+        //Functionality behind Refresh button
+        function RefreshPage() {
+            $('#refresh').click(function () {
+                window.location.reload();
+            });
+        }
+
+        //Sets the layout for the DataTable
+        function SetDataTableLayout() {
+            $('#candidateTable').dataTable({
+                "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "iDisplayLength": -1,
+                "aaSorting": [[3, "desc"]],
+                "aoColumns": [
+                null,
+                null,
+                null,
+                { "sType": "date-uk" },
+                { "sType": "date-uk" },
+                null
+                ],
+                "aoColumnDefs": [
+                    { "bSortable": false, "aTargets": [0] }
+                ]
+            });
+        }
+
+        //Functionality for the "Check all" checkbox
+        function CheckAll() {
+            $('#checkAll').change(function () {
+                var checked = $('#checkAll').is(':checked');
+                $('tbody input[type="checkbox"][disabled!="disabled"]').attr('checked', checked);
+            });
+
+        }
+        
+        //Initializes the dialog box
+        function InitDialog() {           
+            $('#progressDialog').dialog(
+                {
+                    open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
+                    modal: true,
+                    autoOpen: false,
+                    closeOnEscape: false,
+                    closeText: "",
+                    resizable: false,
+                    draggable: false,
+                    width: 250,
+                    height: 100
+                });         
+        }
+
+        //Shows the saving screen
+        function ShowSavingScreen() {
+            $('input[name="createRequests"]').click(function () {
+                $('#progressDialog img').attr('src', '@Url.Content("~/Images/loader.gif")');
+                $('#progressDialog').dialog('open');
+            });
+        }
+        
+        function InitFormSubmit() {
+            $('#participantRequestsForm').submit(function (event) {
+                event.preventDefault();
+                
+                $.ajax({
+                    url: '@Url.Content("~/ParticipantsAdmin/Save/")@Model.ContactId',
+                    type: 'POST',
+                    data: $('input', $('#candidateTable').dataTable().fnGetNodes()).serialize(),
+                    success: function (msg) {
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        $('#progressDialog').dialog('close');
+                        $('#errorHeader p').html('Something went wrong with saving the selected requests...');
+                        $('#errorHeader').animate({ left: 0});
+                        
+                    }
+                });
+            });
+        }
+        
+        function CloseError() {
+            $('#closeError').click(function () {
+                $('#errorHeader').animate({ left: -400 });
+            });
+        }
+        
+        function ShowExistingRequestsWarningDiv() {
+            $('img[data-id=ExistingRequestsImg]').hover(function () {
+                $(this).parent().find('div[data-id=ExistingRequestsOverview]').toggle();
+            });
+        }
+    </script>
+}
+<div id="errorHeader">
+    <p></p>
+    <a href="javascript:CloseError();" id="closeError" class="float-right">Close</a>
+</div>
+<h2>Candidates
+    <img alt="refresh" id="refresh" src="~/Images/refresh.png" height="17" width="17" class="refreshButton" />
+</h2>
+
+@if (!Model.CandidateEntities.Any())
+{
+    <p>No candidates found...</p>
+}
+else
+{
+    
+    using (@Html.BeginForm("Index", "ParticipantsAdmin", FormMethod.Post, new{id="participantRequestsForm"}))
+    {
+    @Html.HiddenFor(m => m.ContactId)
+        <input type="submit" name="createRequests" value="save"/>
+    <br />
+    <br />
+    <table id="candidateTable">
+        <thead>
+            <tr>
+                <th class="center">
+                    <input type="checkbox" checked="" id="checkAll" /></th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>AC Deadline*</th>
+                <th>Request date</th>
+                <th>Verification code</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.CandidateEntities.Count; i++)
+            {
+                <tr>
+                    <td class="center">
+                        @Html.HiddenFor(m => m.CandidateEntities[i].Deadline)                        
+                        @Html.HiddenFor(m => m.CandidateEntities[i].TheoremListRequestId)
+                        @Html.HiddenFor(m => m.CandidateEntities[i].Id)
+                        @Html.HiddenFor(m => m.CandidateEntities[i].ProjectId)
+                        @if (Model.CandidateEntities[i].TheoremListRequestId != Guid.Empty)
+                        {
+                            @Html.CheckBoxFor(m => m.CandidateEntities[i].HasRequest, new { disabled = "disabled" })
+                        }
+                        else
+                        {
+                            @Html.CheckBoxFor(m => m.CandidateEntities[i].HasRequest)
+                        }
+                    </td>
+                    <td>
+                        @Html.HiddenFor(m => m.CandidateEntities[i].FirstName)
+                        @Html.DisplayFor(m => m.CandidateEntities[i].FirstName)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(m => m.CandidateEntities[i].LastName)
+                        @Html.DisplayFor(m => m.CandidateEntities[i].LastName)
+                        @if (Model.CandidateEntities[i].ExistingTheoremListRequest.Count >= 1 && Model.CandidateEntities[i].TheoremListRequestId == Guid.Empty)
+                        {
+                            <img src="~/Images/warning.png" alt="Attention! This name has duplicates!" class="warningIcon" data-id="ExistingRequestsImg"/>
+                            <div data-id="ExistingRequestsOverview">
+                                This name has also been found in following theoremlist requests:<br/><br/>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Company</th>
+                                            <th>Request date</th>
+                                            <th>Verification code</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach(var existing in Model.CandidateEntities[i].ExistingTheoremListRequest)
+                                        {
+                                            <tr>
+                                                <td>@existing.Contact.Name</td>
+                                                <td>@existing.RequestDate</td>
+                                                <td>@existing.VerificationCode</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        @Model.CandidateEntities[i].Deadline.ToShortDateString()
+                    </td>
+
+
+                    <td>
+                        @if (Model.CandidateEntities[i].TheoremListRequestDate != DateTime.MinValue)
+                        {
+                            @Html.HiddenFor(m => m.CandidateEntities[i].TheoremListRequestDate)
+                            @Model.CandidateEntities[i].TheoremListRequestDate.ToShortDateString()
+                        }
+                        else
+                        {
+                            <i>No request</i>
+                        }
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(Model.CandidateEntities[i].TheoremListVerificationCode))
+                        {
+                            @Html.HiddenFor(m => m.CandidateEntities[i].TheoremListVerificationCode)
+                            @Html.DisplayFor(m => m.CandidateEntities[i].TheoremListVerificationCode)
+                        }
+                        else
+                        {
+                            <i>No request</i>
+                        }
+                    </td>
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <br />
+    <input type="submit" name="createRequests" value="save" />
+    <br />
+    <br />
+    <small><i>*AC =  Assessment Center</i></small>
+    <div id="progressDialog" title="Saving...">
+        <img src="~/Images/loader.gif" alt="loading" />
+    </div>
+    }
+}

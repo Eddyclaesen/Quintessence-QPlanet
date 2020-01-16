@@ -1,0 +1,22 @@
+﻿@using Resources
+@model Quintessence.QCare.ViewModel.EvaluationFormBaseModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<fieldset id="intro-fieldset">
+    <legend>
+        @Global.IntroLabel
+    </legend>
+    <div class="auto-width-content">
+        <p>
+            @Global.EvaluationFormAcdcIntroText
+        </p>
+        <div class="right-text">
+            @Html.ActionLink(Global.Next, "Part1", "EvaluationAcdc", new { verificationCode = Model.VerificationCode }, new { @class = "button" })
+        </div>
+    </div>
+</fieldset>

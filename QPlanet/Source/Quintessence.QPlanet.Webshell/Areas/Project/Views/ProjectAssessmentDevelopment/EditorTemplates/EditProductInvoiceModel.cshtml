@@ -1,0 +1,28 @@
+﻿@using Quintessence.QService.QueryModel.Base
+@using Quintessence.QService.QueryModel.Prm
+@model Quintessence.QPlanet.ViewModel.Prm.EditProductInvoiceModel
+<td></td>
+<td>
+    @Model.ProductName
+</td>
+
+<td>
+    @Html.TextBoxFor(m => m.InvoiceAmount)
+</td>
+<td>
+    @{
+        var invoiceStatusType = (InvoiceStatusType)Model.InvoiceStatusCode;
+        switch (invoiceStatusType)
+        {
+            case InvoiceStatusType.Invoiced:
+                @Html.DropDownListFor(m => m.InvoiceStatusCode, Model.CreateInvoiceStatusSelectListItems(Model.InvoiceStatusCode, invoiceStatusType), new{data_control_id="InvoiceStatusType"})        
+                break;
+                
+            default:
+                @EnumMemberNameAttribute.GetName(invoiceStatusType)
+                break;
+        }
+    }
+</td>
+
+

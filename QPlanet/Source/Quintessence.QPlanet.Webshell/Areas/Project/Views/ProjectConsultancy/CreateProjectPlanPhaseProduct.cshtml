@@ -1,0 +1,101 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectConsultancy.CreateProjectPlanPhaseProductModel
+
+@Html.HiddenFor(m => m.ProjectPlanPhaseId)
+@Html.HiddenFor(m => m.ProjectId)
+@Html.HiddenFor(m => m.ProductName)
+
+<div class="row">
+    <div>@Html.DisplayNameFor(m => m.ProductId)</div>
+    <div>@Html.DropDownListFor(m => m.ProductId, Model.ProductSelectListItems)
+    </div>
+</div>
+<div class="row">
+    <div>@Html.DisplayNameFor(m => m.Quantity)</div>
+    <div>@Html.TextBoxFor(m => m.Quantity)</div>
+</div>
+<div class="row">
+    <div>@Html.DisplayNameFor(m => m.UnitPrice)</div>
+    <div>@Html.EditorFor(m => m.UnitPrice)</div>
+</div>
+<div class="row">
+    <div>@Html.DisplayNameFor(m => m.TotalPrice)</div>
+    <div>@Html.EditorFor(m => m.TotalPrice)</div>
+</div>
+<div class="row">
+    <div>@Html.DisplayNameFor(m => m.Deadline) invoicing</div>
+    <div>@Html.TextBox(Html.IdFor(m => m.Deadline).ToString(), Model.Deadline.ToShortDateString(), new { data_function = "CreateProjectPlanPhaseProductModel" })
+    </div>
+</div>
+<div class="row">
+    <div>@Html.DisplayNameFor(m => m.NoInvoice)</div>
+    <div>@Html.CheckBoxFor(m => m.NoInvoice)</div>
+</div>
+<div class="row">
+    <div>@Html.DisplayNameFor(m => m.Notes)</div>
+    <div>@Html.TextAreaFor(m => m.Notes, 4, 50, null)</div>
+</div>
+
+<script>
+    $(function () {
+        $('#@(Html.IdFor(m => m.Deadline))[data-function=CreateProjectPlanPhaseProductModel]').datetimepicker({ dateFormat: "dd/mm/yy", showTimepicker: false });
+
+        var jsData = @Html.Raw(Json.Encode(Model.Products));
+        $('#@(Html.IdFor(m => m.ProductId))').change(function () {
+
+
+            var productId = $('#@(Html.IdFor(m => m.ProductId))').val();
+            var unitPrice = FindProductUnitPrice(productId);
+            $('#@(Html.IdFor(m => m.UnitPrice))').val(unitPrice);
+            var name = FindProductName(productId);
+            $('#@(Html.IdFor(m => m.ProductName))').val(name);
+            RecalcTotalPrice();
+        });
+
+        function FindProductUnitPrice(productId) {
+            var price = 0;
+            $(jsData).each(function(index, data){
+                if(data.Id == productId){
+                    price = jsData[index].UnitPrice;
+                }
+            })
+            return price;
+        }
+
+        function FindProductName(productId) {
+            var name = "";
+            $(jsData).each(function(index, data){
+                if(data.Id == productId){
+                    name = jsData[index].Name + " (" + jsData[index].ProductTypeName + ")";
+                }
+            })
+            return name;
+        }
+
+        $('#@(Html.IdFor(m => m.Quantity))').change(function () {
+            RecalcTotalPrice();
+        });
+
+        $('#@(Html.IdFor(m => m.UnitPrice))').change(function () {
+            RecalcTotalPrice();
+        });
+
+        function RecalcTotalPrice(){
+            var quantity = $('#@(Html.IdFor(m => m.Quantity))').val();
+            var unitPrice = $('#@(Html.IdFor(m => m.UnitPrice))').val();
+            var result = quantity * unitPrice;
+            if (!isNaN(result)){
+                $('#@(Html.IdFor(m => m.TotalPrice))').val(result);
+            }
+            else
+            {
+                unitPrice = unitPrice.replace(",", ".");
+                var result = quantity * unitPrice;
+                if (!isNaN(result)){
+                    $('#@(Html.IdFor(m => m.TotalPrice))').val(result);
+                }
+            }
+        }
+    });
+
+
+</script>

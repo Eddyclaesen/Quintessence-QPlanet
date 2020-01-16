@@ -1,0 +1,151 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quintessence.QPlanet.Webshell", "Source\Quintessence.QPlanet.Webshell\Quintessence.QPlanet.Webshell.csproj", "{B46F013D-605F-4856-8039-E64616C96BA3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "100 QService", "100 QService", "{BE6E33BD-EECE-49A5-B12C-646F7D8DBF87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quintessence.QService.QPlanetService.Contracts", "..\QService\Source\Quintessence.QService.QPlanetService.Contracts\Quintessence.QService.QPlanetService.Contracts.csproj", "{04680AEA-FAD8-4ADA-9D91-386DE6152B63}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "400 Webshell", "400 Webshell", "{4632C7D3-DACE-4330-A352-6F1F030860FD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "200 Infrastructure", "200 Infrastructure", "{DC609023-7FD5-4DA9-AEF9-3D134310CE6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quintessence.QPlanet.Infrastructure", "Source\Quintessence.QPlanet.Infrastructure\Quintessence.QPlanet.Infrastructure.csproj", "{B86B8142-84E0-44D8-A4F4-E443C6239DBB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "300 Model", "300 Model", "{1550A403-FBE5-4D77-9AEB-BBA57FFAEE81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quintessence.QPlanet.ViewModel", "Source\Quintessence.QPlanet.ViewModel\Quintessence.QPlanet.ViewModel.csproj", "{33F76EF6-72FF-4224-BE55-90044A9B1878}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quintessence.QService.QueryModel", "..\QService\Source\Quintessence.QService.QueryModel\Quintessence.QService.QueryModel.csproj", "{C861E521-51A1-4909-9563-A9703FE31917}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quintessence.QService.DataModel", "..\QService\Source\Quintessence.QService.DataModel\Quintessence.QService.DataModel.csproj", "{56A829FA-2175-4C60-9912-09CAB8FDE30B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quintessence.QService.Service.Contracts", "..\QService\Source\Quintessence.QService.Service.Contracts\Quintessence.QService.Service.Contracts.csproj", "{E16355F5-94C4-4A73-8982-C852018936D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quintessence.QService.Core", "..\QService\Source\Quintessence.QService.Core\Quintessence.QService.Core.csproj", "{22E9834E-DB39-410E-AE73-44B2405ACFCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quintessence.QPlanet.Reportshell", "Source\Quintessence.QPlanet.Reportshell\Quintessence.QPlanet.Reportshell.csproj", "{501F9474-A844-4E55-A5A5-809FB5D19B3D}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccLocalPath0 = .
+		SccLocalPath1 = Source\\Quintessence.QPlanet.Webshell
+		SccLocalPath2 = ..\\QService\\Source\\Quintessence.QService.QPlanetService.Contracts
+		SccLocalPath3 = Source\\Quintessence.QPlanet.Infrastructure
+		SccLocalPath4 = Source\\Quintessence.QPlanet.ViewModel
+		SccLocalPath5 = ..\\QService\\Source\\Quintessence.QService.QueryModel
+		SccLocalPath6 = ..\\QService\\Source\\Quintessence.QService.DataModel
+		SccLocalPath7 = ..\\QService\\Source\\Quintessence.QService.Service.Contracts
+		SccLocalPath8 = ..\\QService\\Source\\Quintessence.QService.Core
+		SccLocalPath9 = Source\\Quintessence.QPlanet.Reportshell
+		SccNumberOfProjects = 10
+		SccProjectName1 = Source/Quintessence.QPlanet.Webshell
+		SccProjectName2 = ../QService/Source/Quintessence.QService.QPlanetService.Contracts
+		SccProjectName3 = Source/Quintessence.QPlanet.Infrastructure
+		SccProjectName4 = Source/Quintessence.QPlanet.ViewModel
+		SccProjectName5 = ../QService/Source/Quintessence.QService.QueryModel
+		SccProjectName6 = ../QService/Source/Quintessence.QService.DataModel
+		SccProjectName7 = ../QService/Source/Quintessence.QService.Service.Contracts
+		SccProjectName8 = ../QService/Source/Quintessence.QService.Core
+		SccProjectName9 = Source/Quintessence.QPlanet.Reportshell
+		SccProjectTopLevelParentUniqueName1 = Quintessence.QPlanet.sln
+		SccProjectTopLevelParentUniqueName2 = Quintessence.QPlanet.sln
+		SccProjectTopLevelParentUniqueName3 = Quintessence.QPlanet.sln
+		SccProjectTopLevelParentUniqueName4 = Quintessence.QPlanet.sln
+		SccProjectTopLevelParentUniqueName5 = Quintessence.QPlanet.sln
+		SccProjectTopLevelParentUniqueName6 = Quintessence.QPlanet.sln
+		SccProjectTopLevelParentUniqueName7 = Quintessence.QPlanet.sln
+		SccProjectTopLevelParentUniqueName8 = Quintessence.QPlanet.sln
+		SccProjectTopLevelParentUniqueName9 = Quintessence.QPlanet.sln
+		SccProjectUniqueName1 = Source\\Quintessence.QPlanet.Webshell\\Quintessence.QPlanet.Webshell.csproj
+		SccProjectUniqueName2 = ..\\QService\\Source\\Quintessence.QService.QPlanetService.Contracts\\Quintessence.QService.QPlanetService.Contracts.csproj
+		SccProjectUniqueName3 = Source\\Quintessence.QPlanet.Infrastructure\\Quintessence.QPlanet.Infrastructure.csproj
+		SccProjectUniqueName4 = Source\\Quintessence.QPlanet.ViewModel\\Quintessence.QPlanet.ViewModel.csproj
+		SccProjectUniqueName5 = ..\\QService\\Source\\Quintessence.QService.QueryModel\\Quintessence.QService.QueryModel.csproj
+		SccProjectUniqueName6 = ..\\QService\\Source\\Quintessence.QService.DataModel\\Quintessence.QService.DataModel.csproj
+		SccProjectUniqueName7 = ..\\QService\\Source\\Quintessence.QService.Service.Contracts\\Quintessence.QService.Service.Contracts.csproj
+		SccProjectUniqueName8 = ..\\QService\\Source\\Quintessence.QService.Core\\Quintessence.QService.Core.csproj
+		SccProjectUniqueName9 = Source\\Quintessence.QPlanet.Reportshell\\Quintessence.QPlanet.Reportshell.csproj
+		SccTeamFoundationServer = http://vm-quinttfs:8080/tfs/applications
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Pro|Any CPU = Pro|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{04680AEA-FAD8-4ADA-9D91-386DE6152B63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04680AEA-FAD8-4ADA-9D91-386DE6152B63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04680AEA-FAD8-4ADA-9D91-386DE6152B63}.Pro|Any CPU.ActiveCfg = Pro|Any CPU
+		{04680AEA-FAD8-4ADA-9D91-386DE6152B63}.Pro|Any CPU.Build.0 = Pro|Any CPU
+		{04680AEA-FAD8-4ADA-9D91-386DE6152B63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04680AEA-FAD8-4ADA-9D91-386DE6152B63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22E9834E-DB39-410E-AE73-44B2405ACFCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22E9834E-DB39-410E-AE73-44B2405ACFCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22E9834E-DB39-410E-AE73-44B2405ACFCD}.Pro|Any CPU.ActiveCfg = Pro|Any CPU
+		{22E9834E-DB39-410E-AE73-44B2405ACFCD}.Pro|Any CPU.Build.0 = Pro|Any CPU
+		{22E9834E-DB39-410E-AE73-44B2405ACFCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22E9834E-DB39-410E-AE73-44B2405ACFCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33F76EF6-72FF-4224-BE55-90044A9B1878}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33F76EF6-72FF-4224-BE55-90044A9B1878}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33F76EF6-72FF-4224-BE55-90044A9B1878}.Pro|Any CPU.ActiveCfg = Pro|Any CPU
+		{33F76EF6-72FF-4224-BE55-90044A9B1878}.Pro|Any CPU.Build.0 = Pro|Any CPU
+		{33F76EF6-72FF-4224-BE55-90044A9B1878}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33F76EF6-72FF-4224-BE55-90044A9B1878}.Release|Any CPU.Build.0 = Release|Any CPU
+		{501F9474-A844-4E55-A5A5-809FB5D19B3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{501F9474-A844-4E55-A5A5-809FB5D19B3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{501F9474-A844-4E55-A5A5-809FB5D19B3D}.Pro|Any CPU.ActiveCfg = Pro|Any CPU
+		{501F9474-A844-4E55-A5A5-809FB5D19B3D}.Pro|Any CPU.Build.0 = Pro|Any CPU
+		{501F9474-A844-4E55-A5A5-809FB5D19B3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{501F9474-A844-4E55-A5A5-809FB5D19B3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56A829FA-2175-4C60-9912-09CAB8FDE30B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56A829FA-2175-4C60-9912-09CAB8FDE30B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56A829FA-2175-4C60-9912-09CAB8FDE30B}.Pro|Any CPU.ActiveCfg = Pro|Any CPU
+		{56A829FA-2175-4C60-9912-09CAB8FDE30B}.Pro|Any CPU.Build.0 = Pro|Any CPU
+		{56A829FA-2175-4C60-9912-09CAB8FDE30B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56A829FA-2175-4C60-9912-09CAB8FDE30B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B46F013D-605F-4856-8039-E64616C96BA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B46F013D-605F-4856-8039-E64616C96BA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B46F013D-605F-4856-8039-E64616C96BA3}.Pro|Any CPU.ActiveCfg = Pro|Any CPU
+		{B46F013D-605F-4856-8039-E64616C96BA3}.Pro|Any CPU.Build.0 = Pro|Any CPU
+		{B46F013D-605F-4856-8039-E64616C96BA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B46F013D-605F-4856-8039-E64616C96BA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B86B8142-84E0-44D8-A4F4-E443C6239DBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B86B8142-84E0-44D8-A4F4-E443C6239DBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B86B8142-84E0-44D8-A4F4-E443C6239DBB}.Pro|Any CPU.ActiveCfg = Pro|Any CPU
+		{B86B8142-84E0-44D8-A4F4-E443C6239DBB}.Pro|Any CPU.Build.0 = Pro|Any CPU
+		{B86B8142-84E0-44D8-A4F4-E443C6239DBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B86B8142-84E0-44D8-A4F4-E443C6239DBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C861E521-51A1-4909-9563-A9703FE31917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C861E521-51A1-4909-9563-A9703FE31917}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C861E521-51A1-4909-9563-A9703FE31917}.Pro|Any CPU.ActiveCfg = Pro|Any CPU
+		{C861E521-51A1-4909-9563-A9703FE31917}.Pro|Any CPU.Build.0 = Pro|Any CPU
+		{C861E521-51A1-4909-9563-A9703FE31917}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C861E521-51A1-4909-9563-A9703FE31917}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E16355F5-94C4-4A73-8982-C852018936D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E16355F5-94C4-4A73-8982-C852018936D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E16355F5-94C4-4A73-8982-C852018936D3}.Pro|Any CPU.ActiveCfg = Pro|Any CPU
+		{E16355F5-94C4-4A73-8982-C852018936D3}.Pro|Any CPU.Build.0 = Pro|Any CPU
+		{E16355F5-94C4-4A73-8982-C852018936D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E16355F5-94C4-4A73-8982-C852018936D3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{04680AEA-FAD8-4ADA-9D91-386DE6152B63} = {BE6E33BD-EECE-49A5-B12C-646F7D8DBF87}
+		{22E9834E-DB39-410E-AE73-44B2405ACFCD} = {BE6E33BD-EECE-49A5-B12C-646F7D8DBF87}
+		{33F76EF6-72FF-4224-BE55-90044A9B1878} = {1550A403-FBE5-4D77-9AEB-BBA57FFAEE81}
+		{501F9474-A844-4E55-A5A5-809FB5D19B3D} = {4632C7D3-DACE-4330-A352-6F1F030860FD}
+		{56A829FA-2175-4C60-9912-09CAB8FDE30B} = {BE6E33BD-EECE-49A5-B12C-646F7D8DBF87}
+		{B46F013D-605F-4856-8039-E64616C96BA3} = {4632C7D3-DACE-4330-A352-6F1F030860FD}
+		{B86B8142-84E0-44D8-A4F4-E443C6239DBB} = {DC609023-7FD5-4DA9-AEF9-3D134310CE6B}
+		{C861E521-51A1-4909-9563-A9703FE31917} = {BE6E33BD-EECE-49A5-B12C-646F7D8DBF87}
+		{E16355F5-94C4-4A73-8982-C852018936D3} = {BE6E33BD-EECE-49A5-B12C-646F7D8DBF87}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35
+	EndGlobalSection
+EndGlobal

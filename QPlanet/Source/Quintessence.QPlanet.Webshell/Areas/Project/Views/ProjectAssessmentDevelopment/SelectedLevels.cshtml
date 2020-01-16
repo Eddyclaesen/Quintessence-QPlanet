@@ -1,0 +1,79 @@
+﻿@model List<Quintessence.QService.QueryModel.Prm.ProjectCategoryDetailDictionaryIndicatorView>
+
+<table id="SelectedLevelTable">
+    <thead>
+        <tr>
+            <th style="width: 80%"></th>
+            <th style="width: 10%">Standard</th>
+            <th style="width: 10%">Distinctive</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cluster in Model.GroupBy(cl => cl.DictionaryClusterId))
+        {
+            <tr id="node-SelectedLevelTable-@cluster.Key">
+                <td>@cluster.FirstOrDefault(cl => cl.DictionaryClusterId == cluster.Key).DictionaryClusterName
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            foreach (var competence in cluster.GroupBy(co => co.DictionaryCompetenceId))
+            {
+                var firstCompetence = competence.FirstOrDefault(co => co.DictionaryClusterId == cluster.Key);
+            <tr id="node-SelectedLevelTable-@competence.Key" class="child-of-node-SelectedLevelTable-@cluster.Key">
+                <td>@firstCompetence.DictionaryCompetenceName
+                </td>
+                <td></td>
+                <td></td>
+                <td>
+                    @if (firstCompetence.IsDefinedByRole)
+                    {
+                        @:By Role
+                                }
+                    else
+                    {
+                        <a href="javascript:void(0);" data-function="DeleteCompetenceLink" data-id="@firstCompetence.DictionaryCompetenceId">
+                            Delete</a>
+                    }
+                </td>
+            </tr>
+                    foreach (var level in competence.GroupBy(l => l.DictionaryLevelId))
+                    {
+            <tr id="node-SelectedLevelTable-@level.Key" class="child-of-node-SelectedLevelTable-@competence.Key">
+                <td>@level.FirstOrDefault(co => co.DictionaryLevelId == level.Key).DictionaryLevelName
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                        foreach (var indicator in level)
+                        {
+            <tr id="node-SelectedLevelTable-@indicator.DictionaryIndicatorId" class="child-of-node-SelectedLevelTable-@level.Key">
+                <td>@indicator.DictionaryIndicatorName</td>
+
+                @if (firstCompetence.IsDefinedByRole)
+                {
+                    //If by role, unable to change the isStandard or isDistinctive
+                    <td>@Html.CheckBox("IsNorm", indicator.IsStandard.GetValueOrDefault(false), new { disabled = "disabled" })
+                    </td>
+                    <td>@Html.CheckBox("IsNorm", indicator.IsDistinctive.GetValueOrDefault(false), new { disabled = "disabled" })
+                    </td>
+                }
+                else
+                {
+                    <td>@Html.CheckBox("IsNorm", indicator.IsStandard.GetValueOrDefault(false), new { data_function = "MarkAsStandard", data_id = indicator.Id })
+                    </td>
+                    <td>@Html.CheckBox("IsNorm", indicator.IsDistinctive.GetValueOrDefault(false), new { data_function = "MarkAsDistinctive", data_id = indicator.Id })
+                    </td>
+                }
+
+                <td></td>
+            </tr>
+                        }
+                    }
+            }
+        }
+    </tbody>
+</table>

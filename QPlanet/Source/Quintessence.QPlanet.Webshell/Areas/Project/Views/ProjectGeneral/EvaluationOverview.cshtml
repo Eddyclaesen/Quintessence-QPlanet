@@ -1,0 +1,223 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.EditProjectEvaluationModel
+@using (Html.BeginForm("EvaluationOverview", "ProjectGeneral", FormMethod.Post, new { id = "EvaluationOverviewForm" }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")    
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.LessonsLearned)</div>
+        <div>@Html.TextAreaFor(m => m.LessonsLearned)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.Evaluation)</div>
+        <div>@Html.TextAreaFor(m => m.Evaluation)</div>
+    </div>
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" class="button" id="SaveProjectEvaluationButton">Save</a>
+    </div>
+}
+<h4>QCare website</h4>
+<div id="EvaluationFormsPlaceholder"></div>
+
+<div id="AddEvaluationFormDialog">
+</div>
+
+<h4>Project complaints</h4>
+<div id="ProjectComplaintsPlaceholder"></div>
+
+<div id="AddProjectComplaintDialog">
+</div>
+
+<div id="UpdateProjectComplaintDialog">
+</div>
+
+<script>
+    $(function () {
+        RefreshEvaluationForms();
+        InitializeEvaluationFormDialog();
+        InitializeButtons();
+        InitializeCreateProjectComplaintDialog();
+        InitializeUpdateProjectComplaintDialog();
+    });
+
+    function RefreshEvaluationForms() {
+        $('#EvaluationFormsPlaceholder').loading('Loading evaluation forms...');
+        $('#EvaluationFormsPlaceholder').load('@Url.Action("ListEvaluationForms", "ProjectGeneral", new { crmProjectId = Model.CrmProjectId })', function () {
+            $('#EvaluationFormsDataTable').DataTable();
+        });
+        $('#ProjectComplaintsPlaceholder').loading('Loading complaints...');
+        $('#ProjectComplaintsPlaceholder').load('@Url.Action("ListProjectComplaints", "ProjectGeneral", new {crmProjectId = Model.CrmProjectId})', function () {
+                        $('#ProjectComplaintsDataTable').DataTable();
+                    });
+    }
+
+    function InitializeEvaluationFormDialog() {
+        $('#AddEvaluationFormDialog').dialog(
+                {
+                    autoOpen: false,
+                    modal: false,
+                    resizable: true,
+                    width: 450,
+                    height: 350,
+                    title: 'Add respondent'
+                });
+    }
+    
+    function InitializeUpdateProjectComplaintDialog() {
+        $('#UpdateProjectComplaintDialog').dialog(
+            {
+                autoOpen: false,
+                modal: false,
+                resizable: true,
+                width: 450,
+                height: 425,
+                title: 'Update complaint'
+            });
+    }
+
+    function InitializeCreateProjectComplaintDialog() {
+        $('#AddProjectComplaintDialog').dialog(
+            {
+                autoOpen: false,
+                modal: false,
+                resizable: true,
+                width: 450,
+                height: 425,
+                title: 'Add complaint'
+            });
+    }
+
+    function InitializeButtons() {
+        $(this).on('click', '#AddEvaluationFormButton', null, function () {
+            $('#AddEvaluationFormDialog').dialog('open');
+            $('#AddEvaluationFormDialog').loading('Loading...');
+            $('#AddEvaluationFormDialog').load('@Url.Action("CreateEvaluationForm", "ProjectGeneral", new { crmProjectId = Model.CrmProjectId })');
+        });
+        $(this).on('click', '#AddProjectComplaintButton', null, function () {
+            $('#AddProjectComplaintDialog').dialog('open');
+            $('#AddProjectComplaintDialog').loading('Loading...');
+            $('#AddProjectComplaintDialog').load('@Url.Action("CreateProjectComplaint", "ProjectGeneral", new { crmProjectId = Model.CrmProjectId })');
+        });
+
+        
+        $(this).on('click', '#RefreshEvaluationFormButton', null, function () {
+            RefreshEvaluationForms();
+        });
+
+        $(this).on('click', '#AddEvaluationFormSubmitButton', null, function () {
+            var form = $('#CreateEvaluationFormForm');
+            form.validate({
+                rules: {
+                    FirstName: { required: true },
+                    LastName: { required: true },
+                    Email: { required: true, email: true }
+                },
+                messages: {
+                    FirstName: "First name is required",
+                    LastName: "Last name is required",
+                    Email: { required: "Email is required", email: "Not a valid email." }
+                },
+                errorPlacement: function (error, element) {
+                    var container = $('<div />');
+                    error.insertAfter(element);
+                    error.wrap(container);
+                }
+            });
+            if (form.validate().form()) {
+                ShowDetailSaveDialog();
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function () {
+                        HideDetailSaveDialog();
+                        $('#AddEvaluationFormDialog').dialog('close');
+                        RefreshEvaluationForms();
+                    },
+                    error: function (x, y, z) {
+                        HideDetailSaveDialog();
+                        alert(x.statusText);
+                    }
+                });
+            }
+        });
+        
+        $(this).on('click', '#AddProjectComplaintSubmitButton', null, function () {
+            var form = $('#CreateProjectComplaintForm');
+            form.validate({
+                rules: {
+                    Subject: { required: true },
+                    SubmitterName: { required: true },
+                    ComplaintDate: { required: true }
+                },
+                messages: {
+                    Subject: "Subject is required",
+                    SubmitterName: "Submitter is required",
+                    ComplaintDate: "Date is required"
+                },
+                errorPlacement: function (error, element) {
+                    var container = $('<div />');
+                    error.insertAfter(element);
+                    error.wrap(container);
+                }
+
+            });
+            if (form.validate().form()) {
+                ShowDetailSaveDialog();
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function () {
+                        HideDetailSaveDialog();
+                        $('#AddProjectComplaintDialog').dialog('close');
+                        RefreshEvaluationForms();
+                    },
+                    error: function (x, y, z) {
+                        HideDetailSaveDialog();
+                        alert(x.statusText);
+                    }
+                });
+            }
+        });
+        
+        $(this).on('click', '#UpdateProjectComplaintSubmitButton', null, function () {
+            var form = $('#UpdateProjectComplaintForm');
+            form.validate({
+                rules: {
+                    Subject: { required: true },
+                    SubmitterName: { required: true },
+                    ComplaintDate: { required: true }
+                },
+                messages: {
+                    Subject: "Subject is required",
+                    SubmitterName: "Submitter is required",
+                    ComplaintDate: "Date is required"
+                },
+                errorPlacement: function (error, element) {
+                    var container = $('<div />');
+                    error.insertAfter(element);
+                    error.wrap(container);
+                }
+
+            });
+            if (form.validate().form()) {
+                ShowDetailSaveDialog();
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function () {
+                        HideDetailSaveDialog();
+                        $('#UpdateProjectComplaintDialog').dialog('close');
+                        RefreshEvaluationForms();
+                    },
+                    error: function (x, y, z) {
+                        HideDetailSaveDialog();
+                        alert(x.statusText);
+                    }
+                });
+            }
+        });
+    }
+</script>

@@ -1,0 +1,75 @@
+﻿@using Quintessence.QPlanet.Infrastructure.Nullable
+@using Quintessence.QService.QueryModel.Base
+@using Quintessence.QService.QueryModel.Prm
+@model Quintessence.QPlanet.ViewModel.Fin.EditAccountantConsultancyProjectFixedPriceInvoicingEntryModel
+<td>
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.AuditCreatedBy)
+    @Html.HiddenFor(m => m.AuditCreatedOn)
+    @Html.HiddenFor(m => m.AuditDeletedBy)
+    @Html.HiddenFor(m => m.AuditDeletedOn)
+    @Html.HiddenFor(m => m.AuditIsDeleted)
+    @Html.HiddenFor(m => m.AuditModifiedBy)
+    @Html.HiddenFor(m => m.AuditModifiedOn)
+    @Html.HiddenFor(m => m.AuditVersionId)
+    @if (Model.InvoiceStatusCode != 100)
+    {
+        <div class="circle-status-not-done"></div>            
+    }
+    else
+    {
+        <div class="circle-status-done"></div>            
+    }
+</td>
+<td>@Model.CrmProjectName</td>
+<td>
+    @Html.HiddenFor(m => m.DetailType)
+    @Model.ProductName
+</td>
+<td>@Model.ContactName</td>
+<td>@Model.ProjectName</td>
+<td>@Model.Date</td>
+<td>@Model.PurchaseOrderNumber</td>
+<td>@Html.EditorFor(m => m.InvoiceAmount)</td>
+<td>@Html.EditorFor(m=>m.InvoicedDate, "NullableDateEditorTemplate")</td>
+@if (Model.InvoiceStatusCode != 100)
+{
+    <td>@Html.DropDownListFor(m => m.InvoiceStatusCode, Model.CreateInvoiceStatusDropDownList(Model.InvoiceStatusCode), new { @class = "dropdown-width" })</td>
+}
+else
+{
+    <td>
+        @Html.HiddenFor(m => m.InvoiceStatusCode)
+        @(EnumMemberNameAttribute.GetName((InvoiceStatusType)Model.InvoiceStatusCode))
+    </td>
+}
+<td>@Html.EditorFor(m => m.InvoiceNumber)</td>
+<td>@Html.TextBoxFor(m => m.InvoiceRemarks, new { data_function = "InvoiceRemarks" })
+<td>
+    @if (Model.ProposalId.HasValue)
+    {
+        @Html.CheckBox("AddProposal", true, new
+        {            
+            disabled = "disabled"
+        })
+    }
+    else
+    {
+        @Html.CheckBox("AddProposal", false, new
+        {
+            data_function = "ProposalForConsultancyProjectFixedPrice", 
+            data_name = "ProposalAdded",
+            data_Id = @Model.Id,
+            data_VersionId = @Model.AuditVersionId,
+            data_ProjectName = @Model.ProjectName,
+            data_ProductName = @Model.ProductName,
+            data_ContactId = @Model.ContactId,  
+            data_InvoiceAmount = @Model.InvoiceAmount                    
+        })
+    }   
+</td>
+<td title="@Model.ProjectManagerFullName">@Model.ProjectManagerUserName</td>
+<td title="@Model.CustomerAssistantFullName">@Model.CustomerAssistantUserName</td>
+<td>
+    <a href="javascript:void(0);" data-function="SaveAccountantInvoicingEntryRowButton" class="save-link" title="Save">Save</a>
+</td>

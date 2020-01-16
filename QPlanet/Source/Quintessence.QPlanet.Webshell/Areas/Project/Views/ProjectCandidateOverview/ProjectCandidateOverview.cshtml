@@ -1,0 +1,41 @@
+﻿@using Quintessence.QService.QueryModel.Prm
+@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectCandidateOverview.ProjectCandidateOverviewActionModel
+
+<table id="ProjectCandidatesOverviewDataTable" class="dataTable ProjectCandidatesOverviewDataTable">
+    <thead>
+        <tr>
+            <th style="text-align:left">Contact</th>
+            <th style="text-align:left">Name</th>
+            <th style="text-align:left">Type</th>
+            <th style="text-align:left" title="Language"></th>
+            <th style="min-width: 100px; text-align:left">Function</th>
+            <th style="text-align:center">Date</th>
+            <th style="text-align:center">Time</th>
+            <th style="text-align:left" title="Location">Loc</th>
+            <th style="text-align:left" title="Consultants">Cons</th>
+            <th style="min-width: 100px; text-align: center">OC out</th>
+            <th style="min-width: 100px; text-align: center">OC in</th>
+            <th style="min-width: 100px; text-align: center">Invitation sent</th>
+            <th style="text-align:center" title="Cultural Fit">CF</th>
+            <th style="min-width: 100px; text-align: center">Dossier ready</th>
+            <th style="text-align:left" title="Project manager">PM</th>
+            <th style="min-width: 100px; text-align: center" title="Report Deadline">RD</th>
+            <th style="text-align:left" title="Report recipient(s)">RR</th>
+            <th style="text-align:left" title="Invoice amount">€</th>
+            <th style="text-align:left" title="Customer assistant">CA</th>
+            <th style="text-align:left">Remarks</th>
+            <th style="min-width: 100px; text-align:center">Extra 1</th>
+            <th style="min-width: 100px; text-align: center">Extra 2</th>
+            <th style="min-width: 25px; text-align:left" title="Follow-up done">Done</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ProjectCandidateOverviewEntryView entry in Model.ProjectCandidateOverviewEntries)
+        {
+            Html.RenderPartial("ProjectCandidateOverviewEntry", entry);
+        }
+    </tbody>
+
+</table>
+
+<div id="ProjectCandidateRemarksDialog"></div>

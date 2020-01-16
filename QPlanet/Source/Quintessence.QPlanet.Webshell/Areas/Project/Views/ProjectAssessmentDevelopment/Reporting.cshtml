@@ -1,0 +1,101 @@
+﻿@using Quintessence.QService.QPlanetService.Contracts.DataContracts.ReportManagement
+@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectAssessmentDevelopment.ReportingActionModel
+
+@Html.EditorFor(m => m, "BaseEntityViewTemplate")
+
+<!--<h4>Reporting</h4>    //THIS PART IS MOVED TO CUSTOMER FEEDBACK
+
+<table class="dataTable">
+    <thead>
+        <tr>
+            <th>Report</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <label>
+                    @Html.RadioButton(Html.IdFor(m => m.CandidateReportDefinitionId).ToString(), string.Empty, !Model.CandidateReportDefinitionId.HasValue)
+                    No report
+                </label>
+            </td>
+        </tr>
+        @foreach (var definition in Model.CandidateReportDefinitions)
+        {
+            <tr>
+                <td>
+                    <label>
+                        @Html.RadioButton(Html.IdFor(m => m.CandidateReportDefinitionId).ToString(), definition.Id, Model.CandidateReportDefinitionId == definition.Id)
+                        @definition.Name
+                    </label>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+<br />
+
+<table class="dataTable">
+    <thead>
+        <tr>
+            <th>Score report</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reportType in Model.ReportTypes)
+        {
+            <tr>
+                <td>
+                    <label>
+                        @Html.RadioButton(Html.IdFor(m => m.CandidateScoreReportTypeId).ToString(), reportType.Id, Model.CandidateScoreReportTypeId == reportType.Id)
+                        @reportType.Name
+                    </label>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+<br />-->
+<h4>Documents</h4>
+
+<table class="dataTable" id="ReportDefinitionTable">
+    <thead>
+        <tr>
+            <th>Document</th>
+            <th>Pdf</th>
+            <th>Word</th>
+            <th>Excel</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reportDefinition in Model.ReportDefinitions)
+        {
+            <tr>
+                <td>@reportDefinition.Name</td>
+                <td>
+                    @if (reportDefinition.ExportAsPdf)
+                    {
+                        @Html.ActionLink("PDF", "GenerateReport", "ProjectGeneral", new { id = Model.Id, code = "PROJECT", reportDefinitionId = reportDefinition.Id, outputFormat = ReportOutputFormat.Pdf }, null)
+                    }
+                </td>
+                <td>
+                    @if (reportDefinition.ExportAsWord)
+                    {
+                        @Html.ActionLink("Word", "GenerateReport", "ProjectGeneral", new { id = Model.Id, code = "PROJECT", reportDefinitionId = reportDefinition.Id, outputFormat = ReportOutputFormat.Word }, null)
+                    }
+                </td>
+                <td>
+                    @if (reportDefinition.ExportAsExcel)
+                    {
+                        @Html.ActionLink("Excel", "GenerateReport", "ProjectGeneral", new { id = Model.Id, code = "PROJECT", reportDefinitionId = reportDefinition.Id, outputFormat = ReportOutputFormat.Excel }, null)
+                    }
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

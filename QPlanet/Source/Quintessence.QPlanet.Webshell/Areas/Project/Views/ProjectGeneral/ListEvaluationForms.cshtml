@@ -1,0 +1,44 @@
+﻿@model List<Quintessence.QService.QueryModel.Prm.EvaluationFormView>
+    <table id="EvaluationFormsDataTable">
+        <thead>
+            <tr>
+                <th>M/F</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Code</th>
+                <th>Mail status</th>
+                <th title="Language"></th>
+                <th>Form</th>
+                <th>Creation</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var evaluationForm in Model)
+            {
+                <tr>
+                    <td>@evaluationForm.Gender</td>
+                    <td>@(string.Format("{0} {1}", evaluationForm.FirstName, evaluationForm.LastName))
+                    </td>
+                    <td>@evaluationForm.Email</td>
+                    <td>@evaluationForm.VerificationCode</td>
+                    <td>@evaluationForm.MailStatusName</td>
+                    <td>@evaluationForm.LanguageCode</td>
+                    <td>@evaluationForm.EvaluationFormName</td>
+                    <td>@evaluationForm.Audit.CreatedOn.ToShortDateString()<br />@evaluationForm.Audit.CreatedOn.ToShortTimeString()
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)" data-function="SendEvaluationFormEmailButton" data-evaluation-form-id="@evaluationForm.Id">
+                            Invite</a>
+                        @Html.ActionLink("Download", "GenerateEvaluationReport", new {id = evaluationForm.Id})
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" class="button" id="RefreshEvaluationFormButton">Refresh</a>
+        <a href="javascript:void(0);" class="button" id="AddEvaluationFormButton">Add</a>
+    </div>

@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[Activity]
+	ADD CONSTRAINT [PK_Activity] 
+	PRIMARY KEY NONCLUSTERED ([Id])

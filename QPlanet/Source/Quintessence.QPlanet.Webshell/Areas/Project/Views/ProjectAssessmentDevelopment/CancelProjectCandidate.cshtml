@@ -1,0 +1,18 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.CancelProjectCandidateModel
+
+@using (Html.BeginForm("CancelProjectCandidate", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "CancelProjectCandidateForm", data_id = Model.Id, data_name = Model.CandidateFullName }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    <div class="row">
+        <div>@Html.LabelFor(m => m.CancelledDate)</div>
+        <div>@Html.EditorFor(m => m.CancelledDate, "DateEditorTemplate")</div>
+    </div>
+    <div class="row">
+        <div>@Html.LabelFor(m => m.CancelledReason)</div>
+        <div>@Html.TextAreaFor(m => m.CancelledReason, 7, 40, null)</div>
+    </div>
+    <div class="row">
+        <div>@Html.LabelFor(m => m.CancelledInvoiceAmount)</div>
+        <div>@Html.EditorFor(m => m.CancelledInvoiceAmount)</div>
+    </div>
+}

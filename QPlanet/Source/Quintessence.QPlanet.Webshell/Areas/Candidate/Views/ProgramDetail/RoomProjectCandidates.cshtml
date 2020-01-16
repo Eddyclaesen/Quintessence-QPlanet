@@ -1,0 +1,44 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Candidate.Models.ProgramDetail.RoomProjectCandidatesActionModel
+
+<p>
+    Remove a candidate
+</p>
+
+<table class="dataTable">
+    <thead>
+        <tr>
+            <th style="width: 100%;">Candidate</th>
+            <th style="width: 72px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var candidate in Model.Candidates)
+        {
+            <tr>
+                <td>@candidate.Value</td>
+                <td><a href="javascript:void(0);" data-function="UnplanCandidateLink" data-project-candidate-id="@candidate.Key">
+                        Delete</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br/>
+<br/>
+
+<p>
+    Clear the room
+</p>
+<table class="dataTable">
+    <thead>
+        <tr>
+            <th style="width: 100%;">Room</th>
+            <th style="width: 72px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.AssessmentRoom.Name</td>
+            <td><a href="javascript:void(0);" data-function="ClearRoomLink" data-room-id="@Model.AssessmentRoom.Id">Delete</a></td>
+        </tr>
+    </tbody>
+</table>

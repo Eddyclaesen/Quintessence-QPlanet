@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Quintessence.QService.QueryModel.Dim.DictionaryView>
+<table class="list">
+    <thead>
+        <tr>
+            <th style="width: 70%;">Name</th>
+            <th style="width: 30%;">Current</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            var dictionary = Model.ElementAt(i);
+            if (i % 2 == 0)
+            {
+            <tr class="even">
+                <td>@Html.ActionLink(dictionary.Name, "Edit", "DictionaryDetail",new { Id = dictionary.Id }, new { target = "DictionaryDetailEdit" })</td>
+                <td style="text-align: center">@Html.DisplayFor(m => m.ElementAt(i).Current)</td>
+                <td>@Html.ActionLink("Edit", "Edit", "DictionaryDetail", new { Id = dictionary.Id }, new { target = "DictionaryDetailEdit" })
+                </td>
+            </tr>
+            }
+            else
+            {
+            <tr class="odd">
+                <td>@Html.ActionLink(dictionary.Name, "Edit", "DictionaryDetail",new { Id = dictionary.Id }, new { target = "DictionaryDetailEdit" })</td>
+                <td style="text-align: center">@Html.DisplayFor(m => m.ElementAt(i).Current)</td>
+                <td>@Html.ActionLink("Edit", "Edit", "DictionaryDetail", new { Id = dictionary.Id }, new { target = "DictionaryDetailEdit" })
+            </tr>
+  
+            }
+        }
+    </tbody>
+</table>

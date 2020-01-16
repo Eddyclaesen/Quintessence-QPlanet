@@ -1,0 +1,98 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectDetailControllerBase.ProjectUnitPricesActionModel
+
+@if (Model.ProjectCategoryDetails.Any())
+{
+    using (Html.BeginForm("ProjectUnitPrices", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "ProjectUnitPricesForm" }))
+    {
+        @Html.HiddenFor(m => m.ProjectId)
+        for (int i = 0; i < Model.ProjectCategoryDetails.Count; i++)
+        {
+    <div class="row">
+        <div>
+            @Html.EditorFor(m => m.ProjectCategoryDetails[i], "BaseEntityViewTemplate")
+            @Html.HiddenFor(m => m.ProjectCategoryDetails[i].ProjectTypeCategoryIsMain)
+            @Html.DisplayFor(m => m.ProjectCategoryDetails[i].ProjectTypeCategoryName)
+        </div>
+        <div>
+            @Html.TextBoxFor(m => m.ProjectCategoryDetails[i].UnitPrice, new { data_project_type_category_id = @Model.ProjectCategoryDetails[i].ProjectTypeCategoryId })
+            <a href="javascript:void(0);" data-id="@Model.ProjectCategoryDetails[i].ProjectTypeCategoryId" data-function="ShowUnitPricesOverview" title="Show unit prices">
+                <img alt="prices" src="@Url.Content("~/Images/Icons/calculator16.png")" />
+            </a>
+        </div>
+    </div>
+        }
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" class="button" id="SaveProjectUnitPricesButton">Save</a>
+    </div>
+    }
+}
+else
+{
+    <div class="justify-text">No main category and/or subcategories chosen... You can add a main category and/or subcategories on the <a href="javascript:void(0);" data-function="ProjectInformationTabLink">Project information</a> section.</div>
+}
+
+<div id="ShowUnitPricesDialog">
+    <div id="UnitPricesOverviewPlaceholder"></div>
+</div>
+
+<script>
+    $(function () {
+        InitializeLinks();
+        InitializeButtons();
+        InitializeDialogs();
+    });
+
+    function InitializeLinks() {
+        $('a[data-function=ProjectInformationTabLink]').click(function () {
+            $('#Tabs a[href=#ProjectInformation]').click();
+        });
+    }
+
+    function InitializeButtons() {
+        $(this).on('click', 'a[data-function=ShowUnitPricesOverview]', null, function () {
+            $('#ShowUnitPricesDialog').dialog('open');
+            $('#UnitPricesOverviewPlaceholder').loading('Loading unit prices...');
+            var url = '@Url.Action("ListProjectTypeCategoryUnitPrices")/' + $(this).attr('data-id');
+            $('#UnitPricesOverviewPlaceholder').load(url);
+        });
+
+        $('#SaveProjectUnitPricesButton').click(function () {
+            var form = $('#ProjectUnitPricesForm');
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                success: function () {
+                    HideDetailSaveDialog();
+                },
+                error: function (err) {
+                    HideDetailSaveDialog();
+                    ShowDetailErrorDialog('Save project unit prices.', err);
+                }
+            });
+        });
+
+        //See CopyUnitPrice link on ListProjectTypeCategoryUnitPrices.cshtml
+        $(this).on('click', 'a[data-function=CopyUnitPrice]', null, function () {
+            var projectTypeCategoryId = $(this).attr('data-project-type-category-id');
+            var unitPrice = $(this).attr('data-value');
+            $('input[type=text][data-project-type-category-id=' + projectTypeCategoryId + ']').val(unitPrice);
+            $('#ShowUnitPricesDialog').dialog('close');
+        });
+    }
+
+    function InitializeDialogs() {
+        $('#ShowUnitPricesDialog').dialog(
+                      {
+                          autoOpen: false,
+                          modal: true,
+                          width: 400,
+                          height: 350,
+                          title: 'Unit prices',
+                      });
+    }
+
+
+</script>

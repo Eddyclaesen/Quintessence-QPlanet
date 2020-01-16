@@ -1,0 +1,66 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectCandidateReportingOverview.ProjectCandidateReportingOverviewRowModel
+<tr data-id="@Model.ReportingOverviewEntry.Id" data-version-id="@Model.ReportingOverviewEntry.AuditVersionId">
+    <td>
+        @Html.DisplayTextFor(m => m.ReportingOverviewEntry.CandidateFullName)
+    </td>
+    <td>@Html.DisplayTextFor(m => m.ReportingOverviewEntry.ContactName)</td>
+    <td>@Html.DisplayTextFor(m => m.ReportingOverviewEntry.ReportLanguage)</td>
+    <td>
+        @Html.TextBox("ReportDeadline", @Model.ReportingOverviewEntry.ReportDeadline.ToShortDateString(), new
+   {
+       @id = @Model.ReportingOverviewEntry.Id + "-" + "ReportDeadline", //Avoid duplicate id's by overriding id.
+       data_name = "ReportDeadline",
+       data_type = "DateTime"
+   })
+        <a href="javascript:void(0);" data-function="SaveFieldButton" data-save-type="0">
+            <img src="@Url.Content("~/Images/Icons/save16.png")" class="icon" alt="Save" />
+        </a>
+    </td>
+
+    <td title="@Model.ReportingOverviewEntry.ReportStatusName">
+        @Html.DropDownListFor(m => m.ReportingOverviewEntry.ReportStatusId, Model.CreateReportStatusDropDownList(Model.ReportingOverviewEntry.ReportStatusId), new { data_name = "ReportStatusId", @class="dropdown-width" })
+        <a href="javascript:void(0);" data-function="SaveFieldButton" data-save-type="0">
+            <img src="@Url.Content("~/Images/Icons/save16.png")" class="icon" alt="Save" />
+        </a>
+    </td>
+    <td>
+        <a href="javascript:void(0);" data-function="EditCandidateRemarksButton" data-project-candidate-id="@Model.ReportingOverviewEntry.Id" class="edit-link">Edit</a>
+    </td>
+    <td>
+        @if (string.IsNullOrEmpty(Model.ReportingOverviewEntry.ReportRemarks))
+        {
+            <i>None</i>
+        }
+        else
+        {
+            <a href="javascript:void(0);" data-name="ReportRemarks" data-text="@Model.ReportingOverviewEntry.ReportRemarks">
+                Show
+            </a>
+        }
+    </td>
+    <td class="center-text">@Html.CheckBox("IsRevisionByPmRequired", Model.ReportingOverviewEntry.IsRevisionByPmRequired, new { disabled = "disabled" })</td>
+    <td class="center-text">@Html.CheckBox("SendReportToParticipant", Model.ReportingOverviewEntry.SendReportToParticipant, new { disabled = "disabled" })</td>
+    <td>
+        @if (string.IsNullOrEmpty(Model.ReportingOverviewEntry.SendReportToParticipantRemarks))
+        {
+            <i>None</i>
+        }
+        else
+        {
+            <a href="javascript:void(0);" data-name="SendReportToParticipantRemarks" data-text="@Model.ReportingOverviewEntry.SendReportToParticipantRemarks">
+                Show
+            </a>
+        }
+    </td>
+    <td title="@Model.ReportingOverviewEntry.Assessors">@Model.ReportingOverviewEntry.AssessorUserNames</td>
+    <td title="@Model.ReportingOverviewEntry.ProjectManagerFullName">@Html.DisplayTextFor(m => m.ReportingOverviewEntry.ProjectManagerUserName)</td>
+    <td>@Html.DisplayTextFor(m => m.ReportingOverviewEntry.ReportRecipients)</td>
+    <td title="@Model.ReportingOverviewEntry.CustomerAssistantFullName">@Html.DisplayTextFor(m => m.ReportingOverviewEntry.CustomerAssistantUserName)</td>
+    <td>
+        @Html.DropDownListFor(m => m.ReportingOverviewEntry.ReportReviewerId, Model.CreateUserDropDownList(Model.ReportingOverviewEntry.ReportReviewerId), new { data_name = "ReportReviewerId", @class="dropdown-width" })
+        <a href="javascript:void(0);" data-function="SaveFieldButton" data-save-type="0">
+            <img src="@Url.Content("~/Images/Icons/save16.png")" class="icon" alt="Save" />
+        </a>
+    </td>
+
+</tr>

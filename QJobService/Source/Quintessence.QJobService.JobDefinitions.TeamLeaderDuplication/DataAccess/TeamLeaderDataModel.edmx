@@ -1,0 +1,1115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TeamLeaderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Call">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="int" Nullable="false" />
+          <Property Name="DueDate" Type="datetime" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="128" />
+          <Property Name="CallDateTime" Type="datetime" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="64" />
+          <Property Name="Gsm" Type="nvarchar" MaxLength="64" />
+          <Property Name="RelatedProjectId" Type="int" />
+          <Property Name="RelatedMilestoneId" Type="int" />
+          <Property Name="ForType" Type="nvarchar" MaxLength="64" />
+          <Property Name="ForId" Type="int" />
+          <Property Name="Klant" Type="nvarchar" MaxLength="128" />
+          <Property Name="Intern" Type="nvarchar" MaxLength="128" />
+          <Property Name="Sales" Type="nvarchar" MaxLength="128" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" />
+          <Property Name="TaxCode" Type="nvarchar" MaxLength="32" />
+          <Property Name="BusinessType" Type="nvarchar" MaxLength="64" />
+          <Property Name="Street" Type="nvarchar" MaxLength="128" />
+          <Property Name="Number" Type="nvarchar" MaxLength="32" />
+          <Property Name="ZipCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="City" Type="nvarchar" MaxLength="128" />
+          <Property Name="Country" Type="nvarchar" MaxLength="128" />
+          <Property Name="Website" Type="nvarchar" MaxLength="128" />
+          <Property Name="Email" Type="nvarchar" MaxLength="128" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="64" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="64" />
+          <Property Name="Iban" Type="nvarchar" MaxLength="32" />
+          <Property Name="Bic" Type="nvarchar" MaxLength="12" />
+          <Property Name="LanguageCode" Type="varchar" MaxLength="2" />
+          <Property Name="Afdeling" Type="nvarchar" MaxLength="128" />
+          <Property Name="AccountManagerId" Type="int" />
+          <Property Name="AccountManagerTwo" Type="nvarchar" MaxLength="128" />
+          <Property Name="Assistent" Type="nvarchar" MaxLength="64" />
+          <Property Name="DateAdded" Type="datetime" />
+          <Property Name="DateEdited" Type="datetime" />
+          <Property Name="Status" Type="nvarchar" MaxLength="64" />
+          <Property Name="Business" Type="nvarchar" MaxLength="128" />
+          <Property Name="FidelisatieNorm" Type="nvarchar" MaxLength="128" />
+          <Property Name="FocusList" Type="bit" />
+          <Property Name="LinkedInProfile" Type="nvarchar(max)" />
+          <Property Name="Sector" Type="nvarchar" MaxLength="128" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="64" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="128" />
+          <Property Name="Street" Type="nvarchar" MaxLength="128" />
+          <Property Name="Number" Type="nvarchar" MaxLength="10" />
+          <Property Name="Zipcode" Type="nvarchar" MaxLength="10" />
+          <Property Name="City" Type="nvarchar" MaxLength="128" />
+          <Property Name="Country" Type="nvarchar" MaxLength="128" />
+          <Property Name="Website" Type="nvarchar" MaxLength="128" />
+          <Property Name="Email" Type="nvarchar" MaxLength="128" />
+          <Property Name="Gsm" Type="nvarchar" MaxLength="64" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="64" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="64" />
+          <Property Name="Gender" Type="varchar" MaxLength="2" />
+          <Property Name="LanguageCode" Type="varchar" MaxLength="2" />
+          <Property Name="DateAdded" Type="datetime" />
+          <Property Name="DateEdited" Type="datetime" />
+          <Property Name="Status" Type="nvarchar" MaxLength="64" />
+          <Property Name="LegacyId" Type="int" />
+          <Property Name="Positie" Type="nvarchar" MaxLength="128" />
+          <Property Name="FormerEmployee" Type="nvarchar" MaxLength="128" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ContactCompany">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="int" Nullable="false" />
+          <Property Name="ContactId" Type="int" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="Function" Type="nvarchar" MaxLength="128" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ContactProject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ProjectTeamLeaderId" Type="int" Nullable="false" />
+          <Property Name="Group" Type="nvarchar" MaxLength="128" />
+          <Property Name="ObjectType" Type="nvarchar" MaxLength="64" />
+          <Property Name="ObjectId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" />
+          <Property Name="Role" Type="nvarchar" MaxLength="128" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="64" />
+          <Property Name="Email" Type="nvarchar" MaxLength="128" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Deal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="128" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="128" />
+          <Property Name="QuatationNr" Type="int" />
+          <Property Name="TotalPriceExclVat" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Probability" Type="int" />
+          <Property Name="PhaseId" Type="int" />
+          <Property Name="ResponsibleUserId" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="LatestActivityDate" Type="datetime" />
+          <Property Name="CloseDate" Type="datetime" />
+          <Property Name="DateLost" Type="datetime" />
+          <Property Name="ReasonRefused" Type="nvarchar(max)" />
+          <Property Name="SourceId" Type="int" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DealPhase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DealSource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DuplicationErrorLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogDateUtc" Type="datetime" Nullable="false" />
+          <Property Name="Info" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="DuplicationJobHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="JobName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="Succeeded" Type="bit" />
+          <Property Name="Info" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="DuplicationSettings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Key" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Meeting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="int" Nullable="false" />
+          <Property Name="DurationMinutes" Type="int" />
+          <Property Name="DateTimeStamp" Type="datetime" />
+          <Property Name="MeetingDate" Type="datetime" />
+          <Property Name="RelatedProjectId" Type="int" />
+          <Property Name="RelatedMilestoneId" Type="int" />
+          <Property Name="Title" Type="nvarchar" MaxLength="128" />
+          <Property Name="CreatorId" Type="int" />
+          <Property Name="CancellerId" Type="int" />
+          <Property Name="Afwezig" Type="nvarchar" MaxLength="128" />
+          <Property Name="Bedrijf" Type="nvarchar" MaxLength="128" />
+          <Property Name="Klant" Type="nvarchar" MaxLength="128" />
+          <Property Name="Intern" Type="nvarchar" MaxLength="128" />
+          <Property Name="Sales" Type="nvarchar" MaxLength="128" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+          <Property Name="Location" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="MeetingContact">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="MeetingId" Type="int" Nullable="false" />
+          <Property Name="ContactTeamLeaderId" Type="int" Nullable="false" />
+          <Property Name="ContactName" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="MeetingUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="MeetingId" Type="int" Nullable="false" />
+          <Property Name="UserTeamLeaderId" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="PlannedTask">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="TodoId" Type="int" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="DurationMinutes" Type="int" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="ProjectId" Type="int" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ExternalId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" />
+          <Property Name="Vat" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="BookingAccount" Type="nvarchar" MaxLength="128" />
+          <Property Name="BookingAccountId" Type="int" />
+          <Property Name="Stock" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="128" />
+          <Property Name="Phase" Type="nvarchar" MaxLength="64" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="LegacyId" Type="int" />
+          <Property Name="BoekJaar" Type="nvarchar" MaxLength="32" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="64" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="128" />
+          <Property Name="Intern" Type="nvarchar" MaxLength="128" />
+          <Property Name="Klant" Type="nvarchar" MaxLength="128" />
+          <Property Name="Overige" Type="nvarchar" MaxLength="128" />
+          <Property Name="ProjectId" Type="int" />
+          <Property Name="Sales" Type="nvarchar" MaxLength="128" />
+          <Property Name="Reservatie" Type="int" />
+          <Property Name="Code" Type="nvarchar" MaxLength="16" />
+          <Property Name="LanguageCode" Type="varchar" MaxLength="2" />
+          <Property Name="Gender" Type="varchar" MaxLength="2" />
+          <Property Name="DueDate" Type="datetime" />
+          <Property Name="ResponsibleUserId" Type="int" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+          <Property Name="IsFinished" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TimeTracking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="int" Nullable="false" />
+          <Property Name="ProjectId" Type="int" />
+          <Property Name="ProjectTitle" Type="nvarchar" MaxLength="128" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="EmployeeName" Type="nvarchar" MaxLength="128" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="ContactId" Type="int" />
+          <Property Name="ContactName" Type="nvarchar" MaxLength="128" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="128" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Category" Type="nvarchar" MaxLength="128" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+          <Property Name="RelatedToObjectType" Type="nvarchar" MaxLength="64" />
+          <Property Name="RelatedToObjectId" Type="int" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" />
+          <Property Name="Email" Type="nvarchar" MaxLength="128" />
+          <Property Name="Gsm" Type="nvarchar" MaxLength="64" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="64" />
+          <Property Name="Title" Type="nvarchar" MaxLength="128" />
+          <Property Name="LastSyncedUtc" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_MeetingContact_MeetingTeamLeaderId_Meeting_Id">
+          <End Role="Meeting" Type="Self.Meeting" Multiplicity="1" />
+          <End Role="MeetingContact" Type="Self.MeetingContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meeting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MeetingContact">
+              <PropertyRef Name="MeetingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MeetingUser_MeetingTeamLeaderId_Meeting_Id">
+          <End Role="Meeting" Type="Self.Meeting" Multiplicity="1" />
+          <End Role="MeetingUser" Type="Self.MeetingUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meeting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MeetingUser">
+              <PropertyRef Name="MeetingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="TruncateDuplicationTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="TeamLeaderModelStoreContainer">
+          <EntitySet Name="Call" EntityType="Self.Call" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContactCompany" EntityType="Self.ContactCompany" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContactProject" EntityType="Self.ContactProject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Deal" EntityType="Self.Deal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DealPhase" EntityType="Self.DealPhase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DealSource" EntityType="Self.DealSource" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DuplicationErrorLog" EntityType="Self.DuplicationErrorLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DuplicationJobHistory" EntityType="Self.DuplicationJobHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DuplicationSettings" EntityType="Self.DuplicationSettings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Meeting" EntityType="Self.Meeting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MeetingContact" EntityType="Self.MeetingContact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MeetingUser" EntityType="Self.MeetingUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlannedTask" EntityType="Self.PlannedTask" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimeTracking" EntityType="Self.TimeTracking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_MeetingContact_MeetingTeamLeaderId_Meeting_Id" Association="Self.FK_MeetingContact_MeetingTeamLeaderId_Meeting_Id">
+            <End Role="Meeting" EntitySet="Meeting" />
+            <End Role="MeetingContact" EntitySet="MeetingContact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MeetingUser_MeetingTeamLeaderId_Meeting_Id" Association="Self.FK_MeetingUser_MeetingTeamLeaderId_Meeting_Id">
+            <End Role="Meeting" EntitySet="Meeting" />
+            <End Role="MeetingUser" EntitySet="MeetingUser" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TeamLeaderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DuplicationSetting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Key" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="TeamLeaderEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DuplicationSettings" EntityType="Self.DuplicationSetting" />
+          <EntitySet Name="Contacts" EntityType="TeamLeaderModel.Contact" />
+          <EntitySet Name="Users" EntityType="TeamLeaderModel.User" />
+          <EntitySet Name="Projects" EntityType="TeamLeaderModel.Project" />
+          <EntitySet Name="Calls" EntityType="TeamLeaderModel.Call" />
+          <FunctionImport Name="TruncateDuplicationTables" />
+          <EntitySet Name="ContactCompanies" EntityType="TeamLeaderModel.ContactCompany" />
+          <EntitySet Name="PlannedTasks" EntityType="TeamLeaderModel.PlannedTask" />
+          <EntitySet Name="DuplicationErrorLogs" EntityType="TeamLeaderModel.DuplicationErrorLog" />
+          <EntitySet Name="DuplicationJobHistories" EntityType="TeamLeaderModel.DuplicationJobHistory" />
+          <EntitySet Name="Products" EntityType="TeamLeaderModel.Product" />
+          <EntitySet Name="Deals" EntityType="TeamLeaderModel.Deal" />
+          <EntitySet Name="DealPhases" EntityType="TeamLeaderModel.DealPhase" />
+          <EntitySet Name="DealSources" EntityType="TeamLeaderModel.DealSource" />
+          <EntitySet Name="Meetings" EntityType="TeamLeaderModel.Meeting" />
+          <EntitySet Name="ContactProjects" EntityType="TeamLeaderModel.ContactProject" />
+          <EntitySet Name="MeetingContacts" EntityType="TeamLeaderModel.MeetingContact" />
+          <EntitySet Name="MeetingUsers" EntityType="TeamLeaderModel.MeetingUser" />
+          <AssociationSet Name="FK_MeetingContact_MeetingTeamLeaderId_Meeting_Id" Association="TeamLeaderModel.FK_MeetingContact_MeetingTeamLeaderId_Meeting_Id">
+            <End Role="Meeting" EntitySet="Meetings" />
+            <End Role="MeetingContact" EntitySet="MeetingContacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MeetingUser_MeetingTeamLeaderId_Meeting_Id" Association="TeamLeaderModel.FK_MeetingUser_MeetingTeamLeaderId_Meeting_Id">
+            <End Role="Meeting" EntitySet="Meetings" />
+            <End Role="MeetingUser" EntitySet="MeetingUsers" />
+          </AssociationSet>
+          <EntitySet Name="TimeTrackings" EntityType="TeamLeaderModel.TimeTracking" />
+          <EntitySet Name="Tasks" EntityType="TeamLeaderModel.Task" />
+          <EntitySet Name="Companies" EntityType="TeamLeaderModel.Company" />
+        </EntityContainer>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Street" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Zipcode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Website" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Gsm" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="LanguageCode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+          <Property Name="DateEdited" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LegacyId" Type="Int32" />
+          <Property Name="Positie" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FormerEmployee" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Gsm" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Phase" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="LegacyId" Type="Int32" />
+          <Property Name="BoekJaar" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Call">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="Int32" Nullable="false" />
+          <Property Name="DueDate" Type="DateTime" Precision="3" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="UserName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CallDateTime" Type="DateTime" Precision="3" />
+          <Property Name="Telephone" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Gsm" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="RelatedProjectId" Type="Int32" />
+          <Property Name="RelatedMilestoneId" Type="Int32" />
+          <Property Name="ForType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ForId" Type="Int32" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Klant" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Intern" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Sales" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ContactCompany">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="Int32" Nullable="false" />
+          <Property Name="ContactId" Type="Int32" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="Function" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="PlannedTask">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="TodoId" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="DurationMinutes" Type="Int32" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="ProjectId" Type="Int32" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="DuplicationErrorLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogDateUtc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Info" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="DuplicationJobHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="JobName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="Succeeded" Type="Boolean" />
+          <Property Name="Info" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ExternalId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Vat" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="BookingAccount" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="BookingAccountId" Type="Int32" />
+          <Property Name="Stock" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Deal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="QuatationNr" Type="Int32" />
+          <Property Name="TotalPriceExclVat" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Probability" Type="Int32" />
+          <Property Name="PhaseId" Type="Int32" />
+          <Property Name="ResponsibleUserId" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="LatestActivityDate" Type="DateTime" Precision="3" />
+          <Property Name="CloseDate" Type="DateTime" Precision="3" />
+          <Property Name="DateLost" Type="DateTime" Precision="3" />
+          <Property Name="ReasonRefused" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SourceId" Type="Int32" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="DealPhase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="DealSource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Meeting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="Int32" Nullable="false" />
+          <Property Name="DurationMinutes" Type="Int32" />
+          <Property Name="DateTimeStamp" Type="DateTime" Precision="3" />
+          <Property Name="MeetingDate" Type="DateTime" Precision="3" />
+          <Property Name="RelatedProjectId" Type="Int32" />
+          <Property Name="RelatedMilestoneId" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatorId" Type="Int32" />
+          <Property Name="CancellerId" Type="Int32" />
+          <Property Name="Afwezig" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Bedrijf" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Klant" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Intern" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Sales" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="MeetingContacts" Relationship="TeamLeaderModel.FK_MeetingContact_MeetingTeamLeaderId_Meeting_Id" FromRole="Meeting" ToRole="MeetingContact" />
+          <NavigationProperty Name="MeetingUsers" Relationship="TeamLeaderModel.FK_MeetingUser_MeetingTeamLeaderId_Meeting_Id" FromRole="Meeting" ToRole="MeetingUser" />
+          <Property Name="Location" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ContactProject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ProjectTeamLeaderId" Type="Int32" Nullable="false" />
+          <Property Name="Group" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ObjectType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ObjectId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Role" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="MeetingContact">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="MeetingId" Type="Int32" Nullable="false" />
+          <Property Name="ContactTeamLeaderId" Type="Int32" Nullable="false" />
+          <Property Name="ContactName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Meeting" Relationship="TeamLeaderModel.FK_MeetingContact_MeetingTeamLeaderId_Meeting_Id" FromRole="MeetingContact" ToRole="Meeting" />
+        </EntityType>
+        <EntityType Name="MeetingUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="MeetingId" Type="Int32" Nullable="false" />
+          <Property Name="UserTeamLeaderId" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Meeting" Relationship="TeamLeaderModel.FK_MeetingUser_MeetingTeamLeaderId_Meeting_Id" FromRole="MeetingUser" ToRole="Meeting" />
+        </EntityType>
+        <Association Name="FK_MeetingContact_MeetingTeamLeaderId_Meeting_Id">
+          <End Type="TeamLeaderModel.Meeting" Role="Meeting" Multiplicity="1" />
+          <End Type="TeamLeaderModel.MeetingContact" Role="MeetingContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meeting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MeetingContact">
+              <PropertyRef Name="MeetingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MeetingUser_MeetingTeamLeaderId_Meeting_Id">
+          <End Type="TeamLeaderModel.Meeting" Role="Meeting" Multiplicity="1" />
+          <End Type="TeamLeaderModel.MeetingUser" Role="MeetingUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meeting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MeetingUser">
+              <PropertyRef Name="MeetingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TimeTracking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="Int32" Nullable="false" />
+          <Property Name="ProjectId" Type="Int32" />
+          <Property Name="ProjectTitle" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="EmployeeName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="ContactId" Type="Int32" />
+          <Property Name="ContactName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="CompanyName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Category" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RelatedToObjectType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="RelatedToObjectId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Intern" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Klant" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Overige" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectId" Type="Int32" />
+          <Property Name="Sales" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Reservatie" Type="Int32" />
+          <Property Name="Code" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="LanguageCode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DueDate" Type="DateTime" Precision="3" />
+          <Property Name="ResponsibleUserId" Type="Int32" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsFinished" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="TeamLeaderId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="TaxCode" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="BusinessType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Street" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Website" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Iban" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Bic" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="LanguageCode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Afdeling" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="AccountManagerId" Type="Int32" />
+          <Property Name="AccountManagerTwo" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Assistent" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+          <Property Name="DateEdited" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Business" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FidelisatieNorm" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FocusList" Type="Boolean" />
+          <Property Name="LinkedInProfile" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Sector" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TeamLeaderModelStoreContainer" CdmEntityContainer="TeamLeaderEntities">
+          <EntitySetMapping Name="DuplicationSettings">
+            <EntityTypeMapping TypeName="TeamLeaderModel.DuplicationSetting">
+              <MappingFragment StoreEntitySet="DuplicationSettings">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="TeamLeaderModel.Contact">
+              <MappingFragment StoreEntitySet="Contact">
+                <ScalarProperty Name="FormerEmployee" ColumnName="FormerEmployee" />
+                <ScalarProperty Name="Positie" ColumnName="Positie" />
+                <ScalarProperty Name="LegacyId" ColumnName="LegacyId" />
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DateEdited" ColumnName="DateEdited" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Gsm" ColumnName="Gsm" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="TeamLeaderId" ColumnName="TeamLeaderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="TeamLeaderModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Gsm" ColumnName="Gsm" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TeamLeaderId" ColumnName="TeamLeaderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="TeamLeaderModel.Project">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="BoekJaar" ColumnName="BoekJaar" />
+                <ScalarProperty Name="LegacyId" ColumnName="LegacyId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Phase" ColumnName="Phase" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="TeamLeaderId" ColumnName="TeamLeaderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Calls">
+            <EntityTypeMapping TypeName="TeamLeaderModel.Call">
+              <MappingFragment StoreEntitySet="Call">
+                <ScalarProperty Name="Sales" ColumnName="Sales" />
+                <ScalarProperty Name="Intern" ColumnName="Intern" />
+                <ScalarProperty Name="Klant" ColumnName="Klant" />
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="ForId" ColumnName="ForId" />
+                <ScalarProperty Name="ForType" ColumnName="ForType" />
+                <ScalarProperty Name="RelatedMilestoneId" ColumnName="RelatedMilestoneId" />
+                <ScalarProperty Name="RelatedProjectId" ColumnName="RelatedProjectId" />
+                <ScalarProperty Name="Gsm" ColumnName="Gsm" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="CallDateTime" ColumnName="CallDateTime" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="TeamLeaderId" ColumnName="TeamLeaderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="TruncateDuplicationTables" FunctionName="TeamLeaderModel.Store.TruncateDuplicationTables" />
+          <EntitySetMapping Name="ContactCompanies">
+            <EntityTypeMapping TypeName="TeamLeaderModel.ContactCompany">
+              <MappingFragment StoreEntitySet="ContactCompany">
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="Function" ColumnName="Function" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+                <ScalarProperty Name="TeamLeaderId" ColumnName="TeamLeaderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlannedTasks">
+            <EntityTypeMapping TypeName="TeamLeaderModel.PlannedTask">
+              <MappingFragment StoreEntitySet="PlannedTask">
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DurationMinutes" ColumnName="DurationMinutes" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="TodoId" ColumnName="TodoId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DuplicationErrorLogs">
+            <EntityTypeMapping TypeName="TeamLeaderModel.DuplicationErrorLog">
+              <MappingFragment StoreEntitySet="DuplicationErrorLog">
+                <ScalarProperty Name="Info" ColumnName="Info" />
+                <ScalarProperty Name="LogDateUtc" ColumnName="LogDateUtc" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DuplicationJobHistories">
+            <EntityTypeMapping TypeName="TeamLeaderModel.DuplicationJobHistory">
+              <MappingFragment StoreEntitySet="DuplicationJobHistory">
+                <ScalarProperty Name="Info" ColumnName="Info" />
+                <ScalarProperty Name="Succeeded" ColumnName="Succeeded" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="JobName" ColumnName="JobName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="TeamLeaderModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="BookingAccountId" ColumnName="BookingAccountId" />
+                <ScalarProperty Name="BookingAccount" ColumnName="BookingAccount" />
+                <ScalarProperty Name="Vat" ColumnName="Vat" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ExternalId" ColumnName="ExternalId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Deals">
+            <EntityTypeMapping TypeName="TeamLeaderModel.Deal">
+              <MappingFragment StoreEntitySet="Deal">
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+                <ScalarProperty Name="ReasonRefused" ColumnName="ReasonRefused" />
+                <ScalarProperty Name="DateLost" ColumnName="DateLost" />
+                <ScalarProperty Name="CloseDate" ColumnName="CloseDate" />
+                <ScalarProperty Name="LatestActivityDate" ColumnName="LatestActivityDate" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="ResponsibleUserId" ColumnName="ResponsibleUserId" />
+                <ScalarProperty Name="PhaseId" ColumnName="PhaseId" />
+                <ScalarProperty Name="Probability" ColumnName="Probability" />
+                <ScalarProperty Name="TotalPriceExclVat" ColumnName="TotalPriceExclVat" />
+                <ScalarProperty Name="QuatationNr" ColumnName="QuatationNr" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="TeamLeaderId" ColumnName="TeamLeaderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DealPhases">
+            <EntityTypeMapping TypeName="TeamLeaderModel.DealPhase">
+              <MappingFragment StoreEntitySet="DealPhase">
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TeamLeaderId" ColumnName="TeamLeaderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DealSources">
+            <EntityTypeMapping TypeName="TeamLeaderModel.DealSource">
+              <MappingFragment StoreEntitySet="DealSource">
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TeamLeaderId" ColumnName="TeamLeaderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Meetings">
+            <EntityTypeMapping TypeName="TeamLeaderModel.Meeting">
+              <MappingFragment StoreEntitySet="Meeting">
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="Sales" ColumnName="Sales" />
+                <ScalarProperty Name="Intern" ColumnName="Intern" />
+                <ScalarProperty Name="Klant" ColumnName="Klant" />
+                <ScalarProperty Name="Bedrijf" ColumnName="Bedrijf" />
+                <ScalarProperty Name="Afwezig" ColumnName="Afwezig" />
+                <ScalarProperty Name="CancellerId" ColumnName="CancellerId" />
+                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="RelatedMilestoneId" ColumnName="RelatedMilestoneId" />
+                <ScalarProperty Name="RelatedProjectId" ColumnName="RelatedProjectId" />
+                <ScalarProperty Name="MeetingDate" ColumnName="MeetingDate" />
+                <ScalarProperty Name="DateTimeStamp" ColumnName="DateTimeStamp" />
+                <ScalarProperty Name="DurationMinutes" ColumnName="DurationMinutes" />
+                <ScalarProperty Name="TeamLeaderId" ColumnName="TeamLeaderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContactProjects">
+            <EntityTypeMapping TypeName="TeamLeaderModel.ContactProject">
+              <MappingFragment StoreEntitySet="ContactProject">
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+                <ScalarProperty Name="ObjectType" ColumnName="ObjectType" />
+                <ScalarProperty Name="Group" ColumnName="Group" />
+                <ScalarProperty Name="ProjectTeamLeaderId" ColumnName="ProjectTeamLeaderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MeetingContacts">
+            <EntityTypeMapping TypeName="TeamLeaderModel.MeetingContact">
+              <MappingFragment StoreEntitySet="MeetingContact">
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="ContactTeamLeaderId" ColumnName="ContactTeamLeaderId" />
+                <ScalarProperty Name="MeetingId" ColumnName="MeetingId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MeetingUsers">
+            <EntityTypeMapping TypeName="TeamLeaderModel.MeetingUser">
+              <MappingFragment StoreEntitySet="MeetingUser">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserTeamLeaderId" ColumnName="UserTeamLeaderId" />
+                <ScalarProperty Name="MeetingId" ColumnName="MeetingId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimeTrackings">
+            <EntityTypeMapping TypeName="TeamLeaderModel.TimeTracking">
+              <MappingFragment StoreEntitySet="TimeTracking">
+                <ScalarProperty Name="RelatedToObjectId" ColumnName="RelatedToObjectId" />
+                <ScalarProperty Name="RelatedToObjectType" ColumnName="RelatedToObjectType" />
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProjectTitle" ColumnName="ProjectTitle" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="TeamLeaderId" ColumnName="TeamLeaderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tasks">
+            <EntityTypeMapping TypeName="TeamLeaderModel.Task">
+              <MappingFragment StoreEntitySet="Task">
+                <ScalarProperty Name="IsFinished" ColumnName="IsFinished" />
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="ResponsibleUserId" ColumnName="ResponsibleUserId" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Reservatie" ColumnName="Reservatie" />
+                <ScalarProperty Name="Sales" ColumnName="Sales" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="Overige" ColumnName="Overige" />
+                <ScalarProperty Name="Klant" ColumnName="Klant" />
+                <ScalarProperty Name="Intern" ColumnName="Intern" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TeamLeaderId" ColumnName="TeamLeaderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="TeamLeaderModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="Sector" ColumnName="Sector" />
+                <ScalarProperty Name="LinkedInProfile" ColumnName="LinkedInProfile" />
+                <ScalarProperty Name="FocusList" ColumnName="FocusList" />
+                <ScalarProperty Name="FidelisatieNorm" ColumnName="FidelisatieNorm" />
+                <ScalarProperty Name="Business" ColumnName="Business" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DateEdited" ColumnName="DateEdited" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="Assistent" ColumnName="Assistent" />
+                <ScalarProperty Name="AccountManagerTwo" ColumnName="AccountManagerTwo" />
+                <ScalarProperty Name="AccountManagerId" ColumnName="AccountManagerId" />
+                <ScalarProperty Name="Afdeling" ColumnName="Afdeling" />
+                <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
+                <ScalarProperty Name="Bic" ColumnName="Bic" />
+                <ScalarProperty Name="Iban" ColumnName="Iban" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="BusinessType" ColumnName="BusinessType" />
+                <ScalarProperty Name="TaxCode" ColumnName="TaxCode" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TeamLeaderId" ColumnName="TeamLeaderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

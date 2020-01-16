@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9F748CE1-61ED-4AB2-ADA2-39C5CFEB9553}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Quintessence.QService.Business.Interfaces</RootNamespace>
+    <AssemblyName>Quintessence.QService.Business.Interfaces</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Pro|AnyCPU'">
+    <OutputPath>bin\Pro\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Dev\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Main|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Main\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Dev01|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Dev01\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Dev02|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Dev02\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Dev03|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Dev03\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Test\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\..\packages\EntityFramework.4.3.1\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommandRepositories\IDocumentManagementCommandRepository.cs" />
+    <Compile Include="CommandRepositories\IWorkspaceManagementCommandRepository.cs" />
+    <Compile Include="CommandRepositories\IInfrastructureManagementCommandRepository.cs" />
+    <Compile Include="CommandRepositories\IReportManagementCommandRepository.cs" />
+    <Compile Include="CommandRepositories\ICandidateManagementCommandRepository.cs" />
+    <Compile Include="CommandRepositories\ICommandRepository.cs" />
+    <Compile Include="CommandRepositories\ISimulationManagementCommandRepository.cs" />
+    <Compile Include="CommandRepositories\ICustomerRelationshipManagementCommandRepository.cs" />
+    <Compile Include="CommandRepositories\IProjectManagementCommandRepository.cs" />
+    <Compile Include="CommandRepositories\IDictionaryManagementCommandRepository.cs" />
+    <Compile Include="CommandRepositories\ISecurityManagementCommandRepository.cs" />
+    <Compile Include="CommandRepositories\ISupplyChainManagementCommandRepository.cs" />
+    <Compile Include="QueryRepositories\ICandidateManagementQueryRepository.cs" />
+    <Compile Include="QueryRepositories\IDictionaryImportQueryRepository.cs" />
+    <Compile Include="QueryRepositories\IDocumentManagementQueryRepository.cs" />
+    <Compile Include="QueryRepositories\IFinanceManagementQueryRepository.cs" />
+    <Compile Include="QueryRepositories\IInfrastructureQueryRepository.cs" />
+    <Compile Include="QueryRepositories\IQueryRepository.cs" />
+    <Compile Include="QueryRepositories\IReportManagementQueryRepository.cs" />
+    <Compile Include="QueryRepositories\IReportServiceQueryRepository.cs" />
+    <Compile Include="QueryRepositories\ISecurityManagementQueryRepository.cs" />
+    <Compile Include="QueryRepositories\ICustomerRelationshipManagementQueryRepository.cs" />
+    <Compile Include="QueryRepositories\IDictionaryManagementQueryRepository.cs" />
+    <Compile Include="QueryRepositories\IProjectManagementQueryRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryRepositories\ISimulationManagementQueryRepository.cs" />
+    <Compile Include="QueryRepositories\ISupplyChainManagementQueryRepository.cs" />
+    <Compile Include="QueryRepositories\IWorkspaceManagementQueryRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Quintessence.Infrastructure\Quintessence.Infrastructure.csproj">
+      <Project>{18A071D5-7AE7-4F2F-94DF-4D40DEB81A9C}</Project>
+      <Name>Quintessence.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.Core\Quintessence.QService.Core.csproj">
+      <Project>{22E9834E-DB39-410E-AE73-44B2405ACFCD}</Project>
+      <Name>Quintessence.QService.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.Data.Interfaces\Quintessence.QService.Data.Interfaces.csproj">
+      <Project>{D1C30158-4472-41D1-A1C9-D6C7F63F4E95}</Project>
+      <Name>Quintessence.QService.Data.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.DataModel\Quintessence.QService.DataModel.csproj">
+      <Project>{56a829fa-2175-4c60-9912-09cab8fde30b}</Project>
+      <Name>Quintessence.QService.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.QueryModel\Quintessence.QService.QueryModel.csproj">
+      <Project>{c861e521-51a1-4909-9563-a9703fe31917}</Project>
+      <Name>Quintessence.QService.QueryModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

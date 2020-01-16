@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9c0f80a4805f4c6da63f2cbfe7c295d0" Name="Diagram1">
+        <EntityTypeShape EntityType="TeamLeaderModel.DuplicationSetting" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TeamLeaderModel.Contact" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TeamLeaderModel.User" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="TeamLeaderModel.Project" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TeamLeaderModel.Call" Width="1.5" PointX="9.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TeamLeaderModel.ContactCompany" Width="1.5" PointX="5.375" PointY="9.75" />
+        <EntityTypeShape EntityType="TeamLeaderModel.PlannedTask" Width="1.5" PointX="7.375" PointY="9.75" />
+        <EntityTypeShape EntityType="TeamLeaderModel.DuplicationErrorLog" Width="1.5" PointX="11.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TeamLeaderModel.DuplicationJobHistory" Width="1.5" PointX="11.375" PointY="3.75" />
+        <EntityTypeShape EntityType="TeamLeaderModel.Product" Width="1.5" PointX="11.375" PointY="6.75" />
+        <EntityTypeShape EntityType="TeamLeaderModel.Deal" Width="1.5" PointX="11.375" PointY="10.75" />
+        <EntityTypeShape EntityType="TeamLeaderModel.DealPhase" Width="1.5" PointX="0.75" PointY="12.75" />
+        <EntityTypeShape EntityType="TeamLeaderModel.DealSource" Width="1.5" PointX="2.75" PointY="12.75" />
+        <EntityTypeShape EntityType="TeamLeaderModel.Meeting" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TeamLeaderModel.ContactProject" Width="1.5" PointX="7.375" PointY="5.75" />
+        <EntityTypeShape EntityType="TeamLeaderModel.MeetingContact" Width="1.5" PointX="15.625" PointY="8.5" />
+        <EntityTypeShape EntityType="TeamLeaderModel.MeetingUser" Width="1.5" PointX="15.625" PointY="5.75" />
+        <AssociationConnector Association="TeamLeaderModel.FK_MeetingContact_MeetingTeamLeaderId_Meeting_Id" />
+        <AssociationConnector Association="TeamLeaderModel.FK_MeetingUser_MeetingTeamLeaderId_Meeting_Id" />
+        <EntityTypeShape EntityType="TeamLeaderModel.TimeTracking" Width="1.5" PointX="5.375" PointY="13.75" />
+        <EntityTypeShape EntityType="TeamLeaderModel.Task" Width="1.5" PointX="7.375" PointY="13.75" />
+        <EntityTypeShape EntityType="TeamLeaderModel.Company" Width="1.5" PointX="13.375" PointY="11.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

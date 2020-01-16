@@ -1,0 +1,23 @@
+=========================================================================
+==  NOTICE file corresponding to the section 4 d of                    ==
+==  the Apache License, Version 2.0,                                   ==
+==  in this case for the MvcUtil distribution.                         ==
+=========================================================================
+
+MvcUtil
+Copyright 2011-2012 Max Toro Q.
+
+CheckBoxListExtensions and RadioButtonListExtensions are based on SelectExtensions 
+from ASP.NET MVC by 'Microsoft Corporation' (http://aspnetwebstack.codeplex.com/).
+
+HttpGetHeadAttribute and HttpPatchAttribute are based on HttpGetAttribute 
+from ASP.NET MVC by 'Microsoft Corporation' (http://aspnetwebstack.codeplex.com/).
+
+DiskOutputCacheProvider is based on code by 'Scott Mitchell' <mitchell@4guysfromrolla.com>
+(http://www.4guysfromrolla.com/articles/061610-1.aspx).
+
+MetadataTypeRegister is based on code by 'bart' (http://stackoverflow.com/a/2657644/39923) 
+licensed under CC BY-SA 3.0 (http://creativecommons.org/licenses/by-sa/3.0/).
+
+Additional copyright notices and license terms applicable are
+present in the licenses directory of this distribution.

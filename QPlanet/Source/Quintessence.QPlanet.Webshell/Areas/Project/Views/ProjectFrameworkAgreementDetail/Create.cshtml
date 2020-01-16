@@ -1,0 +1,167 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.CreateFrameworkAgreementModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Framework Agreement - Create";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">New framework agreement</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li class="current">Detail</li>
+        </ul>
+    </nav>
+}
+
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/tiny_mce/jquery.tinymce.js")" type="text/javascript"></script>
+    <script>
+        $(function () {
+            $('#ChangeContactNameLink').hide();
+
+            InitializeContactNameAutocomplete();
+
+            InitializeChangeContactNameLink();
+
+            InitializeDatePickers();
+
+            InitializeButtons();
+
+            InitializeTextAreas();
+        });
+
+        function InitializeContactNameAutocomplete() {
+            $("#@Html.IdFor(m => m.ContactName)").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("SearchContact", "ProjectGeneral", new { area = "Project" })/' + request.term,
+                        data: request,
+                        dataType: "json",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.label,
+                                    value: item.label,
+                                    id: item.value
+                                };
+                            }));
+                        },
+                        error: function (err) {
+                            ShowDetailErrorDialog('Search customer.', err);
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    $('#@Html.IdFor(m => m.ContactId)').val(ui.item.id);
+                    $('#@Html.IdFor(m => m.ContactName)').hide();
+                    $('#ChangeContactNameLink').text(ui.item.label);
+                    $('#ChangeContactNameLink').show();
+                }
+            });
+        }
+
+        function InitializeChangeContactNameLink() {
+            $('#ChangeContactNameLink').click(function () {
+                $('#@Html.IdFor(m => m.ContactId)').val(null);
+                $('#@Html.IdFor(m => m.ContactName)').val(null);
+                $('#ChangeContactNameLink').hide();
+                $('#@Html.IdFor(m => m.ContactName)').show();
+                $('#@Html.IdFor(m => m.ContactName)').focus();
+            });
+        }
+
+        function InitializeDatePickers() {
+            $('#@Html.IdFor(m => m.StartDate)').datepicker({ dateFormat: "dd/mm/yy" });
+            $('#@Html.IdFor(m => m.EndDate)').datetimepicker({ dateFormat: "dd/mm/yy" });
+        }
+        
+        function InitializeButtons() {
+            $('#CreateFrameworkAgreementButton').click(function() {
+                var form = $('form');
+                
+                if (form.valid()) {
+                    ShowDetailSaveDialog();
+
+                    form.submit();
+                }
+            });
+        }
+
+        function InitializeTextAreas() {
+            $('textarea').each(function () {
+                $(this).tinymce({
+                    script_url: '@Url.Content("~/Scripts/tiny_mce/tiny_mce.js")',
+                    height: '200',
+                    width: '300',
+                    theme: 'simple',
+                    valid_styles: { '*': 'font-weight,text-decoration' }
+                });
+            });
+        }
+    </script>
+}
+
+<div class="grid_8">
+    <fieldset>
+        <legend>Framework agreement information</legend>
+
+        @using (Html.BeginForm())
+        {
+            <div class="row">
+                <div class="width-30-percent">@Html.LabelFor(m => m.Name)</div>
+                <div>@Html.EditorFor(m => m.Name)</div>
+            </div>
+            <div class="row">
+                <div>@Html.ValidationMessageFor(m => m.Name)</div>
+            </div> 
+            
+            <div class="row">
+                <div class="width-30-percent">@Html.LabelFor(m => m.Description)</div>
+                <div>@Html.TextAreaFor(m => m.Description)</div>
+            </div>
+                         
+            <div class="row">
+                <div class="width-30-percent">@Html.LabelFor(m => m.ContactName)</div>
+                <div>@Html.HiddenFor(m => m.ContactId)
+                    @Html.TextBoxFor(m => m.ContactName)
+                    <a href="javascript:void(0);" id="ChangeContactNameLink" title="Click on this link to change the contact">
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div>@Html.ValidationMessageFor(m => m.ContactName)</div>
+            </div>  
+            
+            <div class="row">
+                <div class="width-30-percent">@Html.LabelFor(m => m.StartDate)</div>
+                <div>@Html.TextBox(Html.IdFor(m => m.StartDate).ToString(), Model.StartDate.ToShortDateString())
+                </div>
+            </div>
+            <div class="row">
+                <div>@Html.ValidationMessageFor(m => m.StartDate)</div>
+            </div> 
+                
+            <div class="row">
+                <div class="width-30-percent">@Html.LabelFor(m => m.EndDate)</div>
+                <div>@Html.TextBox(Html.IdFor(m => m.EndDate).ToString(), Model.EndDate.ToShortDateString())
+                </div>
+            </div>
+            <div class="row">
+                <div>@Html.ValidationMessageFor(m => m.EndDate)</div>
+            </div>   
+            
+            <div class="right-text">
+                <a href="javascript:void(0);" id="CreateFrameworkAgreementButton" class="button">Create</a>
+            </div>  
+        }
+    </fieldset>
+</div>
+

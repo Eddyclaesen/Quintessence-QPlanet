@@ -1,0 +1,37 @@
+﻿@using Quintessence.QPlanet.Infrastructure.Nullable
+@using Quintessence.QService.QueryModel.Base
+@using Quintessence.QService.QueryModel.Prm
+@model Quintessence.QPlanet.ViewModel.Prm.EditProjectCandidateCategoryDetailType3Model
+
+@if (Model.SurveyPlanningId == (int)SurveyPlanningType.Before || Model.SurveyPlanningId == (int)SurveyPlanningType.After)
+{
+    <div class="row">
+        <div>@(string.Format("{0}: ", Html.DisplayFor(m => m.SurveyPlanningName)))</div>
+        <div>@Html.TextBoxFor(m => m.DeadlineString, new{data_function="DetailTypeDeadline"})</div>
+    </div>
+}
+<div class="row">
+    <div>@Html.DisplayNameFor(m => m.LoginCode)</div>
+    <div>@Html.TextBoxFor(m => m.LoginCode)</div>
+</div>
+@if (Model.PricingModelId != (int)PricingModelType.FixedPrice)
+{
+    <div class="row">
+        <div>@Html.LabelFor(m => m.InvoiceAmount)</div>
+        @if (Model.InvoiceStatusCode == (int)InvoiceStatusType.Planned)
+        {
+            <div>@Html.TextBoxFor(m => m.InvoiceAmount, new { data_id = @Model.ProjectCategoryDetailTypeId })</div>
+        }
+        else
+        {
+            var statusCode = EnumMemberNameAttribute.GetName(Enum.GetValues(typeof(InvoiceStatusType)).OfType<InvoiceStatusType>().FirstOrDefault(invoiceStatusType => (int)invoiceStatusType == Model.InvoiceStatusCode));
+            <div>@(string.Format("{0} ({1})", Model.InvoiceAmount.ToString("C"), statusCode))</div>
+        }
+    </div>
+}
+
+<script>
+    $(function() {
+        $('input[data-function=DetailTypeDeadline]').datetimepicker({ dateFormat: "dd/mm/yy", showTimepicker: false });
+    });
+</script>

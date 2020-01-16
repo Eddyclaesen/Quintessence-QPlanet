@@ -1,0 +1,68 @@
+﻿@model List<Quintessence.QPlanet.ViewModel.Dim.DictionaryIndicatorMatrixEntryModel>
+
+<table id="SelectNewLevelTable" class="dataTable" style="width: 95%">
+    <thead>
+        <tr>
+            <th style="width: 100%">Level</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var clusters = Model
+                .OrderBy(m => m.DictionaryClusterOrder)
+                .ThenBy(m => m.DictionaryCompetenceOrder)
+                .ThenBy(m => m.DictionaryLevelLevel)
+                .ThenBy(m => m.DictionaryIndicatorOrder)
+                .GroupBy(m => m.DictionaryClusterId).ToList();
+        }
+
+        @for (int w = 0; w < clusters.Count; w++)
+        {
+            var cl = clusters[w];
+            var cluster = cl.FirstOrDefault();
+
+            <tr id="node-SelectNewLevelTable-@cluster.DictionaryClusterId" class="node-SelectNewLevelTable-@cluster.DictionaryClusterId expanded">
+                <td>
+                    <font color="darkgreen">@cluster.DictionaryClusterName</font>
+                </td>
+            </tr>
+
+            var competences = cl.GroupBy(m => m.DictionaryCompetenceId).ToList();
+
+            for (int x = 0; x < competences.Count; x++)
+            {
+                var co = competences[x];
+                var competence = co.FirstOrDefault();
+
+            <tr id="node-SelectNewLevelTable-@competence.DictionaryCompetenceId" class="child-of-node-SelectNewLevelTable-@cluster.DictionaryClusterId">
+                <td>
+                    @competence.DictionaryCompetenceName
+                </td>
+            </tr>
+
+                var levels = co.GroupBy(m => m.DictionaryLevelId).ToList();
+                for (int y = 0; y < levels.Count; y++)
+                {
+                    var le = levels[y];
+                    var level = le.FirstOrDefault();
+                    <tr id="node-SelectNewLevelTable-@level.DictionaryLevelId" class="child-of-node-SelectNewLevelTable-@competence.DictionaryCompetenceId">
+                        <td>
+                            @Html.CheckBox("DictionaryLevelCheckBox", level.IsChecked, new { data_id = level.DictionaryLevelId })
+                            @(level.DictionaryLevelLevel). @level.DictionaryLevelName
+                        </td>
+                    </tr>
+                    var indicators = le.ToList();
+                    for (int z = 0; z < indicators.Count; z++)
+                    {
+                        var indicator = indicators[z];
+                    <tr class="child-of-node-SelectNewLevelTable-@level.DictionaryLevelId">
+                        <td>
+                            @indicator.DictionaryIndicatorName
+                        </td>
+                    </tr>
+                    }
+                }
+            }
+        }
+    </tbody>
+</table>

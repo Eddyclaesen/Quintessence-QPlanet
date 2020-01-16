@@ -1,0 +1,80 @@
+﻿@model Quintessence.QPlanet.ViewModel.Scm.EditProductTypeModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Admin - Activities - Create product type";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">New product type</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li class="current">Create</li>
+        </ul>
+    </nav>
+}
+@section AdditionalScripts
+{
+    <script>
+        $(function() {
+            InitializeButtons();
+        });
+
+        function InitializeButtons() {
+            $('#CreateProductTypeSubmitButton').click(function(e) {
+                var form = $('#CreateProductTypeForm');
+                if (form.validate().form()){
+                    ShowDetailSaveDialog();
+                    form.submit();
+                }
+            });
+        }
+    </script>
+}
+
+<div class="grid_8">
+    <fieldset>
+        <legend>Product type</legend>
+        @using (Html.BeginForm("CreateProductType", "AdminActivity", FormMethod.Post, new { id = "CreateProductTypeForm" }))
+        {
+            <div class="row">
+                <div>@Html.DisplayNameFor(m => m.Name)</div>
+                <div>@Html.TextBoxFor(m => m.Name)</div>
+            </div>
+            <div class="row">
+                <div />
+                <div>@Html.ValidationMessageFor(m => m.Name)</div>
+            </div>
+            <div class="row">
+                <div>@Html.DisplayNameFor(m => m.Description)</div>
+                <div>@Html.TextBoxFor(m => m.Description)</div>
+            </div>
+            <div class="row">
+                <div>@Html.DisplayNameFor(m => m.UnitPrice)</div>
+                <div>@Html.TextBoxFor(m => m.UnitPrice)</div>
+            </div>
+            <div class="row">
+                <div />
+                <div>@Html.ValidationMessageFor(m => m.UnitPrice)</div>
+            </div>
+            <br />
+            <div class="right-text">
+                <a href="javascript:void(0);" id="CreateProductTypeSubmitButton" title="Create a new product type." class="button">Save</a>
+            </div>
+        }
+    </fieldset>
+</div>
+
+
+
+
+
+
+
+

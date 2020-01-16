@@ -1,0 +1,30 @@
+﻿@using Quintessence.QPlanet.Infrastructure.Nullable
+@using Quintessence.QService.QueryModel.Prm
+@model IEnumerable<ProposalView>
+<table class="dataTable" data-function="ProposalTableToPropose">
+    <thead>
+        <tr>
+            <th style="width: 20%;">Customer</th>
+            <th style="width: 40%;">Name</th>
+            <th style="width: 20%;">Deadline</th>
+            <th style="width: 20%;">Exec</th>
+            <th style="width: 72px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var proposal in Model)
+        {
+            <tr style="font-size:small;">
+                <td>@proposal.ContactFullName</td>
+                <td>@proposal.Name</td>
+                <td>@proposal.Deadline.ToString("dd/MM/yy HH:mm")</td>
+                <td>@proposal.ExecutorFullName</td>
+                <td style="width: 72px;">
+                    <a href="@Url.Action("Edit", "ProjectProposalDetail", new { id = proposal.Id })" target="@proposal.Id" class="edit-link" title="Edit this proposal">
+                    </a>
+                    <a href="javascript:void(0);" data-function="DeleteProposal" data-id="@proposal.Id" class="delete-link" title="Delete this proposal"></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

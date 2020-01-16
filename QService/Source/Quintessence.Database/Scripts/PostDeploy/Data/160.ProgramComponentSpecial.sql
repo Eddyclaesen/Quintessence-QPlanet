@@ -1,0 +1,8 @@
+﻿INSERT INTO [ProgramComponentSpecial]([Id], [Name], [Execution], [IsWithLeadAssessor]) VALUES(NEWID(), 'Intro', 30, 1)
+INSERT INTO [ProgramComponentSpecial]([Id], [Name], [Execution], [IsWithLeadAssessor]) VALUES(NEWID(), 'Lunch', 45, 0)
+INSERT INTO [ProgramComponentSpecial]([Id], [Name], [Execution], [IsWithLeadAssessor]) VALUES(NEWID(), 'Pause', 15, 0)
+INSERT INTO [ProgramComponentSpecial]([Id], [Name], [Execution], [IsWithLeadAssessor]) VALUES(NEWID(), 'Self reflection', 30, 0)
+INSERT INTO [ProgramComponentSpecial]([Id], [Name], [Execution], [IsWithLeadAssessor]) VALUES(NEWID(), 'Debriefing (15)', 15, 1)
+INSERT INTO [ProgramComponentSpecial]([Id], [Name], [Execution], [IsWithLeadAssessor]) VALUES(NEWID(), 'Debriefing (30)', 30, 1)
+INSERT INTO [ProgramComponentSpecial]([Id], [Name], [Execution], [IsWithLeadAssessor]) VALUES(NEWID(), 'Interview', 45, 1)
+INSERT INTO [ProgramComponentSpecial]([Id], [Name], [Execution], [IsWithLeadAssessor]) VALUES(NEWID(), 'Other', 15, 0)

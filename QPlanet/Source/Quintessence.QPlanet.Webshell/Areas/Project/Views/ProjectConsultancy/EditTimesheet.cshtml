@@ -1,0 +1,459 @@
+﻿@using System.Globalization
+@using Quintessence.QService.QueryModel.Prm
+@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectConsultancy.EditTimesheetActionModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Consultancy - Edit timesheet";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">Timesheet</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li class="current">@Model.Project.Name (@Model.Month/@Model.Year)</li>
+        </ul>
+    </nav>
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.treeTable.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.cookie.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/persist.js")" type="text/javascript"></script>
+    <script>
+        $(function () {
+            InitializeTimesheetTable();
+        });
+
+        function InitializeTimesheetTable() {
+            $('#RegisteredTimesheetTable').treeTable({ persist: true });
+
+            $('#SubmitTimesheetFormButton').click(function () {
+                var form = $('form');
+                ShowDetailSaveDialog();
+                form.submit();
+            });
+
+            $('#@(InvoiceStatusType.Draft)To@(InvoiceStatusType.ToVerify)').click(function () {
+                $('select[data-controlid=StatusDropDownList]').each(function () {
+                    if ($(this).val() == '@((int)InvoiceStatusType.Draft)')
+                        $(this).val('@((int)InvoiceStatusType.ToVerify)');
+                });
+            });
+
+            $('#@(InvoiceStatusType.Draft)To@(InvoiceStatusType.FixedPrice)').click(function () {
+                $('select[data-controlid=StatusDropDownList]').each(function () {
+                    if ($(this).val() == '@((int)InvoiceStatusType.Draft)')
+                        $(this).val('@((int)InvoiceStatusType.FixedPrice)');
+                });
+            });
+
+            //Upon changing the selected activity profile
+            $(this).on('change', 'select[data-controlid=ActivityProfileDropDownList]', null, function () {
+                var activityProfileId = $(this).val();
+                var projectPlanPhaseControlId = $(this).attr('data-projectplanphasecontrolid');
+                var projectPlanPhaseId = $('#' + projectPlanPhaseControlId).val();
+
+                var activityProfile = $('div[data-projectplanphaseid=' + projectPlanPhaseId + '][data-activityprofileid=' + activityProfileId + ']');
+
+                var priceControlId = $(this).attr('data-pricecontrolid');
+
+                if (activityProfile.val() == undefined) {
+                    $('#' + priceControlId).val(0);
+                    return;
+                }
+
+                var durationControlId = $(this).attr('data-durationcontrolid');
+                var duration = $('#' + durationControlId).val().replace(',', '.');
+
+                var date = $.datepicker.parseDate('dd/mm/yy', $(this).attr('data-date'));
+
+                var index = 100;
+
+                $('div[data-type=Index]').each(function () {
+                    var indexDate = $.datepicker.parseDate('dd/mm/yy', $(this).attr('data-startdate'));
+
+                    if (indexDate <= date)
+                        index = parseFloat($(this).attr('data-index'));
+                });
+
+                switch (parseFloat(duration)) {
+                    case 8:
+                        $('#' + priceControlId).val(parseFloat(activityProfile.attr('data-day').replace(',', '.')) * index / 100);
+                        break;
+                    case 4:
+                        $('#' + priceControlId).val(parseFloat(activityProfile.attr('data-halfday').replace(',', '.')) * index / 100);
+                        break;
+                    case 1:
+                        $('#' + priceControlId).val(parseFloat(activityProfile.attr('data-isohour').replace(',', '.')) * index / 100);
+                        break;
+                    default:
+                        var rate = parseFloat(activityProfile.attr('data-hour').replace(',', '.')) * index / 100;
+                        $('#' + priceControlId).val(rate * parseFloat(duration));
+                        break;
+                }
+            });
+
+            //Upon changing the duration
+            $(this).on('change', 'input[type=text][data-controlid=DurationTextBox]', null, function () {
+                var activityProfileControlId = $(this).attr('data-activityprofilecontrolid');
+                var activityProfileId = $('#' + activityProfileControlId).val();
+                var projectPlanPhaseControlId = $('#' + activityProfileControlId).attr('data-projectplanphasecontrolid');
+                var projectPlanPhaseId = $('#' + projectPlanPhaseControlId).val();
+
+                var activityProfile = $('div[data-projectplanphaseid=' + projectPlanPhaseId + '][data-activityprofileid=' + activityProfileId + ']');
+
+                var priceControlId = $(this).attr('data-pricecontrolid');
+
+                if (activityProfile.val() == undefined) {
+                    $('#' + priceControlId).val(0);
+                    return;
+                }
+
+                var duration = $(this).val();
+
+                var date = $.datepicker.parseDate('dd/mm/yy', $(this).attr('data-date'));
+
+                var index = 100;
+
+                $('div[data-type=Index]').each(function () {
+                    var indexDate = $.datepicker.parseDate('dd/mm/yy', $(this).attr('data-startdate'));
+
+                    if (indexDate <= date)
+                        index = parseFloat($(this).attr('data-index'));
+                });
+
+                switch (parseFloat(duration)) {
+                    case 8:
+                        $('#' + priceControlId).val(parseFloat(activityProfile.attr('data-day').replace(',', '.')) * index / 100);
+                        break;
+                    case 4:
+                        $('#' + priceControlId).val(parseFloat(activityProfile.attr('data-halfday').replace(',', '.')) * index / 100);
+                        break;
+                    case 1:
+                        $('#' + priceControlId).val(parseFloat(activityProfile.attr('data-isohour').replace(',', '.')) * index / 100);
+                        break;
+                    default:
+                        var rate = parseFloat(activityProfile.attr('data-hour').replace(',', '.')) * index / 100;
+                        $('#' + priceControlId).val(rate * parseFloat(duration));
+                        break;
+                }
+            });
+
+            $(this).on('change', 'select[data-controlid=ProjectPlanPhaseDropDownList]', null, function () {
+                var entryId = $(this).attr('data-entryid');
+                var priceControlId = $(this).attr('data-pricecontrolid');
+
+                $('#' + priceControlId).val(0);
+
+                $('select[data-controlid=ActivityProfileDropDownList][data-entryid=' + entryId + ']').html('<option value="null"></option>');
+
+                if ($(this).val() != undefined && $(this).val() != null && $(this).val() != '') {
+                    $.ajax({
+                        url: '@Url.Action("ProjectPlanPhaseActivityProfiles")/' + $(this).val(),
+                        success: function (html) {
+                            $('select[data-controlid=ActivityProfileDropDownList][data-entryid=' + entryId + ']').html(html);
+                        }
+                    });
+                    }
+            });
+
+                $(this).on('click', 'a[data-function=UnregisterTimesheetEntry]', null, function () {
+                    ShowDetailSaveDialog();
+
+                    $.ajax({
+                        url: '@Url.Action("DeleteTimesheetEntry")/' + $(this).attr('data-id'),
+                    success: function () {
+                        location.reload();
+                    }
+                });
+            });
+        }
+    </script>
+}
+<fieldset id="Timesheet">
+    <legend>Timesheet</legend>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.HiddenFor(m => m.ProjectId)
+        @Html.HiddenFor(m => m.Year)
+        @Html.HiddenFor(m => m.Month)
+        @Html.HiddenFor(m => m.UserId)
+
+        <h4>Unregistered hours</h4>
+        if (Model.UnregisteredEntries.Count > 0)
+        {
+        <table id="UnregisteredTimesheetTable" class="dataTable">
+            <thead>
+                <tr>
+                    @if (Model.IsProjectManager)
+                    {
+                        <th>Consultant</th>
+                    }
+                    <th>Date</th>
+                    @if (Model.IsProjectManager)
+                    {
+                        <th>Category</th>
+                    }
+                    <th>Description</th>
+                    <th>Project phase - Activity/Consultancy profile</th>
+                    <th>Hours</th>
+                    <th style="width:85px">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.UnregisteredEntries.Count; i++)
+                {
+                    <tr>
+                        @if (Model.IsProjectManager)
+                        {
+                            <td>
+                                @Model.UnregisteredEntries[i].User.FullName
+                            </td>
+                        }
+                        <td>
+                            @Html.HiddenFor(m => m.UnregisteredEntries[i].AppointmentId)
+                            @Html.HiddenFor(m => m.UnregisteredEntries[i].ProjectId)
+                            @Html.HiddenFor(m => m.UnregisteredEntries[i].UserId)
+                            @Html.HiddenFor(m => m.UnregisteredEntries[i].Date)
+                            @Html.HiddenFor(m => m.UnregisteredEntries[i].InvoiceStatusCode)
+                            @Html.HiddenFor(m => m.UnregisteredEntries[i].Description)
+                            @Model.UnregisteredEntries[i].Date.ToShortDateString()
+                        </td>
+                        @if (Model.IsProjectManager)
+                        {
+                            <td>
+                                @Model.UnregisteredEntries[i].Category
+                            </td>
+                        }
+                        <td>
+                            @if (!string.IsNullOrWhiteSpace(Model.UnregisteredEntries[i].Description) && Model.UnregisteredEntries[i].Description.Length > 25)
+                            {
+                                <a title="@Model.UnregisteredEntries[i].Description">@Model.UnregisteredEntries[i].Description.Substring(0, 25)...</a>
+                            }
+                            else
+                            {
+                                @Model.UnregisteredEntries[i].Description
+                            }
+                        </td>
+                        <td>@Html.DropDownListFor(m => m.UnregisteredEntries[i].ProjectPlanPhaseId, Model.CreateProjectPlanPhaseSelectListItems(Model.UnregisteredEntries[i].Date), new
+                                {
+                                    data_controlId = "ProjectPlanPhaseDropDownList",
+                                    data_entryid = Model.UnregisteredEntries[i].AppointmentId.ToString(CultureInfo.InvariantCulture),
+                                    data_pricecontrolid = Html.IdFor(m => m.UnregisteredEntries[i].InvoiceAmount).ToString(),
+                                    style = "width: 320px;"
+                                })
+                        </td>
+                        <td class="numeric">@Html.TextBoxFor(m => m.UnregisteredEntries[i].Duration, new
+                                                {
+                                                    data_controlid = "DurationTextBox",
+                                                    data_activityprofilecontrolid = Html.IdFor(m => m.UnregisteredEntries[i].ActivityProfileId).ToString(),
+                                                    data_pricecontrolid = Html.IdFor(m => m.UnregisteredEntries[i].InvoiceAmount).ToString(),
+                                                    data_date = Model.UnregisteredEntries[i].Date.ToShortDateString(),
+                                                    style = "max-width: 75px;"
+                                                })
+                        </td>
+                        <td class="numeric">€ @Html.TextBoxFor(m => m.UnregisteredEntries[i].InvoiceAmount, new
+                                                  {
+                                                      style = "max-width: 75px;"
+                                                  })
+                        </td>
+                    </tr>
+                    <tr>
+                        @if (Model.IsProjectManager)
+                    {
+                        <td></td>
+                        <td></td>
+                    }
+                        <td></td>
+                        <td></td>
+                        <td>
+                            @Html.DropDownListFor(m => m.UnregisteredEntries[i].ActivityProfileId, new List<SelectListItem>(), new
+                                {
+                                    data_projectplanphasecontrolid = Html.IdFor(m => m.UnregisteredEntries[i].ProjectPlanPhaseId),
+                                    data_entryid = Model.UnregisteredEntries[i].AppointmentId,
+                                    data_controlid = "ActivityProfileDropDownList",
+                                    data_pricecontrolid = Html.IdFor(m => m.UnregisteredEntries[i].InvoiceAmount).ToString(),
+                                    data_durationcontrolid = Html.IdFor(m => m.UnregisteredEntries[i].Duration).ToString(),
+                                    data_date = Model.UnregisteredEntries[i].Date.ToShortDateString(),
+                                    style = "width: 320px;"
+                                })
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        }
+        else
+        {
+        <p>No unregistered timesheet entries found.</p>
+        }
+        <br />
+        <br />
+
+        <h4>Registered hours</h4>
+        if (Model.Entries.Count > 0)
+        {
+        <table id="RegisteredTimesheetTable" class="dataTable">
+            <thead>
+                <tr>
+                    @if (Model.IsProjectManager)
+                    {
+                        <th>Consultant</th>
+                    }
+                    <th>Date</th>
+                    @if (Model.IsProjectManager)
+                    {
+                        <th>Category</th>
+                    }
+                    <th>Project phase</th>
+                    <th>Activity/Consultancy profile</th>
+                    <th>Hours</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th style="width: 72px">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Entries.Count; i++)
+                {
+                    <tr id="node-@Model.Entries[i].Id">
+                        @if (Model.IsProjectManager)
+                        {
+                            <td>
+                                @Model.Entries[i].User.FullName
+                            </td>
+                        }
+                        <td>
+                                @Html.EditorFor(m => m.Entries[i], "BaseEntityViewTemplate")
+                                @Html.HiddenFor(m => m.Entries[i].AppointmentId)
+                                @Html.HiddenFor(m => m.Entries[i].ProjectId)
+                                @Html.HiddenFor(m => m.Entries[i].UserId)
+                                @Html.HiddenFor(m => m.Entries[i].Date)
+                                @Html.HiddenFor(m => m.Entries[i].ActivityProfileId, new { data_projectplanphasecontrolid = Html.IdFor(m => m.Entries[i].ProjectPlanPhaseId) })
+                                @Html.HiddenFor(m => m.Entries[i].ProjectPlanPhaseId)
+                                @Model.Entries[i].Date.ToShortDateString()
+                            </td>
+                        @if (Model.IsProjectManager)
+                        {
+                            <td>
+                                @Model.Entries[i].Category
+                            </td>
+                        }
+                        <td>@Html.DisplayTextFor(m => m.Entries[i].ProjectPlanPhaseName)</td>
+                        <td>@Html.DisplayTextFor(m => m.Entries[i].ActivityProfileName)</td>
+                        <td class="numeric">@Html.TextBoxFor(m => m.Entries[i].Duration, new
+                                                {
+                                                    data_controlid = "DurationTextBox",
+                                                    data_activityprofilecontrolid = Html.IdFor(m => m.Entries[i].ActivityProfileId).ToString(),
+                                                    data_pricecontrolid = Html.IdFor(m => m.Entries[i].InvoiceAmount).ToString(),
+                                                    data_date = Model.Entries[i].Date.ToShortDateString(),
+                                                    style = "max-width: 75px;"
+                                                })
+                        </td>
+                        <td style="min-width: 125px;">€ @Html.TextBoxFor(m => m.Entries[i].InvoiceAmount, new
+                                         {
+                                             style = "max-width: 100px;"
+                                         })
+                        </td>
+                        @if (Model.CreateInvoiceStatusSelectListItem(Model.Entries[i].InvoiceStatusCode).Count() <2){
+
+                        <td>
+                            @((InvoiceStatusType)Model.Entries[i].InvoiceStatusCode)
+                    </td>
+                        }else{
+                        <td>
+                            @Html.DropDownListFor(m => m.Entries[i].InvoiceStatusCode, Model.CreateInvoiceStatusSelectListItem(Model.Entries[i].InvoiceStatusCode), new
+                                {
+                                    data_controlid = "StatusDropDownList"
+                                })
+                    </td>
+                        }
+                        <td><a href="javascript:void(0);" data-function="UnregisterTimesheetEntry" class="delete-link" data-id="@Model.Entries[i].Id" title="Delete this timesheet entry."></a></td>
+                    </tr>
+                    <tr class="child-of-node-@Model.Entries[i].Id">
+                        <td></td>
+                        @if (Model.IsProjectManager)
+                        {
+                            <td colspan="4">@Html.TextAreaFor(m => m.Entries[i].Description, 3, 50, null)</td>
+                        }
+                        else
+                        {
+                            <td>@Html.TextAreaFor(m => m.Entries[i].Description, 3, 50, null)</td>
+    <td></td>
+                        }
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        }
+        else
+        {
+        <p>No registered timesheet entries found.</p>
+        }
+        <br />
+        <br />
+    }
+
+    <div class="right-text">
+        @if (Model.Entries != null)
+        {
+            if (Model.Entries.Any(e => e.Status == InvoiceStatusType.Draft))
+            {
+                switch (Model.Project.PricingModelType)
+                {
+                    case PricingModelType.FixedPrice:
+            <a href="javascript:void(0);" id="@(InvoiceStatusType.Draft)To@(InvoiceStatusType.FixedPrice)" class="button">@InvoiceStatusType.Draft
+                => @InvoiceStatusType.FixedPrice</a>
+                        break;
+
+                    case PricingModelType.TimeAndMaterial:
+            <a href="javascript:void(0);" id="@(InvoiceStatusType.Draft)To@(InvoiceStatusType.ToVerify)" class="button">@InvoiceStatusType.Draft
+                => @InvoiceStatusType.ToVerify</a>
+                        break;
+                }
+            }
+        }
+        <a href="javascript:void(0);" id="SubmitTimesheetFormButton" class="button">Save</a>
+    </div>
+</fieldset>
+
+<div style="display: none">
+    @foreach (var index in Model.ProjectPriceIndices)
+    {
+        <div id="@index.Index" data-type="Index" data-startdate="@index.StartDate.ToShortDateString()" data-index="@index.Index" />
+    }
+    @foreach (var projectPlanPhase in Model.ProjectPlan.ProjectPlanPhases)
+    {
+        var activityEntries = projectPlanPhase.ProjectPlanPhaseEntries.OfType<ProjectPlanPhaseActivityView>().ToList();
+        foreach (var activityProfile in Model.ActivityProfiles.Where(ap => activityEntries.Any(ae => ae.ActivityId == ap.ActivityId && ae.ProfileId == ap.ProfileId)))
+        {
+        <div 
+                data-projectplanphaseid="@projectPlanPhase.Id"
+                data-activityprofileid="@activityProfile.Id" 
+                data-day="@activityProfile.DayRate"
+                data-halfday="@activityProfile.HalfDayRate"
+                data-hour="@activityProfile.HourlyRate" 
+                data-isohour="@activityProfile.IsolatedHourlyRate"
+                />
+        }
+    }
+</div>
+
+
+

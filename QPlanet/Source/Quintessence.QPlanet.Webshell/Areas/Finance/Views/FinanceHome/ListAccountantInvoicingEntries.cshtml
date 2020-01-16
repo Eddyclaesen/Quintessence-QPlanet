@@ -1,0 +1,98 @@
+﻿@using Quintessence.QPlanet.ViewModel.Fin
+@model Quintessence.QPlanet.Webshell.Areas.Finance.Models.FinanceHome.ListAccountantInvoicingModel
+<table class="dataTable" id="AccountantInvoicingDataTable">
+    <thead>
+        <tr>
+            <th></th>
+            <th>TL Project</th>
+            <th>Description</th>
+            <th>Contact</th>
+            <th>Q Project</th>
+            <th>Date</th>
+            <th>PO number</th>
+            <th>Amount</th>
+            <th title="Invoiced on">On</th>
+            <th>Status code</th>
+            <th>Invoice no.</th>
+            <th>Remarks</th>
+            <th>Proposal</th>
+            <th>P.M.</th>
+            <th>C.A.</th>
+            <th></th>            
+        </tr>
+    </thead>
+    <tbody>
+
+        @for (int i = 0; i < Model.GroupedInvoicingEntries.Count; i++)
+        {
+            //<tr id="node-@i" class="expanded">
+            //    <td colspan="12">@Model.GroupedInvoicingEntries[i].CrmProjectName</td>
+            //</tr>
+            for (int j = 0; j < Model.GroupedInvoicingEntries[i].InvoicingEntries.Count; j++)
+            {
+            <tr class="child-of-node-@i">
+                @{
+                var invoicingProjectCandidateEntry = Model.GroupedInvoicingEntries[i].InvoicingEntries[j] as EditAccountantProjectCandidateInvoicingEntryModel;
+                if (invoicingProjectCandidateEntry != null)
+                {
+                    @Html.EditorFor(m => m.GroupedInvoicingEntries[i].InvoicingEntries[j], "EditAccountantProjectCandidateInvoicingModel")
+                }
+
+                var invoicingProjectCandidateCategoryType1Entry = Model.GroupedInvoicingEntries[i].InvoicingEntries[j] as EditAccountantProjectCandidateCategoryType1InvoicingEntryModel;
+                if (invoicingProjectCandidateCategoryType1Entry != null)
+                {
+                    @Html.EditorFor(m => m.GroupedInvoicingEntries[i].InvoicingEntries[j], "EditAccountantProjectCandidateCategoryType1InvoicingModel")
+                }
+
+                var invoicingProjectCandidateCategoryType2Entry = Model.GroupedInvoicingEntries[i].InvoicingEntries[j] as EditAccountantProjectCandidateCategoryType2InvoicingEntryModel;
+                if (invoicingProjectCandidateCategoryType2Entry != null)
+                {
+                    @Html.EditorFor(m => m.GroupedInvoicingEntries[i].InvoicingEntries[j], "EditAccountantProjectCandidateCategoryType2InvoicingModel")
+                }
+
+                var invoicingProjectCandidateCategoryType3Entry = Model.GroupedInvoicingEntries[i].InvoicingEntries[j] as EditAccountantProjectCandidateCategoryType3InvoicingEntryModel;
+                if (invoicingProjectCandidateCategoryType3Entry != null)
+                {
+                    @Html.EditorFor(m => m.GroupedInvoicingEntries[i].InvoicingEntries[j], "EditAccountantProjectCandidateCategoryType3InvoicingModel")
+                }
+
+                var invoicingProjectProductEntry = Model.GroupedInvoicingEntries[i].InvoicingEntries[j] as EditAccountantProjectProductInvoicingEntryModel;
+                if (invoicingProjectProductEntry != null)
+                {
+                    @Html.EditorFor(m => m.GroupedInvoicingEntries[i].InvoicingEntries[j], "EditAccountantProjectProductInvoicingModel")
+                }
+
+                var invoicingAcdcProjectFixedPriceEntry = Model.GroupedInvoicingEntries[i].InvoicingEntries[j] as EditAccountantAcdcProjectFixedPriceInvoicingEntryModel;
+                if (invoicingAcdcProjectFixedPriceEntry != null)
+                {
+                    @Html.EditorFor(m => m.GroupedInvoicingEntries[i].InvoicingEntries[j], "EditAccountantAcdcProjectFixedPriceInvoicingModel")
+                }
+
+                var invoicingConsultancyProjectFixedPriceEntry = Model.GroupedInvoicingEntries[i].InvoicingEntries[j] as EditAccountantConsultancyProjectFixedPriceInvoicingEntryModel;
+                if (invoicingConsultancyProjectFixedPriceEntry != null)
+                {
+                    @Html.EditorFor(m => m.GroupedInvoicingEntries[i].InvoicingEntries[j], "EditAccountantConsultancyProjectFixedPriceInvoicingModel")
+                }
+                
+                var invoicingProductSheetEntry = Model.GroupedInvoicingEntries[i].InvoicingEntries[j] as EditAccountantProductSheetEntryInvoicingEntryModel;
+                if (invoicingProductSheetEntry != null)
+                {
+                    @Html.EditorFor(m => m.GroupedInvoicingEntries[i].InvoicingEntries[j], "EditAccountantProductSheetEntryInvoicingModel")
+                }
+                
+                var invoicingTimesheetEntry = Model.GroupedInvoicingEntries[i].InvoicingEntries[j] as EditAccountantTimesheetEntryInvoicingEntryModel;
+                if (invoicingTimesheetEntry != null)
+                {
+                    @Html.EditorFor(m => m.GroupedInvoicingEntries[i].InvoicingEntries[j], "EditAccountantTimesheetEntryInvoicingModel")
+                }
+                }
+            </tr>
+
+            }
+        }
+
+    </tbody>
+</table>
+
+
+

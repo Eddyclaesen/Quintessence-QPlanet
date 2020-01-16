@@ -1,0 +1,79 @@
+﻿@model Quintessence.QService.QueryModel.Sec.UserView
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Admin - Users - Edit user";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">@Model.FullName</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li class="current">Detail</li>
+        </ul>
+    </nav>
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            RefreshEditUser();
+
+            InitializeButtons();
+        });
+
+        function RefreshEditUser() {
+            $('#EditUserPlaceholder').loading('Retrieving user details.');
+
+            $.ajax({
+                url: '@Url.Action("EditUser", new { id = Model.Id })',
+                success: function (html) {
+                    $('#EditUserPlaceholder').html(html);
+                },
+                error: function (err) {
+                    ShowDetailErrorDialog('Edit user.', err);
+                    $('#EditUserPlaceholder').html('Error retrieving user. Please contact your system administrator if this problems persists.');
+                }
+            });
+        }
+        
+        function InitializeButtons() {
+            $(this).on('click', 'a[data-function=SubmitEditUserFormButton]', null, function (event) {
+                event.preventDefault();
+
+                ShowDetailSaveDialog();
+
+                var form = $('#EditUserForm');
+
+                $.ajax({
+                    url: form.attr('action'),
+                    data: form.serialize(),
+                    type: 'POST',
+                    success: function () {
+                        HideDetailSaveDialog();
+                        RefreshEditUser();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Edit user.', err);
+                    }
+                });
+            });
+        }
+    </script>
+}
+
+<div class="grid_8">
+    <fieldset>
+        <legend>User details</legend>
+
+        <div id="EditUserPlaceholder"></div>
+    </fieldset>
+</div>

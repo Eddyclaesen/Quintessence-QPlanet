@@ -1,0 +1,49 @@
+﻿@using Quintessence.QService.QueryModel.Base
+@model IEnumerable<Quintessence.QService.QueryModel.Prm.ProductsheetEntryView>
+<table id="ProductsheetOverviewTable">
+    @foreach (var entryYearGroup in Model.OrderBy(m => m.Date).GroupBy(m => m.Date.Year))
+    { 
+        <tr id="node-ProductsheetYear-@entryYearGroup.Key">
+            <td>@entryYearGroup.Key</td>
+        </tr>
+        
+        foreach (var entryMontGroup in entryYearGroup.GroupBy(m => m.Date.ToString("MMMM")))
+        {   
+        <tr id="node-ProductsheetMonth-@string.Format("{0}{1}", entryYearGroup.Key, entryMontGroup.Key)" class="child-of-node-ProductsheetYear-@entryYearGroup.Key">
+            <td>@entryMontGroup.Key</td>
+        </tr>
+    
+        <tr class="child-of-node-ProductsheetMonth-@string.Format("{0}{1}", entryYearGroup.Key, entryMontGroup.Key)">
+            <td>
+                <table id="@string.Format("{0}{1}", entryYearGroup.Key, entryMontGroup.Key)Table" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var entry in entryMontGroup)
+                        {
+                            <tr>
+                                <td>@entry.Date.ToShortDateString()</td>
+                                <td>@entry.Name</td>
+                                <td>@entry.Quantity</td>
+                                <td>@entry.InvoiceAmount</td>
+                                <td>@EnumMemberNameAttribute.GetName(entry.Status)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <br />
+                @Html.ActionLink("Edit", "EditProductsheet", new { id = Model.FirstOrDefault().ProjectId, year = entryYearGroup.Key, entryMontGroup.FirstOrDefault().Date.Month }, new { target = "EditProductsheet", @class = "button" })
+                <br />
+                <br />
+            </td>
+        </tr>
+        }
+    }
+</table>

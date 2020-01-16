@@ -1,0 +1,88 @@
+﻿html {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background: #8C8A8A;
+}
+
+body {
+    font-size: 10pt;
+    font-family: Verdana;/*Century Gothic;*/
+    background: white;
+}
+
+input[type="text"], input[type="password"] {
+    font-family: Century Gothic, Verdana;
+}
+
+a:link, a:visited,
+a:active, a:hover {
+}
+
+a:hover {
+}
+
+footer {
+    border-top:1px solid #bbb;
+    font-size: x-small;
+    padding: 5px;
+}
+
+header, footer, hgroup,
+nav, section {
+    display: block;
+}
+
+.buttonLink a {
+    background-color: whitesmoke;
+    color: gray;
+    border: 1px solid gray;
+}
+
+.pdfLink {
+    display: inline-block;
+    text-decoration: none;
+    border: none;
+    text-indent: -9999px; /*Hides text*/
+    padding-left: 2px;
+    padding-right: 2px;
+    display: inline-block;
+    background: url('../Images/pdf.png') no-repeat;
+    background-size: contain;
+    width: 20px;
+    height: 20px;
+}
+
+.buttonLink a:hover {
+    background-color: gray;
+    color: whitesmoke;
+    border: 1px solid whitesmoke;
+}
+
+footer
+{
+    text-align: center;
+    vertical-align: bottom;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.field-validation-valid
+{
+    display: none;
+}
+
+.IsMostApplicableColumn, .IsLeastApplicableColumn {
+    text-align: center;   
+}
+
+#loginError {
+    width: 100%;
+    text-align: center;
+}

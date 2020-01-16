@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{034EFD76-090C-4490-B086-24742CF7805C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Quintessence.QJobService.JobDefinitions.SuperOfficeDuplication</RootNamespace>
+    <AssemblyName>Quintessence.QJobService.JobDefinitions.SuperOfficeDuplication</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constants.cs" />
+    <Compile Include="DataAccess\Appointment.cs">
+      <DependentUpon>SuperOfficeEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Contact.cs">
+      <DependentUpon>SuperOfficeEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\DuplicationDataAccess.cs" />
+    <Compile Include="DataAccess\DuplicationErrorLog.cs">
+      <DependentUpon>SuperOfficeEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\DuplicationJobHistory.cs">
+      <DependentUpon>SuperOfficeEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\DuplicationSetting.cs">
+      <DependentUpon>SuperOfficeEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\IDuplicationDataAccess.cs" />
+    <Compile Include="DataAccess\Person.cs">
+      <DependentUpon>SuperOfficeEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Project.cs">
+      <DependentUpon>SuperOfficeEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\ProjectMember.cs">
+      <DependentUpon>SuperOfficeEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Sale.cs">
+      <DependentUpon>SuperOfficeEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\SuperOfficeEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SuperOfficeEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\SuperOfficeEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SuperOfficeEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\SuperOfficeEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SuperOfficeEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\User.cs">
+      <DependentUpon>SuperOfficeEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Duplicator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SuperOfficeAppointmentDetailDuplicator.cs" />
+    <Compile Include="SuperOfficeAppointmentDuplicator.cs" />
+    <Compile Include="SuperOfficeProjectMemberDuplicator.cs" />
+    <Compile Include="SuperOfficeSaleDuplicator.cs" />
+    <Compile Include="SuperOfficeProjectDuplicator.cs" />
+    <Compile Include="SuperOfficePersonDuplicator.cs" />
+    <Compile Include="SuperOfficeContactDuplicator.cs" />
+    <Compile Include="SuperOfficeDuplicator.cs" />
+    <Compile Include="SuperOfficeUserDuplicator.cs" />
+    <Compile Include="SuperOffice\Constants.cs" />
+    <Compile Include="SuperOffice\Models\PostDataObjects.cs" />
+    <Compile Include="SuperOffice\Models\SuperOfficeAppointmentDetail.cs" />
+    <Compile Include="SuperOffice\Models\SuperOfficeAppointment.cs" />
+    <Compile Include="SuperOffice\Models\SuperOfficeProjectMember.cs" />
+    <Compile Include="SuperOffice\Models\SuperOfficeSale.cs" />
+    <Compile Include="SuperOffice\Models\SuperOfficeContact.cs" />
+    <Compile Include="SuperOffice\Models\SuperOfficePerson.cs" />
+    <Compile Include="SuperOffice\Models\SuperOfficeProject.cs" />
+    <Compile Include="SuperOffice\Models\SuperOfficeTest.cs" />
+    <Compile Include="SuperOffice\Models\SuperOfficeUser.cs" />
+    <Compile Include="SuperOffice\Models\UserdefinedFields.cs" />
+    <Compile Include="SuperOffice\WebApi\ApiResponse.cs" />
+    <Compile Include="SuperOffice\WebApi\ISuperOfficeAccess.cs" />
+    <Compile Include="SuperOffice\WebApi\SuperOfficeAccess.cs" />
+    <Compile Include="SuperOffice\WebApi\TicketResponse.cs" />
+    <Compile Include="SuperOffice\WebApi\WebApiBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Quintessence.QJobService.Interfaces\Quintessence.QJobService.Interfaces.csproj">
+      <Project>{d52dcf73-d4b9-4942-90c5-5ac44b1fd272}</Project>
+      <Name>Quintessence.QJobService.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QJobService.JobDefinitions.Replication\Quintessence.QJobService.JobDefinitions.Replication.csproj">
+      <Project>{1f651452-c5d8-45ef-943c-554dd106967a}</Project>
+      <Name>Quintessence.QJobService.JobDefinitions.Replication</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EntityDeploy Include="DataAccess\SuperOfficeEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SuperOfficeEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DataAccess\SuperOfficeEntities.edmx.diagram">
+      <DependentUpon>SuperOfficeEntities.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DataAccess\SuperOfficeEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SuperOfficeEntities.edmx</DependentUpon>
+      <LastGenOutput>SuperOfficeEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataAccess\SuperOfficeEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SuperOfficeEntities.edmx</DependentUpon>
+      <LastGenOutput>SuperOfficeEntities.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,33 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.EditCustomerFeedbackModel
+@using (Html.BeginForm("CustomerFeedback", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "CustomerFeedbackForm" }))
+{
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.PhoneCallRemarks)</div>
+        <div>@Html.TextAreaFor(m => m.PhoneCallRemarks)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ReportRemarks)</div>
+        <div>@Html.TextAreaFor(m => m.ReportRemarks)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ReportDeadlineStep)</div>
+        <div>@Html.TextBoxFor(m => m.ReportDeadlineStep)</div>
+    </div>
+    <div class="row">
+        <div>@Html.CheckBoxFor(m => m.IsRevisionByPmRequired)</div>
+        <div>@Html.LabelFor(m => m.IsRevisionByPmRequired)</div>
+    </div>
+    <div class="row">
+        <div>@Html.CheckBoxFor(m => m.SendReportToParticipant)</div>
+        <div>@Html.LabelFor(m => m.SendReportToParticipant)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.SendReportToParticipantRemarks)</div>
+        <div>@Html.TextAreaFor(m => m.SendReportToParticipantRemarks)</div>
+    </div>
+    <br/>
+    <br/>
+    <div class="right-text">
+        <a href="javascript:void(0);" class="button" id="SaveCustomerFeedbackButton">Save</a>
+    </div>
+}

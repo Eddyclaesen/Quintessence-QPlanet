@@ -1,0 +1,207 @@
+﻿@using System.Globalization
+@using Quintessence.QPlanet.Webshell.Infrastructure.Enums
+@model Quintessence.QPlanet.ViewModel.Cam.CandidateModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Candidates - Edit candidate";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current">
+                <a href="javascript:void(0);">
+                    @if (ViewBag.ViewMode == ViewMode.Edit)
+                    {
+                        <span>@string.Format("{0} {1}", Model.FirstName, Model.LastName)</span>
+                    }
+                    else
+                    {
+                        @:New candidate
+                    }
+                </a>
+            </li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li class="current">
+                @ViewContext.RouteData.Values["action"].ToString()
+            </li>
+        </ul>
+    </nav>
+}
+@section AdditionalScripts
+{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.treeview.js")"></script>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/themes/base/jquery.treeview.css")" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.treeTable.js")"></script>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/themes/base/jquery.treeTable.css")" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.dataTables.js")"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            InitializeButtons();
+            InitializeProjectTable();
+        });
+
+        function InitializeButtons() {
+            $('#SubmitFormButtonLink').click(function () {
+                if ($('#CandidateForm').valid()) {
+                    ShowDetailSaveDialog();
+                    $('#CandidateForm').submit();
+                }
+            });
+        }
+
+        function InitializeProjectTable() {
+            $('#ProjectTable').dataTable({
+                "aLengthMenu": [[20, 40, 60, -1], [20, 40, 60, "All"]],
+                "iDisplayLength": 20
+            });
+        }
+    </script>
+}
+<div class="grid_6">
+    <fieldset>
+        <legend>Candidate information</legend>
+        @using (Html.BeginForm(ViewContext.RouteData.Values["action"].ToString(), "Candidate", FormMethod.Post, new { id = "CandidateForm" }))
+        {
+            @Html.EditorFor(m => m, "BaseEntityViewTemplate");
+                                                          
+            <table class="properties">
+                <tbody>
+                    <tr>
+                        <td class="label">
+                            @Html.DisplayNameFor(m => m.FirstName)
+                        </td>
+                        <td class="value">
+                            @Html.EditorFor(m => m.FirstName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            @Html.DisplayNameFor(m => m.LastName)
+                        </td>
+                        <td class="value">
+                            @Html.EditorFor(m => m.LastName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            @Html.DisplayNameFor(m => m.Email)
+                        </td>
+                        <td class="value">
+                            @Html.EditorFor(m => m.Email)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            @Html.DisplayNameFor(m => m.Gender)
+                        </td>
+                        <td class="value">
+                            @Html.DropDownListFor(m => m.Gender, Model.CreateGenderSelectListItems())
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            @Html.DisplayNameFor(m => m.LanguageId)
+                        </td>
+                        <td class="value">
+                            @Html.DropDownListFor(m => m.LanguageId, Model.Languages.AsSelectListItems(l => l.Id.ToString(CultureInfo.InvariantCulture), l => l.Name))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            @Html.DisplayNameFor(m => m.Phone)
+                        </td>
+                        <td class="value">
+                            @Html.EditorFor(m => m.Phone)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            @Html.DisplayNameFor(m => m.Reference)
+                        </td>
+                        <td class="value">
+                            @Html.EditorFor(m => m.Reference)
+                        </td>
+                    </tr>
+                </tbody>
+            </table> 
+            
+            <div class="right-text">
+                <input type="submit" class="button" id="SubmitFormButtonLink" value="@(ViewBag.ViewMode == ViewMode.Edit ? "Save" : "Create")"/>
+            </div>
+        }
+    </fieldset>
+</div>
+@if (ViewBag.ViewMode == ViewMode.Edit)
+{
+    <div class="grid_10">
+        <fieldset>
+            <legend>Corresponding projects</legend>
+            <table id="ProjectTable">
+                <thead>
+                    <tr>
+                        <th>Archive</th>
+                        <th>Date</th>
+                        <th>Assessor</th>
+                        <th>CRM Code</th>
+                        <th>Project</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var project in Model.ProjectCandidates)
+                    {
+                        <tr>
+                            <td>@project.CrmCandidateInfoId</td>
+                            <td>@project.ProjectCandidateDetail.AssessmentStartDate</td>
+                            <td>@project.ProjectCandidateDetail.LeadAssessorFullName</td>
+                            <td>@project.Code</td>
+                            <td>
+                                @if (project.Project.Confidential == false)
+                                {
+                                    @Html.ActionLink(project.Project.Name, "Edit", "ProjectGeneral", new { id = project.ProjectId, area = "Project" }, new { target = project.ProjectId })
+                                }
+                                else
+                                {
+                                    <span style="color:darksalmon;">Confidential</span>
+                                }
+                            </td>
+                            <td>
+                                @if (project.IsCancelled)
+                                {
+                                    @:Cancelled
+                                }
+                                else if (project.ProjectCandidateDetail == null || project.ProjectCandidateDetail.IsSuperofficeAppointmentDeleted)
+                                {
+                                    <img src="@Url.Content("~/Images/Icons/Warning16.png")"/>
+                                    @Html.ActionLink("Deleted", "EditProjectCandidates", "ProjectAssessmentDevelopment", new { id = project.ProjectId, area = "Project" }, new { target = project.ProjectId.ToString() })
+                                }
+                                else
+                                {
+                                    if (project.Project.Confidential == false)
+                                    {
+                                        @Html.ActionLink("Scores", "EditProjectCandidateSimulationScores", "ProjectAssessmentDevelopment", new { id = project.Id, area = "Project" }, new { target = project.Id.ToString() })
+                                    }
+                                    else
+                                    {
+                                        <span style="color:darksalmon;">Confidential</span>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+}
+
+<div class="clear"></div>
+

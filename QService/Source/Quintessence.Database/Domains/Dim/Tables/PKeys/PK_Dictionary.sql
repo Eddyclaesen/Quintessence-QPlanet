@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[Dictionary]
+	ADD CONSTRAINT [PK_Dictionary] 
+	PRIMARY KEY NONCLUSTERED ([Id])

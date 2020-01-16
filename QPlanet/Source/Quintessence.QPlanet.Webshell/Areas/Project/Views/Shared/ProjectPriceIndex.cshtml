@@ -1,0 +1,24 @@
+﻿@model List<Quintessence.QService.QueryModel.Prm.ProjectPriceIndexView>
+
+<table id="ProjectPriceIndexTable" class="dataTable">
+    <thead>
+        <tr>
+            <th style="width: 50%">Start date</th>
+            <th style="width: 50%">Index</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var index in Model.OrderBy(i => i.StartDate))
+        {
+            <tr>
+                <td>@index.StartDate.ToShortDateString()</td>
+                <td>@index.Index</td>
+                <td>
+                    <a href="javascript:void(0);" data-function="EditProjectPriceIndex" class="edit-link" data-id="@index.Id"></a>
+                    <a href="javascript:void(0);" data-function="DeleteProjectPriceIndex" class="delete-link" data-id="@index.Id"></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

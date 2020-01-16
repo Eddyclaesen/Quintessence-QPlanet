@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Quintessence.QService.QueryModel.Dom.BlogEntryView>
+
+<table>
+    @foreach (var entry in Model)
+    {
+        <tr>
+            <td>
+                <b>@entry.Title</b>
+                <p>
+                    @Html.Raw(entry.Body)
+                </p>
+                <div style="font-size: .75em;">
+                    Created on @entry.Created - Expires on @(entry.Expires.HasValue ? entry.Expires.GetValueOrDefault().ToString() : "never")
+                </div>
+                <hr />
+            </td>
+        </tr>
+    }
+</table>

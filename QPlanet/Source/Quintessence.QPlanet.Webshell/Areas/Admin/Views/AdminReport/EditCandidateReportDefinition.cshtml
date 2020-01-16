@@ -1,0 +1,34 @@
+﻿@model Quintessence.QPlanet.ViewModel.Rep.EditCandidateReportDefinitionModel
+@using (Html.BeginForm("EditCandidateReportDefinition", "AdminReport", FormMethod.Post, new { id = "EditCandidateReportDefinitionForm" }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    <p>
+        Please enter a name and location for a new report definition.
+        For a standard report (Quintessence report), leave the customer-field empty.
+    </p>
+    
+    <div class="row">
+        <div>Contact</div>
+        <div>
+            @Model.ContactName
+        </div>
+    </div>
+    <div class="row">
+        <div>Name</div>
+        <div>@Html.TextBoxFor(m => m.Name)</div>
+    </div>
+    <div class="row">
+        <div>Location</div>
+        <div>@Html.TextBoxFor(m => m.Location)</div>
+    </div>
+    <div class="row">
+        <div>Is active</div>
+        <div>@Html.CheckBoxFor(m => m.IsActive)</div>
+    </div>
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" id="SubmitEditCandidateReportDefinitionForm" title="Add new report definition."
+            class="button">Save</a>
+    </div>
+}

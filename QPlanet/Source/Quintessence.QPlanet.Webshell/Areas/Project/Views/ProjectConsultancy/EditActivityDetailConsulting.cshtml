@@ -1,0 +1,46 @@
+﻿@model Quintessence.QPlanet.ViewModel.Scm.EditActivityDetailConsultingModel
+@using (Html.BeginForm("EditActivityDetailConsulting", "ProjectConsultancy", FormMethod.Post, new { data_form = "EditActivityDetailConsultingForm", data_activitydetailid = Model.Id }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    <h4>Information</h4>
+    <table style="width: 100%">
+        <tr>
+            <td class="label" style="vertical-align: top">@Html.DisplayNameFor(m => m.Description)
+            </td>
+            <td class="value" style="">@Html.TextAreaFor(m => m.Description, 4, 60, null)</td>
+        </tr>
+    </table>
+    <br />
+    <br />
+    <table class="dataTable">
+        <thead>
+            <tr>
+                <th style="width: 40%" colspan="2">Activity/Consultancy profile</th>
+                <th style="width: 15%">1 day</th>
+                <th style="width: 15%">1/2 day</th>
+                <th style="width: 15%">1 hour</th>
+                <th style="width: 15%">1 isol. hour</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.ActivityProfiles.Count; i++)
+            {
+                <tr>
+                    <td style="width: 40%" colspan="2">
+                        @Html.DisplayTextFor(m => m.ActivityProfiles[i].ProfileName)
+                    </td>
+                    <td style="max-width: 15%" class="numeric">@Model.ActivityProfiles[i].DayRate.ToString("C")</td>
+                    <td style="max-width: 15%" class="numeric">@Model.ActivityProfiles[i].HalfDayRate.ToString("C")</td>
+                    <td style="max-width: 15%" class="numeric">@Model.ActivityProfiles[i].HourlyRate.ToString("C")</td>
+                    <td style="max-width: 15%" class="numeric">@Model.ActivityProfiles[i].IsolatedHourlyRate.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+    <br />
+
+<div class="right-text">
+    <a href="@Url.Action("Edit", "ProjectConsultancy", new{id=@Model.ProjectId})#ActivityProfileInformation" target="_blank" class="button">Edit profiles</a>
+    <a href="javascript:void(0);" class="button" data-function="EditActivityDetailConsultingSubmitButton" data-activitydetailid="@Model.Id">Save</a>
+</div>

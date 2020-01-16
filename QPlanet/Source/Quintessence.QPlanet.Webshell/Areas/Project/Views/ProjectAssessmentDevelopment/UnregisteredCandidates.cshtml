@@ -1,0 +1,52 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectAssessmentDevelopment.UnregisteredCandidatesModel
+
+<table class="dataTable">
+    <thead>
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Gender</th>
+            <th>Code</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.UnregisteredCandidates.Count < 1)
+        {
+            <tr>
+                <td colspan="5" class="center-text">No unregistered candidates found...</td>
+            </tr>
+        }
+        @for (int i = 0; i < Model.UnregisteredCandidates.Count; i++)
+        {
+            <tr>
+                <td>@(Model.UnregisteredCandidates[i].FirstName ?? "-")</td>
+                <td>@(Model.UnregisteredCandidates[i].LastName ?? "-")</td>
+                <td>@(Model.UnregisteredCandidates[i].Gender)</td>
+                <td>@(Model.UnregisteredCandidates[i].Code ?? "-")</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(Model.UnregisteredCandidates[i].FirstName) && !string.IsNullOrEmpty(Model.UnregisteredCandidates[i].LastName))
+                    {
+                        using (Html.BeginForm("AddCandidate", "ProjectAssessmentDevelopment", FormMethod.Post, new { data_id = "AddCandidateForm" }))
+                        {
+                            @Html.Hidden("ProjectId", Model.ProjectId)
+                            @Html.Hidden("FirstName", Model.UnregisteredCandidates[i].FirstName)
+                            @Html.Hidden("LastName", Model.UnregisteredCandidates[i].LastName)
+                            @Html.Hidden("Gender", Model.UnregisteredCandidates[i].Gender)
+                            @Html.Hidden("Code", Model.UnregisteredCandidates[i].Code)
+                            @Html.Hidden("LanguageId", Model.UnregisteredCandidates[i].LanguageId)
+                            @Html.Hidden("AppointmentId", Model.UnregisteredCandidates[i].Id)
+                            <a href="javascript:void(0);" data-id="SubmitAddCandidateButton">Add</a>
+                        }
+                    }
+                    else
+                    {
+                        <img src="@Url.Content("~/Images/Icons/warning.png")" class="icon" alt="This candidate has no first or last name!" title="This candidate has no first or last name!"/>
+                    }
+                </td>
+            </tr>  
+        }
+    </tbody>
+</table>
+
+

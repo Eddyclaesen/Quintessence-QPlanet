@@ -1,0 +1,88 @@
+﻿@using Resources
+@model Quintessence.QCare.ViewModel.EvaluationFormCoachingPart6Model
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            InitializeButtons();
+        });
+
+        function InitializeButtons() {
+            //Previous
+            $('a[data-function=previous]').click(function (e) {
+                e.preventDefault();
+                var form = $('#Part6Form');
+                $('#Navigation').val('0');
+                form.submit();
+            });
+
+            //Next
+            $('a[data-function=next]').click(function (e) {
+                e.preventDefault();
+                var form = $('#Part6Form');
+                $('#Navigation').val('1');
+                form.submit();
+            });
+        }
+    </script>
+}
+
+@using (Html.BeginForm("Part6", "EvaluationCoaching", FormMethod.Post, new { id = "Part6Form" }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    @Html.HiddenFor(m => m.Navigation)
+    <fieldset>
+        <legend>@Global.EvaluationFormCoachingTitleBlock6</legend>
+        <div>
+            <table class="multiple-choice">
+                <tr>
+                    <td></td>
+                    <td class="vertical-flipped">@Global.VeryDissatisfied</td>
+                    <td class="vertical-flipped">@Global.Dissatisfied</td>
+                    <td class="vertical-flipped">@Global.Neutral</td>
+                    <td class="vertical-flipped">@Global.Satisfied</td>
+                    <td class="vertical-flipped">@Global.VerySatisfied</td>
+                    <td class="vertical-flipped">@Global.NotApplicable</td>
+                </tr>
+                <tr>
+                    <td>@Global.ToWhatDegree</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>@Global.EvaluationFormCoachingQuestion12</td>
+                    <td class="center-text">@Html.RadioButtonFor(m => m.Question12, -2)</td>
+                    <td class="center-text">@Html.RadioButtonFor(m => m.Question12, -1)</td>
+                    <td class="center-text">@Html.RadioButtonFor(m => m.Question12, 0) </td>
+                    <td class="center-text">@Html.RadioButtonFor(m => m.Question12, 1) </td>
+                    <td class="center-text">@Html.RadioButtonFor(m => m.Question12, 2) </td>
+                    <td class="center-text">@Html.RadioButtonFor(m => m.Question12, 3) </td>
+                </tr>
+                <tr>
+                    <td>@Global.EvaluationFormCoachingQuestion13</td>
+                    <td class="center-text">@Html.RadioButtonFor(m => m.Question13, -2)</td>
+                    <td class="center-text">@Html.RadioButtonFor(m => m.Question13, -1)</td>
+                    <td class="center-text">@Html.RadioButtonFor(m => m.Question13, 0) </td>
+                    <td class="center-text">@Html.RadioButtonFor(m => m.Question13, 1) </td>
+                    <td class="center-text">@Html.RadioButtonFor(m => m.Question13, 2) </td>
+                    <td class="center-text">@Html.RadioButtonFor(m => m.Question13, 3) </td>
+                </tr>
+            </table>
+            <br/>
+            <div class="right-text">
+                <a href="javascript:void(0);" data-function="previous" class="button">@Global.Previous</a>
+                <a href="javascript:void(0);" data-function="next" class="button">@Global.Next</a>
+            </div>
+        </div>
+    </fieldset>
+    
+}

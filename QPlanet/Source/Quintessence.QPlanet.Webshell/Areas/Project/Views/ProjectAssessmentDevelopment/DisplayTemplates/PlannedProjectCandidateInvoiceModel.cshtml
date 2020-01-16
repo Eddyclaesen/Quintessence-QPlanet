@@ -1,0 +1,15 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.EditProjectCandidateInvoiceModel
+<td>
+    @Model.CandidateFullName
+</td>
+<td>
+    @Model.ProductName
+</td>
+<td>
+    @Model.InvoiceAmount.ToString("C")    
+</td>
+<td>
+    @(Model.ProjectCandidateDetailAssessmentStartDate.GetValueOrDefault().ToShortDateString())
+</td>
+
+

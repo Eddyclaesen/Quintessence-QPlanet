@@ -1,0 +1,81 @@
+﻿CREATE PROCEDURE [dbo].[Invoicing_ConsultancyProjectFixedPrice]
+	@Date					DATETIME,
+	@CustomerAssistantId	UNIQUEIDENTIFIER = NULL,
+	@ProjectManagerId		UNIQUEIDENTIFIER = NULL
+AS
+BEGIN
+	SET NOCOUNT ON;
+	
+	SELECT		[ProjectFixedPriceView].[Id]													AS  [Id],							
+				[ProjectFixedPriceView].[ProjectId]												AS  [ProjectId],	
+				[ProjectView].[Name]															AS  [ProjectName],
+				[CrmContactView].[Id]															AS  [ContactId],	
+				[CrmContactView].[name]															AS	[ContactName],
+				[ProjectFixedPriceView].[Amount]												AS  [InvoiceAmount],				
+				[ProjectFixedPriceView].[InvoiceStatusCode]										AS  [InvoiceStatusCode],				
+				[ProjectFixedPriceView].[InvoicedDate]											AS  [InvoicedDate],				
+				[ProjectFixedPriceView].[PurchaseOrderNumber]									AS  [PurchaseOrderNumber],				
+				[ProjectFixedPriceView].[InvoiceNumber]											AS  [InvoiceNumber],					
+				[ProjectFixedPriceView].[InvoiceRemarks]										AS  [InvoiceRemarks],				
+				'Partial payment (Consultancy)'													AS	[ProductName],
+				[ProjectFixedPriceView].[Deadline]												AS  [Date],
+				[CustomerAssistant].[FirstName]													AS	[CustomerAssistantFirstName],
+				[CustomerAssistant].[LastName]													AS	[CustomerAssistantLastName],
+				[CustomerAssistant].[UserName]													AS	[CustomerAssistantUserName],
+				[ProjectManager].[FirstName]													AS	[ProjectManagerFirstName],
+				[ProjectManager].[LastName]														AS	[ProjectManagerLastName],
+				[ProjectManager].[UserName]														AS	[ProjectManagerUserName],
+				NULL																			AS	[ConsultantFirstName],
+				NULL																			AS	[ConsultantLastName],
+				NULL																			AS	[ConsultantUserName],	
+				[ProjectFixedPriceView].[ProposalId]											AS  [ProposalId],	
+				[ProjectFixedPriceView].[Audit_CreatedBy]										AS  [AuditCreatedBy],				
+				[ProjectFixedPriceView].[Audit_CreatedOn]										AS  [AuditCreatedOn],				
+				[ProjectFixedPriceView].[Audit_ModifiedBy]										AS  [AuditModifiedBy],				
+				[ProjectFixedPriceView].[Audit_ModifiedOn]										AS  [AuditModifiedOn],				
+				[ProjectFixedPriceView].[Audit_DeletedBy]										AS  [AuditDeletedBy],				
+				[ProjectFixedPriceView].[Audit_DeletedOn]										AS  [AuditDeletedOn],				
+				[ProjectFixedPriceView].[Audit_IsDeleted]										AS  [AuditIsDeleted],				
+				[ProjectFixedPriceView].[Audit_VersionId]										AS  [AuditVersionId]	
+
+	FROM		[ProjectFixedPriceView]
+
+	INNER JOIN  [ConsultancyProjectView]
+		ON		[ConsultancyProjectView].[Id] = [ProjectFixedPriceView].[ProjectId]
+
+	INNER JOIN  [ProjectView]
+		ON		[ProjectView].[Id] = [ConsultancyProjectView].[Id]
+		AND		[ProjectView].[PricingModelId] = 2
+
+	INNER JOIN	[CrmContactView]
+		ON		[CrmContactView].[Id] = [ProjectView].[ContactId]
+
+	INNER JOIN	[UserView] [ProjectManager]
+		ON		[ProjectManager].[Id] = [ProjectView].[ProjectManagerId]
+		
+	INNER JOIN	[UserView] [CustomerAssistant]
+		ON		[CustomerAssistant].[Id] = [ProjectView].[CustomerAssistantId]
+
+	WHERE		[ProjectFixedPriceView].[Deadline] <= @Date
+		AND		(@CustomerAssistantId IS NULL OR [CustomerAssistant].[Id] = @CustomerAssistantId)
+		AND		(@ProjectManagerId IS NULL OR [ProjectManager].[Id] = @ProjectManagerId)
+		AND		(
+					[ProjectFixedPriceView].[InvoiceStatusCode] < 100
+					OR
+					(
+						MONTH([ProjectFixedPriceView].[InvoicedDate]) = MONTH(@Date)
+						AND
+						YEAR([ProjectFixedPriceView].[InvoicedDate]) = YEAR(@Date)
+					)
+				)
+		AND		(
+					[ProjectFixedPriceView].[InvoiceStatusCode] <> 15
+					OR
+					(
+						MONTH([ProjectFixedPriceView].[Deadline]) = MONTH(@Date)
+						AND
+						YEAR([ProjectFixedPriceView].[Deadline]) = YEAR(@Date)
+					)
+				)
+END
+GO

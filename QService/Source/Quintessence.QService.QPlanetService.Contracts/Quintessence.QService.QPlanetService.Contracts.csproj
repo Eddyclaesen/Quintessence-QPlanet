@@ -1,0 +1,500 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{04680AEA-FAD8-4ADA-9D91-386DE6152B63}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Quintessence.QService.QPlanetService.Contracts</RootNamespace>
+    <AssemblyName>Quintessence.QService.QPlanetService.Contracts</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Pro|AnyCPU'">
+    <OutputPath>bin\Pro\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Dev\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Main|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Main\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Dev01|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Dev01\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Dev02|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Dev02\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Dev03|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Dev03\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Test\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft ASP.NET\ASP.NET MVC 4\Assemblies\System.Web.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataContracts\Authentication\NegociateAuthenticationTokenResponse.cs" />
+    <Compile Include="DataContracts\CandidateManagement\CreateProgramComponentRequest.cs" />
+    <Compile Include="DataContracts\CandidateManagement\ListCandidatesByFullNameRequest.cs" />
+    <Compile Include="DataContracts\CandidateManagement\CreateCandidateRequest.cs" />
+    <Compile Include="DataContracts\CandidateManagement\ListCandidatesRequest.cs" />
+    <Compile Include="DataContracts\CandidateManagement\ListCandidatesResponse.cs" />
+    <Compile Include="DataContracts\CandidateManagement\RetrieveDayProgramDashboardRequest.cs" />
+    <Compile Include="DataContracts\CandidateManagement\RetrieveDayProgramDashboardResponse.cs" />
+    <Compile Include="DataContracts\CandidateManagement\UpdateCandidateRequest.cs" />
+    <Compile Include="DataContracts\CandidateManagement\UpdateProgramComponentEndRequest.cs" />
+    <Compile Include="DataContracts\CandidateManagement\UpdateProgramComponentRequest.cs" />
+    <Compile Include="DataContracts\CandidateManagement\UpdateProgramComponentStartRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\CreateNewDictionaryClusterRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\CreateNewDictionaryCompetenceRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\CreateNewDictionaryIndicatorRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\CreateNewDictionaryLevelRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\ImportDictionaryClusterRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\ImportDictionaryClusterTranslationRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\ImportDictionaryCompetenceRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\ImportDictionaryCompetenceTranslationRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\ImportDictionaryIndicatorRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\ImportDictionaryIndicatorTranslationRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\ImportDictionaryLevelRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\ImportDictionaryLevelTranslationRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\ImportDictionaryRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\ListDictionaryIndicatorMatrixEntriesRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\RetrieveDictionaryDetailRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\UpdateDictionaryClusterRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\UpdateDictionaryClusterTranslationRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\UpdateDictionaryCompetenceRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\UpdateDictionaryCompetenceTranslationRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\UpdateDictionaryIndicatorRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\UpdateDictionaryIndicatorTranslationRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\UpdateDictionaryLanguageRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\UpdateDictionaryLevelRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\UpdateDictionaryLevelTranslationRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\UpdateDictionaryRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateAccountantConsultancyProjectFixedPriceInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateAccountantProductSheetEntryInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateAccountantProjectCandidateCategoryType1InvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateAccountantProjectCandidateCategoryType2InvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateAccountantProjectCandidateCategoryType3InvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateAccountantProjectCandidateInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateAccountantAcdcProjectFixedPriceInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateAccountantProjectProductInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\ListAccountantInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\ListCustomerAssistantInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\ListInvoicingBaseRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\ListProjectManagerInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateAccountantInvoicingBaseRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateAccountantTimesheetEntryInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateCustomerAssistantConsultancyProjectFixedPriceInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateCustomerAssistantProductSheetEntryInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateCustomerAssistantProjectCandidateCategoryType1InvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateCustomerAssistantProjectCandidateCategoryType2InvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateCustomerAssistantProjectCandidateCategoryType3InvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateCustomerAssistantProjectCandidateInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateCustomerAssistantAcdcProjectFixedPriceInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateCustomerAssistantProjectProductInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateCustomerAssistantTimesheetEntryInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateInvoicingBaseRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateProjectManagerConsultancyProjectFixedPriceInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateProjectManagerProductSheetEntryInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateProjectManagerProjectCandidateCategoryType1InvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateProjectManagerProjectCandidateCategoryType2InvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateProjectManagerProjectCandidateCategoryType3InvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateProjectManagerProjectCandidateInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateProjectManagerAcdcProjectFixedPriceInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateProjectManagerProjectProductInvoicingRequest.cs" />
+    <Compile Include="DataContracts\FinanceManagement\UpdateProjectManagerTimesheetEntryInvoicingRequest.cs" />
+    <Compile Include="DataContracts\InfrastructureManagement\CreateCulturalFitInvitationMailResponse.cs" />
+    <Compile Include="DataContracts\InfrastructureManagement\CreateEvaluationFormMailResponse.cs" />
+    <Compile Include="DataContracts\InfrastructureManagement\CreateMailBaseResponse.cs" />
+    <Compile Include="DataContracts\InfrastructureManagement\CreateMailTemplateRequest.cs" />
+    <Compile Include="DataContracts\InfrastructureManagement\CreateMailTemplateTranslationRequest.cs" />
+    <Compile Include="DataContracts\InfrastructureManagement\CreateProjectCandidateInvitationMailResponse.cs" />
+    <Compile Include="DataContracts\InfrastructureManagement\ListAssessmentRoomsRequest.cs" />
+    <Compile Include="DataContracts\InfrastructureManagement\RetrieveOfficeRequest.cs" />
+    <Compile Include="DataContracts\CustomerRelationshipManagement\CreateCandidateInfoRequest.cs" />
+    <Compile Include="DataContracts\CustomerRelationshipManagement\ListTimesheetUnregisteredEntriesRequest.cs" />
+    <Compile Include="DataContracts\CustomerRelationshipManagement\SearchContactRequest.cs" />
+    <Compile Include="DataContracts\CustomerRelationshipManagement\UpdateContactDetailRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\ListDetailedDictionariesRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\ListDictionariesRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\ListDictionariesResponse.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\SearchDictionaryRequest.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\SearchDictionaryResponse.cs" />
+    <Compile Include="DataContracts\DocumentManagement\ListProjectDocumentsRequest.cs" />
+    <Compile Include="DataContracts\DocumentManagement\DocumentManagementResponseBase.cs" />
+    <Compile Include="DataContracts\DocumentManagement\ListProjectDocumentsResponse.cs" />
+    <Compile Include="DataContracts\InfrastructureManagement\SearchResponse.cs" />
+    <Compile Include="DataContracts\InfrastructureManagement\UpdateMailTemplateRequest.cs" />
+    <Compile Include="DataContracts\InfrastructureManagement\UpdateMailTemplateTranslationRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CancelProjectCandidateRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateConsultancyProjectFixedPriceProposalRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateAcdcProjectFixedPriceProposalRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProductSheetEntryProposalRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateTimeSheetEntryProposalRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectProductProposalRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateDetailType3ProposalRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateDetailType2ProposalRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateDetailType1ProposalRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateProposalRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateCulturalFitCandidateRequestRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateCulturalFitContactRequestRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateEvaluationFormRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewProjectDnaCommercialTranslationsRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewProjectDnaRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewProjectRoleLanguageRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewWonProposalRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateProjectComplaintRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateProjectEvaluationRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateProjectProductRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateProjectReportRecipientRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateProjectTypeCategoryUnitPriceRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\InvoiceOverviewResponse.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ListProductScoresRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ListProductScoresResponse.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ListProjectCandidateOverviewResponse.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ListProjectCandidateOverviewRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ListProjectCandidateReportingOverviewEntriesRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ListProjectCategoryDetailDictionaryIndicatorsRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ListProjectRoleDictionaryIndicatorsRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ProjectComplaintResponse.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ProjectTypeCategoryUnitPriceOverviewResponse.cs" />
+    <Compile Include="DataContracts\ProjectManagement\RetrieveEvaluationFormRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\RetrieveProjectCandidateReportingResponse.cs" />
+    <Compile Include="DataContracts\ProjectManagement\RetrieveProjectTypeCategoryRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateBaseInvoicingRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UnplannedProjectCandidateEvent.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateCancelledProjectCandidateRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ListProjectCandidateDetailsRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ListProjectCandidatesResponse.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateCulturalFitContactRequestRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateCustomerFeedbackRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormAcdcCompletedRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormAcdcPart1Request.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormAcdcPart2Request.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormAcdcPart3Request.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormAcdcPart4Request.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormAcdcPart5Request.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormAcdcPart6Request.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormCoachingPart1Request.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormCoachingPart2Request.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormCoachingPart3Request.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormCoachingPart4Request.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormCoachingPart5Request.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormCoachingPart6Request.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormCoachingPart7Request.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormCoachingCompletedRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormCustomProjectsCompletedRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormCustomProjectsPart1Request.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormCustomProjectsPart2Request.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormCustomProjectsPart3Request.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateEvaluationFormRequestBase.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateInvoiceItemRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProductInvoicingRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateCategoryInvoicingRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateInvoicingRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateOverviewEntryProjectCandidateCategoryFieldRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateOverviewEntryProjectCandidateFieldRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateRemarksRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateReportingOverviewEntryProjectCandidateFieldRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateReportingOverviewEntryProjectFieldRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateScoringCoAssessorIdRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCategoryDetailSimulationInformationRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectComplaintRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectDnaCommercialTranslationRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectDnaRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectEvaluationRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectPlanPhaseRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectProductRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectRevenueDistributionRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectRoleTranslationRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectTypeCategoryUnitPriceRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectReportingRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectUnitPricesRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateReportRecipientRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateProjectCandidateReportRecipientRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateDetailRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ListReportDefinitionsRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateFrameworkAgreementRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateFrameworkAgreementRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewProjectCandidateResumeFieldRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewProjectCandidateResumeRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewProposalRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\RetrieveProjectCandidateResumeResponse.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateClusterScoreRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewProjectCandidateClusterScoreRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewProjectCandidateCompetenceScoreRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewProjectCandidateCompetenceSimulationScoreRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewProjectCandidateIndicatorScoreRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewProjectCandidateIndicatorSimulationScoreRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ListProjectCandidateClusterScoresResponse.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ListProjectCandidateCompetenceScoresResponse.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ListProjectCandidateFocusedSimulationScoresResponse.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ListProjectCandidateScoresResponse.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ListProjectCandidateSimulationScoresResponse.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ListProjectCandidateStandardSimulationScoresResponse.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ListUserProjectCandidatesRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateCategoryDetailType1Request.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateCategoryDetailType2Request.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateCategoryDetailType3Request.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateCategoryDetailTypeRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateCompetenceScoreRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateCompetenceSimulationScoreRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateIndicatorScoreRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateIndicatorSimulationScoreRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateResumeFieldRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCandidateResumeRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectTypeCategoryDefaultValueRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProposalRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateSubcategoryRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateSubcategoryRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectCategoryDetailTypeRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewProductsheetEntryRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewProjectFixedPriceRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewProjectPlanPhaseProductRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewProjectPlanPhaseEntryRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewProjectPlanPhaseActivityRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewProjectPlanPhaseRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\AddProjectCandidateRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CopyProjectRoleRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewProjectPriceIndexRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewTimesheetEntryRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateProjectRoleRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\CreateNewProjectRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\LinkProjectCategoryDetail2DictionaryIndicatorsRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ListProjectsRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\ListProjectsResponse.cs" />
+    <Compile Include="DataContracts\ProjectManagement\RetrieveProjectPlanDetailRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\SaveProductsheetEntriesRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\SaveTimesheetEntriesRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\SearchCrmProjectsRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UnlinkProjectCategoryDetail2DictionaryLevelRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateAssessmentDevelopmentProjectRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateConsultancyProjectRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProductsheetEntryRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectFixedPriceRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectPlanPhaseActivityRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectPlanPhaseEntryRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectPlanPhaseEntryDeadlineRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectPlanPhaseProductRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectPriceIndexRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateProjectRoleRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateTimesheetEntryRequest.cs" />
+    <Compile Include="DataContracts\ProjectManagement\UpdateUnitPriceRequest.cs" />
+    <Compile Include="DataContracts\ReportManagement\CreateNewCandidateReportDefinitionFieldRequest.cs" />
+    <Compile Include="DataContracts\ReportManagement\CreateNewCandidateReportDefinitionRequest.cs" />
+    <Compile Include="DataContracts\ReportManagement\CreateNewReportDefinitionRequest.cs" />
+    <Compile Include="DataContracts\ReportManagement\CreateNewReportParameterRequest.cs" />
+    <Compile Include="DataContracts\ReportManagement\CreateNewReportParameterValueRequest.cs" />
+    <Compile Include="DataContracts\ReportManagement\GenerateReportRequest.cs" />
+    <Compile Include="DataContracts\ReportManagement\GenerateReportResponse.cs" />
+    <Compile Include="DataContracts\ReportManagement\ReportOutputFormat.cs" />
+    <Compile Include="DataContracts\ReportManagement\UpdateCandidateReportDefinitionFieldRequest.cs" />
+    <Compile Include="DataContracts\ReportManagement\UpdateCandidateReportDefinitionRequest.cs" />
+    <Compile Include="DataContracts\Authentication\ChangePasswordRequest.cs" />
+    <Compile Include="DataContracts\ReportManagement\UpdateReportDefinitionRequest.cs" />
+    <Compile Include="DataContracts\ReportManagement\UpdateReportParameterRequest.cs" />
+    <Compile Include="DataContracts\ReportManagement\UpdateReportParameterValueRequest.cs" />
+    <Compile Include="DataContracts\SecurityManagement\CreateNewUserRequest.cs" />
+    <Compile Include="DataContracts\SecurityManagement\SynchronizeUserRequest.cs" />
+    <Compile Include="DataContracts\SecurityManagement\UpdateEmployeeRequest.cs" />
+    <Compile Include="DataContracts\SecurityManagement\UpdateUserRequest.cs" />
+    <Compile Include="DataContracts\SecurityManagement\UserCollection.cs" />
+    <Compile Include="DataContracts\Shared\DataTablePaging.cs" />
+    <Compile Include="DataContracts\Shared\ListRequestBase.cs" />
+    <Compile Include="DataContracts\Shared\ListResponseBase.cs" />
+    <Compile Include="DataContracts\Shared\UpdateRequestBase.cs" />
+    <Compile Include="DataContracts\SimulationManagement\CreateNewSimulationContextRequest.cs" />
+    <Compile Include="DataContracts\SimulationManagement\CreateNewSimulationContextUserRequest.cs" />
+    <Compile Include="DataContracts\SimulationManagement\ListSimulationDepartmentsResponse.cs" />
+    <Compile Include="DataContracts\SimulationManagement\ListSimulationLevelsResponse.cs" />
+    <Compile Include="DataContracts\SimulationManagement\ListSimulationMatrixEntriesResponse.cs" />
+    <Compile Include="DataContracts\SimulationManagement\ListSimulationSetsResponse.cs" />
+    <Compile Include="DataContracts\SimulationManagement\ListSimulationsResponse.cs" />
+    <Compile Include="DataContracts\SimulationManagement\CreateSimulationDepartmentRequest.cs" />
+    <Compile Include="DataContracts\SimulationManagement\CreateSimulationLevelRequest.cs" />
+    <Compile Include="DataContracts\SimulationManagement\CreateSimulationMatrixEntryRequest.cs" />
+    <Compile Include="DataContracts\SimulationManagement\CreateSimulationRequest.cs" />
+    <Compile Include="DataContracts\SimulationManagement\CreateSimulationSetRequest.cs" />
+    <Compile Include="DataContracts\SimulationManagement\ListSimulationDepartmentsRequest.cs" />
+    <Compile Include="DataContracts\SimulationManagement\ListSimulationLevelsRequest.cs" />
+    <Compile Include="DataContracts\SimulationManagement\ListSimulationMatrixEntriesRequest.cs" />
+    <Compile Include="DataContracts\SimulationManagement\ListSimulationSetsRequest.cs" />
+    <Compile Include="DataContracts\SimulationManagement\ListSimulationsRequest.cs" />
+    <Compile Include="DataContracts\SimulationManagement\UpdateSimulationContextRequest.cs" />
+    <Compile Include="DataContracts\SimulationManagement\UpdateSimulationContextUserRequest.cs" />
+    <Compile Include="DataContracts\SimulationManagement\UpdateSimulationDepartmentRequest.cs" />
+    <Compile Include="DataContracts\SimulationManagement\UpdateSimulationLevelRequest.cs" />
+    <Compile Include="DataContracts\SimulationManagement\UpdateSimulationCombinationRequest.cs" />
+    <Compile Include="DataContracts\SimulationManagement\UpdateSimulationRequest.cs" />
+    <Compile Include="DataContracts\SimulationManagement\UpdateSimulationSetRequest.cs" />
+    <Compile Include="DataContracts\SimulationManagement\UpdateSimulationTranslationRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\UpdateActivityDetailRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\UpdateProductTypeRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\CreateProductTypeRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\UpdateProfileRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\CreateNewProfileRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\UpdateActivtyTypeProfileRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\CreateNewActivityTypeProfileRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\CreateNewActivityDetailTrainingLanguageRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\CreateNewActivityDetailWorkshopLanguageRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\CreateNewActivityProfileRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\CreateNewActivityTypeRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\CreateNewProductRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\ListActivitiesRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\ListActivityTypeProfilesRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\CreateNewActivityRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\UpdateActivityDetailCoachingRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\UpdateActivityDetailConsultingRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\UpdateActivityDetailSupportRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\UpdateActivityDetailTrainingLanguageRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\UpdateActivityDetailTrainingRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\UpdateActivityDetailWorkshopLanguageRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\UpdateActivityDetailWorkshopRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\UpdateActivityProfileRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\UpdateActivityRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\UpdateActivtyTypeRequest.cs" />
+    <Compile Include="DataContracts\SupplyChainManagement\UpdateProductRequest.cs" />
+    <Compile Include="DataContracts\WorkspaceManagement\CreateNewUserProfileRequest.cs" />
+    <Compile Include="DataContracts\WorkspaceManagement\ListProgramComponentsRequest.cs" />
+    <Compile Include="DataContracts\WorkspaceManagement\UpdateUserProfileRequest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecurityContracts\OperationType.cs" />
+    <Compile Include="ServiceContracts\CommandServiceContracts\IDocumentManagementCommandService.cs" />
+    <Compile Include="ServiceContracts\CommandServiceContracts\IWorkspaceManagementCommandService.cs" />
+    <Compile Include="ServiceContracts\CommandServiceContracts\IInfrastructureCommandService.cs" />
+    <Compile Include="ServiceContracts\CommandServiceContracts\IReportManagementCommandService.cs" />
+    <Compile Include="ServiceContracts\CommandServiceContracts\ICandidateManagementCommandService.cs" />
+    <Compile Include="ServiceContracts\CommandServiceContracts\ISimulationManagementCommandService.cs" />
+    <Compile Include="ServiceContracts\CommandServiceContracts\ICustomerRelationshipManagementCommandService.cs" />
+    <Compile Include="ServiceContracts\CommandServiceContracts\IAuthenticationCommandService.cs" />
+    <Compile Include="ServiceContracts\CommandServiceContracts\IDictionaryManagementCommandService.cs" />
+    <Compile Include="ServiceContracts\CommandServiceContracts\IProjectManagementCommandService.cs" />
+    <Compile Include="ServiceContracts\CommandServiceContracts\ISecurityCommandService.cs" />
+    <Compile Include="ServiceContracts\CommandServiceContracts\ISupplyChainManagementCommandService.cs" />
+    <Compile Include="ServiceContracts\QueryServiceContracts\IFinanceManagementQueryService.cs" />
+    <Compile Include="ServiceContracts\QueryServiceContracts\IReportManagementQueryService.cs" />
+    <Compile Include="ServiceContracts\QueryServiceContracts\IWorkspaceManagementQueryService.cs" />
+    <Compile Include="ServiceContracts\QueryServiceContracts\ICandidateManagementQueryService.cs" />
+    <Compile Include="ServiceContracts\QueryServiceContracts\IDocumentManagementQueryService.cs" />
+    <Compile Include="ServiceContracts\QueryServiceContracts\ISimulationManagementQueryService.cs" />
+    <Compile Include="ServiceContracts\QueryServiceContracts\IAuthenticationQueryService.cs" />
+    <Compile Include="ServiceContracts\QueryServiceContracts\ICustomerRelationshipManagementQueryService.cs" />
+    <Compile Include="ServiceContracts\QueryServiceContracts\IDictionaryManagementQueryService.cs" />
+    <Compile Include="DataContracts\DictionaryManagement\ListQuintessenceDictionariesResponse.cs" />
+    <Compile Include="ServiceContracts\QueryServiceContracts\IInfrastructureQueryService.cs" />
+    <Compile Include="ServiceContracts\QueryServiceContracts\IProjectManagementQueryService.cs" />
+    <Compile Include="ServiceContracts\QueryServiceContracts\ISecurityQueryService.cs" />
+    <Compile Include="DataContracts\SecurityManagement\SearchUserRequest.cs" />
+    <Compile Include="DataContracts\SecurityManagement\SearchUserResponse.cs" />
+    <Compile Include="ServiceContracts\QueryServiceContracts\ISupplyChainManagementQueryService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Quintessence.Infrastructure\Quintessence.Infrastructure.csproj">
+      <Project>{18A071D5-7AE7-4F2F-94DF-4D40DEB81A9C}</Project>
+      <Name>Quintessence.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.DataModel\Quintessence.QService.DataModel.csproj">
+      <Project>{56A829FA-2175-4C60-9912-09CAB8FDE30B}</Project>
+      <Name>Quintessence.QService.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.QueryModel\Quintessence.QService.QueryModel.csproj">
+      <Project>{C861E521-51A1-4909-9563-A9703FE31917}</Project>
+      <Name>Quintessence.QService.QueryModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.Service.Contracts\Quintessence.QService.Service.Contracts.csproj">
+      <Project>{E16355F5-94C4-4A73-8982-C852018936D3}</Project>
+      <Name>Quintessence.QService.Service.Contracts</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FaultContracts\DictionaryManagement\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

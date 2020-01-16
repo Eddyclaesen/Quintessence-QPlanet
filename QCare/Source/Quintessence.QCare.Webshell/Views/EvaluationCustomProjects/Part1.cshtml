@@ -1,0 +1,29 @@
+﻿@using Resources
+@model Quintessence.QCare.ViewModel.EvaluationFormCustomProjectsPart1Model
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("Part1", "EvaluationCustomProjects", FormMethod.Post, null))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    <fieldset>
+        <legend>@Global.EvaluationFormCustomProjectsTitleBlock1</legend>
+        <div>
+            <ol>
+                <li value="1">
+                    <p>@Global.EvaluationFormCustomProjectsQuestion01</p>
+                    @Html.TextAreaFor(m => m.Question01, 6, 90, null)
+                </li>
+                <li>
+                    <p>@Global.EvaluationFormCustomProjectsQuestion02</p>
+                    @Html.TextAreaFor(m => m.Question02, 6, 90, null)
+                </li>
+            </ol>
+            <div class="right-text">
+                <input type="submit" value="@Global.Next" class="button"/>
+            </div>
+        </div>
+    </fieldset>
+        
+}

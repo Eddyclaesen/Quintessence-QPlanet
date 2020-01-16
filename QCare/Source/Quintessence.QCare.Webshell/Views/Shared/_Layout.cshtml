@@ -1,0 +1,27 @@
+@using Resources
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Quintessence - Customer care</title>
+    <link rel="shortcut icon" href="@Url.Content("~/Images/QPlanet.ico")"/>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.8.2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/global.js")"></script>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Global.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Site.css")" />
+    @RenderSection("Scripts", false)
+</head>
+<body>
+    <header>
+        <img src="@Url.Content("~/Images/banner.jpg")" alt="Quintessence - We bring out the best in you" width="960"/>
+    </header>
+    <div id="content">
+        @RenderBody()
+    </div>
+    <footer>
+        &copy; Quintessence Consulting - @Global.FooterText - <a href="mailto:info@quintessence.be">info@quintessence.be</a> - 0032 (0)3 281 44 88                 
+    </footer>
+</body>
+</html>

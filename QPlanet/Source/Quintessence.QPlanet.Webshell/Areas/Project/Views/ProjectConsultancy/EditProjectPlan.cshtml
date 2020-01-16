@@ -1,0 +1,657 @@
+﻿@using Quintessence.QService.QueryModel.Prm
+@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectConsultancy.EditProjectPlanActionModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Consultancy - Edit project plan";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">@Model.Project.Name</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li>@Html.ActionLink("Detail", "Edit", "ProjectConsultancy", new RouteValueDictionary(new { area = "Project", id = Model.Project.Id }), null)
+            </li>
+            <li class="current">Project plan</li>
+            <li>@Html.ActionLink("Activity details", "ActivityDetail", "ProjectConsultancy", new RouteValueDictionary(new { area = "Project", id = Model.Project.Id }), null)
+            </li>
+            <li>@Html.ActionLink("Product details", "ProductDetail", "ProjectConsultancy", new RouteValueDictionary(new { area = "Project", id = Model.Project.Id }), null)
+            </li>
+
+            @if (Model.Project.Status != ProjectStatusCodeViewType.Draft && Model.Project.PricingModelType == PricingModelType.TimeAndMaterial)
+            {
+                <li>@Html.ActionLink("Time sheets", "Timesheet", "ProjectConsultancy", new RouteValueDictionary(new { area = "Project", id = Model.Project.Id }), null)
+                </li>
+                @*if (Model.IsCurrentUserProjectManager || Model.IsCurrentUserCustomerAssistant)
+                {
+                <li>@Html.ActionLink("Project time sheets", "ProjectTimesheet", "ProjectConsultancy", new RouteValueDictionary(new { area = "Project", id = Model.Project.Id }), null)
+                </li>
+                }*@
+            }
+        </ul>
+    </nav>
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.treeTable.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.cookie.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/persist.js")" type="text/javascript"></script>
+    <script>
+    $(function () {
+        RefreshProjectPlanPhases();
+
+        InitializeAddActivityProfileDialog();
+        InitializeEditActivityProfileDialog();
+        InitializeEditActivityDeadlineDialog();
+        InitializeAddProductDialog();
+        InitializeEditProductProductDialog();
+        InitializeEditProductDeadlineDialog();
+        InitializeAddProjectPlanPhaseDialog();
+        InitializeEditProjectPlanPhaseDialog();
+
+        InitializeButtons();
+
+        InitializeProjectPlanPhaseButtons();
+    });
+
+    function InitializeProjectPlanPhasesTable() {
+        $('#ProjectPlanPhasesTable').treeTable({ persist: true });
+        $('table[data-function=ProjectPlanPhaseEntryTable]').each(function () {
+            $(this).treeTable({ persist: true });
+        });
+    }
+
+    function InitializeAddActivityProfileDialog() {
+        @Html.Js().InitializeDialog("#AddActivityProfileDialog", "Add new activity", 750, 550);
+        $('#AddActivityProfileDialog').bind('dialogclose', function (event) {
+            $('#AddActivityProfileDialogFormPlaceholder').html('');
+        });
+    }
+
+    function InitializeEditActivityDeadlineDialog() {
+        @Html.Js().InitializeDialog("#EditActivityDeadlineDialog", "Change activity deadline", 500, 250);
+        $('#EditActivityDeadlineDialog').bind('dialogclose', function (event) {
+            $('#EditActivityDeadlineDialogFormPlaceholder').html('');
+        });
+    }
+
+    function InitializeEditActivityProfileDialog() {
+        @Html.Js().InitializeDialog("#EditActivityProfileDialog", "Edit activity", 500, 300);
+        $('#EditActivityProfileDialog').bind('dialogclose', function (event) {
+            $('#EditActivityProfileDialogFormPlaceholder').html('');
+        });
+    }
+
+    function InitializeAddProductDialog() {
+        @Html.Js().InitializeDialog("#AddProductDialog", "Add new product", 650, 400);
+        $('#AddProductDialog').bind('dialogclose', function (event) {
+            $('#AddProductDialogFormPlaceholder').html('');
+        });
+    }
+
+    function InitializeEditProductDeadlineDialog() {
+        @Html.Js().InitializeDialog("#EditProductDeadlineDialog", "Change product deadline", 500, 250);
+        $('#EditProductDeadlineDialog').bind('dialogclose', function (event) {
+            $('#EditProductDeadlineDialogFormPlaceholder').html('');
+        });
+    }
+
+    function InitializeEditProductProductDialog() {
+        @Html.Js().InitializeDialog("#EditProductDialog", "Edit product", 500, 275);
+        $('#EditProductDialog').bind('dialogclose', function (event) {
+            $('#EditProductDialogFormPlaceholder').html('');
+        });
+    }
+
+    function InitializeAddProjectPlanPhaseDialog() {
+        @Html.Js().InitializeDialog("#AddProjectPlanPhaseDialog", "Add new Phase", 500, 300);
+        $('#AddProjectPlanPhaseDialog').bind('dialogclose', function (event) {
+            $('#AddProjectPlanPhaseDialogFormPlaceholder').html('');
+        });
+    }
+
+    function InitializeEditProjectPlanPhaseDialog() {
+        @Html.Js().InitializeDialog("#EditProjectPlanPhaseDialog", "Edit Phase", 500, 250);
+        $('#EditProjectPlanPhaseDialog').bind('dialogclose', function (event) {
+            $('#EditProjectPlanPhaseDialogFormPlaceholder').html('');
+        });
+    }
+
+    function InitializeProjectPlanPhaseButtons() {
+        $(this).on('click', 'a[data-function=EditProjectPlanPhaseActivityDraft]', null, function () {
+            ShowDetailSaveDialog();
+            $('#EditActivityProfileDialogFormPlaceholder').html('');
+            $.ajax({
+                url: '@Url.Action("UpdateProjectPlanPhaseActivity")/' + $(this).attr('data-id'),
+                success: function (html) {
+                    $('#EditActivityProfileDialogFormPlaceholder').html(html);
+                    HideDetailSaveDialog();
+                    $('#EditActivityProfileDialog').dialog('open');
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                    HideDetailSaveDialog();
+                }
+            });
+        });
+
+        @*$(this).on('click', 'a[data-function=EditProjectPlanPhaseProductDraft]', null, function () {
+            ShowDetailSaveDialog();
+            $('#EditProductDialogFormPlaceholder').html('');
+            $.ajax({
+                url: '@Url.Action("UpdateProjectPlanPhaseProduct")/' + $(this).attr('data-id'),
+                success: function (html) {
+                    $('#EditProductDialogFormPlaceholder').html(html);
+                    HideDetailSaveDialog();
+                    $('#EditProductDialog').dialog('open');
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                    HideDetailSaveDialog();
+                }
+            });
+        });*@
+
+        $(this).on('click', 'a[data-function=EditProjectPlanPhaseActivityDeadline]', null, function () {
+            ShowDetailSaveDialog();
+            $('#EditActivityDeadlineDialogFormPlaceholder').html('');
+            $.ajax({
+                url: '@Url.Action("UpdateProjectPlanPhaseActivityDeadline")/' + $(this).attr('data-id'),
+                success: function (html) {
+                    $('#EditActivityDeadlineDialogFormPlaceholder').html(html);
+                    HideDetailSaveDialog();
+                    $('#EditActivityDeadlineDialog').dialog('open');
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                    HideDetailSaveDialog();
+                }
+            });
+        });
+
+        @*$(this).on('click', 'a[data-function=EditProjectPlanPhaseProductDeadline]', null, function () {
+            ShowDetailSaveDialog();
+            $('#EditProductDeadlineDialogFormPlaceholder').html('');
+            $.ajax({
+                url: '@Url.Action("UpdateProjectPlanPhaseProductDeadline")/' + $(this).attr('data-id'),
+                    success: function (html) {
+                        $('#EditProductDeadlineDialogFormPlaceholder').html(html);
+                        HideDetailSaveDialog();
+                        $('#EditProductDeadlineDialog').dialog('open');
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                        HideDetailSaveDialog();
+                    }
+                });
+            });*@
+
+            $(this).on('click', 'a[data-function=DeleteProjectPlanPhaseActivity]', null, function () {
+                if (!confirm('Are you sure you want to delete this activity?'))
+                    return;
+
+                ShowDetailSaveDialog();
+                $.ajax({
+                    url: '@Url.Action("DeleteProjectPlanPhaseActivity")/' + $(this).attr('data-id'),
+                success: function () {
+                    HideDetailSaveDialog();
+                    RefreshProjectPlanPhases();
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                    HideDetailSaveDialog();
+                }
+            });
+        });
+
+        $(this).on('click', 'a[data-function=DeleteProjectPlanPhaseProduct]', null, function () {
+            if (!confirm('Are you sure you want to delete this product?'))
+                return;
+
+            ShowDetailSaveDialog();
+            var id = $(this).attr('data-id');
+            var entryId = $(this).attr('data-entryid')
+            $.ajax({
+                url: '@Url.Action("DeleteProjectPlanPhaseProduct")',
+                method:"POST",
+                data: { id: id, entryId: entryId },
+                success: function () {
+                    HideDetailSaveDialog();
+                    RefreshProjectPlanPhases();
+                },
+                error: function (err) {
+                    ShowDetailErrorDialog('Delete ProjectPlanPhaseProduct.', err);
+                    HideDetailSaveDialog();
+                }
+            });
+        });
+    }
+
+    function InitializeButtons() {
+        $('a[data-function=AddProjectPlanPhaseButton]').click(function () {
+            $('#AddProjectPlanPhaseFormPlaceholder').loading('Preparing project plan phase...');
+            $('#AddProjectPlanPhaseDialog').dialog('open');
+            $.ajax({
+                url: '@Url.Action("AddProjectPlanPhase")/@Model.ProjectPlan.Id',
+                success: function (msg) {
+                    $('#AddProjectPlanPhaseFormPlaceholder').html(msg);
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                    $('#AddProjectPlanPhaseFormPlaceholder').html(err.statusText);
+                }
+            });
+        });
+
+        $(this).on('click', 'a[data-function=EditProjectPlanPhaseButton]', null, function () {
+            $('#EditProjectPlanPhaseFormPlaceholder').loading('Retrieving project plan phase...');
+            $('#EditProjectPlanPhaseDialog').dialog('open');
+
+            var projectPlanPhaseId = $(this).attr('data-id');
+
+            $.ajax({
+                url: '@Url.Action("EditProjectPlanPhase")/' + projectPlanPhaseId,
+                success: function (msg) {
+                    $('#EditProjectPlanPhaseFormPlaceholder').html(msg);
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                    $('#EditProjectPlanPhaseFormPlaceholder').html(err.statusText);
+                }
+            });
+        });
+
+        $(this).on('click', 'a[data-function=DeleteProjectPlanPhaseButton]', null, function () {
+            if (!confirm('Are you sure you want to delete this project plan phase?'))
+                return;
+
+            var projectPlanPhaseId = $(this).attr('data-id');
+
+            ShowDetailSaveDialog();
+            $.ajax({
+                url: '@Url.Action("DeleteProjectPlanPhase")/' + projectPlanPhaseId,
+                success: function () {
+                    HideDetailSaveDialog();
+                    RefreshProjectPlanPhases();
+                },
+                error: function (err) {
+                    HideDetailSaveDialog();
+                    ShowDetailErrorDialog('Delete project plan phase', err);
+                }
+            });
+        });
+
+        $(this).on('click', 'a[data-function=CreateProjectPlanPhaseActivity]', null, function () {
+            $('#AddActivityProfileDialog').dialog('open');
+            RefreshActivityProfiles($(this).attr('data-Phase-id'));
+        });
+
+        $(this).on('click', 'a[data-function=CreateProjectPlanPhaseProduct]', null, function () {
+            ShowDetailSaveDialog();
+            $('#AddProductDialogFormPlaceholder').html('');
+            $.ajax({
+                url: '@Url.Action("CreateProjectPlanPhaseProduct")/' + $(this).attr('data-Phase-id') + '/@Model.Project.Id',
+                success: function (msg) {
+                    $('#AddProductDialogFormPlaceholder').html(msg);
+                    $('#AddProductTable').treeTable({ persist: true });
+                    HideDetailSaveDialog();
+                    $('#AddProductDialog').dialog('open');
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                    HideDetailSaveDialog();
+                }
+            });
+        });
+
+        $('#SubmitActivityProfileButton').click(function () {
+            ShowDetailSaveDialog();
+
+            var form = $('#CreateProjectPlanPhaseActivityForm');
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                success: function () {
+                    HideDetailSaveDialog();
+                    $('#AddActivityProfileDialog').dialog('close');
+                    RefreshProjectPlanPhases();
+                },
+                error: function (err) {
+                    HideDetailSaveDialog();
+                    ShowDetailErrorDialog('Add an activity/profile to the project plan phase', err);
+                }
+            });
+        });
+
+        $('#RefreshActivityProfileButton').click(function () {
+            Refresh();
+        });
+
+        $('#SubmitProductButton').click(function () {
+            ShowDetailSaveDialog();
+
+            var form = $('#CreateProjectPlanPhaseProductForm');
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                success: function () {
+                    $('#AddProductDialog').dialog('close');
+                    HideDetailSaveDialog();
+                    RefreshProjectPlanPhases();
+                },
+                error: function (err) {
+                    $('#AddProductDialog').dialog('close');
+                    alert(err.statusText);
+                    HideDetailSaveDialog();
+                }
+            });
+        });
+
+        $('#SubmitEditActivityProfileButton').click(function () {
+            ShowDetailSaveDialog();
+
+            var form = $('#UpdateProjectPlanPhaseActivityForm');
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                success: function () {
+                    $('#EditActivityProfileDialog').dialog('close');
+                    HideDetailSaveDialog();
+                    RefreshProjectPlanPhases();
+                },
+                error: function (err) {
+                    $('#EditActivityProfileDialog').dialog('close');
+                    HideDetailSaveDialog();
+                }
+            });
+        });
+
+        $('#SubmitEditActivityDeadlineButton').click(function () {
+            ShowDetailSaveDialog();
+
+            var form = $('#UpdateProjectPlanPhaseActivityDeadlineForm');
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                success: function () {
+                    $('#EditActivityDeadlineDialog').dialog('close');
+                    HideDetailSaveDialog();
+                    RefreshProjectPlanPhases();
+                },
+                error: function (err) {
+                    $('#EditActivityDeadlineDialog').dialog('close');
+                    HideDetailSaveDialog();
+                }
+            });
+        });
+
+        $('#SubmitEditProductButton').click(function () {
+            ShowDetailSaveDialog();
+
+            var form = $('#UpdateProjectPlanPhaseProductForm');
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                success: function () {
+                    $('#EditProductDialog').dialog('close');
+                    HideDetailSaveDialog();
+                    RefreshProjectPlanPhases();
+                },
+                error: function (err) {
+                    $('#EditProductDialog').dialog('close');
+                    HideDetailSaveDialog();
+                }
+            });
+        });
+
+        $('#SubmitEditProductDeadlineButton').click(function () {
+            ShowDetailSaveDialog();
+
+            var form = $('#UpdateProjectPlanPhaseProductDeadlineForm');
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                success: function () {
+                    $('#EditProductDeadlineDialog').dialog('close');
+                    HideDetailSaveDialog();
+                    RefreshProjectPlanPhases();
+                },
+                error: function (err) {
+                    $('#EditProductDeadlineDialog').dialog('close');
+                    HideDetailSaveDialog();
+                }
+            });
+        });
+
+        $('#SubmitAddProjectPlanPhaseButton').click(function () {
+            var form = $('#AddProjectPlanPhaseForm');
+
+            var isvalid = true;
+
+            if (isvalid) {
+                ShowDetailSaveDialog();
+
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function () {
+                        $('#AddProjectPlanPhaseDialog').dialog('close');
+                        HideDetailSaveDialog();
+                        RefreshProjectPlanPhases();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Create new project plan phase', err);
+                    }
+                });
+            }
+        });
+
+        $('#SubmitEditProjectPlanPhaseButton').click(function () {
+            var form = $('#EditProjectPlanPhaseForm');
+
+            try {
+                ShowDetailSaveDialog();
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function () {
+                        $('#EditProjectPlanPhaseDialog').dialog('close');
+                        HideDetailSaveDialog();
+                        RefreshProjectPlanPhases();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Edit project plan phase', err);
+                    }
+                });
+            } catch (e) {
+                alert(e);
+            }
+        });
+    }
+
+    function RefreshProjectPlanPhases(projectPlanPhaseId) {
+        $('#ProjectPlanPhasesPlaceholder').loading('Retrieving project plan phases.');
+        $.ajax({
+            url: '@Url.Action("ProjectPlanPhases", new { id = Model.Project.Id })',
+            success: function (msg) {
+                $('#ProjectPlanPhasesPlaceholder').html(msg);
+                InitializeProjectPlanPhasesTable();
+
+            },
+            error: function (err) {
+                alert(err.statusText);
+                $('#ProjectPlanPhasesPlaceholder').showErrorMessage('Unable to retrieve project plan phases.');
+            }
+        });
+    }
+
+    function RefreshActivityProfiles(phaseId) {
+        $('#AddActivityProfileDialogFormPlaceholder').loading('Retrieve activities and profiles.');
+        $.ajax({
+            url: '@Url.Action("CreateProjectPlanPhaseActivity")/' + phaseId + '/@Model.Project.Id',
+            success: function (msg) {
+                $('#AddActivityProfileDialogFormPlaceholder').html(msg);
+                $('#AddActivityProfileTable').treeTable({ persist: true });
+            },
+            error: function (err) {
+                alert(err.statusText);
+                $('#AddActivityProfileDialogFormPlaceholder').showErrorMessage('Unable to retrieve the activities and profiles.');
+            }
+        });
+    }
+    </script>
+}
+<fieldset id="ProjectPlanOverview">
+    <legend>Project plan overview</legend>
+
+    <table style="width: 100%">
+        <tr>
+            <td style="width: 50%">
+                <table style="width: 100%">
+                    <tr>
+                        <td class="label">Project status</td>
+                        <td class="value">@((ProjectStatusCodeType)Model.Project.StatusCode)</td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 50%">
+                <table style="width: 100%">
+                    <tr>
+                        <td class="label"></td>
+                        <td class="value right-text">
+                            @Html.ActionLink("Print", "GenerateProjectPlanReport", new { id = Model.ProjectPlan.Id }, new { @class = "button" })
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <div class="right-text">
+        <a href="javascript:void(0);" data-function="AddProjectPlanPhaseButton" class="button"
+            title="Add a new phase to this project">Add New Phase</a>
+    </div>
+
+    <div id="ProjectPlanPhasesPlaceholder"></div>
+
+    <div class="right-text">
+        <a href="javascript:void(0);" data-function="AddProjectPlanPhaseButton" class="button"
+            title="Add a new phase to this project">Add New Phase</a>
+    </div>
+</fieldset>
+
+<div id="AddActivityProfileDialog">
+    @using (Html.BeginForm("CreateProjectPlanPhaseActivity", "ProjectConsultancy", FormMethod.Post, new { id = "CreateProjectPlanPhaseActivityForm" }))
+    {
+        <div id="AddActivityProfileDialogFormPlaceholder">
+        </div>
+    }
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="@Url.Action("Edit", "ProjectConsultancy", new { id = Model.Project.Id })#ActivityProfileInformation" target="_blank" class="button">
+            New activity</a>
+        <a href="javascript:void(0);" id="SubmitActivityProfileButton" class="button">Save</a>
+    </div>
+</div>
+
+<div id="EditActivityProfileDialog">
+    @using (Html.BeginForm("UpdateProjectPlanPhaseActivity", "ProjectConsultancy", FormMethod.Post, new { id = "UpdateProjectPlanPhaseActivityForm" }))
+    {
+        <div id="EditActivityProfileDialogFormPlaceholder">
+        </div>
+    }
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" id="SubmitEditActivityProfileButton" class="button">Save</a>
+    </div>
+</div>
+
+<div id="EditActivityDeadlineDialog">
+    @using (Html.BeginForm("UpdateProjectPlanPhaseActivityDeadline", "ProjectConsultancy", FormMethod.Post, new { id = "UpdateProjectPlanPhaseActivityDeadlineForm" }))
+    {
+        <div id="EditActivityDeadlineDialogFormPlaceholder">
+        </div>
+    }
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" id="SubmitEditActivityDeadlineButton" class="button">Save</a>
+    </div>
+</div>
+
+<div id="AddProductDialog" style="height:300px;">
+    @using (Html.BeginForm("CreateProjectPlanPhaseProduct", "ProjectConsultancy", FormMethod.Post, new { id = "CreateProjectPlanPhaseProductForm" }))
+    {
+        <div id="AddProductDialogFormPlaceholder">
+        </div>
+        }
+        <br />
+        <br />
+        <div class="right-text">
+            <a href="javascript:void(0);" id="SubmitProductButton" class="button">Save</a>
+        </div>
+    </div>
+
+<div id="EditProductDialog">
+    @using (Html.BeginForm("UpdateProjectPlanPhaseProduct", "ProjectConsultancy", FormMethod.Post, new { id = "UpdateProjectPlanPhaseProductForm" }))
+    {
+        <div id="EditProductDialogFormPlaceholder">
+        </div>
+    }
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" id="SubmitEditProductButton" class="button">Save</a>
+    </div>
+</div>
+
+<div id="EditProductDeadlineDialog">
+    @using (Html.BeginForm("UpdateProjectPlanPhaseProductDeadline", "ProjectConsultancy", FormMethod.Post, new { id = "UpdateProjectPlanPhaseProductDeadlineForm" }))
+    {
+        <div id="EditProductDeadlineDialogFormPlaceholder">
+        </div>
+    }
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" id="SubmitEditProductDeadlineButton" class="button">Save</a>
+    </div>
+</div>
+
+<div id="AddProjectPlanPhaseDialog">
+    <div id="AddProjectPlanPhaseFormPlaceholder">
+    </div>
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" id="SubmitAddProjectPlanPhaseButton" class="button">Save</a>
+    </div>
+</div>
+
+<div id="EditProjectPlanPhaseDialog">
+    <div id="EditProjectPlanPhaseFormPlaceholder">
+    </div>
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" id="SubmitEditProjectPlanPhaseButton" class="button">Save</a>
+    </div>
+</div>

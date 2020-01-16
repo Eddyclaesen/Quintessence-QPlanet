@@ -1,0 +1,17 @@
+﻿@model Quintessence.QPlanet.ViewModel.Scm.EditActivityTypeModel
+@using (Html.BeginForm("EditActivityType", "AdminActivity", FormMethod.Post, new { id = "EditActivityTypeForm" }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    <p>Please enter a name for a new activity type.</p>
+    
+    <div class="row">
+        <div>Name</div>
+        <div>@Html.TextBoxFor(m => m.Name)</div>
+    </div>
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" id="EditActivityTypeButton" title="Save changes."
+            class="button">Save</a>
+    </div>
+}

@@ -1,0 +1,27 @@
+﻿@model List<Quintessence.QService.QueryModel.Dim.DictionaryImportFileInfoView>
+
+<table class="dataTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Extension</th>
+            <th>Size</th>
+            <th>Created</th>
+            <th style="max-width: 72px; min-width: 72px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dictionary in Model.OrderByDescending(d => d.CreationTime))
+        {
+            <tr>
+                <td>@dictionary.Name</td>
+                <td>@dictionary.Extension</td>
+                <td>@string.Format("{0:#,#} Kb", dictionary.Length)</td>
+                <td>@dictionary.CreationTime</td>
+                <td>
+                    @Html.ActionLink("Import", "ImportDictionary", new { name = dictionary.Name }, new { target = dictionary.Name })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

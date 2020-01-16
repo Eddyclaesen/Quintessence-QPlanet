@@ -1,0 +1,18 @@
+﻿@model Exception
+<table>
+    <tr>
+        <td></td>
+        <td>
+            <p>
+                Something terrible went wrong that we did not foresee.<br />
+                Please close your browser and try again.<br />
+                If this problem keeps occuring, please contact the helpdesk.
+            </p>
+
+            <p>
+                Details that might help the helpdesk.<br />
+                @Model.Message
+            </p>
+        </td>
+    </tr>
+</table>

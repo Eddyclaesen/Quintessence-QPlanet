@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[PricingModel]
+	ADD CONSTRAINT [PK_PricingModel] 
+	PRIMARY KEY NONCLUSTERED ([Id])

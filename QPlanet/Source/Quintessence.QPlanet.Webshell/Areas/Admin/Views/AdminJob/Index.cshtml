@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Admin - Jobs";
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/tiny_mce/jquery.tinymce.js")" type="text/javascript"></script>
+
+    <script>
+        $(function () {
+            RefreshJobs();
+            InitializeButtons();
+        });
+
+        function RefreshJobs() {
+            $('#JobOverviewPlaceholder').loading('Retrieving job definitions');
+            $.ajax({
+                url: '@Url.Action("JobDefinitions")',
+                success: function (html) {
+                    $('#JobOverviewPlaceholder').html(html);
+                    CreateTabs();
+                },
+                error: function (err) {
+                    ShowDetailErrorDialog('Retrieve job definitions.', err);
+                }
+            });
+        }
+        
+        function InitializeButtons() {
+            $(this).on('click', 'a[data-function=ScheduleJob]', null, function (event) {
+                ShowDetailSaveDialog();
+                $.ajax({
+                    url: '@Url.Action("ScheduleJob")/' + $(this).attr('data-id'),
+                    success: function () {
+                        HideDetailSaveDialog();
+                        alert('Job scheduled');
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Schedule new job.', err);
+                    }
+                });
+            });
+        }
+    </script>
+}
+<div id="JobOverviewPlaceholder"></div>

@@ -1,0 +1,10 @@
+﻿@model Quintessence.Infrastructure.Validation.AuthenticationFaultEntry
+<table>
+    <tr>
+        <td></td>
+        <td>@Model.Message<br />
+            Please go to the @Html.ActionLink("Login page", "Logout", "Login", new { area = string.Empty }, null)
+            to renew your authentication and try again.
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,8 @@
+﻿EXECUTE	[dbo].[CrmReplicationAppointment_Sync]
+EXECUTE	[dbo].[CrmReplicationAppointmentTraining_Sync]
+EXECUTE	[dbo].[CrmReplicationAppointmentTimesheet_Sync]
+EXECUTE	[dbo].[CrmReplicationAssociate_Sync]
+EXECUTE	[dbo].[CrmReplicationContact_Sync]
+EXECUTE	[dbo].[CrmReplicationEmail_Sync]
+EXECUTE	[dbo].[CrmReplicationEmailAssociate_Sync]
+EXECUTE	[dbo].[CrmReplicationProject_Sync]

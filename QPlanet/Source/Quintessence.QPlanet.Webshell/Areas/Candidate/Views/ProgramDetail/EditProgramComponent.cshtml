@@ -1,0 +1,69 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Candidate.Models.ProgramDetail.EditProgramComponentActionModel
+
+@using (Html.BeginForm("EditProgramComponent", "ProgramDetail", FormMethod.Post, new { id = "EditProgramComponentForm" }))
+{
+    @Html.EditorFor(m => m.ProgramComponent, "BaseEntityViewTemplate")
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ProgramComponent.CandidateFullName)</div>
+        <div>@Html.DisplayFor(m => m.ProgramComponent.CandidateFullName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ProgramComponent.ContactName)</div>
+        <div>@Html.DisplayFor(m => m.ProgramComponent.ContactName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ProgramComponent.AssessmentRoomOfficeFullName)</div>
+        <div>@Html.DisplayFor(m => m.ProgramComponent.AssessmentRoomOfficeFullName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ProgramComponent.AssessmentRoomName)</div>
+        <div>@Html.DisplayFor(m => m.ProgramComponent.AssessmentRoomName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ProgramComponent.LeadAssessorUserId)</div>
+        <div>@Html.DropDownListFor(m => m.ProgramComponent.LeadAssessorUserId, Model.CreateAssessorDropDownList(Model.ProgramComponent.LeadAssessorUserId))</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ProgramComponent.CoAssessorUserId)</div>
+        <div>@Html.DropDownListFor(m => m.ProgramComponent.CoAssessorUserId, Model.CreateAssessorDropDownList(Model.ProgramComponent.CoAssessorUserId))</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ProgramComponent.Start)</div>
+        <div>@Model.ProgramComponent.Start.ToShortTimeString()</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ProgramComponent.End)</div>
+        <div>@Model.ProgramComponent.End.ToShortTimeString()</div>
+    </div>
+    
+    if (!string.IsNullOrWhiteSpace(Model.ProgramComponent.SimulationName))
+    {
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ProgramComponent.SimulationName)</div>
+        <div>@Html.DisplayFor(m => m.ProgramComponent.SimulationName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ProgramComponent.SimulationCombinationTypeCode)</div>
+        <div>@(Model.ProgramComponent.SimulationCombinationTypeCode == 1 ? "Preparation" : "Execution")</div>
+    </div>
+    }
+
+    if (!string.IsNullOrWhiteSpace(Model.ProgramComponent.ProjectCategoryDetailTypeName))
+    {
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ProgramComponent.ProjectCategoryDetailTypeName)</div>
+        <div>@Html.DisplayFor(m => m.ProgramComponent.ProjectCategoryDetailTypeName)</div>
+    </div>
+    }
+    
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ProgramComponent.Description)</div>
+        <div>@Html.TextAreaFor(m => m.ProgramComponent.Description, 4, 50, null)</div>
+    </div>
+    
+    <br />
+    
+    <div class="right-text">
+        <a href="javascript:void(0);" data-function="SaveProgramComponentButton" data-room-id="@Model.ProgramComponent.AssessmentRoomId" class="button">Save</a>
+    </div>
+}

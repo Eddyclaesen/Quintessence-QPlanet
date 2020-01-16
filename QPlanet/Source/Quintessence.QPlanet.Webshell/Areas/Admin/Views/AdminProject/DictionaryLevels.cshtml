@@ -1,0 +1,62 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Admin.Models.AdminProject.DictionaryLevelsModel
+<table id="AllDictionaryLevelsTreeTable" class="dataTable" style="width: 95%">
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @Html.HiddenFor(m => m.ProjectRoleId)
+        @for (int dic = 0; dic < Model.Dictionaries.Count; dic++)
+        {
+            var dictionary = Model.Dictionaries[dic];
+            <tr id="node-AllDictionaryLevels-@dictionary.Id">
+                <td>@Html.HiddenFor(m => Model.Dictionaries[dic].Id)
+                    <span>@dictionary.Name</span></td>
+            </tr>
+            for (int clu = 0; clu < dictionary.DictionaryClusters.Count; clu++)
+            {
+                var cluster = dictionary.DictionaryClusters[clu];
+            <tr class="child-of-node-AllDictionaryLevels-@dictionary.Id" id="node-AllDictionaryLevels-@cluster.Id">
+                <td>
+                    @Html.HiddenFor(m => Model.Dictionaries[dic].DictionaryClusters[clu].Id)
+                    <span>@cluster.Name</span>
+                </td>
+            </tr>
+                for (int com = 0; com < cluster.DictionaryCompetences.Count; com++)
+                {
+                    var competence = cluster.DictionaryCompetences[com];
+            <tr  class="child-of-node-AllDictionaryLevels-@cluster.Id" id="node-AllDictionaryLevels-@competence.Id">
+                <td>
+                    @Html.HiddenFor(m => Model.Dictionaries[dic].DictionaryClusters[clu].DictionaryCompetences[com].Id)
+                    <span>@competence.Name</span>
+                </td>
+            </tr>
+                    for (int lev = 0; lev < competence.DictionaryLevels.Count; lev++)
+                    {
+                        var level = competence.DictionaryLevels[lev];
+            <tr class="child-of-node-AllDictionaryLevels-@competence.Id" id="node-AllDictionaryLevels-@level.Id">
+                <td>
+                    @Html.HiddenFor(m => Model.Dictionaries[dic].DictionaryClusters[clu].DictionaryCompetences[com].DictionaryLevels[lev].Id)
+                    <label>
+                        @Html.CheckBoxFor(m => Model.Dictionaries[dic].DictionaryClusters[clu].DictionaryCompetences[com].DictionaryLevels[lev].IsChecked)
+                        @level.Level - @level.Name
+                    </label>
+                </td>
+            </tr>
+                        for (int ind = 0; ind < level.DictionaryIndicators.Count; ind++)
+                        {
+                            var indicator = level.DictionaryIndicators[ind];
+            <tr class="child-of-node-AllDictionaryLevels-@level.Id" id="node-AllDictionaryLevels-@indicator.Id">
+                <td>
+                    @Html.Label(indicator.Name, indicator.Name)
+                </td>
+            </tr>
+                        }
+                    }
+                }
+
+            }
+        }
+    </tbody>
+</table>

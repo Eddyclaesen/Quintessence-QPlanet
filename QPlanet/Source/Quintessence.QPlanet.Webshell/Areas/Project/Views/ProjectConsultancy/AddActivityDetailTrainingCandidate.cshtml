@@ -1,0 +1,28 @@
+﻿@model Quintessence.QPlanet.ViewModel.Scm.EditActivityDetailTrainingCandidateModel
+
+@using (Html.BeginForm("AddActivityDetailTrainingCandidate", "ProjectConsultancy", FormMethod.Post, new { id = "AddActivityDetailTrainingCandidateForm" }))
+{
+    @Html.HiddenFor(m => m.CrmAppointmentId)
+    @Html.HiddenFor(m => m.ActivityDetailTrainingId)
+    
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ActivityDetailTrainingName)</div>
+        <div>@Html.DisplayTextFor(m => m.ActivityDetailTrainingName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.AppointmentDescription)</div>
+        <div>@Html.DisplayTextFor(m => m.AppointmentDescription)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.FirstName)</div>
+        <div>@Html.TextBoxFor(m => m.FirstName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.LastName)</div>
+        <div>@Html.TextBoxFor(m => m.LastName)</div>
+    </div>
+    
+    <div class="right-text">
+        <a href="javascript:void(0);" data-function="AddActivityDetailTrainingCandidateButton" class="button">Save</a>
+    </div>
+}

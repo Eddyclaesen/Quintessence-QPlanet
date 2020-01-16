@@ -1,0 +1,70 @@
+﻿@model Quintessence.QPlanet.ViewModel.Dim.CreateNewDictionaryIndicatorModel
+@using (Html.BeginForm("AddDictionaryIndicator", "AdminDictionary", FormMethod.Post, new { id = "AddDictionaryIndicatorForm" }))
+{
+    @Html.HiddenFor(m => m.DictionaryLevelId)
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.DictionaryName)</div>
+        <div>@Html.DisplayTextFor(m => m.DictionaryName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.DictionaryClusterName)</div>
+        <div>@Html.DisplayTextFor(m => m.DictionaryClusterName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.DictionaryCompetenceName)</div>
+        <div>@Html.DisplayTextFor(m => m.DictionaryCompetenceName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.DictionaryLevelName)</div>
+        <div>@Html.DisplayTextFor(m => m.DictionaryLevelName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.Name)</div>
+        <div>@Html.EditorFor(m => m.Name)</div>
+    </div>
+    <div class="row">
+        <div>&nbsp;</div>
+        <div>
+            <label>
+                @Html.CheckBoxFor(m => m.IsStandard, new { data_function = "MarkAsStandard" })
+                @Html.DisplayNameFor(m => m.IsStandard)
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div>&nbsp;</div>
+        <div>
+            <label>
+                @Html.CheckBoxFor(m => m.IsDistinctive, new { data_function = "MarkAsDistinctive" })
+                @Html.DisplayNameFor(m => m.IsDistinctive)
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.LanguageId)</div>
+        <div>@Html.DropDownListFor(m => m.LanguageId, Model.CreateLanguageList())</div>
+    </div>
+    <div class="row"></div>
+    
+    <div class="right-text">
+        <a href="javascript:void();" data-function="SaveDictionaryIndicator" class="button">Save</a>
+    </div>
+}
+
+<script>
+    $(function() {
+        $('input[type=checkbox][data-function=MarkAsStandard]').change(function(event) {
+            event.preventDefault();
+            $('input[type=checkbox][data-function=MarkAsDistinctive]').each(function() {
+                $(this).attr('checked', false);
+            });
+        });
+
+        $('input[type=checkbox][data-function=MarkAsDistinctive]').change(function(event) {
+            event.preventDefault();
+            $('input[type=checkbox][data-function=MarkAsStandard]').each(function() {
+                $(this).attr('checked', false);
+            });
+        });
+    });
+</script>

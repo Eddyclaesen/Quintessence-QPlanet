@@ -1,0 +1,108 @@
+﻿@using Quintessence.QPlanet.ViewModel.Fin
+@model Quintessence.QPlanet.Webshell.Areas.Finance.Models.FinanceHome.ListProjectManagerInvoicingModel
+@using (Html.BeginForm("SaveProjectManagerInvoicingEntries", "FinanceHome", FormMethod.Post, new { id = "SaveProjectManagerInvoicingForm" }))
+{
+    <div class="right-text">
+        <a href="javascript:void(0);" class="button" id="SaveProjectManagerInvoicingEntriesButton">Save</a>
+    </div>
+    <table class="dataTable" id="ProjectManagerInvoicingDataTable">
+        <thead>
+            <tr>
+                <th style="width: 1px;"></th>
+                <th>Project</th>
+                <th>Candidate</th>
+                <th>Product</th>
+                <th>Contact</th>
+                <th>Cons</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th title="Invoiced on">On</th>
+                <th>Status code</th>
+                <th>Remarks</th>
+                <th style="display:none;">Proposal</th>
+                <th>P.M.</th>
+                <th>C.A.</th>                
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.InvoicingEntries.Count; i++)
+            {
+                <tr>
+                    <td style="width: 1px;">
+                        @Html.EditorFor(m => m.InvoicingEntries[i], "BaseEntityViewTemplate")
+                    </td>
+                    <td>
+                        @Html.ActionLink(Model.InvoicingEntries[i].ProjectName, "Edit", "ProjectGeneral", new { area = "Project", id = Model.InvoicingEntries[i].ProjectId }, new { target = Model.InvoicingEntries[i].ProjectId })
+                    </td>
+
+                    @{
+
+                        var invoicingProjectCandidateEntry = Model.InvoicingEntries[i] as EditProjectCandidateInvoicingEntryModel;
+                        if (invoicingProjectCandidateEntry != null)
+                        {
+                                @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerProjectCandidateInvoicingModel")
+                        }
+
+                        var invoicingProjectCandidateCategoryType1Entry = Model.InvoicingEntries[i] as EditProjectCandidateCategoryType1InvoicingEntryModel;
+                        if (invoicingProjectCandidateCategoryType1Entry != null)
+                        {
+                                @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerProjectCandidateCategoryType1InvoicingModel")
+                        }
+
+                        var invoicingProjectCandidateCategoryType2Entry = Model.InvoicingEntries[i] as EditProjectCandidateCategoryType2InvoicingEntryModel;
+                        if (invoicingProjectCandidateCategoryType2Entry != null)
+                        {
+                                @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerProjectCandidateCategoryType2InvoicingModel")
+                        }
+
+                        var invoicingProjectCandidateCategoryType3Entry = Model.InvoicingEntries[i] as EditProjectCandidateCategoryType3InvoicingEntryModel;
+                        if (invoicingProjectCandidateCategoryType3Entry != null)
+                        {
+                                @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerProjectCandidateCategoryType3InvoicingModel")
+                        }
+
+                        var invoicingProjectProductEntry = Model.InvoicingEntries[i] as EditProjectProductInvoicingEntryModel;
+                        if (invoicingProjectProductEntry != null)
+                        {
+                                @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerProjectProductInvoicingModel")
+                        }
+
+                        var invoicingAcdcProjectFixedPriceEntry = Model.InvoicingEntries[i] as EditAssessmentDevelopmentProjectFixedPriceInvoicingEntryModel;
+                        if (invoicingAcdcProjectFixedPriceEntry != null)
+                        {
+                                @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerAcdcProjectFixedPriceInvoicingModel")
+                        }
+
+                        var invoicingConsultancyProjectFixedPriceEntry = Model.InvoicingEntries[i] as EditConsultancyProjectFixedPriceInvoicingEntryModel;
+                        if (invoicingConsultancyProjectFixedPriceEntry != null)
+                        {
+                                @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerConsultancyProjectFixedPriceInvoicingModel")
+                        }
+                        
+                        var invoicingProductSheetEntry = Model.InvoicingEntries[i] as EditProductSheetEntryInvoicingEntryModel;
+                        if (invoicingProductSheetEntry != null)
+                        {
+                                @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerProductSheetEntryInvoicingModel")
+                        }
+                        
+                        var invoicingTimesheetEntry = Model.InvoicingEntries[i] as EditTimesheetEntryInvoicingEntryModel;
+                        if (invoicingTimesheetEntry != null)
+                        {
+                                @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerTimesheetEntryInvoicingModel")
+                        }
+                    }
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" class="button" id="SaveProjectManagerInvoicingEntriesButton">Save</a>
+    </div>
+}
+
+
+

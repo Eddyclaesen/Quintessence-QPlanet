@@ -1,0 +1,28 @@
+﻿@model Quintessence.QPlanet.ViewModel.Rep.CreateNewReportDefinitionModel
+@using (Html.BeginForm("AddReportDefinition", "AdminReport", FormMethod.Post, new { id = "AddReportDefinitionForm" }))
+{
+    <p>
+        Please enter a name and location for a new report definition.
+    </p>
+    
+    <div class="row">
+        <div>Report type</div>
+        <div>
+            @Html.DropDownListFor(m => m.ReportTypeId, Model.ReportTypes.Select(rt => new SelectListItem { Text = rt.Name, Value = rt.Id.ToString() }))
+        </div>
+    </div>
+    <div class="row">
+        <div>Name</div>
+        <div>@Html.TextBoxFor(m => m.Name)</div>
+    </div>
+    <div class="row">
+        <div>Location</div>
+        <div>@Html.TextBoxFor(m => m.Location)</div>
+    </div>
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" id="SubmitAddReportDefinitionForm" title="Add new report definition."
+            class="button">Save</a>
+    </div>
+}

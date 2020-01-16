@@ -1,0 +1,52 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectAssessmentDevelopment.IndicatorSimulationsModel
+@{
+    var tableWidth = (Model.SimulationCombinations.Count + 1 > 5 ? 5 : Model.SimulationCombinations.Count) * 20;
+}
+
+<table style="width: @tableWidth%" class="dataTable">
+    <tr>
+        <td style="min-width: 250px; width: @(tableWidth / (Model.SimulationCombinations.Count + 1))%"></td>
+        @foreach (var combination in Model.SimulationCombinations)
+        {
+            <td style="width: @(tableWidth / (Model.SimulationCombinations.Count + 1))%; text-align: center">@combination.SimulationName
+            </td>
+        }
+    </tr>
+
+    @foreach (var groupedIndicators in Model.DictionaryIndicators
+                                .OrderBy(di => di.DictionaryClusterOrder)
+                                .ThenBy(di => di.DictionaryCompetenceOrder)
+                                .ThenBy(di => di.DictionaryLevelLevel)
+                                .ThenBy(di => di.DictionaryIndicatorOrder)
+                                .GroupBy(i => i.DictionaryCompetenceId))
+    {
+        var competence = new { Id = groupedIndicators.First().DictionaryCompetenceId, Name = groupedIndicators.First().DictionaryCompetenceName };
+        <tr>
+            <td>
+                <img src="@Url.Content("~/Images/Icons/Warning16.png")" 
+                     alt="At least 2 simulations should be selected for this competence" 
+                     title="At least 2 simulations should be selected for this competence" 
+                     data-competenceid="@competence.Id" 
+                     data-function="CompetenceWarningImage" 
+                     style="display: none"/>
+                @competence.Name
+            </td>
+
+            @foreach (var combination in Model.SimulationCombinations)
+            {
+                <td style="text-align: center">
+                    @Html.CheckBox("SimulationCompetenceCheckBox", Model.Matrix[combination.SimulationCombinationId][competence.Id], new { data_competence_id = competence.Id, data_combination_id = combination.SimulationCombinationId })
+                </td>
+            }
+        </tr>
+    }
+</table>
+
+<script>
+    $(function () {
+        RefreshWarningMessages();
+        $(this).on('change', 'input[type=checkbox][name=SimulationCompetenceCheckBox]', null, function () {
+            RefreshWarningMessages();
+        });
+    });
+</script>

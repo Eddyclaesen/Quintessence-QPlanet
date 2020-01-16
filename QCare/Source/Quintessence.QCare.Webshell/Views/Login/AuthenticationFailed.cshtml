@@ -1,0 +1,17 @@
+﻿@using Resources
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<fieldset id="authentication-failed-fieldset">
+    <legend>@Global.LoginCodeLabel</legend>
+    <p class="center-text">
+        @Global.AuthenticationFailedText
+        <br/>
+        <br/>
+        @Html.ActionLink("Back", "Login", "Login", null, new { @class="button" })
+    </p>
+</fieldset>
+
+

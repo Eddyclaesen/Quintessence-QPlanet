@@ -1,0 +1,149 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Workspace.Models.WorkspaceTimesheet.TimesheetsActionModel
+
+@if (!Model.IsProjectManager)
+{
+    <h4>Registered hours</h4>
+    <table id="TimesheetOverviewTable">
+        <thead>
+            <tr>
+                @*<th>Customer</th>*@
+                <th>Project</th>
+                @*<th>Consultant</th>*@
+                <th>Date</th>
+                @*<th>Category</th>*@
+                <th>Activity/Profile</th>
+                <th>Duration</th>
+                <th>Price</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var projectEntries in Model.RegisteredTimesheets.OrderBy(e => e.Date).GroupBy(e => e.Project))
+            {
+                <tr id="node-@projectEntries.Key.Id">
+                    @*@if (projectEntries.First().Project.Contact != null)
+                        {
+                            <td>
+                                @projectEntries.First().Project.Contact.FullName
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }*@
+                    <td>
+                        @projectEntries.Key.Name
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditTimesheet", "ProjectConsultancy", new { area = "project", id = projectEntries.Key.Id, year = projectEntries.FirstOrDefault().Date.Year, month = projectEntries.FirstOrDefault().Date.Month, userId = Model.UserId }, new { target = "EditTimesheet", @class = "edit-link" })
+                    </td>
+                    <td></td>
+                </tr>
+
+                foreach (var entry in projectEntries)
+                {
+                    <tr class="child-of-node-@projectEntries.Key.Id">
+                        <td></td>
+                        <td></td>
+                        @*<td>@entry.User.FullName</td>*@
+                        <td>@entry.Date.ToShortDateString()</td>
+                        @*<td>@entry.Category</td>*@
+                        <td>@entry.ActivityName - @entry.ProfileName</td>
+                        <td>@entry.Duration</td>
+                        <td>&euro; @entry.InvoiceAmount</td>
+                        <td>@entry.Status</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <br />
+    <br />
+
+    <h4>Unregistered hours</h4>
+    <table id="UnregisteredTimesheetOverviewTable">
+        <thead>
+            <tr>
+                @*<th>Customer</th>*@
+                <th>Project</th>
+                @*<th>Consultant</th>*@
+                <th>Date</th>
+                @*<th>Category</th>*@
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var projectEntries in Model.UnregisteredTimesheets.OrderBy(e => e.StartDate).GroupBy(e => e.Project))
+            {
+                <tr id="node-@projectEntries.Key.Id">
+                    @*@if (projectEntries.First().Project.Contact != null)
+                        {
+                            <td>
+                                @projectEntries.First().Project.Contact.FullName
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }*@
+                    <td>
+                        @projectEntries.Key.Name
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditTimesheet", "ProjectConsultancy", new { area = "project", id = projectEntries.Key.Id, year = projectEntries.FirstOrDefault().StartDate.Year, month = projectEntries.FirstOrDefault().StartDate.Month, userId = Model.UserId }, new { target = "EditTimesheet", @class = "edit-link" })
+                    </td>
+                    <td></td>
+                </tr>
+
+                foreach (var entry in projectEntries)
+                {
+                    <tr class="child-of-node-@projectEntries.Key.Id">
+                        <td></td>
+                        <td></td>
+                        @*<td>@entry.User.FullName</td>*@
+                        <td>@entry.StartDate.ToShortDateString()</td>
+                        @*<td>@entry.Category</td>*@
+                        <td>@entry.Description</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <table id="UnregisteredTimesheetOverviewTable">
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Project</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var projectEntries in Model.PromaProjects.OrderBy(e => e.Contact.FullName).GroupBy(e => e.Contact))
+            {
+                <tr id="node-@projectEntries.Key.Id">
+                    <td>
+                        @projectEntries.Key.FullName
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                foreach (var entry in projectEntries)
+                {
+                    <tr class="child-of-node-@projectEntries.Key.Id">
+                        <td></td>
+                        <td>
+                            @entry.Name
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditTimesheet", "ProjectConsultancy", new { area = "project", id = entry.Id, year = Model.Year, month = Model.Month, userId = Model.UserId, isProjectManager = true }, new { target = "EditTimesheet", @class = "edit-link" })
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}

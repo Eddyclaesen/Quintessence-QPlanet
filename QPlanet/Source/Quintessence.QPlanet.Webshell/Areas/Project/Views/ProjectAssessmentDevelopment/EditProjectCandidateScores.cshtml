@@ -1,0 +1,637 @@
+﻿@using Quintessence.QPlanet.Infrastructure.Nullable
+@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectDetailControllerBase.EditProjectCandidateScoresActionModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Projects - Edit Assessor Overview";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <!--<li class="current"><a href="javascript:void(0);">@Model.ProjectCandidate.CandidateFullName
+                (@Model.Project.Name)</a></li>-->
+            <li class="current">
+                <a href="@Url.Action("Edit", "ProjectGeneral", new { area = "Project", id = Model.ProjectCandidate.ProjectId })" target="_blank">
+                    @Model.ProjectCandidate.CandidateFullName <u>@Model.ProjectCandidate.Project.Name</u>
+                </a>
+            </li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li>
+                @Html.ActionLink("Simulation Scores", "EditProjectCandidateSimulationScores", new { id = Model.ProjectCandidate.Id })
+        </li>
+        <li class="current">Assessors Overview</li>
+        <li>
+            @Html.ActionLink("Product scores", "ProjectCandidateProductScores", new { id = Model.ProjectCandidate.Id })
+    </li>
+    <li>
+        @Html.ActionLink("Resume", "EditProjectCandidateResume", new { id = Model.ProjectCandidate.Id })
+</li>
+<li>
+    @Html.ActionLink("Reporting", "ProjectCandidateReporting", new { id = Model.ProjectCandidate.Id })
+</li>
+</ul>
+</nav>
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/tiny_mce/jquery.tinymce.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.treeTable.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.cookie.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/persist.js")" type="text/javascript"></script>
+
+    @if (Model.ProjectCandidate.ProjectCandidateDetail.IsSuperofficeAppointmentDeleted)
+    {
+        if (Model.ProjectCandidate.IsCancelled)
+        {
+            <script>
+                $(function () {
+                    $('a[class=button]').each(function () { $(this).hide(); });
+                    AddNotification('CANCELLED', 'This candidate has been cancelled. Unable to save any changes to this scoring form.');
+                });
+            </script>
+        }
+        else
+        {
+            <script>
+                $(function () {
+                    $('a[class=button]').each(function () { $(this).hide(); });
+                    AddNotification('DELETED', 'This candidate has been deleted from CRM, but has not yet been cancelled in QPlanet. Unable to save any changes to this scoring form.');
+                });
+            </script>
+        }
+    }
+
+    <script>
+        $(function () {
+            InitializeButtons();
+            InitializeTextAreas();
+            InitializeTreeTable();
+        });
+
+        function InitializeButtons() {
+            $('a[data-function=SaveProjectCandidateScoresButton]').each(function () {
+                $(this).click(function () {
+                    var form = $('#SubmitProjectCandidateScoresForm');
+                    var data = form.serialize();
+                    console.log(data);
+                    ShowDetailSaveDialog();
+
+                    $.ajax({
+                        url: form.attr('action'),
+                        type: 'POST',
+                        data: form.serialize(),
+
+                        success: function () {
+                            window.location.reload();
+                        },
+                        error: function (err) {
+                            HideDetailSaveDialog();
+                            alert(err.statusText);
+                        }
+                    });
+                });
+            });
+        }
+
+        function InitializeTextAreas() {
+            $('textarea').each(function () {
+                $(this).tinymce({
+                    script_url: '@Url.Content("~/Scripts/tiny_mce/tiny_mce.js")',
+                    height: '200',
+                    width: '100%',
+                    theme: 'simple',
+                    valid_styles: { '*': 'font-weight,text-decoration' }
+                });
+            });
+        }
+
+        function InitializeTreeTable() {
+            $('table[data-id=FinalScoreTable]').each(function () {
+                $(this).treeTable({ persist: true });
+            });
+        }
+    </script>
+}
+
+@switch (Model.ReportType.Code)
+{
+    case "CO":
+        <fieldset>
+            <legend>
+                Competence based report - @if (Model.ReportDefinition != null)
+                {
+                    @Model.ReportDefinition.Name
+                }
+                else
+                {
+                    <text><font color="red">NO REPORT-TYPE DEFINED! PLEASE CONTACT THE PROJECTMANAGER</font></text>
+                }
+            </legend>
+
+            @using (Html.BeginForm("EditProjectCandidateScores", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "SubmitProjectCandidateScoresForm" }))
+            {
+                @Html.HiddenFor(m => Model.ProjectCandidate.Id)
+
+                var simulationsAll = Model.GetSimulations().ToList();
+                for (int y = 0; y < Model.Competences.Count; y++)
+                {
+                    <table class="dataTable" data-id="FinalScoreTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 40%"></th>
+                                <th>Final Score</th>
+                                <th>Average</th>
+                                @foreach (var simulation in simulationsAll)
+                                {
+                                    <th>@simulation.SimulationName</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="node-Competence-@Model.Competences[y].Id" style="background-color: #E9E9E9">
+                                <td>
+                                    @Html.EditorFor(m => Model.Competences[y], "BaseEntityViewTemplate")
+                                    @Model.Competences[y].GetDictionaryCompetenceName(Model.ProjectCandidate.ReportLanguageId)
+                                    @if (Model.IsIndicatorScoringEnabled && Model.Competences[y].ProjectCandidateIndicatorScores.Any(i => !i.Score.HasValue))
+                                    {
+                                        <img src="@Url.Content("~/Images/Icons/Warning16.png")" class="icon" alt="Missing indicator scores" title="Some indicators don't have a score" />
+                                    }
+                                </td>
+                                <td class="CompetenceScore">
+                                    @Html.EditorFor(m => Model.Competences[y].Score)
+                            </td>
+                            <td>
+                                @Model.GetCompetenceSimulationAverage(Model.Competences[y].DictionaryCompetence.Id).ToString("G29")
+                        </td>
+                        @foreach (var simulation in simulationsAll)
+                        {
+                            <td>
+                                @Model.GetCompetenceSimulationScore(Model.Competences[y].DictionaryCompetence.Id, simulation).ToString("G29")
+                        </td>
+                        }
+                    </tr>
+                    @if (Model.Project.ProjectTypeCategoryCode == "FA" || Model.Project.ProjectTypeCategoryCode == "FD")
+                    {
+                        <tr id="node-IsStandard-@Model.Competences[y].Id" class="child-of-node-Competence-@Model.Competences[y].Id expanded">
+                            <td colspan="2">Standard</td>
+                        </tr>
+                        for (int z = 0; z < Model.Competences[y].ProjectCandidateIndicatorScores.Count(); z++)
+                        {
+                            if (Model.Competences[y].ProjectCandidateIndicatorScores[z].IsStandard.HasValue && Model.Competences[y].ProjectCandidateIndicatorScores[z].IsStandard.Value)
+                            {
+                                <tr class="child-of-node-IsStandard-@Model.Competences[y].Id">
+                                    <td>
+                                        @if (Model.Competences[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Color != null)
+                                        {
+                                            <div style="color: @Model.Competences[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Color;">
+                                                @Html.EditorFor(m => Model.Competences[y].ProjectCandidateIndicatorScores[z], "BaseEntityViewTemplate")
+                                                @Model.Competences[y].ProjectCandidateIndicatorScores[z].GetDictionaryIndicatorName(Model.ProjectCandidate.ReportLanguageId)
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div style="color: #1e4372;">
+                                                @Html.EditorFor(m => Model.Competences[y].ProjectCandidateIndicatorScores[z], "BaseEntityViewTemplate")
+                                                @Model.Competences[y].ProjectCandidateIndicatorScores[z].GetDictionaryIndicatorName(Model.ProjectCandidate.ReportLanguageId)
+                                            </div>
+                                        }
+                                    </td>
+                                    @if (Model.IsIndicatorScoringEnabled)
+                                    {
+                                        <td>
+                                            @Html.EditorFor(m => Model.Competences[y].ProjectCandidateIndicatorScores[z].Score)
+                                        </td>
+                                        <td>
+                                            @Model.GetIndicatorSimulationAverage(Model.Competences[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Id).ToString("G29")
+                                    </td>
+                                        foreach (var simulation in simulationsAll)
+                                        {
+                                            <td>
+                                                @Model.GetIndicatorSimulationScore(Model.Competences[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Id, simulation).ToString("G29")
+                                        </td>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <td colspan="@(2 + @simulationsAll.Count)"></td>
+                                    }
+                                </tr>
+                            }
+                        }
+
+
+                        <tr id="node-IsDistinctive-@Model.Competences[y].Id" class="child-of-node-Competence-@Model.Competences[y].Id expanded">
+                            <td colspan="2">Distinctive</td>
+                        </tr>
+                        for (int z = 0; z < Model.Competences[y].ProjectCandidateIndicatorScores.Count(); z++)
+                        {
+                            if (Model.Competences[y].ProjectCandidateIndicatorScores[z].IsDistinctive.HasValue && Model.Competences[y].ProjectCandidateIndicatorScores[z].IsDistinctive.Value)
+                            {
+                                <tr class="child-of-node-IsDistinctive-@Model.Competences[y].Id">
+                                    <td>
+                                        @if (Model.Competences[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Color != null)
+                                        {
+                                            <div style="color: @Model.Competences[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Color;">
+                                                @Html.EditorFor(m => Model.Competences[y].ProjectCandidateIndicatorScores[z], "BaseEntityViewTemplate")
+                                                @Model.Competences[y].ProjectCandidateIndicatorScores[z].GetDictionaryIndicatorName(Model.ProjectCandidate.ReportLanguageId)
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div style="color: #1e4372;">
+                                                @Html.EditorFor(m => Model.Competences[y].ProjectCandidateIndicatorScores[z], "BaseEntityViewTemplate")
+                                                @Model.Competences[y].ProjectCandidateIndicatorScores[z].GetDictionaryIndicatorName(Model.ProjectCandidate.ReportLanguageId)
+                                            </div>
+                                        }
+                                    </td>
+                                    @if (Model.IsIndicatorScoringEnabled)
+                                    {
+                                        <td>
+                                            @Html.EditorFor(m => Model.Competences[y].ProjectCandidateIndicatorScores[z].Score)
+                                        </td>
+                                        <td>
+                                            @Model.GetIndicatorSimulationAverage(Model.Competences[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Id).ToString("G29")
+                                        </td>
+                                        foreach (var simulation in simulationsAll)
+                                        {
+                                            <td>
+                                                @Model.GetIndicatorSimulationScore(Model.Competences[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Id, simulation).ToString("G29")
+                                            </td>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <td colspan="@(2 + @simulationsAll.Count)"></td>
+                                    }
+                                </tr>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int z = 0; z < Model.Competences[y].ProjectCandidateIndicatorScores.Count; z++)
+                        {
+                            <tr class="child-of-node-Competence-@Model.Competences[y].Id">
+                                <td>
+                                    @if (Model.Competences[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Color != null)
+                                    {
+                                        <div style="color: @Model.Competences[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Color;">
+                                            @Html.EditorFor(m => Model.Competences[y].ProjectCandidateIndicatorScores[z], "BaseEntityViewTemplate")
+                                            @Model.Competences[y].ProjectCandidateIndicatorScores[z].GetDictionaryIndicatorName(Model.ProjectCandidate.ReportLanguageId)
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div style="color: #1e4372;">
+                                            @Html.EditorFor(m => Model.Competences[y].ProjectCandidateIndicatorScores[z], "BaseEntityViewTemplate")
+                                            @Model.Competences[y].ProjectCandidateIndicatorScores[z].GetDictionaryIndicatorName(Model.ProjectCandidate.ReportLanguageId)
+                                        </div>
+                                    }
+                                </td>
+                                @if (Model.IsIndicatorScoringEnabled)
+                                {
+                                    <td>
+                                        @Html.EditorFor(m => Model.Competences[y].ProjectCandidateIndicatorScores[z].Score)
+                                    </td>
+                                    <td>
+                                        @Model.GetIndicatorSimulationAverage(Model.Competences[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Id).ToString("G29")
+                                </td>
+                                    foreach (var simulation in simulationsAll)
+                                    {
+                                        <td>
+                                            @Model.GetIndicatorSimulationScore(Model.Competences[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Id, simulation).ToString("G29")
+                                    </td>
+                                    }
+                                }
+                                else
+                                {
+                                    <td colspan="@(2 + @simulationsAll.Count)"></td>
+                                }
+                            </tr>
+                        }
+                    }
+
+                    <tr id="node-CompetenceRemarks-@Model.Competences[y].Id" class="child-of-node-Competence-@Model.Competences[y].Id expanded">
+                        <td colspan="@(simulationsAll.Count + 3)">Description from the simulations</td>
+                    </tr>
+                    <tr class="child-of-node-CompetenceRemarks-@Model.Competences[y].Id expanded">
+                        <td colspan="@(simulationsAll.Count + 3)">
+                            @Html.Raw(string.Join(string.Empty, Model.GetCompetenceRemarks(Model.Competences[y].DictionaryCompetence.Id)))
+                    </td>
+                </tr>
+
+                <tr id="node-CompetenceStatement-@Model.Competences[y].Id" class="child-of-node-Competence-@Model.Competences[y].Id expanded">
+                    <td colspan="@(simulationsAll.Count + 3)">
+                        Final report statement @if (Model.ReportDefinition != null && Model.ReportDefinition.Id.Equals(new Guid("6CE34EDD-6536-4AEE-9918-5D849FBE7D4D")))
+                        {
+                            <strong>(observations between //-symbols; development place between #-symbols)</strong>
+                        }
+                    </td>
+                </tr>
+                @if (Model.ReportDefinition != null && Model.ReportDefinition.Id.Equals(new Guid("3F721BF5-3648-4458-9D92-252371D4E8DD")))
+                {
+                    <tr class="child-of-node-CompetenceStatement-@Model.Competences[y].Id">
+                        <td colspan="@(simulationsAll.Count + 3)" style="color:red;">Final report statement not available with this type of report template.</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr class="child-of-node-CompetenceStatement-@Model.Competences[y].Id expanded">
+                        <td colspan="@(simulationsAll.Count + 3)">
+                            @Html.TextAreaFor(m => Model.Competences[y].Statement)
+                    </td>
+                </tr>
+                }
+                <tr>
+                    <td colspan="@(simulationsAll.Count + 3)">
+                        <div class="right-text">
+                            <a href="javascript:void(0);" data-function="SaveProjectCandidateScoresButton" class="button">
+                                Save
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+                <br />
+                }
+            }
+
+        </fieldset>
+            break;
+
+    case "CL":
+    <fieldset>
+        <legend>
+            Final scores (@Model.ReportType.Name) - @if (Model.ReportDefinition != null)
+            {
+                @Model.ReportDefinition.Name
+            }
+            else
+            {
+                <text><font color="red">NO REPORT-TYPE DEFINED! PLEASE CONTACT THE PROJECTMANAGER</font></text>
+            }
+        </legend>
+
+        @using (Html.BeginForm("EditProjectCandidateScores", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "SubmitProjectCandidateScoresForm" }))
+        {
+            @Html.HiddenFor(m => Model.ProjectCandidate.Id)
+
+            var simulationsAll = Model.GetSimulations().ToList();
+
+            for (int x = 0; x < Model.Clusters.Count; x++)
+            {
+                <table class="dataTable" data-id="FinalScoreTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%"></th>
+                            <th>Final Score</th>
+                            <th>Average</th>
+                            @foreach (var simulation in simulationsAll)
+                            {
+                                <th>@simulation.SimulationName</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="node-Cluster-@Model.Clusters[x].Id">
+                            <td>
+                                @Html.EditorFor(m => Model.Clusters[x], "BaseEntityViewTemplate")
+                                @Model.Clusters[x].GetDictionaryClusterName(Model.ProjectCandidate.ReportLanguageId)
+                                @if (Model.IsIndicatorScoringEnabled && Model.Clusters[x].ProjectCandidateCompetenceScores.Any(c => !c.Score.HasValue))
+                                {
+                                    <img src="@Url.Content("~/Images/Icons/Warning16.png")" class="icon" alt="Missing competence scores" title="Some competences don't have a score" />
+                                }
+                                @if (Model.IsIndicatorScoringEnabled && Model.Clusters[x].ProjectCandidateCompetenceScores.SelectMany(pccs => pccs.ProjectCandidateIndicatorScores).Any(i => !i.Score.HasValue))
+                                {
+                                    <img src="@Url.Content("~/Images/Icons/Warning16.png")" class="icon" alt="Missing indicator scores" title="Some indicators don't have a score" />
+                                }
+                            </td>
+                            <td colspan="@(simulationsAll.Count + 2)"></td>
+                        </tr>
+                        @if (Model.Project.ProjectTypeCategoryCode == "FA" || Model.Project.ProjectTypeCategoryCode == "FD")
+                        {
+                            for (int y = 0; y < Model.Clusters[x].ProjectCandidateCompetenceScores.Count; y++)
+                            {
+                                <tr id="node-Competence-@Model.Clusters[x].ProjectCandidateCompetenceScores[y].Id" class="child-of-node-Cluster-@Model.Clusters[x].Id" style="background-color: #E9E9E9">
+                                    <td>
+                                        @Html.EditorFor(m => Model.Clusters[x].ProjectCandidateCompetenceScores[y], "BaseEntityViewTemplate")
+                                        @Model.Clusters[x].ProjectCandidateCompetenceScores[y].GetDictionaryCompetenceName(Model.ProjectCandidate.ReportLanguageId)
+                                        @if (Model.IsIndicatorScoringEnabled && Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores.Any(i => !i.Score.HasValue))
+                                        {
+                                            <img src="@Url.Content("~/Images/Icons/Warning16.png")" class="icon" alt="Missing indicator scores" title="Some indicators don't have a score" />
+                                        }
+                                    </td>
+                                    <td class="CompetenceScore">
+                                        @Html.EditorFor(m => Model.Clusters[x].ProjectCandidateCompetenceScores[y].Score)
+                                    </td>
+                                    <td>
+                                        @Model.GetCompetenceSimulationAverage(Model.Clusters[x].ProjectCandidateCompetenceScores[y].DictionaryCompetence.Id).ToString("G29")
+                                    </td>
+                                    @foreach (var simulation in simulationsAll)
+                                    {
+                                        <td>
+                                            @Model.GetCompetenceSimulationScore(Model.Clusters[x].ProjectCandidateCompetenceScores[y].DictionaryCompetence.Id, simulation).ToString("G29")
+                                        </td>
+                                    }
+                                </tr>
+
+
+                                <tr id="node-IsStandard-@Model.Clusters[x].ProjectCandidateCompetenceScores[y].Id" class="child-of-node-Competence-@Model.Clusters[x].ProjectCandidateCompetenceScores[y].Id expanded">
+                                    <td colspan="2">Standard</td>
+                                </tr>
+                                for (int z = 0; z < Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores.Count(); z++)
+                                {
+                                    if (Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z].IsStandard.HasValue && Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z].IsStandard.Value)
+                                    {
+                                        <tr class="child-of-node-IsStandard-@Model.Clusters[x].ProjectCandidateCompetenceScores[y].Id">
+                                            <td>
+                                                @Html.EditorFor(m => Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z], "BaseEntityViewTemplate")
+                                                @Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z].GetDictionaryIndicatorName(Model.ProjectCandidate.ReportLanguageId)
+                                            </td>
+                                            @if (Model.IsIndicatorScoringEnabled)
+                                            {
+                                                <td>
+                                                    @Html.EditorFor(m => Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z].Score)
+                                                </td>
+                                                <td>
+                                                    @Model.GetIndicatorSimulationAverage(Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Id).ToString("G29")
+                                                </td>
+                                                foreach (var simulation in simulationsAll)
+                                                {
+                                                    <td>
+                                                        @Model.GetIndicatorSimulationScore(Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Id, simulation).ToString("G29")
+                                                    </td>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <td colspan="@(2 + @simulationsAll.Count)"></td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+
+
+                                <tr id="node-IsDistinctive-@Model.Clusters[x].ProjectCandidateCompetenceScores[y].Id" class="child-of-node-Competence-@Model.Clusters[x].ProjectCandidateCompetenceScores[y].Id expanded">
+                                    <td colspan="2">Distinctive</td>
+                                </tr>
+                                for (int z = 0; z < Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores.Count(); z++)
+                                {
+                                    if (Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z].IsDistinctive.HasValue && Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z].IsDistinctive.Value)
+                                    {
+                                        <tr class="child-of-node-IsDistinctive-@Model.Clusters[x].ProjectCandidateCompetenceScores[y].Id">
+                                            <td>
+                                                @Html.EditorFor(m => Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z], "BaseEntityViewTemplate")
+                                                @Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z].GetDictionaryIndicatorName(Model.ProjectCandidate.ReportLanguageId)
+                                            </td>
+                                            @if (Model.IsIndicatorScoringEnabled)
+                                            {
+                                                <td>
+                                                    @Html.EditorFor(m => Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z].Score)
+                                                </td>
+                                                <td>
+                                                    @Model.GetIndicatorSimulationAverage(Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Id).ToString("G29")
+                                                </td>
+                                                foreach (var simulation in simulationsAll)
+                                                {
+                                                    <td>
+                                                        @Model.GetIndicatorSimulationScore(Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Id, simulation).ToString("G29")
+                                                    </td>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <td colspan="@(2 + @simulationsAll.Count)"></td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+                            }
+
+                        }
+
+                        else
+                        {
+                            for (int y = 0; y < Model.Clusters[x].ProjectCandidateCompetenceScores.Count; y++)
+                            {
+                                <tr id="node-Competence-@Model.Clusters[x].ProjectCandidateCompetenceScores[y].Id" class="child-of-node-Cluster-@Model.Clusters[x].Id" style="background-color: #E9E9E9">
+                                    <td>
+                                        @Html.EditorFor(m => Model.Clusters[x].ProjectCandidateCompetenceScores[y], "BaseEntityViewTemplate")
+                                        @Model.Clusters[x].ProjectCandidateCompetenceScores[y].GetDictionaryCompetenceName(Model.ProjectCandidate.ReportLanguageId)
+                                        @if (Model.IsIndicatorScoringEnabled && Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores.Any(i => !i.Score.HasValue))
+                                        {
+                                            <img src="@Url.Content("~/Images/Icons/Warning16.png")" class="icon" alt="Missing indicator scores" title="Some indicators don't have a score" />
+                                        }
+                                    </td>
+                                    <td class="CompetenceScore">
+                                        @Html.EditorFor(m => Model.Clusters[x].ProjectCandidateCompetenceScores[y].Score)
+                                    </td>
+                                    <td>
+                                        @Model.GetCompetenceSimulationAverage(Model.Clusters[x].ProjectCandidateCompetenceScores[y].DictionaryCompetence.Id).ToString("G29")
+                                    </td>
+                                    @foreach (var simulation in simulationsAll)
+                                    {
+                                        <td>
+                                            @Model.GetCompetenceSimulationScore(Model.Clusters[x].ProjectCandidateCompetenceScores[y].DictionaryCompetence.Id, simulation).ToString("G29")
+                                        </td>
+                                    }
+                                </tr>
+
+                                for (int z = 0; z < Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores.Count; z++)
+                                {
+                                    <tr class="child-of-node-Competence-@Model.Clusters[x].ProjectCandidateCompetenceScores[y].Id">
+                                        <td>
+                                            @if (Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Color != null)
+                                            {
+                                                <div style="color: @Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Color;">
+                                                    @Html.EditorFor(m => Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z], "BaseEntityViewTemplate")
+                                                    @Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z].GetDictionaryIndicatorName(Model.ProjectCandidate.ReportLanguageId)
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div style="color: #1e4372;">
+                                                    @Html.EditorFor(m => Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z], "BaseEntityViewTemplate")
+                                                    @Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z].GetDictionaryIndicatorName(Model.ProjectCandidate.ReportLanguageId)
+                                                </div>
+                                            }
+                                        </td>
+
+                                        @if (Model.IsIndicatorScoringEnabled)
+                                        {
+                                            <td>
+                                                @Html.EditorFor(m => Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z].Score)
+                                            </td>
+                                            <td>
+                                                @Model.GetIndicatorSimulationAverage(Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Id).ToString("G29")
+                                            </td>
+                                            foreach (var simulation in simulationsAll)
+                                            {
+                                                <td>
+                                                    @Model.GetIndicatorSimulationScore(Model.Clusters[x].ProjectCandidateCompetenceScores[y].ProjectCandidateIndicatorScores[z].DictionaryIndicator.Id, simulation).ToString("G29")
+                                                </td>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <td colspan="@(2 + @simulationsAll.Count)"></td>
+                                        }
+                                    </tr>
+                                }
+                            }
+                        }
+                        <tr id="node-ClusterRemarks-@Model.Clusters[x].Id" class="child-of-node-Cluster-@Model.Clusters[x].Id expanded">
+                            <td colspan="@(simulationsAll.Count + 3)">Description from the simulations</td>
+                        </tr>
+                        <tr class="child-of-node-ClusterRemarks-@Model.Clusters[x].Id">
+                            <td colspan="@(simulationsAll.Count + 3)">
+                                @Html.Raw(string.Join(string.Empty, Model.GetClusterRemarks(Model.Clusters[x].DictionaryCluster.Id)))
+                            </td>
+                        </tr>
+
+                        <tr id="node-ClusterStatement-@Model.Clusters[x].Id" class="child-of-node-Cluster-@Model.Clusters[x].Id expanded">
+                            <td colspan="@(simulationsAll.Count + 3)">
+                                Final report statement @if (Model.ReportDefinition != null && Model.ReportDefinition.Id.Equals(new Guid("6CE34EDD-6536-4AEE-9918-5D849FBE7D4D")))
+                                {
+                                    <strong>(observations between //-symbols; development place between #-symbols)</strong>
+                                }
+                            </td>
+                        </tr>
+                        @if (Model.ReportDefinition != null && Model.ReportDefinition.Id.Equals(new Guid("3F721BF5-3648-4458-9D92-252371D4E8DD")))
+                        {
+                            <tr class="child-of-node-ClusterStatement-@Model.Clusters[x].Id">
+                                <td colspan="@(simulationsAll.Count + 3)" style="color:red;">Final report statement not available with this type of report template.</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr class="child-of-node-ClusterStatement-@Model.Clusters[x].Id">
+                                <td colspan="@(simulationsAll.Count + 3)">
+                                    @Html.TextAreaFor(m => Model.Clusters[x].Statement)
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="@(simulationsAll.Count + 3)">
+                                <div class="right-text">
+                                    <a href="javascript:void(0);" data-function="SaveProjectCandidateScoresButton" class="button">
+                                        Save
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            }
+        }
+    </fieldset>
+        break;
+}

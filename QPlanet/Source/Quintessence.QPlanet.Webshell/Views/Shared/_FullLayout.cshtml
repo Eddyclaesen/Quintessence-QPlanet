@@ -1,0 +1,264 @@
+@using Quintessence.QPlanet.Webshell.Infrastructure
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="@Url.Content("~/Images/QPlanet.ico")"/>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.7.2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.8.18.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/global.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.ui.touch-punch.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/globalize.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/persist.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/cultures/globalize.culture.nl-BE.js")"></script>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/themes/base/jquery.ui.all.css")"
+        media="screen" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Reset.css")" media="screen" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Grid.css")" media="screen" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Site.css")" media="screen" />
+    @Html.Action("BackgroundStyle", "General", new { area = string.Empty })
+    <script type="text/javascript">
+        $.validator.methods.number = function (value, element) {
+            return !isNaN(Globalize.parseFloat(value));
+        };
+
+        $(function () {
+            Globalize.culture('nl-BE');
+            $.ajaxSetup({ cache: false });
+            InitializeDetailDialogs();
+            InitializeGeneralSearchBox();
+            CheckForImportantMessage();
+            CreateTabs();
+        });
+
+        function InitializeDetailDialogs() {
+            $('#DetailSaveDialog').dialog(
+                {
+                    autoOpen: false,
+                    modal: true, resizable: false,
+                    width: 350,
+                    height: 200,
+                    title: 'Please wait',
+                    closeOnEscape: false,
+                    open: function (event, ui) { $(".ui-dialog-titlebar-close", ui.dialog || ui).hide(); }
+                });
+            
+            $('#DetailErrorDialog').dialog({
+                autoOpen: false,
+                modal: true,
+                resizable: false,
+                width: 600,
+                height: 300,
+                position: 'center',
+                title: 'Unable to perform the operation',
+                closeOnEscape: false,
+                open: function (event, ui) {
+                    $(".ui-dialog-titlebar-close", ui.dialog || ui).hide();
+                }
+            });
+        }
+
+        function ShowDetailSaveDialog() {
+            $('#DetailSaveDialogLoadingIndicator').attr('src', $('#DetailSaveDialogLoadingIndicator').attr('src'));
+            $('#DetailSaveDialog').dialog('open');
+        }
+
+        function HideDetailSaveDialog() {
+            $('#DetailSaveDialog').dialog('close');
+        }
+        
+        function ShowDetailErrorDialog(operation, err) {
+            try {
+                var errorData = $.parseJSON(err.responseText);
+
+                $('#DetailErrorPlaceholder').html('<p>' + operation + '</p><ul><li class="circle">' + errorData.join('</li><li class="circle">') + '</li></ul>');
+                $('#DetailErrorDialog').dialog('open');
+
+            } catch (e) {
+                alert(err.statusText);
+            }
+        }
+
+        function InitializeGeneralSearchBox() {
+            $("#GeneralSearchBox").autocomplete({
+                source: function (request, response) {
+                    if (request.term.length < 3)
+                        return;
+
+                    $("#GeneralSearchBox").addClass('Searching');
+                    $.ajax({
+                        url: '@Url.Action("Search", "General", new { area = string.Empty })/' + $.trim(request.term),
+                        data: request,
+                        dataType: "json",
+                        success: function (data) {
+                            $("#GeneralSearchBox").removeClass('Searching');
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.label,
+                                    value: item.label,
+                                    id: item.value
+                                };
+                            }));
+                        },
+                        error: function (err) {
+                            $("#GeneralSearchBox").removeClass('Searching');
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    window.open(ui.item.id);
+                }
+            });
+        }
+
+        function CheckForImportantMessage() {
+            if ($('#ImportantMessage') != null && $('#ImportantMessage') != undefined && $('#ImportantMessage').length > 0) {
+                AddNotification('IMPMESS', $('#ImportantMessage').attr('data-message'));
+            }
+        }
+
+        function ParseIcon(icon, title) {
+            var imageUrl = '@Url.Content("~/Images/Icons/")' + icon + '.png';
+            return '<img src="' + imageUrl + '" title="' + title + '" class="icon" />';
+        }
+
+        function AddNotification(code, message) {
+            if ($('#ValidationSummary > div.validation-summary-errors').length == 0) {
+                $('#ValidationSummary').html('<div class="validation-summary-errors"><ul></ul></div>');
+            }
+            $('#ValidationSummary div.validation-summary-errors ul').append('<li data-code="' + code + '">' + message + '</li>');
+        }
+
+        function RemoveNotification(code) {
+            $('li[data-code=' + code + ']').remove();
+            if ($('#ValidationSummary div.validation-summary-errors > ul > li').length == 0) {
+                $('#ValidationSummary div.validation-summary-errors').remove();
+            }
+        }
+
+        function CreateTabs() {
+            $('#Tabs li a').each(function () {
+                if ($(this).text() == undefined || $(this).text() == '')
+                    $(this).text($($(this).attr('href') + ' legend').text());
+
+                $(this).click(function (event) {
+                    event.preventDefault();
+                    $('#Tabs li a').each(function (index, link) {
+                        $(link.hash).hide();
+                    });
+                    $($(this).attr('href')).show();
+                });
+            });
+            $('#Tabs li a').first().click();
+        }
+
+        //Initialize the persist on the left navigation bar
+        function InitializeLeftNavigationPersist(persist) {
+            if (persist) {
+                var store = new Persist.Store('QPlanet');
+                if (store.get('SelectedAdminProjectTab') == "" || store.get('SelectedTab') == undefined) {
+                    $('#Tabs a').first().click();
+                } else {
+                    $('#Tabs a[href=' + store.get('SelectedTab') + ']').click();
+                }
+                $('#Tabs a').click(function () {
+                    store.set('SelectedTab', $(this).attr('href'));
+
+                });
+            } else {
+                return;
+            }
+        }
+
+        //'form' parameter is a JQuery selector of the form in which the required fields are to be validated.
+        //Returns true if validation is successful, otherwise false.
+        function ValidateFormInputRequired(form) {
+            var validator = form.validate();
+            var requiredFields = $('input[data-val-required]').toArray();
+            var errorFields = {};
+            for (var i = 0; i < requiredFields.length; i++) {
+                var name = requiredFields[i].name;
+                errorFields[name] = '*';
+            }
+            validator.showErrors(errorFields);
+            if (validator.valid())
+                return true;
+            return false;
+        }
+    </script>
+    <style>
+        #GeneralSearchBox.Searching {
+            background-image:url('@Url.Content("~/Images/loading_animation.gif")'); 
+            background-position: right; 
+            background-repeat: no-repeat;
+            background-size: 16px;
+        }
+    </style>
+    @RenderSection("AdditionalScripts", false)
+</head>
+<body>
+    <header>
+        <div class="container_16 qplanet-logo">
+            <div class="grid_12">
+                @Html.Action("AreaNavigation", "AreaInfo", new { area = string.Empty })
+                @Html.Action("AreaActionNavigation", "AreaInfo", new { area = string.Empty })
+            </div>
+            <div class="grid_4">
+                @Html.Action("Index", "Profile", new { area = string.Empty })
+                <div style="text-align: right;">
+                    <input type="text" style="width: 300px" id="GeneralSearchBox">
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </header>
+    <div id="ValidationSummary">
+        @Html.ValidationSummary(true)
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+
+    <div id="DetailSaveDialog">
+        <table style="display: table; width: 100%">
+            <tr style="display: table-row; vertical-align: middle; width: 100%">
+                <td style="display: table-cell; vertical-align: middle; text-align: center; width: 100%">
+                    The computer is exchanging information with the server.<br />
+                    Please wait.<br />
+                    <br />
+                    <img id="DetailSaveDialogLoadingIndicator" src="@Url.Content("~/Images/loading_animation.gif")" title="Loading indicator" alt="Loading..." />
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    <div id="DetailErrorDialog">
+        <table style="display: table; width: 100%">
+            <tr style="display: table-row;">
+                <td style="display: table-cell; vertical-align: top; text-align: left; min-width: 150px;
+                    padding: 0">
+                    <img src="@Url.Content("~/Images/Error/Error0" + new Random().Next(1, 5) + ".png")"/>
+                </td>
+                <td style="display: table-cell; vertical-align: top; text-align: left; width: 100%">
+                    <p>One or more errors occured during the operation:</p>
+                    <div id="DetailErrorPlaceholder">
+                    </div>
+                    <p>Please review your changes and take appropriate action.</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+    @{
+        string message;
+        if (Configuration.GetImportantMessage(out message))
+        {
+        <div id="ImportantMessage" style="display: none" data-message="@message">
+        </div>
+        }
+    }
+</body>
+</html>

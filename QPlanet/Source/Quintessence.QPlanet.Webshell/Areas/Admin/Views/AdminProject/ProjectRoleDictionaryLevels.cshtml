@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Quintessence.QService.QueryModel.Prm.ProjectRoleDictionaryLevelView>
+<table id="ProjectRoleDictionaryLevelTree">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Standard</th>
+            <th>Distinctive</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dictionary in Model.GroupBy(dic => dic.DictionaryId))
+        {
+            <tr id="node-@dictionary.Key">
+                <td><span>@dictionary.First().DictionaryName</span></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>  
+            foreach (var cluster in dictionary.GroupBy(cl => cl.DictionaryClusterId))
+            {   
+            <tr id="node-@cluster.Key" class="child-of-node-@dictionary.Key">
+                <td><span>@cluster.First().DictionaryClusterName</span></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>       
+                       
+                foreach (var competence in cluster.GroupBy(co => co.DictionaryCompetenceId))
+                {
+            <tr id="node-@competence.Key" class="child-of-node-@cluster.Key">
+                <td><span>@competence.First().DictionaryCompetenceName</span></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>   
+                                    
+                    foreach (var level in competence.GroupBy(lvl => lvl.DictionaryLevelId))
+                    {
+                        <tr id="node-@level.Key" class="child-of-node-@competence.Key">
+                            @{
+                                var firstLevel = level.First();
+                            }
+                            <td>@firstLevel.DictionaryLevelLevel - @firstLevel.DictionaryLevelName</td>
+                            <td></td>
+                            <td></td>
+                            <td><a href="#" data-function="UnlinkProjectRoleDictionaryLevel" data-projectroleid="@level.First().ProjectRoleId" data-dictionarylevelid="@level.First().DictionaryLevelId">
+                                    Delete</a></td>
+                        </tr>
+                        foreach (var indicator in level)
+                        {
+            <tr id="node-@indicator.DictionaryIndicatorId" class="child-of-node-@level.Key">
+                <td>
+                    @Html.Label(indicator.DictionaryIndicatorName, indicator.DictionaryIndicatorName)
+                </td>
+                <td>@Html.CheckBox("IsStandard", indicator.IsStandard, new { data_function = "IsStandardCheckBox", data_projectroleid = level.First().ProjectRoleId, data_dictionaryindicatorid = indicator.DictionaryIndicatorId })
+                </td>
+                <td>@Html.CheckBox("IsDistinctive", indicator.IsDistinctive, new { data_function = "IsDistinctiveCheckBox", data_projectroleid = level.First().ProjectRoleId, data_dictionaryindicatorid = indicator.DictionaryIndicatorId })
+                </td>
+                <td></td>
+            </tr>
+                        }
+                    }
+
+                }
+
+            }
+        }
+    </tbody>
+
+</table>
+
+<script>
+    $(function () {
+        $('#ProjectRoleDictionaryLevelTree tr').each(function () {
+            var row = $(this);
+            row.find('input:checkbox').click(function (e) {
+                row.find('input:checkbox').not(this).removeAttr('checked');
+            });
+        });
+    });
+</script>

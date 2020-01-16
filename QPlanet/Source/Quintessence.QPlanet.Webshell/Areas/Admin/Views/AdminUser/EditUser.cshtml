@@ -1,0 +1,54 @@
+﻿@using Quintessence.QPlanet.ViewModel.Sec
+@model EditUserModel
+
+@using (Html.BeginForm(Model is EditEmployeeModel ? "EditEmployee" : "EditUser", "AdminUser", FormMethod.Post, new { id = "EditUserForm" }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.UserName)</div>
+        <div>@Html.TextBoxFor(m => m.UserName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ResetPassword)</div>
+        <div>@Html.TextBoxFor(m => m.ResetPassword)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.FirstName)</div>
+        <div>@Html.TextBoxFor(m => m.FirstName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.LastName)</div>
+        <div>@Html.TextBoxFor(m => m.LastName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.RoleId)</div>
+        <div>@Html.DropDownListFor(m => m.RoleId, Model.CreateRoleDropdownList())</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.LanguageId)</div>
+        <div>@Html.DropDownListFor(m => m.LanguageId, Model.CreateLanguageDropdownList())</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.IsEmployee)</div>
+        <div>@Html.CheckBoxFor(m => m.IsEmployee)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.IsLocked)</div>
+        <div>@Html.CheckBoxFor(m => m.IsLocked)</div>
+    </div>
+    
+    if (Model is EditEmployeeModel)
+    {
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => ((EditEmployeeModel)m).HourlyCostRate)</div>
+        <div>@Html.EditorFor(m =>((EditEmployeeModel)m).HourlyCostRate)</div>
+    </div>
+    }
+    
+    <br />
+    <br />
+    
+    <div class="right-text">
+        <a href="javascript:void(0);" data-function="SubmitEditUserFormButton" class="button">Save</a>
+    </div>
+}

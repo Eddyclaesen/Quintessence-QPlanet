@@ -1,0 +1,38 @@
+﻿@using Quintessence.QPlanet.Infrastructure.Nullable
+@model List<Quintessence.QService.QueryModel.Prm.ProjectComplaintView>
+
+    <table id="ProjectComplaintsDataTable">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Submitter</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Severity</th>
+                <th>Type</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var projectComplaint in Model)
+            {
+                <tr>
+                    <td>@projectComplaint.Subject</td>
+                    <td>@projectComplaint.SubmitterName</td>
+                    <td>@projectComplaint.ComplaintDate.ToShortDateString()</td>
+                    <td>@projectComplaint.ComplaintStatusTypeName</td>
+                    <td>@projectComplaint.ComplaintSeverityTypeName</td>
+                    <td>@projectComplaint.ComplaintTypeName</td>
+                    <td>
+                        <a href="javascript:void(0)" data-function="UpdateProjectComplaintButton" data-complaint-id="@projectComplaint.Id">
+                            Update</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" class="button" id="AddProjectComplaintButton">Add</a>
+    </div>

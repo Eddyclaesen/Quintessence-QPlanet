@@ -1,0 +1,9 @@
+﻿@model Quintessence.QPlanet.ViewModel.Dim.DictionaryCompetenceModel
+<li><span datamodel-id="@Model.Id">@Html.DisplayTextFor(m => m.Name)</span>
+    <ul>
+        @for (int i = 0; i < Model.DictionaryLevels.Count; i++)
+        {
+            @Html.DisplayFor(m => m.DictionaryLevels[i])
+        }
+    </ul>
+</li>

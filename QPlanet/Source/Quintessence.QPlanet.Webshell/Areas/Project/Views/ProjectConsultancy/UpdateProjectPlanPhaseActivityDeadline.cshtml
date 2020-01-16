@@ -1,0 +1,27 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.EditProjectPlanPhaseEntryDeadlineModel
+
+@Html.EditorFor(m => m, "BaseEntityViewTemplate")
+
+<div class="row">
+    <div>@Html.LabelFor(m => m.ActivityName)</div>
+    <div>@Html.DisplayTextFor(m => m.ActivityName)</div>
+</div>
+<div class="row">
+    <div>@Html.LabelFor(m => m.ProfileName)</div>
+    <div>@Html.DisplayTextFor(m => m.ProfileName)</div>
+</div>
+<div class="row">
+    <div>@Html.LabelFor(m => m.Deadline)</div>
+    <div>@Html.TextBox(Html.IdFor(m => m.Deadline).ToString(), Model.Deadline.ToString("dd/MM/yyyy"), new { data_function = "EditProjectPlanPhaseActivityDeadlineModel" })
+    </div>
+</div>
+<div class="row">
+        <div>@Html.LabelFor(m => m.Notes)</div>
+        <div>@Html.TextBoxFor(m => m.Notes)</div>
+</div>
+
+<script>
+    $(function () {
+        $('#@(Html.IdFor(m => m.Deadline))[data-function=EditProjectPlanPhaseActivityDeadlineModel]').datetimepicker({ dateFormat: "dd/mm/yy", showTimepicker: false });
+    });
+</script>

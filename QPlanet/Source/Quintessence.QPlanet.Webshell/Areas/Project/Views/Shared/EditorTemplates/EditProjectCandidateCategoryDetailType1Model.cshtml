@@ -1,0 +1,34 @@
+﻿@using Quintessence.QService.QueryModel.Base
+@using Quintessence.QService.QueryModel.Prm
+@model Quintessence.QPlanet.ViewModel.Prm.EditProjectCandidateCategoryDetailType1Model
+
+@if (Model.SurveyPlanningId == (int)SurveyPlanningType.Before || Model.SurveyPlanningId == (int)SurveyPlanningType.After)
+{
+    <div class="row">
+        <div>@(string.Format("{0}: ", Html.DisplayFor(m => m.SurveyPlanningName)))</div>
+        <div>@Html.DisplayTextFor(m => m.ScheduledDate)</div>
+    </div>
+    <div class="row">
+        <div>@Html.LabelFor(m => m.OfficeId):</div>
+        <div>@Html.DisplayTextFor(m => m.OfficeName)</div>
+    </div>
+    
+}
+@if (Model.PricingModelId != (int)PricingModelType.FixedPrice)
+{
+    <div class="row">
+        <div>@Html.LabelFor(m => m.InvoiceAmount)</div>
+        @if (Model.InvoiceStatusCode == (int)InvoiceStatusType.Planned)
+        {
+            <div>@Html.TextBoxFor(m => m.InvoiceAmount, new { data_id = @Model.ProjectCandidateId })</div>
+        }
+        else
+        {
+            var statusCode = EnumMemberNameAttribute.GetName(Enum.GetValues(typeof(InvoiceStatusType)).OfType<InvoiceStatusType>().FirstOrDefault(invoiceStatusType => (int)invoiceStatusType == Model.InvoiceStatusCode));
+            <div>@(string.Format("{0} ({1})", Model.InvoiceAmount.ToString("C"), statusCode))</div>
+        }
+    </div>
+}
+
+
+

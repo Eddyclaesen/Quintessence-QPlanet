@@ -1,0 +1,422 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectCandidateOverview.ProjectCandidateOverviewIndexActionModel
+@{
+    Layout = "~/Views/Shared/_FullLayout.cshtml";
+    ViewBag.Title = "Project - Candidate overview";    
+}
+
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.tooltip.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")"></script>
+    <script src="@Url.Content("~/Scripts/fnFilterOnReturn.js")"></script>
+
+    <script>
+        $(function () {
+            RefreshProjectCandidatesOverview();
+            InitializeDialogs();
+            InitializeButtons();
+            InitializeEditFields();
+            InitializeFilter();
+        });
+
+        try {
+            //console.log('Add DataTableSort: date-dd/MM/yy');
+            jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+                "date-dd/MM/yy-pre": function (a) {
+                    var ukDatea = a.split('/');
+                    return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+                },
+
+                "date-dd/MM/yy-asc": function (a, b) {
+                    isNaN(a) ? a = 0 : a = a;
+                    isNaN(b) ? b = 0 : b = b;
+                    return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+                },
+
+                "date-dd/MM/yy-desc": function (a, b) {
+                    isNaN(a) ? a = 0 : a = a;
+                    isNaN(b) ? b = 0 : b = b;
+                    return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+                }
+            });
+            
+            //console.log('Add DataTableSort: date-input-dd/MM/yy');
+            jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+                "date-input-dd/MM/yy-pre": function (a) {            
+                    var jAInput = $.grep($(a), function (e) { return $(e).is('input[data-type=DateTime]'); })[0];
+                    var aDate = '';
+                    if (!(typeof jAInput === 'undefined')) {
+                        aDate = jAInput.value;
+                    }
+                    console.log(aDate);
+                    var ukDatea = aDate.split('/');
+                    return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+                },
+
+                "date-input-dd/MM/yy-asc": function (a, b) {
+                    isNaN(a) ? a = 0 : a = a;
+                    isNaN(b) ? b = 0 : b = b;
+                    return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+                },
+
+                "date-input-dd/MM/yy-desc": function (a, b) {
+                    isNaN(a) ? a = 0 : a = a;
+                    isNaN(b) ? b = 0 : b = b;
+                    return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+                }
+            });
+        } catch (e) {
+            console.log(e);
+        }
+
+        function RefreshProjectCandidatesOverview() {
+            var form = $('#FilterProjectCandidateOverviewForm');
+            $('#ProjectCandidatesOverviewPlaceholder').loading('Loading candidates overview...');
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                success: function (data) {
+                    $('#ProjectCandidatesOverviewPlaceholder').html(data);
+                    var oTable = $('#ProjectCandidatesOverviewDataTable').dataTable({
+                        'bPaginate': false,
+                        'aaSorting': [],
+                        'sScrollY': '750px',
+                        'sScrollX': '100%',
+                        'bAutoWidth': false,
+                        'fnDestroy': true,
+                        'fnInitComplete': function () {
+                            InitializeDatePickers();
+                            InitializeColors();
+                            InitializeRemarks();
+                        },
+                        'fnRowCallback': function (nRow, aData, iDisplayIndex) {
+                            $(nRow).find('a[data-function=SaveFieldButton]').hide();
+                            InitializeColors();
+                            InitializeDatePickers($(nRow));
+                            return nRow;
+                        },
+                        'aoColumns': [
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            { "sType": "date-dd/MM/yy" },
+                            null,
+                            null,
+                            null,
+                            { "sType": "date-input-dd/MM/yy" },
+                            { "sType": "date-input-dd/MM/yy" },
+                            { "sType": "date-input-dd/MM/yy" },
+                            null,
+                            { "sType": "date-input-dd/MM/yy" },
+                            null,
+                            { "sType": "date-input-dd/MM/yy" },
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null
+                        ]
+                    }).fnFilterOnReturn();
+                },
+                error: function (err) {
+                    ShowDetailErrorDialog('Show project candidate overview.', err);
+                }
+            });
+        }
+
+        function InitializeColors(selector) {
+            if (selector == undefined) {
+                $('input[type=text]').each(function () {
+                    var input = $(this);
+                    var backgroundColor = input.css('backgroundColor');
+                    var hexBackgroundColor = $.rgbToHex(backgroundColor);
+                    var contrastColor = $.getContrastColor(hexBackgroundColor);
+                    input.css('color', contrastColor);
+                });
+            } else {
+                selector.find('input[type=text]').each(function () {
+                    var input = $(this);
+                    var backgroundColor = input.css('backgroundColor');
+                    var hexBackgroundColor = $.rgbToHex(backgroundColor);
+                    var contrastColor = $.getContrastColor(hexBackgroundColor);
+                    if (contrastColor == 'white') {
+                        console.log(contrastColor);
+                    }
+
+                    input.css('color', contrastColor);
+                });
+            }
+        }
+
+        function InitializeEditFields() {
+
+            //Initially hide "Save" button.
+            $('a[data-function=SaveFieldButton]').hide();
+            $('a[data-function=SaveFieldButton]').css('text-decoration', 'none');
+
+            $(this).on('keyup', '#ProjectCandidatesOverviewDataTable input[type=text]', null, function (event) {
+                //Bind Keyup event to edit field to show "Save" button.
+                var saveButton = $(this).parent().find('a[data-function=SaveFieldButton]');
+                saveButton.show();
+                //Click "Save" button next to edit field when pressing enter.
+                if (event.keyCode == 13) {
+                    saveButton.click();
+                }
+            });
+            
+            $(this).on("keyup", ".Extra1", function (event) {
+                $(this).parent().attr("title", $(this).val());
+            });
+
+            $(this).on("keyup", ".Extra2", function (event) {
+                $(this).parent().attr("title", $(this).val());
+            });
+
+
+        }
+
+        function InitializeButtons() {
+
+
+            
+            //Color button
+            $(this).on('change', 'input[type=checkbox][data-function=FieldStatusCheck]', null, function () {
+                var checkbox = $(this);
+                var row = checkbox.parent().parent(); //button.parent() = td
+                var id = row.attr('data-id');
+                var type = row.attr('data-type');
+                var auditVersionId = row.attr('data-version-id');
+                var propertyName = checkbox.attr('data-name');
+                if (checkbox.is(':checked')) {
+                    SaveField(id, type, true, propertyName, auditVersionId);
+                } else {
+                    SaveField(id, type, false, propertyName, auditVersionId);
+                }
+            });
+
+            //Save button
+            $(this).on('click', 'a[data-function=SaveFieldButton]', null, function () {
+                var button = $(this);
+                var cell = button.parent();
+                var row = cell.parent();
+                var id = row.attr('data-id');
+                var type = row.attr('data-type');
+                var auditVersionId = row.attr('data-version-id');
+                var propertyValue = cell.find('input[type=text]').val();
+                var propertyName = cell.find('input[type=text]').attr('data-name');
+                SaveField(id, type, propertyValue, propertyName, auditVersionId);
+            });
+
+            //Version mismatch confirm button
+            $(this).on('click', '#ProjectCandidateOverviewVersionMismatchConfirmButton', null, function () {
+                ShowDetailSaveDialog();
+                var id = $('div[data-name=ProjectCandidateOverviewVersionMismatchValues] input[type=hidden][data-name=Id]').val();
+                var propertyValue = $('div[data-name=ProjectCandidateOverviewVersionMismatchValues] input[type=hidden][data-name=ProjectCandidateOverviewVersionMismatchCurrentVersion]').val();
+                var propertyName = $('div[data-name=ProjectCandidateOverviewVersionMismatchValues] input[type=hidden][data-name=PropertyName]').val();
+                var auditVersionId = $('div[data-name=ProjectCandidateOverviewVersionMismatchValues] input[type=hidden][data-name=AuditVersionId]').val();
+                var type = $('div[data-name=ProjectCandidateOverviewVersionMismatchValues] input[type=hidden][name=VersionMismatchType]').val();
+                SaveField(id, type, propertyValue, propertyName, auditVersionId);
+            });
+
+            //Version mismatch cancel button
+            $(this).on('click', '#ProjectCandidateOverviewVersionMismatchCancelButton', null, function () {
+                ShowDetailSaveDialog();
+                var id = $('div[data-name=ProjectCandidateOverviewVersionMismatchValues] input[type=hidden][data-name=Id]').val();
+                var propertyValue = $('div[data-name=ProjectCandidateOverviewVersionMismatchValues] input[type=hidden][data-name=ProjectCandidateOverviewVersionMismatchServerVersion]').val();
+                var propertyName = $('div[data-name=ProjectCandidateOverviewVersionMismatchValues] input[type=hidden][data-name=PropertyName]').val();
+                var auditVersionId = $('div[data-name=ProjectCandidateOverviewVersionMismatchValues] input[type=hidden][data-name=AuditVersionId]').val();
+                var type = $('div[data-name=ProjectCandidateOverviewVersionMismatchValues] input[type=hidden][name=VersionMismatchType]').val();
+                SaveField(id, type, propertyValue, propertyName, auditVersionId);
+            });
+
+            //Invitation mail button
+            $(this).on('click', 'a[data-function=SendCandidateInvitationMailButton]', null, function () {
+                var inviteButton = $(this);
+                ShowDetailSaveDialog();
+                $.ajax({
+                    url: '@Url.Action("SendCandidateInvitationMail", "ProjectAssessmentDevelopment")/' + $(this).attr("data-id") + '/' + $(this).attr("data-language-id"),
+                    success: function (data) {
+                        HideDetailSaveDialog();
+                        $.openOutlook(data.to, '', data.bcc, data.subject, data.body);
+                        var invitationSendDateInput = $('input[type=text][name=InvitationSentDate]', inviteButton.parent().parent());
+                        //invitationSendDateInput.val(new Date());
+                        invitationSendDateInput.focus();
+                        invitationSendDateInput.datepicker('setDate', new Date());
+                        $('a[data-function=SaveFieldButton]', invitationSendDateInput.parent()).show();
+                    },
+                    error: function (x, y, z) {
+                        HideDetailSaveDialog();
+                        alert(x.responseText);
+                    }
+                });
+
+            });
+        }
+
+        function InitializeDatePickers(selector) {
+
+            if (selector == undefined) {
+                $('input[type=Text][data-type=DateTime]').each(function () {
+                    var input = $(this);
+                    input.datetimepicker({
+                        dateFormat: "dd/MM/yy",
+                        showTimepicker: false,
+                        constrainInput: false,
+                        onSelect: function () {
+                            input.keyup();
+                            input.focus();
+                        }
+                    });
+                });
+            } else {
+                selector.find('input[type=Text][data-type=DateTime]').each(function () {
+                    var input = $(this);
+                    input.datetimepicker({
+                        dateFormat: "dd/MM/yy",
+                        showTimepicker: false,
+                        constrainInput: false,
+                        onSelect: function () {
+                            input.keyup();
+                            input.focus();
+                        }
+                    });
+                });
+            }
+
+        }
+
+        function InitializeRemarks() {
+            $('#ProjectCandidateRemarksDialog').dialog({
+                autoOpen: false,
+                modal: true,
+                resizable: true,
+                width: 500,
+                height: 300,
+                title: 'Remarks'
+            });
+
+            $('a[data-name=ProjectCandidateRemarks]').click(function () {
+                var remarkField = $(this);
+                var dialog = $('#ProjectCandidateRemarksDialog');
+                dialog.html($('div[data-remarks=' + remarkField.attr('data-text') + ']').html());
+                dialog.dialog('open');
+            });
+        }
+
+        function SaveField(id, type, propertyValue, propertyName, auditVersionId) {
+            var selector = '#ProjectCandidatesOverviewDataTable tr[data-id=' + id + ']';
+            var cell = $(selector).find('input[data-name=' + propertyName + ']').parent();
+            cell.find('a[data-function=SaveFieldButton]').hide();
+            cell.append('<img src="/Images/loading_small.gif" alt="loading" data-name="loader-small"/>');
+
+            var postData = {
+                id: id,
+                propertyValue: propertyValue,
+                propertyName: propertyName,
+                auditVersionId: auditVersionId
+            };
+
+            var url = "";
+
+            if (type == "ProjectCandidate") {
+                url = '@Url.Action("UpdateProjectCandidateField")';
+            } else {
+                url = '@Url.Action("UpdateProjectCandidateCategoryField")';
+            }
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: postData,
+                success: function (html) {
+                    selector = '#ProjectCandidatesOverviewDataTable tr[data-id=' + id + ']';
+                    cell.find('img[data-name=loader-small]').remove();
+                    if ($('#ProjectCandidateOverviewVersionMismatchDialog').dialog('isOpen') == true) //You need to explicitly compare this with true to avoid the dialog being returned as an object.
+                    {
+                        $('#ProjectCandidateOverviewVersionMismatchDialog').dialog('close');
+                        HideDetailSaveDialog();
+                    }
+
+                    var dataTable = $('#ProjectCandidatesOverviewDataTable').dataTable();
+
+                    //Get index of row (the filter taken into account).
+                    var correctIndex = dataTable.fnGetPosition($(selector)[0]);
+
+                    //Convert row  to JavaScript object so dataTables can update the row.
+                    var newRow = $(html).tableRowToObject();
+                    dataTable.fnUpdate(newRow, correctIndex, undefined, null, null);
+
+                    //Set VersionId on tr manually because that wasn't updated by dataTables.
+                    var dataRow = dataTable.fnSettings().aoData[correctIndex].nTr;
+                    var dataVersionId = $(html).closest('tr').attr('data-version-id');
+                    var rowStyle = $(html).closest('tr').attr('style');
+                    $.each(dataRow.attributes, function (index, element) {
+                        if (element.name == "data-version-id") {
+                            element.nodeValue = dataVersionId;
+                        } else if (element.name == "style") {
+                            element.nodeValue = rowStyle;
+                        }
+                    });
+
+                    //Initialize the buttons/datepickers.
+                    $(selector).find('a[data-function=SaveFieldButton]').hide();
+                    InitializeDatePickers($(selector));
+                    InitializeColors($(selector));
+                },
+                error: function (err) {
+                    if (err.status == 409) { //Version mismatch
+                        $('#ProjectCandidateOverviewVersionMismatchDialog').html(err.responseText);
+                        $('#ProjectCandidateOverviewVersionMismatchDialog').dialog('open');
+                        cell.find('img[data-name=loader-small]').remove();
+                    } else {
+                        cell.find('img[data-name=loader-small]').remove();
+                        ShowDetailErrorDialog('Updating text field.', err);
+                    }
+                }
+            });
+        }
+
+        function InitializeDialogs() {
+            $('#ProjectCandidateOverviewVersionMismatchDialog').dialog(
+                {
+                    autoOpen: false,
+                    modal: true,
+                    resizable: false,
+                    width: 500,
+                    height: 400,
+                    title: 'Version mismatch'
+                });
+        }
+
+        function InitializeFilter() {
+            $('#FilterProjectCandidateOverviewButton').click(function () {
+                RefreshProjectCandidatesOverview();
+            });
+        }
+    </script>
+}
+
+<fieldset>
+    <legend>Candidates overview</legend>
+    @using (Html.BeginForm("ProjectCandidateOverview", "ProjectCandidateOverview", FormMethod.Post, new { id = "FilterProjectCandidateOverviewForm" }))
+    {
+        <table style="width: 100%">
+            <tr>
+                <td style="min-width: 250px;">@Html.DropDownListFor(m => m.CustomerAssistantId, Model.CreateCustomerAssistantDropDownList())</td>
+                <td style="min-width: 250px;">@Html.EditorFor(m => m.StartDate, "NullableDateTimeEditorTemplate")</td>
+                <td style="min-width: 250px;">@Html.EditorFor(m => m.EndDate, "NullableDateTimeEditorTemplate")</td>
+                <td style="min-width: 250px;"><a href="javascript:void(0);" id="FilterProjectCandidateOverviewButton">Apply filter</a></td>
+                <td style="width: 100%;"></td>
+            </tr>
+        </table>
+    }
+    <div id="ProjectCandidatesOverviewPlaceholder"></div>
+</fieldset>
+
+<div id="ProjectCandidateOverviewVersionMismatchDialog"></div>
+

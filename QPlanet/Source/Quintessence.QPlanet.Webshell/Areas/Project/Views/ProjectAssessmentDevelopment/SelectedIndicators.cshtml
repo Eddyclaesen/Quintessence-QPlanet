@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Quintessence.QService.QueryModel.Prm.ProjectCategoryDetailDictionaryIndicatorView>
+
+<table id="SelectedIndicatorTable" class="dataTable">
+    <thead>
+        <tr>
+            <th>Cluster</th>
+            <th>Competence</th>
+            <th>Level</th>
+            <th>Indicator</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var entry in Model
+            .OrderBy(m => m.DictionaryClusterOrder)
+            .ThenBy(m => m.DictionaryCompetenceOrder)
+            .ThenBy(m => m.DictionaryLevelLevel)
+            .ThenBy(m => m.DictionaryIndicatorOrder))
+        {
+            <tr>
+                <td>@entry.DictionaryClusterName</td>
+                <td>@entry.DictionaryCompetenceName</td>
+                <td>@entry.DictionaryLevelName</td>
+                <td>@entry.DictionaryIndicatorName</td>
+                <td>
+                    <a href="javascript:void(0);" data-function="DeleteSelectedIndicator" data-id="@entry.Id">Remove</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

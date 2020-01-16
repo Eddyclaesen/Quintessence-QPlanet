@@ -1,0 +1,217 @@
+﻿@using Quintessence.QPlanet.Webshell.Areas.Admin.Models.AdminDictionary
+@model Quintessence.QPlanet.Webshell.Areas.Admin.Models.AdminDictionary.ImportDictionaryActionModel
+@{
+    Layout = "~/Views/Shared/_FullDetailLayout.cshtml";
+    ViewBag.Title = "Admin - Edit Quintessence dictionary";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">@Model.Dictionary.Name</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li class="current">Detail</li>
+        </ul>
+    </nav>
+}
+@section AdditionalScripts
+{
+    <style>
+        table.dictionary
+        {
+            border-collapse: collapse;
+        }
+
+            table.dictionary, table.dictionary th, table.dictionary td
+            {
+                border: 1px solid #346310;
+            }
+    </style>
+
+    <script>
+        $(function () {
+            InitializeButtons();
+            RefreshMessages();
+        });
+
+        function InitializeButtons() {
+            $('a[data-function=ImportDictionaryButton]').click(function (event) {
+                ShowDetailSaveDialog();
+                event.preventDefault();
+
+                var form = $('form');
+
+                form.submit();
+            });
+        }
+        
+        function RefreshMessages() {
+            $('#Messages > div').each(function () {
+                AddNotification($(this).attr('data-code'), $(this).attr('data-message'));
+            });
+        }
+    </script>
+}
+<fieldset>
+    <legend>Import dictionary</legend>
+    
+    <div id="Messages">
+        @foreach (var importMessage in Model.Messages)
+        {
+            <div data-message="@importMessage.Message" data-code="@importMessage.Code"></div>
+        }
+    </div>
+    <br />
+
+    @using (Html.BeginForm())
+    {
+        <div class="row">
+            <div>@Html.DisplayNameFor(m => m.Dictionary.Name)</div>
+            <div>@Html.EditorFor(m => m.Dictionary.Name)</div>
+        </div>
+        <div class="row">
+            <div>@Html.DisplayNameFor(m => m.Dictionary.ContactId)</div>
+            <div>@Html.DropDownListFor(m => m.Dictionary.ContactId, Model.CreateContactSelectListItem())
+            </div>
+        </div>
+
+        <table class="dataTable dictionary">
+            <thead>
+                <th>Default</th>
+                @foreach (var language in Model.Languages)
+                {
+                    <th>@language.Name</th>
+                }
+            </thead>
+            <tbody>
+                @for (int a = 0; a < Model.Dictionary.DictionaryClusters.Count; a++)
+                {
+                    <tr>
+                        <td>
+                            @Html.TextBoxFor(m => m.Dictionary.DictionaryClusters[a].Name, new { style = "width: 375px;" })
+                            <br />
+                            @Html.TextAreaFor(m => m.Dictionary.DictionaryClusters[a].Description, 4, 50, null)
+                            @Html.HiddenFor(m => m.Dictionary.DictionaryClusters[a].Order)
+                        </td>
+                        @foreach (var language in Model.Languages)
+                        {
+                            <td>
+                                @for (int b = 0; b < Model.Dictionary.DictionaryClusters[a].DictionaryClusterTranslations.Count; b++)
+                                {
+                                    var dictionaryClusterTranslation = Model.Dictionary.DictionaryClusters[a].DictionaryClusterTranslations[b];
+                                    if (dictionaryClusterTranslation.LanguageId == language.Id)
+                                    {
+                                    @Html.HiddenFor(m => m.Dictionary.DictionaryClusters[a].DictionaryClusterTranslations[b].LanguageId)
+                                    @Html.TextBoxFor(m => m.Dictionary.DictionaryClusters[a].DictionaryClusterTranslations[b].Text, new { style = "width: 375px;" })
+                                    <br />
+                                    @Html.TextAreaFor(m => m.Dictionary.DictionaryClusters[a].DictionaryClusterTranslations[b].Description, 4, 50, null)
+                                    }
+                                }
+                            </td>
+                        }
+                    </tr>
+
+                        for (int b = 0; b < Model.Dictionary.DictionaryClusters[a].DictionaryCompetences.Count; b++)
+                        {
+                    <tr>
+                        <td style="padding-left: 50px;">
+
+                            @Html.TextBoxFor(m => m.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].Name, new { style = "width: 375px;" })
+                            <br />
+                            @Html.TextAreaFor(m => m.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].Description, 4, 50, null)
+                            @Html.HiddenFor(m => m.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].Order)
+
+                        </td>
+                        @foreach (var language in Model.Languages)
+                        {
+                            <td style="padding-left: 50px;">
+                                @for (int c = 0; c < Model.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].DictionaryCompetenceTranslations.Count; c++)
+                                {
+                                    var dictionaryCompetenceTranslation = Model.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].DictionaryCompetenceTranslations[c];
+                                    if (dictionaryCompetenceTranslation.LanguageId == language.Id)
+                                    {
+                                    @Html.HiddenFor(m => m.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].DictionaryCompetenceTranslations[c].LanguageId)
+                                    @Html.TextBoxFor(m => m.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].DictionaryCompetenceTranslations[c].Text, new { style = "width: 375px;" })
+                                    <br />
+                                    @Html.TextAreaFor(m => m.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].DictionaryCompetenceTranslations[c].Description, 4, 50, null)
+                                    }
+                                }
+                            </td>
+                        }
+                    </tr>
+
+                        for (int c = 0; c < Model.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels.Count; c++)
+                        {
+                    <tr>
+                        <td style="padding-left: 100px;">
+
+                            @Html.TextBoxFor(m => m.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].Level, new { style = "width: 375px;" })
+                            <br />
+                            @Html.TextAreaFor(m => m.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].Name, 4, 50, null)
+
+                        </td>
+                        @foreach (var language in Model.Languages)
+                        {
+                            <td style="padding-left: 100px;">
+                                @for (int d = 0; d < Model.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryLevelTranslations.Count; d++)
+                                {
+                                    var dictionaryLevelTranslation = Model.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryLevelTranslations[d];
+                                    if (dictionaryLevelTranslation.LanguageId == language.Id)
+                                    {
+                                    <br />
+                                    <br />
+                                    @Html.HiddenFor(m => m.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryLevelTranslations[d].LanguageId)
+                                    @Html.TextAreaFor(m => m.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryLevelTranslations[d].Text, 4, 50, null)
+                                    }
+                                }
+                            </td>
+                        }
+                    </tr>
+
+                        for (int d = 0; d < Model.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryIndicators.Count; d++)
+                        {
+                    <tr>
+                        <td style="padding-left: 150px;">
+                            @Html.TextAreaFor(m => m.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryIndicators[d].Name, 4, 50, null)
+                            @Html.HiddenFor(m => m.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryIndicators[d].Order)
+                        </td>
+                        @foreach (var language in Model.Languages)
+                        {
+                            <td style="padding-left: 150px;">
+                                @for (int e = 0; e < Model.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryIndicators[d].DictionaryIndicatorTranslations.Count; e++)
+                                {
+                                    var dictionaryIndicatorTranslation = Model.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryIndicators[d].DictionaryIndicatorTranslations[e];
+                                    if (dictionaryIndicatorTranslation.LanguageId == language.Id)
+                                    {
+                                    @Html.HiddenFor(m => m.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryIndicators[d].DictionaryIndicatorTranslations[e].LanguageId)
+                                    @Html.TextAreaFor(m => m.Dictionary.DictionaryClusters[a].DictionaryCompetences[b].DictionaryLevels[c].DictionaryIndicators[d].DictionaryIndicatorTranslations[e].Text, 4, 50, null)
+                                    }
+                                }
+                            </td>
+                        }
+                    </tr>
+                        }
+                        }
+                        }
+                }
+            </tbody>
+        </table>
+    }
+    <br />
+    <div>
+        @if (Model.Messages.Any(m => m.Severity == ImportDictionaryMessageSeverity.Error))
+        {
+            @:Unable to import due to errors!
+        }
+        else
+        {
+            <a href="javascript:void(0);" data-function="ImportDictionaryButton" class="button">Import</a>
+        }
+    </div>
+</fieldset>

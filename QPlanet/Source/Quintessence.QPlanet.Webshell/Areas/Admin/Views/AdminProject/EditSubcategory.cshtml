@@ -1,0 +1,143 @@
+﻿@using Quintessence.QPlanet.Webshell.Infrastructure.Enums
+@using Quintessence.QService.QueryModel.Base
+@using Quintessence.QService.QueryModel.Prm
+@model Quintessence.QPlanet.ViewModel.Prm.EditSubcategoryModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Admin - Project - Edit subcategory";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current">
+                <a href="javascript:void(0);">
+                    @(ViewBag.ViewMode == ViewMode.Create ? "New subcategory" : Model.Name)
+                </a>
+            </li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li class="current">
+                @(ViewContext.RouteData.Values["action"].ToString().ToLower().Contains("edit") ? "Edit" : "Create")
+            </li>
+        </ul>
+    </nav>
+}
+@section AdditionalScripts
+{
+    <script>
+        $(function () {
+            InitializeButtons();
+            InitializeCodeTextboxFiller();
+
+            $(window).unload(function () {
+                window.opener.location.reload();
+            });
+        });
+
+        //Initialize buttons
+        function InitializeButtons() {
+            $(this).on('click', '#EditSubcategorySubmitButton', function (e) {
+                ShowDetailSaveDialog();
+                $(this).submit();
+            });
+        }
+
+        //Initialize Code textbox filler
+        function InitializeCodeTextboxFiller() {
+            $(this).on('keyup', 'input[id=Name]', null, function () {
+                var length = $(this).val().length;
+                if (10 >= length) {
+                    $('input[id=Code]').val($(this).val().toUpperCase());
+                }
+            });
+        }
+    </script>
+}
+<div class="grid_8">
+    @using (Html.BeginForm(ViewContext.RouteData.Values["action"].ToString(), "AdminProject", new { area = "Admin" }, FormMethod.Post, null))
+    {
+        @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+        <fieldset>
+            <legend>Subcategory</legend>
+            <table class="dataTable">
+                <tr>
+                    <td>@Html.DisplayNameFor(m => m.Name)</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.Name)
+                        @Html.ValidationMessageFor(m => m.Name)
+                    </td>
+                </tr>
+                @if (ViewBag.ViewMode == ViewMode.Edit)
+                {
+                    <tr>
+                    <td>@Html.DisplayNameFor(m => m.CrmTaskId)</td>
+                    <td>@Html.TextBoxFor(m => m.CrmTaskId)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(m => m.Execution)</td>
+                    <td>@Html.TextBoxFor(m => m.Execution)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(m => m.Color)</td>
+                    <td>@Html.TextBoxFor(m => m.Color)</td>
+                </tr>
+                }
+                
+                <tr>
+                    <td>@Html.DisplayNameFor(m => m.Code)</td>
+                    <td>
+                        @if (ViewBag.ViewMode == ViewMode.Edit)
+                        {
+                            @Html.DisplayFor(m => m.Code)
+                            @Html.HiddenFor(m => m.Code)
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(m => m.Code, new { maxlength = 10 })
+                        }
+                        @Html.ValidationMessageFor(m => m.Code)
+                    </td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(m => m.SubcategoryType)</td>
+                    <td>
+                        @if (ViewBag.ViewMode == ViewMode.Edit)
+                        {
+                            @EnumMemberNameAttribute.GetName(((SubcategoryType)Model.SubcategoryType))
+                            @Html.HiddenFor(m => m.SubcategoryType)
+                        }
+                        else
+                        {
+                            @Html.DropDownListFor(m => m.SubcategoryType, Model.CreateSubcategoryTypesSelectListItems())
+                        }
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+                        if (ViewBag.ViewMode == ViewMode.Edit)
+                        {
+        <fieldset>
+            <legend>Default values</legend>
+            <table class="dataTable">
+                @for (int i = 0; i < Model.ProjectTypeCategoryDefaultValues.Count; i++)
+                {
+                    <tr>
+                        @Html.EditorFor(m => m.ProjectTypeCategoryDefaultValues[i], "BaseEntityViewTemplate")
+                        @Html.EditorFor(m => m.ProjectTypeCategoryDefaultValues[i])
+                    </tr>
+                }
+            </table>
+        </fieldset>
+                        }
+        
+        <div class="right-text">
+            <input type="submit" id="EditSubcategorySubmitButton" class="button" value="Save" />
+        </div>
+    }
+</div>

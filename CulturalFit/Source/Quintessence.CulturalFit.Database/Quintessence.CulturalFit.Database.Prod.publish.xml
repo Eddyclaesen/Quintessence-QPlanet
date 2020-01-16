@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseName>CulturalFit</TargetDatabaseName>
+    <DeployScriptFileName>Quintessence.CulturalFit.Database.sql</DeployScriptFileName>
+    <TargetConnectionString>Data Source=QPROD-DB\QUINTESSENCE;Persist Security Info=True;User ID=CulturalFitUser;Pooling=False</TargetConnectionString>
+    <ScriptDatabaseOptions>True</ScriptDatabaseOptions>
+    <BlockOnPossibleDataLoss>True</BlockOnPossibleDataLoss>
+    <CreateNewDatabase>True</CreateNewDatabase>
+    <ProfileVersionNumber>1</ProfileVersionNumber>
+  </PropertyGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="Act">
+      <Value>Act</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="ActServer">
+      <Value>ACTSERVER</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="Superoffice7">
+      <Value>Superoffice7</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="Superoffice7Server">
+      <Value>SUPEROFFICE7SERVER</Value>
+    </SqlCmdVariable>
+  </ItemGroup>
+</Project>

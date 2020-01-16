@@ -1,0 +1,17 @@
+﻿@model List<Quintessence.QService.QueryModel.Sec.RoleOperationView>
+
+<table id="OperationsInRoleTable">
+    <thead>
+        <tr>
+            <th style="width: 100%;">Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var operation in Model)
+        {
+            <tr>
+                <td>@operation.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>

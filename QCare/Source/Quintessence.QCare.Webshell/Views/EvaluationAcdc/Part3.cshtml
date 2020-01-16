@@ -1,0 +1,70 @@
+﻿@using Resources
+@model Quintessence.QCare.ViewModel.EvaluationFormAcdcPart3Model
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            InitializeButtons();
+        });
+
+        function InitializeButtons() {
+            //Previous
+            $('a[data-function=previous]').click(function (e) {
+                e.preventDefault();
+                var form = $('#Part3Form');
+                $('#Navigation').val('0');
+                form.submit();
+            });
+
+            //Next
+            $('a[data-function=next]').click(function (e) {
+                e.preventDefault();
+                var form = $('#Part3Form');
+                $('#Navigation').val('1');
+                form.submit();
+            });
+        }
+
+    </script>
+}
+
+@using (Html.BeginForm("Part3", "EvaluationAcdc", FormMethod.Post, new { id = "Part3Form" }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    @Html.HiddenFor(m => m.Navigation)
+    <fieldset>
+        <legend>@Global.EvaluationFormAcdcTitleBlock3</legend>
+        <div>
+            <ol>
+                <li value="17">
+                    <p>@Global.EvaluationFormAcdcQuestion17</p>
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question17, true)
+                        @Global.Yes
+                    </label>
+                    <br />
+                    <label>
+                        @Html.RadioButtonFor(m => m.Question17, false)
+                        @Global.No
+                    </label>
+                </li>
+                <li>
+                    <p>@Global.EvaluationFormAcdcQuestion18</p>
+                    @Html.TextAreaFor(m => m.Question18, 6, 90, null)
+                </li>
+            </ol>
+            
+            <div class="right-text">
+                <a href="javascript:void(0);" data-function="previous" class="button">@Global.Previous</a>
+                <a href="javascript:void(0);" data-function="next" class="button">@Global.Next</a>
+            </div>
+
+        </div>
+    </fieldset>
+    
+}

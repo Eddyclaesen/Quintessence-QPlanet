@@ -1,0 +1,12 @@
+﻿@model Quintessence.QPlanet.Webshell.Models.Profile.ProfileInfo
+<div class="profile">
+    @if (Model.IsLoggedIn)
+    {
+        @Html.ActionLink(Model.UserName, "Index", "WorkspaceHome", new { area = "Workspace" }, null)
+        @Html.ActionLink("(Logout)", "Logout", "Login", new { area = "" }, new { @id = "logout", title = "Logout" })
+    }
+    else
+    {
+        @Html.ActionLink("Log in", "Login", "Login")
+    }
+</div>

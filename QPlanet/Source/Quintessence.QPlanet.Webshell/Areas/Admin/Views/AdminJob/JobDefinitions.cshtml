@@ -1,0 +1,31 @@
+﻿@model List<Quintessence.QService.QueryModel.Inf.JobDefinitionView>
+
+<div class="grid_4">
+    <fieldset>
+        <legend>Sections</legend>
+
+        <nav class="navigation">
+            <ul id="Tabs">
+                @foreach (var jobeDefinition in Model)
+                {
+                    <li><a href="#@jobeDefinition.Id">@jobeDefinition.Name</a></li>
+                }
+            </ul>
+        </nav>
+
+    </fieldset>
+</div>
+
+@foreach (var jobDefinition in Model)
+{
+    <fieldset id="@jobDefinition.Id">
+        <legend>@jobDefinition.Name</legend>
+
+        <img src="@Url.Action("Image", "Reporting", new { area = string.Empty, report = "_Qplanet_Admin_ReplicationJobHistory", file = Guid.NewGuid() + ".png", format = "PNG", parameter = "JobDefinitionId", value = jobDefinition.Id.ToString() })"/>
+        <br />
+
+        <div class="right-text">
+            <a href="javascript:void(0);" data-function="ScheduleJob" data-id="@jobDefinition.Id" class="button">Request new</a>
+        </div>
+    </fieldset>
+}

@@ -1,0 +1,182 @@
+﻿@using Quintessence.QPlanet.ViewModel.Prm
+@using Quintessence.QService.QueryModel.Base
+@using Quintessence.QService.QueryModel.Prm
+@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectAssessmentDevelopment.ListInvoicesActionModel
+@using (Html.BeginForm("SaveInvoices", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "InvoiceOverviewForm" }))
+{
+    <table id="InvoiceOverviewTable">
+        <tr id="node-to-verify">
+            <td>To verify</td>
+        </tr>
+        <tr class="child-of-node-to-verify">
+            <td>
+                <table id="ToVerifyDataTable">
+                    <thead>
+                        <tr>
+                            <th style="max-width: 0px;"></th>
+                            <th style="width:20%;">Candidate</th>
+                            <th style="width:20%;">Product</th>
+                            <th style="width:20%;">Start date</th>
+                            <th style="width:20%;">Invoice amount</th>
+                            <th style="width:20%;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.ToVerifyList.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.EditorFor(m => Model.ToVerifyList[i], "BaseEntityViewTemplate")
+                                    @Html.HiddenFor(m => Model.ToVerifyList[i].DetailType)
+                                </td>
+                                @Html.EditorFor(m => Model.ToVerifyList[i])
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <br />
+                <br />
+                <div class="right-text">
+                    <a href="javascript:void(0);" data-id="@(InvoiceStatusType.ToVerify)To@(InvoiceStatusType.ReadyForInvoicing)" class="button">@(EnumMemberNameAttribute.GetName(InvoiceStatusType.ToVerify)) => @(EnumMemberNameAttribute.GetName(InvoiceStatusType.ReadyForInvoicing))</a>
+                </div>
+                <div class="seperator" />
+                <div class="right-text">
+                    <a href="javascript:void(0);" data-id="SaveInvoiceOverviewButton" class="button">Save</a>
+                </div>
+            </td>
+        </tr>
+
+        <tr id="node-ready-for-invoicing">
+            <td>Ready for invoicing</td>
+        </tr>
+        <tr class="child-of-node-ready-for-invoicing">
+            <td>
+                <table id="ReadyForInvoicingDataTable">
+                    <thead>
+                        <tr>
+                            <th style="max-width: 0px;"></th>
+                            <th style="width:20%;">Candidate</th>
+                            <th style="width:20%;">Product</th>
+                            <th style="width:20%;">Start date</th>
+                            <th style="width:20%;">Invoice amount</th>
+                            <th style="width:20%;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.ReadyForInvoicingList.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.EditorFor(m => Model.ReadyForInvoicingList[i], "BaseEntityViewTemplate")
+                                    @Html.HiddenFor(m => Model.ReadyForInvoicingList[i].DetailType)
+                                </td>
+                                @Html.EditorFor(m => Model.ReadyForInvoicingList[i])
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <br />
+                <br />
+                <div class="right-text">
+                    <a href="javascript:void(0);" data-id="@(InvoiceStatusType.ReadyForInvoicing)To@(InvoiceStatusType.ToVerify)" class="button">@(EnumMemberNameAttribute.GetName(InvoiceStatusType.ReadyForInvoicing)) => @(EnumMemberNameAttribute.GetName(InvoiceStatusType.ToVerify))</a>
+                </div>
+                <div class="seperator" />
+                <div class="right-text">
+                    <a href="javascript:void(0);" data-id="SaveInvoiceOverviewButton" class="button">Save</a>
+                </div>
+            </td>
+        </tr>
+
+        <tr id="node-invoiced">
+            <td>Invoiced</td>
+        </tr>
+        <tr class="child-of-node-invoiced">
+            <td>
+                <table id="InvoicedDataTable">
+                    <thead>
+                        <tr>
+                            <th style="width:20%;">Candidate</th>
+                            <th style="width:20%;">Product</th>
+                            <th style="width:20%;">Invoice amount</th>
+                            <th style="width:20%;">Invoiced on</th>
+                            <th style="width:20%;">Invoice number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.InvoicedList.Count; i++)
+                        {
+                            <tr>
+                                @if (Model.InvoicedList[i] is EditProjectCandidateInvoiceModel)
+                                {
+                                    @Html.DisplayFor(m => Model.InvoicedList[i], "InvoicedProjectCandidateInvoiceModel")
+                                    continue;
+                                }
+                                @if (Model.InvoicedList[i] is EditProjectCandidateCategoryInvoiceModel)
+                                {
+                                    @Html.DisplayFor(m => Model.InvoicedList[i], "InvoicedProjectCandidateCategoryInvoiceModel")
+                                    continue;
+                                }
+                                @if (Model.InvoicedList[i] is EditProductInvoiceModel)
+                                {
+                                    @Html.DisplayFor(m => Model.InvoicedList[i], "InvoicedProductInvoiceModel")
+                                    continue;
+                                }
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+                <br />
+                <br />
+                <div class="seperator" />
+                <br />
+                <br />
+                <div class="right-text">
+                    <a href="javascript:void(0);" data-id="SaveInvoiceOverviewButton" class="button">Save</a>
+                </div>
+            </td>
+        </tr>
+
+        <tr id="node-planned">
+            <td>Planned</td>
+        </tr>
+        <tr class="child-of-node-planned">
+            <td>
+                <table id="PlannedDataTable">
+                    <thead>
+                        <tr>
+                            <th style="max-width: 0px;"></th>
+                            <th style="width:20%;">Candidate</th>
+                            <th style="width:20%;">Product</th>
+                            <th style="width:20%;">Start date</th>
+                            <th style="width:20%;">Invoice amount</th>
+                            <th style="width:20%;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.PlannedList.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.EditorFor(m => Model.PlannedList[i], "BaseEntityViewTemplate")
+                                    @Html.HiddenFor(m => Model.PlannedList[i].DetailType)
+                                </td>
+                                @Html.EditorFor(m => Model.PlannedList[i])
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+                <br />
+                <br />
+                <div class="seperator" />
+                <br />
+                <br />
+                <div class="right-text">
+                    <a href="javascript:void(0);" data-id="SaveInvoiceOverviewButton" class="button">Save</a>
+                </div>
+            </td>
+        </tr>
+    </table>
+    
+}

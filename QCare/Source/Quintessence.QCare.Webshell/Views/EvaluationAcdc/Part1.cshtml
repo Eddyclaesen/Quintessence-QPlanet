@@ -1,0 +1,126 @@
+﻿@using Resources
+@model Quintessence.QCare.ViewModel.EvaluationFormAcdcPart1Model
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("Part1", "EvaluationAcdc", FormMethod.Post, null))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    <fieldset>
+        <legend>@Global.EvaluationFormAcdcTitleBlock1</legend>
+        <table class="multiple-choice">
+            <tr>
+                <td></td>
+                <td class="vertical-flipped">@Global.VeryDissatisfied</td>
+                <td class="vertical-flipped">@Global.Dissatisfied</td>
+                <td class="vertical-flipped">@Global.Neutral</td>
+                <td class="vertical-flipped">@Global.Satisfied</td>
+                <td class="vertical-flipped">@Global.VerySatisfied</td>
+            </tr>
+            <tr>
+                <td>@Global.ToWhatDegree</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <ol>
+                        <li value="1">@Global.EvaluationFormAcdcQuestion01</li>
+                    </ol>
+                </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question01, -2)</td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question01, -1)</td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question01, 0) </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question01, 1) </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question01, 2) </td>
+            </tr>
+            <tr>
+                <td>
+                    <ol>
+                        <li value="2">@Global.EvaluationFormAcdcQuestion02</li>
+                    </ol>
+                </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question02, -2)</td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question02, -1)</td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question02, 0) </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question02, 1) </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question02, 2) </td>
+            </tr>
+            <tr>
+                <td>
+                    <ol>
+                        <li value="3">@Global.EvaluationFormAcdcQuestion03</li>
+                    </ol>
+                </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question03, -2)</td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question03, -1)</td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question03, 0) </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question03, 1) </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question03, 2) </td>
+            </tr>
+            <tr>
+                <td>
+                    <ol>
+                        <li value="4">@Global.EvaluationFormAcdcQuestion04</li>
+                    </ol>
+                </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question04, -2)</td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question04, -1)</td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question04, 0) </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question04, 1) </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question04, 2) </td>
+            </tr>
+            <tr>
+                <td>
+                    <ol>
+                        <li value="5">@Global.EvaluationFormAcdcQuestion05</li>
+                    </ol>
+                </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question05, -2)</td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question05, -1)</td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question05, 0) </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question05, 1) </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question05, 2) </td>
+            </tr>
+            <tr>
+                <td>
+                    <ol>
+                        <li value="6">@Global.EvaluationFormAcdcQuestion06</li>
+                    </ol>
+                </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question06, -2)</td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question06, -1)</td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question06, 0) </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question06, 1) </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question06, 2) </td>
+            </tr>
+            <tr>
+                <td>
+                    <ol>
+                        <li value="7">@Global.EvaluationFormAcdcQuestion07</li>
+                    </ol>
+                </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question07, -2)</td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question07, -1)</td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question07, 0) </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question07, 1) </td>
+                <td class="center-text">@Html.RadioButtonFor(m => m.Question07, 2) </td>
+            </tr>
+        </table>
+        <br/>
+        <ol>
+            <li value="8">
+                <p>@Global.EvaluationFormAcdcQuestion08</p>
+                @Html.TextAreaFor(m => m.Question08, 6, 90, null)
+            </li>
+        </ol>
+        <div class="right-text">
+            <input type="submit" value="@Global.Next" class="button"/>
+        </div>
+    </fieldset>
+        
+}

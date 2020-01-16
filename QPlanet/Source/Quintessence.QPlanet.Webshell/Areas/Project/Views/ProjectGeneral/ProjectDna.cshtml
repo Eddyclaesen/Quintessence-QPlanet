@@ -1,0 +1,362 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.EditProjectDnaModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Project - ProjectDNA";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">@Model.ContactFullName</a>
+            </li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li class="current">@string.Format("{0}", Model.CrmProjectName)</li>
+        </ul>
+    </nav>
+}
+@section LeftNavigation
+{
+    <ul id="Tabs">
+        <li><a href="#ProjectDna"></a></li>
+        <li><a href="#EvaluationPane"></a></li>
+    </ul>
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/tiny_mce/jquery.tinymce.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.treeTable.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.cookie.js")"></script>
+    <script src="@Url.Content("~/Scripts/persist.js")"></script>
+
+    <script>
+        $(function() {
+            InitializeButtons();
+            InitializeCommercialNameHelpDialog();
+            InitializeCommercialRecapHelpDialog();
+            RefreshEvaluationOverview();
+            InitializeTextAreas();
+            InitializeTreeTable();
+        });
+
+        function InitializeTextAreas() {
+            $('textarea', '#ProjectDnaForm').each(function() {
+                $(this).tinymce({
+                    script_url: '@Url.Content("~/Scripts/tiny_mce/tiny_mce.js")',
+                    height: '300',
+                    width: '600',
+                    theme: 'simple',
+                    valid_styles: { '*': 'font-weight,text-decoration' }
+                });
+            });
+        }
+
+        function InitializeTreeTable() {
+            $('#ProjectDnaCommercialTranslationTable').treeTable();
+        }
+
+        function RefreshEvaluationForms() {
+            $('#EvaluationFormsPlaceholder').loading('Loading evaluation forms...');
+            $('#EvaluationFormsPlaceholder').load('@Url.Action("ListEvaluationForms", "ProjectGeneral", new {crmProjectId = Model.CrmProjectId})', function() {
+                $('#EvaluationFormsDataTable').DataTable();
+            });
+            $('#ProjectComplaintsPlaceholder').loading('Loading complaints...');
+            $('#ProjectComplaintsPlaceholder').load('@Url.Action("ListProjectComplaints", "ProjectGeneral", new {crmProjectId = Model.CrmProjectId})', function() {
+                $('#ProjectComplaintsDataTable').DataTable();
+            });
+        }
+
+        function InitializeButtons() {
+            $(this).on('click', 'a[data-function=SubmitProjectDnaButton]', null, function() {
+                ShowDetailSaveDialog();
+                tinyMCE.triggerSave();
+                $('#ProjectDnaForm').submit();
+            });
+
+            $('#ShowCommercialNameHelpDialogButton').click(function() {
+                $('#CommercialNameHelpDialog').dialog('open');
+            });
+
+            $('#ShowCommercialRecapHelpDialogButton').click(function() {
+                $('#CommercialRecapHelpDialog').dialog('open');
+            });
+
+            $('a[data-function=CopyTextToCommercialName]').click(function() {
+                $('#@Html.IdFor(m => m.ProjectDnaCommercialTranslations[0].CommercialName)').val($(this).text());
+            });
+
+
+            $(this).on('click', 'a[data-function=SendEvaluationFormEmailButton]', null, function() {
+                ShowDetailSaveDialog();
+                var evaluationFormId = $(this).attr('data-evaluation-form-id');
+                console.log(evaluationFormId);
+                $.ajax({
+                    url: '@Url.Action("RetrieveEvaluationFormEmail")/' + evaluationFormId,
+                    type: 'GET',
+                    success: function(data2) {
+                        $.ajax({
+                            url: '@Url.Action("UpdateEvaluationForm")/' + evaluationFormId,
+                            type: 'GET',
+                            success: function(data) {
+                                RefreshEvaluationForms();
+                                $.openOutlook(data2.to, '', data2.bcc, data2.subject, data2.body);
+                            }
+                        });
+                        HideDetailSaveDialog();
+                    },
+                    error: function(err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Retrieving evaluation form email.', err);
+                    }
+                });
+
+            });
+            $(this).on('click', 'a[data-function=UpdateProjectComplaintButton]', null, function () {
+                console.log($(this).attr('data-complaint-id'));
+                var dummyUrl = '@Url.Action("UpdateProjectComplaint","ProjectGeneral", new { complaintId = -1})';
+                var url = dummyUrl.replace("-1", $(this).attr('data-complaint-id'));
+                $('#UpdateProjectComplaintDialog').dialog('open');
+                $('#UpdateProjectComplaintDialog').loading('Loading...');
+                $('#UpdateProjectComplaintDialog').load(url);
+
+            });
+        }
+
+        function InitializeCommercialNameHelpDialog() {
+            $('#CommercialNameHelpDialog').dialog(
+                {
+                    autoOpen: false,
+                    modal: false,
+                    resizable: true,
+                    width: 600,
+                    height: 350,
+                    title: 'Commercial name help'
+                });
+        }
+
+        function InitializeCommercialRecapHelpDialog() {
+            $('#CommercialRecapHelpDialog').dialog(
+                {
+                    autoOpen: false,
+                    modal: false,
+                    resizable: true,
+                    width: 600,
+                    height: 450,
+                    title: 'Commercial recap help'
+                });
+        }
+
+        function RefreshEvaluationOverview() {
+            $('#EvaluationPlaceholder').loading('Loading evaluation overview...');
+            $('#EvaluationPlaceholder').load('@Url.Action("EvaluationOverview", "ProjectGeneral", new {crmProjectId = Model.CrmProjectId})', function() {
+                $('textarea', '#EvaluationPlaceholder').each(function() {
+                    $(this).tinymce({
+                        script_url: '@Url.Content("~/Scripts/tiny_mce/tiny_mce.js")',
+                        height: '300',
+                        width: '600',
+                        theme: 'simple',
+                        valid_styles: { '*': 'font-weight,text-decoration' }
+                    });
+                });
+            });
+        }
+
+    </script>
+    }
+
+    <fieldset id="ProjectDna">
+        <legend>Project Dna</legend>
+
+        @using (Html.BeginForm("ProjectDna", "ProjectGeneral", FormMethod.Post, new {id = "ProjectDnaForm"}))
+        {
+            <h4>Commercial info</h4>
+            @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+            @Html.HiddenFor(m => m.CrmProjectId)
+
+            <table style="width: 100%" id="ProjectDnaCommercialTranslationTable">
+                @for (var i = 0; i < Model.ProjectDnaCommercialTranslations.Count; i++)
+                {
+                    @Html.EditorFor(m => m.ProjectDnaCommercialTranslations[i], "BaseEntityViewTemplate")
+                    <tr id="node-language-@Model.ProjectDnaCommercialTranslations[i].LanguageId" class="@(Model.ProjectDnaCommercialTranslations[i].LanguageId == 1 ? "expanded" : "collapsed")">
+                        <td>
+                            @Model.ProjectDnaCommercialTranslations[i].LanguageName
+                        </td>
+                    </tr>
+                    <tr class="child-of-node-language-@Model.ProjectDnaCommercialTranslations[i].LanguageId">
+                        <td>
+                            <div class="row">
+                                <div>
+                                    <a href="javascript:void(0);" id="ShowCommercialNameHelpDialogButton" title="Show commercial name help dialog">
+                                        <img src="@Url.Content("~/Images/Icons/Help16.png")" alt="Help icon"/></a>
+                                    @Html.DisplayNameFor(m => m.ProjectDnaCommercialTranslations[i].CommercialName)
+                                </div>
+                                <div>@Html.TextBoxFor(m => m.ProjectDnaCommercialTranslations[i].CommercialName)
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div>
+                                    <a href="javascript:void(0);" id="ShowCommercialRecapHelpDialogButton" title="Show commercial recap help dialog">
+                                        <img src="@Url.Content("~/Images/Icons/Help16.png")" alt="Help icon"/></a>
+                                    @Html.DisplayNameFor(m => m.ProjectDnaCommercialTranslations[i].CommercialRecap)
+                                </div>
+                                <div>@Html.TextAreaFor(m => m.ProjectDnaCommercialTranslations[i].CommercialRecap)
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </table>
+            <div class="row">
+                <div>Details</div>
+                <div>@Html.TextAreaFor(m => m.Details)</div>
+            </div>
+            <div class="row">
+                <div>&nbsp;</div>
+                <div>
+                    <label>@Html.CheckBoxFor(m => m.ApprovedForReferences)@Html.DisplayNameFor(m => m.ApprovedForReferences)</label>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="right-text">
+                <a href="javascript:void(0);" data-function="SubmitProjectDnaButton" class="button">
+                    Save</a>
+            </div>
+
+            <h4>Reference contacts</h4>
+            <table class="dataTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Title</th>
+                        <th>Retired?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.ProjectDnaContactPersons.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.HiddenFor(m => m.ProjectDnaContactPersons[i].Id)
+                                <label>
+                                    @Html.CheckBoxFor(m => m.ProjectDnaContactPersons[i].IsSelected)
+                                    @Model.ProjectDnaContactPersons[i].FullName
+                                </label>
+                            </td>
+                            <td>@Model.ProjectDnaContactPersons[i].Title</td>
+                            <td>@Html.CheckBox(Html.IdFor(m => m.ProjectDnaContactPersons[i].IsRetired).ToString(), Model.ProjectDnaContactPersons[i].IsRetired, new {onclick = "return false", onkeydown = "return false"})
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <br />
+            <br />
+            <div class="right-text">
+                <a href="javascript:void(0);" data-function="SubmitProjectDnaButton" class="button">
+                    Save</a>
+            </div>
+
+            <h4>Project type</h4>
+            <table class="dataTable">
+                <tbody>
+                    @{
+                        const int columnCount = 3;
+                        var typeCount = Model.ProjectDnaTypes.Count;
+                        var rowCount = (((int) (typeCount/columnCount)) + 1);
+                    }
+                    @for (int x = 0; x < rowCount; x++)
+                    {
+                        <tr>
+                            @{
+                                var nextTypes = Model.ProjectDnaTypes.OrderBy(pdt => pdt.Name).Skip(columnCount*x).Take(columnCount).ToList();
+                            }
+
+                            @for (int y = 0; y < columnCount; y++)
+                            {
+                                if (y < nextTypes.Count)
+                                {
+                                    <td style="width: @(100/columnCount)%">
+                                        @Html.HiddenFor(m => m.ProjectDnaTypes[(x*columnCount) + y].Id)
+                                        <label>@Html.CheckBoxFor(m => m.ProjectDnaTypes[(x*columnCount) + y].IsSelected)@Html.DisplayFor(m => m.ProjectDnaTypes[(x*columnCount) + y].Name)</label>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="width: @(100/columnCount)%"></td>
+                                }
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        <br />
+        <br />
+        <div class="right-text">
+            <a href="javascript:void(0);" data-function="SubmitProjectDnaButton" class="button">
+                Save</a>
+        </div>
+    </fieldset>
+
+    <fieldset id="EvaluationPane">
+        <legend>Evaluation</legend>
+        <h4>Project evaluation</h4>
+        <div id="EvaluationPlaceholder"></div>
+    </fieldset>
+
+    <div id="CommercialNameHelpDialog">
+        <ul style="padding-left: 20px">
+            <li class="circle">
+                <a href="javascript:void(0);" data-function="CopyTextToCommercialName">Realisatie van
+                    assessments</a>:
+                deze titel gebruiken voor zowel focused assessments als assessment centers als executive
+                assessments
+            </li>
+            <li class="circle">
+                <a href="javascript:void(0);" data-function="CopyTextToCommercialName">Development traject</a>:
+                deze titel gebruiken voor development centers om zo de nadruk te leggen op het development
+                traject in plaats van het product.
+            </li>
+            <li class="circle">'Scope³®: self-assessment tool', 'Evolutips®': tool ter ondersteuning
+                van persoonlijke
+                ontwikkeling, 'Perspective®: 360° feedback tool',... </li>
+            <li class="circle">In de naam van het project:</li>
+            <ul style="padding-left: 20px">
+                <li class="circle">Geen afkortingen</li>
+                <li class="circle">Gebruik van hoofdletter bij het eerste woord</li>
+            </ul>
+        </ul>
+    </div>
+
+    <div id="CommercialRecapHelpDialog">
+        <ul style="padding-left: 20px">
+            <li class="circle">FA = focused assessment</li>
+            <li class="circle">AC = assessment center</li>
+            <li class="circle">POP = Persoonlijk OntwikkelingsPlan (POP) </li>
+            <li class="circle">Hoofdletters bij het begin van de zin </li>
+            <li class="circle">Zinnen </li>
+            <li class="circle">Geef effectief een duidelijke uitleg (geen ‘klassiek assessment traject’,
+                maar Quintessence organiseerde de assessment centers in het kader van de aanwerving
+                voor … Hierbij werd een competentieprofiel op maat opgesteld samen met de opdrachtgever.
+                Het assessment center werd uitgevoerd volgens de assessment center methodologie
+                met als resultaat een concreet aanwervingsadvies.)</li>
+            <ul style="padding-left: 20px">
+                <li class="circle">Gebruik eventueel functietitels in zoverre dat dit niet de vertrouwelijkheid
+                    schaadt</li>
+                <li class="circle">Bij een development center leg je best uit welke fasen het proces
+                    bevatte</li>
+                <li class="circle">De doelgroep van de training en het doel</li>
+                <li class="circle">Het doel van een competentiemanagementproject en uit welke fasen
+                    dit bestond</li>
+                <li class="circle">Maak het niet te lang! Een 15tal regels is voldoende</li>
+            </ul>
+        </ul>
+
+    </div>

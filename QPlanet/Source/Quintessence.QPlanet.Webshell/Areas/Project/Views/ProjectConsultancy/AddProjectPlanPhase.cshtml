@@ -1,0 +1,37 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.EditProjectPlanPhaseModel
+<p>
+    Create a new phase on the project.<br />
+    Define a name and a timeframe.
+</p>
+@using (Html.BeginForm("AddProjectPlanPhase", "ProjectConsultancy", FormMethod.Post, new { id = "AddProjectPlanPhaseForm" }))
+{
+    @Html.HiddenFor(m => m.ProjectPlanId)
+    <div class="row">
+        <div>@Html.LabelFor(m => m.Name)</div>
+        <div>
+            @Html.EditorFor(m => m.Name)
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+    </div>
+    <div class="row">
+        <div>@Html.LabelFor(m => m.StartDate)</div>
+        <div>
+            @Html.EditorFor(m => m.StartDate)
+            @Html.ValidationMessageFor(m => m.StartDate)
+        </div>
+    </div>
+    <div class="row">
+        <div>@Html.LabelFor(m => m.EndDate)</div>
+        <div>
+            @Html.EditorFor(m => m.EndDate)
+            @Html.ValidationMessageFor(m => m.EndDate)
+        </div>
+    </div>
+}
+
+<script>
+    $(function () {
+        $('#@Html.IdFor(m => m.StartDate)').datetimepicker({ dateFormat: "dd/mm/yy", showTimepicker: false });
+        $('#@Html.IdFor(m => m.EndDate)').datetimepicker({ dateFormat: "dd/mm/yy", showTimepicker: false });
+    })
+</script>

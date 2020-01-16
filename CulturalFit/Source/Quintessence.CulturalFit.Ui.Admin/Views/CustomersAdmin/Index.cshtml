@@ -1,0 +1,146 @@
+﻿@model Quintessence.CulturalFit.UI.Admin.Models.Admin.CustomerModel
+@section AdditionalJavascript
+{
+    <script type="text/javascript" src="~/Scripts/jquery-1.7.2.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            if ($('#contactsTable').length > 0)
+                $('#contactsTable').dataTable({
+                    "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                    "aaSorting": [[0, "desc"]],
+                    "aoColumnDefs": [
+                                        { "bSortable": false, "aTargets": [7] }
+                    ]
+                });
+
+            $('#refresh').click(function () {
+                window.location.reload();
+            });
+
+            //SetPositionLanguageDiv();
+        });
+
+        function SetPositionLanguageDiv() {
+            $('a[data-id=pdfLink]').each(function () {
+                var link = $(this);
+                var positionLeft = link.offset().left + 50;
+                var positionTop = link.offset().top + 50;
+                link.parent().find('div[data-id=pdfLanguage]').css('left', positionLeft);
+                link.parent().find('div[data-id=pdfLanguage]').css('top', positionTop);
+
+            });
+        }
+
+
+    </script>
+}
+@if (Model.ErrorMessages.Count >= 1)
+{
+    @Html.Partial("ErrorPartial", Model.ErrorMessages)
+}
+else
+{
+    <h2>
+        @Model.Name
+        <img alt="refresh" id="refresh" src="~/Images/refresh.png" height="17" width="17" class="refreshButton" />
+    </h2>
+    
+    @Html.HiddenFor(m => m.ProjectId)
+    if (Model.TheoremListRequests.Count == 0 || Model.TheoremListRequests == null)
+    {
+    <p>
+        No requests for '@Model.Name'. Press 'Create new' to create a new request for this contact.
+    </p>
+    }
+    else
+    {
+    <table id="contactsTable" class="display">
+        <thead>
+            <tr>
+                <th>Request date</th>
+                <th>Contact person</th>
+                <th>Questionnaire type</th>
+                <th>Verification code</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>Mail sent</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.TheoremListRequests.Count; i++)
+            {
+
+                var isCompletedCount = Model.TheoremListRequests[i].TheoremLists.Count(tl => tl.IsCompleted);
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => m.TheoremListRequests[i].RequestDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => m.TheoremListRequests[i].ContactPerson.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => m.TheoremListRequests[i].TheoremListRequestType.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => m.TheoremListRequests[i].VerificationCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => m.TheoremListRequests[i].Deadline)
+                    </td>
+                    <td>
+                        @if (isCompletedCount == Model.TheoremListRequests[i].TheoremLists.Count)
+                        {
+                            @:Done
+                            }
+                        else if (isCompletedCount == 0)
+                        {
+                            @:New
+                            }
+                        else
+                        {
+                            @:In Progress
+                            }
+                    </td>
+                    <td>
+                        @if (Model.TheoremListRequests[i].IsMailSent)
+                        {
+                            @:Yes
+                            }
+                        else
+                        {
+                            @:No
+                            }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditCustomerRequest", "CustomersAdmin", new { projectId = Model.ProjectId, requestId = Model.TheoremListRequests[i].Id }, new { @class = "imgLink editLink", title = "Edit" })
+                        
+                        <input type="hidden" value="@Model.TheoremListRequests[i].Id"/>
+                        <div data-id="pdfLink" class="imgLink pdfLink" title="pdf">
+                            <div data-id="pdfLanguage" class="pdfLanguage">
+                                <ul>
+                                    @foreach (var language in Model.Languages)
+                                    {
+                                        <li>
+                                            <a href="@Url.Content("~/CustomersAdmin/GenerateReport/" + Model.TheoremListRequests[i].Id + "/" + @language.Id + "")" data-id="languageLink">@language.GlobalizationName</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+
+                        @Html.ActionLink("Reopen", "ReopenQuestionnaire", "CustomersAdmin", new { projectId = Model.ProjectId, requestId = Model.TheoremListRequests[i].Id }, new { @class = "imgLink reopenLink", title = "Reopen" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <br />
+    <br />
+    }
+    
+    @Html.ActionLink("Create new", "CreateCustomerRequest", "CustomersAdmin", new { projectId = Model.ProjectId }, new { @class = "buttonStyle" })
+    
+}

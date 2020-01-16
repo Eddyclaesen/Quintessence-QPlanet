@@ -1,0 +1,72 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "100 Core", "100 Core", "{94BE02AC-3020-46B5-AFF7-56555389E582}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quintessence.QJobService.Core", "Source\Quintessence.QJobService.Core\Quintessence.QJobService.Core.csproj", "{B85AB43C-4A3A-4B0D-A4CB-7D0B7BAE6420}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "200 Model", "200 Model", "{25118AE5-8F3F-46D0-863A-4E2CA731760C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "300 Service", "300 Service", "{C87A395F-7496-43AF-8AD1-88EAD4979926}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quintessence.QJobService.Model", "Source\Quintessence.QJobService.Model\Quintessence.QJobService.Model.csproj", "{CAE6A5F7-5510-402F-8062-C73663DEC898}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quintessence.QJobService.Scheduler", "Source\Quintessence.QJobService.Scheduler\Quintessence.QJobService.Scheduler.csproj", "{2380A4AF-08AB-4FA9-84F2-2C24AE34B09A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "400 Jobs", "400 Jobs", "{0006EA93-784C-4294-ACB7-BA2B401BB0C9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{2ECDF4EC-73B3-4120-AC0E-F792FBB44826}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://kenze.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Source\\Quintessence.QJobService.Core\\Quintessence.QJobService.Core.csproj
+		SccProjectTopLevelParentUniqueName1 = Quintessence.QJobService.sln
+		SccProjectName1 = Source/Quintessence.QJobService.Core
+		SccLocalPath1 = Source\\Quintessence.QJobService.Core
+		SccProjectUniqueName2 = Source\\Quintessence.QJobService.Model\\Quintessence.QJobService.Model.csproj
+		SccProjectTopLevelParentUniqueName2 = Quintessence.QJobService.sln
+		SccProjectName2 = Source/Quintessence.QJobService.Model
+		SccLocalPath2 = Source\\Quintessence.QJobService.Model
+		SccProjectUniqueName3 = Source\\Quintessence.QJobService.Scheduler\\Quintessence.QJobService.Scheduler.csproj
+		SccProjectTopLevelParentUniqueName3 = Quintessence.QJobService.sln
+		SccProjectName3 = Source/Quintessence.QJobService.Scheduler
+		SccLocalPath3 = Source\\Quintessence.QJobService.Scheduler
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B85AB43C-4A3A-4B0D-A4CB-7D0B7BAE6420}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B85AB43C-4A3A-4B0D-A4CB-7D0B7BAE6420}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B85AB43C-4A3A-4B0D-A4CB-7D0B7BAE6420}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B85AB43C-4A3A-4B0D-A4CB-7D0B7BAE6420}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAE6A5F7-5510-402F-8062-C73663DEC898}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAE6A5F7-5510-402F-8062-C73663DEC898}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAE6A5F7-5510-402F-8062-C73663DEC898}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAE6A5F7-5510-402F-8062-C73663DEC898}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2380A4AF-08AB-4FA9-84F2-2C24AE34B09A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2380A4AF-08AB-4FA9-84F2-2C24AE34B09A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2380A4AF-08AB-4FA9-84F2-2C24AE34B09A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2380A4AF-08AB-4FA9-84F2-2C24AE34B09A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B85AB43C-4A3A-4B0D-A4CB-7D0B7BAE6420} = {94BE02AC-3020-46B5-AFF7-56555389E582}
+		{CAE6A5F7-5510-402F-8062-C73663DEC898} = {25118AE5-8F3F-46D0-863A-4E2CA731760C}
+		{2380A4AF-08AB-4FA9-84F2-2C24AE34B09A} = {C87A395F-7496-43AF-8AD1-88EAD4979926}
+	EndGlobalSection
+EndGlobal

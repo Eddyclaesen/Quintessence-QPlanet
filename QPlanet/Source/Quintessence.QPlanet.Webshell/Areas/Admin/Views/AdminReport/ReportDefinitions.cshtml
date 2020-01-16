@@ -1,0 +1,62 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Admin.Models.AdminReport.ReportDefinitionsActionModel
+
+<table id="ReportDefinitionTable" class="dataTable">
+    <thead>
+        <tr>
+            <th style="width: 25%">Report</th>
+            <th style="width: 20%"></th>
+            <th style="width: 20%"></th>
+            <th style="width: 20%"></th>
+            <th style="width: 10%">Active</th>
+            <th style="width: 15%">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int previousReportTypeId = -1;
+        }
+        @for (int i = 0; i < Model.Definitions.Count; i++)
+        {
+            if (Model.Definitions[i].ReportTypeId != previousReportTypeId)
+            {
+                previousReportTypeId = Model.Definitions[i].ReportTypeId;
+            <tr id="node-ReportType-@previousReportTypeId">
+                <td colspan="13">
+                    @Model.ReportTypes.FirstOrDefault(rt => rt.Id == previousReportTypeId).Name
+                </td>
+            </tr>   
+            }
+            
+            <tr class="child-of-node-ReportType-@previousReportTypeId @(i % 2 == 0 ? "even" : "odd")">
+                <td>
+                    @Html.EditorFor(m => Model.Definitions[i], "BaseEntityViewTemplate")
+                    @Html.EditorFor(m => Model.Definitions[i].Name)<br />
+                    @Html.EditorFor(m => Model.Definitions[i].Location)
+                    
+                </td>
+                <td>
+                    <label>@Html.CheckBoxFor(m => Model.Definitions[i].ExportAsPdf) Pdf</label><br />
+                    <label>@Html.CheckBoxFor(m => Model.Definitions[i].ExportAsWord) Word</label><br />
+                    <label>@Html.CheckBoxFor(m => Model.Definitions[i].ExportAsExcel) Excel</label>
+                </td>
+                <td>
+                    <label>@Html.CheckBoxFor(m => Model.Definitions[i].ExportAsHtml4) Html4</label><br />
+                    <label>@Html.CheckBoxFor(m => Model.Definitions[i].ExportAsHtml32) Html32</label><br />
+                    <label>@Html.CheckBoxFor(m => Model.Definitions[i].ExportAsMhtml) MHtml</label>
+                </td>
+                <td>
+                    <label>@Html.CheckBoxFor(m => Model.Definitions[i].ExportAsXml) Xml</label><br />
+                    <label>@Html.CheckBoxFor(m => Model.Definitions[i].ExportAsImg) Image</label><br />
+                    <label>@Html.CheckBoxFor(m => Model.Definitions[i].ExportAsCsvl) Csvl</label>
+                </td>
+                <td>@Html.CheckBoxFor(m => Model.Definitions[i].IsActive)</td>
+                <td class="right-text">
+                    @Html.DropDownListFor(m => Model.Definitions[i].ReportTypeId, Model.ReportTypes.Select(rt => new SelectListItem { Selected = rt.Id == Model.Definitions[i].ReportTypeId, Text = rt.Name, Value = rt.Id.ToString() }))
+                    <br />
+                    <br />
+                    <a href="javascript:void" data-function="DeleteReportDefinition" data-id="@Model.Definitions[i].Id" class="delete-link" title="Delete '@Model.Definitions[i].Name'"></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

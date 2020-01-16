@@ -1,0 +1,217 @@
+﻿@model Quintessence.CulturalFit.UI.Admin.Models.Admin.CustomerRequestModel
+@section AdditionalJavascript
+{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.7.2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.8.20.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")"></script>
+    <link type="text/css" href="@Url.Content("~/Content/jquery-ui-datepicker.css")" rel="Stylesheet" />	
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-datepicker.js")"></script>
+    <script>
+        $(function () {
+            SetContactPersonReadOnly();
+            CopyDdlValuesToHidden();
+
+            var today = new Date();
+            $("#Deadline").datepicker({
+                minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1),
+                dateFormat: "dd/mm/yy",
+                numberOfMonths: 3
+            });
+
+            $('#FirstName').autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Content("~/CustomersAdmin/FindContactPersons")',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            searchText: request.term,
+                            maxResults: 10
+                        },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.FullName + ' (' + item.Email + ')',
+                                    id: item.Id,
+                                    firstName: item.FirstName,
+                                    lastName: item.LastName,
+                                    email: item.Email,
+                                    gender: item.GenderType,
+                                    languageId: item.LanguageId
+                                };
+                            }));
+                        },
+                        error: function(x,y,z) {
+                            alert(x.responseText);
+                        }
+
+                    });
+                },
+                select: function (event, ui) {
+                    $('#ContactPersonId').val(ui.item.id);
+                    $('#FirstName').val(ui.item.firstName);
+                    $('#LastName').val(ui.item.lastName);
+                    $('#Email').val(ui.item.email);
+                    $('#SelectedGenderId').val(ui.item.gender);
+                    $('#SelectedLanguageId').val(ui.item.languageId);
+                    $('select[name="SelectedGenderId"]').val(ui.item.gender);
+                    $('select[name="SelectedLanguageId"]').val(ui.item.languageId);
+
+                    $('#FirstName').attr("readonly", "readonly");
+                    $('#LastName').attr("readonly", "readonly");
+                    $('#Email').attr("readonly", "readonly");
+                    $('select[name="SelectedGenderId"]').attr("disabled", "disabled");
+                    //$('select[name="SelectedLanguageId"]').attr("disabled", "disabled");
+                    return false;
+                }
+            });
+
+            $('#clearButton').click(function () {
+                
+                $('#ContactPersonId').val(null);
+                $('#FirstName').val(null);
+                $('#LastName').val(null);
+                $('#Email').val(null);
+                $('#SelectedGenderId').val('1');
+                $('#SelectedLanguageId').val('1');
+                $('select[name="SelectedGenderId"]').val('1');
+                $('select[name="SelectedLanguageId"]').val('1');
+
+                $('#FirstName').attr("readonly", false);
+                $('#LastName').attr("readonly", false);
+                $('#Email').attr("readonly", false);
+                $('select[name="SelectedGenderId"]').removeAttr("disabled");
+                //$('select[name="SelectedLanguageId"]').removeAttr("disabled");
+                
+            });
+
+            $('#saveButton').click(function (event) {
+                var form$ = $('#requestForm');
+                form$.attr('action', '@Url.Content("~/CustomersAdmin/CreateCustomerRequest/")' + $('#ProjectId').val());
+                form$.submit();
+            });
+
+            $('#saveSendButton').click(function (event) {
+                var form$ = $('#requestForm');
+                form$.attr('action', '@Url.Content("~/CustomersAdmin/CreateCustomerRequestAndSend/")' + $('#ProjectId').val());
+                form$.submit();
+            });
+
+            $('#requestForm').validate();
+        });
+
+        function SetContactPersonReadOnly() {
+            if ($('#ContactPersonId').val()) {
+                $('#FirstName').attr("readonly", "readonly");
+                $('#LastName').attr("readonly", "readonly");
+                $('#Email').attr("readonly", "readonly");
+                $('select[name="SelectedGenderId"]').attr("disabled", "disabled");
+                //$('select[name="SelectedLanguageId"]').attr("disabled", "disabled");
+            }
+        }
+        
+        function CopyDdlValuesToHidden() {
+            $('select[name="SelectedGenderId"]').change(function () {
+                $('#SelectedGenderId').val($(this).val());
+            });
+            
+            $('select[name="SelectedLanguageId"]').change(function () {
+                $('#SelectedLanguageId').val($(this).val());
+            });
+            
+            $('select[name="SelectedTheoremListRequestTypeId"]').change(function () {
+                $('#SelectedTheoremListRequestTypeId').val($(this).val());
+            });
+        }
+
+    </script>
+}
+@if (Model.ErrorMessages.Count >= 1)
+{
+    @Html.Partial("ErrorPartial", Model.ErrorMessages)
+}
+else
+{
+    using (Html.BeginForm("CreateCustomerRequest", "CustomersAdmin", FormMethod.Post, new { id = "requestForm" }))
+    {      
+    <h2>@Html.DisplayFor(m => m.ContactName)</h2>
+    @Html.HiddenFor(m => m.TheoremListRequestId)
+    @Html.HiddenFor(m => m.ProjectId)
+    @Html.HiddenFor(m => m.ContactId)
+    @Html.HiddenFor(m => m.ContactName)
+    @Html.HiddenFor(m => m.ContactPersonId)
+    <fieldset>
+        <legend>Contact person</legend>
+        <table>
+            <tr>
+                <td>@Html.LabelFor(m => m.FirstName)</td>
+                <td>
+                    @Html.EditorFor(m => m.FirstName)
+                    @Html.ValidationMessageFor(m => m.FirstName)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.LastName)</td>
+                <td>
+                    @Html.EditorFor(m => m.LastName)
+                    @Html.ValidationMessageFor(m => m.LastName)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Email)</td>
+                <td>
+                    @Html.EditorFor(m => m.Email)
+                    @Html.ValidationMessageFor(m => m.Email)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Gender)</td>
+                <td>
+                    @Html.HiddenFor(m => m.SelectedGenderId)
+                    @Html.DropDownListFor(m => m.SelectedGenderId, Model.Gender.ToSelectList("1"))
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Languages)</td>
+                <td>
+                    @Html.HiddenFor(m => m.SelectedLanguageId)
+                    @Html.DropDownListFor(m => m.SelectedLanguageId, new SelectList(Model.Languages, "Id", "Name"))
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="button" id="clearButton" value="clear" />
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <br /><br />
+    <fieldset>
+        <legend>Questionnaire info</legend>
+        <table>
+            <tr>
+                <td>@Html.LabelFor(m => m.Deadline)</td>
+                <td>
+                    @Html.EditorFor(m => m.Deadline, "{0:dd/MM/yyyy}")
+                    @Html.ValidationMessageFor(m => m.Deadline)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.TheoremListRequestTypes)</td>
+                <td>
+                    @Html.DropDownListFor(m => m.SelectedTheoremListRequestTypeId, new SelectList(Model.TheoremListRequestTypes, "Id", "Type"))
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    
+    }
+    <br />
+    <input type="button" value="back" onclick="history.go(-1)" />
+    <input type="submit" value="save" id="saveButton" />
+    <input type="submit" value="save & send" id="saveSendButton" />
+
+    <br/>
+    @Html.ValidationSummary(true)
+}

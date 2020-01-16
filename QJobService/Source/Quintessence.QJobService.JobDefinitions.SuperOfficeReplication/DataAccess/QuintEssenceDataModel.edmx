@@ -1,0 +1,827 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="QuintessenceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CrmReplicationAppointment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="AppointmentDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="AssociateId" Type="int" />
+          <Property Name="IsReserved" Type="bit" />
+          <Property Name="OfficeId" Type="int" />
+          <Property Name="LanguageId" Type="int" />
+          <Property Name="Gender" Type="varchar" MaxLength="1" />
+          <Property Name="Code" Type="varchar" MaxLength="12" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="CrmProjectId" Type="int" />
+          <Property Name="TaskId" Type="int" />
+          <Property Name="Description" Type="text" />
+          <Property Name="TeamLeaderId" Type="int" />
+          <Property Name="LastSyncedUtc" Type="datetime" />
+          <Property Name="SyncVersion" Type="int" Nullable="false" />
+          <Property Name="SuperOfficeId" Type="int" />
+        </EntityType>
+        <EntityType Name="CrmReplicationAppointmentTaskMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="CrmReplicationAppointmentTimesheet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ProjectId" Type="int" />
+          <Property Name="AssociateId" Type="int" />
+          <Property Name="StartDate" Type="datetime2" Precision="7" />
+          <Property Name="EndDate" Type="datetime2" Precision="7" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="TaskDescription" Type="nvarchar" MaxLength="150" />
+          <Property Name="TeamLeaderId" Type="int" />
+          <Property Name="LastSyncedUtc" Type="datetime" />
+          <Property Name="SyncVersion" Type="int" Nullable="false" />
+          <Property Name="SuperOfficeId" Type="int" />
+        </EntityType>
+        <EntityType Name="CrmReplicationAppointmentTraining">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ProjectId" Type="int" />
+          <Property Name="AssociateId" Type="int" />
+          <Property Name="OfficeId" Type="int" />
+          <Property Name="LanguageId" Type="int" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="Code" Type="nvarchar" MaxLength="12" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="LastSyncedUtc" Type="datetime" />
+          <Property Name="SyncVersion" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CrmReplicationAssociate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="UserGroupId" Type="int" />
+          <Property Name="TeamLeaderName" Type="nvarchar(max)" />
+          <Property Name="TeamLeaderId" Type="int" />
+          <Property Name="LastSyncedUtc" Type="datetime" />
+          <Property Name="SyncVersion" Type="int" Nullable="false" />
+          <Property Name="SuperOfficeId" Type="int" />
+        </EntityType>
+        <EntityType Name="CrmReplicationContact">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Department" Type="nvarchar(max)" />
+          <Property Name="AssociateId" Type="int" />
+          <Property Name="AccountManagerId" Type="int" />
+          <Property Name="CustomerAssistantId" Type="int" />
+          <Property Name="TeamLeaderId" Type="int" />
+          <Property Name="LastSyncedUtc" Type="datetime" />
+          <Property Name="SyncVersion" Type="int" Nullable="false" />
+          <Property Name="SuperOfficeId" Type="int" />
+        </EntityType>
+        <EntityType Name="CrmReplicationEmail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="PersonId" Type="int" />
+          <Property Name="ContactId" Type="int" />
+          <Property Name="ContactName" Type="nvarchar(max)" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="DirectPhone" Type="nvarchar(max)" />
+          <Property Name="MobilePhone" Type="nvarchar(max)" />
+          <Property Name="LastSyncedUtc" Type="datetime" />
+          <Property Name="SyncVersion" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CrmReplicationEmailAssociate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="AssociateId" Type="int" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="Rank" Type="int" />
+          <Property Name="LastSyncedUtc" Type="datetime" />
+          <Property Name="SyncVersion" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CrmReplicationJob">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Description" Type="text" />
+        </EntityType>
+        <EntityType Name="CrmReplicationJobHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CrmReplicationJobId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="Succeeded" Type="bit" />
+          <Property Name="Info" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="CrmReplicationPerson">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ContactId" Type="int" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="IsRetired" Type="bit" />
+          <Property Name="TeamLeaderId" Type="int" />
+          <Property Name="LastSyncedUtc" Type="datetime" />
+          <Property Name="SyncVersion" Type="int" Nullable="false" />
+          <Property Name="SuperOfficeId" Type="int" />
+        </EntityType>
+        <EntityType Name="CrmReplicationProject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="AssociateId" Type="int" />
+          <Property Name="ContactId" Type="int" />
+          <Property Name="ProjectStatusId" Type="int" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="BookyearFrom" Type="datetime" />
+          <Property Name="BookyearTo" Type="datetime" />
+          <Property Name="TeamLeaderId" Type="int" />
+          <Property Name="LastSyncedUtc" Type="datetime" />
+          <Property Name="SyncVersion" Type="int" Nullable="false" />
+          <Property Name="SuperOfficeId" Type="int" />
+        </EntityType>
+        <EntityType Name="CrmReplicationProjectStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="CrmReplicationProjectStatusMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="SourceValue" Type="nvarchar(max)" />
+          <Property Name="TargetId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CrmReplicationSettings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Key" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="CrmReplicationSuperOfficeEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventType" Type="nvarchar(max)" />
+          <Property Name="ObjectType" Type="nvarchar(max)" />
+          <Property Name="ObjectId" Type="nvarchar(max)" />
+          <Property Name="ObjectChanges" Type="nvarchar(max)" />
+          <Property Name="ByAssociateId" Type="int" />
+          <Property Name="Source" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ReceivedUtc" Type="datetime" Nullable="false" />
+          <Property Name="ProcessCount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CrmReplicationSuperOfficeEventErrorLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CrmReplicationSuperOfficeEventId" Type="int" Nullable="false" />
+          <Property Name="LogDateUtc" Type="datetime" Nullable="false" />
+          <Property Name="Info" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="CrmReplicationUserGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Rank" Type="int" />
+        </EntityType>
+        <EntityType Name="Office">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Project2CrmProject">
+          <Key>
+            <PropertyRef Name="ProjectId" />
+            <PropertyRef Name="CrmProjectId" />
+          </Key>
+          <Property Name="ProjectId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CrmProjectId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="QuintessenceModelStoreContainer">
+          <EntitySet Name="CrmReplicationAppointment" EntityType="Self.CrmReplicationAppointment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrmReplicationAppointmentTaskMapping" EntityType="Self.CrmReplicationAppointmentTaskMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrmReplicationAppointmentTimesheet" EntityType="Self.CrmReplicationAppointmentTimesheet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrmReplicationAppointmentTraining" EntityType="Self.CrmReplicationAppointmentTraining" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrmReplicationAssociate" EntityType="Self.CrmReplicationAssociate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrmReplicationContact" EntityType="Self.CrmReplicationContact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrmReplicationEmail" EntityType="Self.CrmReplicationEmail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrmReplicationEmailAssociate" EntityType="Self.CrmReplicationEmailAssociate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrmReplicationJob" EntityType="Self.CrmReplicationJob" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrmReplicationJobHistory" EntityType="Self.CrmReplicationJobHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrmReplicationPerson" EntityType="Self.CrmReplicationPerson" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrmReplicationProject" EntityType="Self.CrmReplicationProject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrmReplicationProjectStatus" EntityType="Self.CrmReplicationProjectStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrmReplicationProjectStatusMapping" EntityType="Self.CrmReplicationProjectStatusMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrmReplicationSettings" EntityType="Self.CrmReplicationSettings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrmReplicationSuperOfficeEvent" EntityType="Self.CrmReplicationSuperOfficeEvent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrmReplicationSuperOfficeEventErrorLog" EntityType="Self.CrmReplicationSuperOfficeEventErrorLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrmReplicationUserGroup" EntityType="Self.CrmReplicationUserGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Office" EntityType="Self.Office" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Project2CrmProject" EntityType="Self.Project2CrmProject" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QuintessenceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CrmReplicationAppointment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="AppointmentDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="AssociateId" Type="Int32" />
+          <Property Name="IsReserved" Type="Boolean" />
+          <Property Name="OfficeId" Type="Int32" />
+          <Property Name="LanguageId" Type="Int32" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CrmProjectId" Type="Int32" />
+          <Property Name="TaskId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TeamLeaderId" Type="Int32" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Precision="3" />
+          <Property Name="SyncVersion" Type="Int32" Nullable="false" />
+          <Property Name="SuperOfficeId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="CrmReplicationAppointmentTaskMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CrmReplicationAppointmentTimesheet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ProjectId" Type="Int32" />
+          <Property Name="AssociateId" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="7" />
+          <Property Name="EndDate" Type="DateTime" Precision="7" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TaskDescription" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="TeamLeaderId" Type="Int32" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Precision="3" />
+          <Property Name="SyncVersion" Type="Int32" Nullable="false" />
+          <Property Name="SuperOfficeId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="CrmReplicationAppointmentTraining">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ProjectId" Type="Int32" />
+          <Property Name="AssociateId" Type="Int32" />
+          <Property Name="OfficeId" Type="Int32" />
+          <Property Name="LanguageId" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="Code" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Precision="3" />
+          <Property Name="SyncVersion" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CrmReplicationAssociate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserGroupId" Type="Int32" />
+          <Property Name="TeamLeaderName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TeamLeaderId" Type="Int32" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Precision="3" />
+          <Property Name="SyncVersion" Type="Int32" Nullable="false" />
+          <Property Name="SuperOfficeId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="CrmReplicationContact">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AssociateId" Type="Int32" />
+          <Property Name="AccountManagerId" Type="Int32" />
+          <Property Name="CustomerAssistantId" Type="Int32" />
+          <Property Name="TeamLeaderId" Type="Int32" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Precision="3" />
+          <Property Name="SyncVersion" Type="Int32" Nullable="false" />
+          <Property Name="SuperOfficeId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="CrmReplicationEmail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="PersonId" Type="Int32" />
+          <Property Name="ContactId" Type="Int32" />
+          <Property Name="ContactName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DirectPhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MobilePhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Precision="3" />
+          <Property Name="SyncVersion" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CrmReplicationEmailAssociate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="AssociateId" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Rank" Type="Int32" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Precision="3" />
+          <Property Name="SyncVersion" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CrmReplicationJob">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CrmReplicationPerson">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ContactId" Type="Int32" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsRetired" Type="Boolean" />
+          <Property Name="TeamLeaderId" Type="Int32" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Precision="3" />
+          <Property Name="SyncVersion" Type="Int32" Nullable="false" />
+          <Property Name="SuperOfficeId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="CrmReplicationProject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AssociateId" Type="Int32" />
+          <Property Name="ContactId" Type="Int32" />
+          <Property Name="ProjectStatusId" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="BookyearFrom" Type="DateTime" Precision="3" />
+          <Property Name="BookyearTo" Type="DateTime" Precision="3" />
+          <Property Name="TeamLeaderId" Type="Int32" />
+          <Property Name="LastSyncedUtc" Type="DateTime" Precision="3" />
+          <Property Name="SyncVersion" Type="Int32" Nullable="false" />
+          <Property Name="SuperOfficeId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="CrmReplicationProjectStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CrmReplicationProjectStatusMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="SourceValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TargetId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CrmReplicationSetting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Key" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CrmReplicationSuperOfficeEventErrorLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CrmReplicationSuperOfficeEventId" Type="Int32" Nullable="false" />
+          <Property Name="LogDateUtc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Info" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CrmReplicationUserGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Rank" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="QuintessenceEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CrmReplicationAppointments" EntityType="Self.CrmReplicationAppointment" />
+          <EntitySet Name="CrmReplicationAppointmentTaskMappings" EntityType="Self.CrmReplicationAppointmentTaskMapping" />
+          <EntitySet Name="CrmReplicationAppointmentTimesheets" EntityType="Self.CrmReplicationAppointmentTimesheet" />
+          <EntitySet Name="CrmReplicationAppointmentTrainings" EntityType="Self.CrmReplicationAppointmentTraining" />
+          <EntitySet Name="CrmReplicationAssociates" EntityType="Self.CrmReplicationAssociate" />
+          <EntitySet Name="CrmReplicationContacts" EntityType="Self.CrmReplicationContact" />
+          <EntitySet Name="CrmReplicationEmails" EntityType="Self.CrmReplicationEmail" />
+          <EntitySet Name="CrmReplicationEmailAssociates" EntityType="Self.CrmReplicationEmailAssociate" />
+          <EntitySet Name="CrmReplicationJobs" EntityType="Self.CrmReplicationJob" />
+          <EntitySet Name="CrmReplicationPersons" EntityType="Self.CrmReplicationPerson" />
+          <EntitySet Name="CrmReplicationProjects" EntityType="Self.CrmReplicationProject" />
+          <EntitySet Name="CrmReplicationProjectStatus" EntityType="Self.CrmReplicationProjectStatu" />
+          <EntitySet Name="CrmReplicationProjectStatusMappings" EntityType="Self.CrmReplicationProjectStatusMapping" />
+          <EntitySet Name="CrmReplicationSettings" EntityType="Self.CrmReplicationSetting" />
+          <EntitySet Name="CrmReplicationSuperOfficeEventErrorLogs" EntityType="Self.CrmReplicationSuperOfficeEventErrorLog" />
+          <EntitySet Name="CrmReplicationUserGroups" EntityType="Self.CrmReplicationUserGroup" />
+          <EntitySet Name="CrmReplicationJobHistories" EntityType="QuintessenceModel.CrmReplicationJobHistory" />
+          <EntitySet Name="CrmReplicationSuperOfficeEvents" EntityType="QuintessenceModel.CrmReplicationSuperOfficeEvent" />
+          <EntitySet Name="Project2CrmProject" EntityType="QuintessenceModel.Project2CrmProject" />
+          <EntitySet Name="Offices" EntityType="QuintessenceModel.Office" />
+        </EntityContainer>
+        <EntityType Name="CrmReplicationJobHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="CrmReplicationJobId" Type="Guid" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="Succeeded" Type="Boolean" />
+          <Property Name="Info" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CrmReplicationSuperOfficeEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ObjectType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ObjectId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ObjectChanges" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ByAssociateId" Type="Int32" />
+          <Property Name="Source" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ReceivedUtc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProcessCount" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Project2CrmProject">
+          <Key>
+            <PropertyRef Name="ProjectId" />
+            <PropertyRef Name="CrmProjectId" />
+          </Key>
+          <Property Name="ProjectId" Type="Guid" Nullable="false" />
+          <Property Name="CrmProjectId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Office">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShortName" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QuintessenceModelStoreContainer" CdmEntityContainer="QuintessenceEntities">
+          <EntitySetMapping Name="CrmReplicationAppointments">
+            <EntityTypeMapping TypeName="QuintessenceModel.CrmReplicationAppointment">
+              <MappingFragment StoreEntitySet="CrmReplicationAppointment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="AssociateId" ColumnName="AssociateId" />
+                <ScalarProperty Name="IsReserved" ColumnName="IsReserved" />
+                <ScalarProperty Name="OfficeId" ColumnName="OfficeId" />
+                <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="CrmProjectId" ColumnName="CrmProjectId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TeamLeaderId" ColumnName="TeamLeaderId" />
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="SyncVersion" ColumnName="SyncVersion" />
+                <ScalarProperty Name="SuperOfficeId" ColumnName="SuperOfficeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrmReplicationAppointmentTaskMappings">
+            <EntityTypeMapping TypeName="QuintessenceModel.CrmReplicationAppointmentTaskMapping">
+              <MappingFragment StoreEntitySet="CrmReplicationAppointmentTaskMapping">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrmReplicationAppointmentTimesheets">
+            <EntityTypeMapping TypeName="QuintessenceModel.CrmReplicationAppointmentTimesheet">
+              <MappingFragment StoreEntitySet="CrmReplicationAppointmentTimesheet">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="AssociateId" ColumnName="AssociateId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TaskDescription" ColumnName="TaskDescription" />
+                <ScalarProperty Name="TeamLeaderId" ColumnName="TeamLeaderId" />
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="SyncVersion" ColumnName="SyncVersion" />
+                <ScalarProperty Name="SuperOfficeId" ColumnName="SuperOfficeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrmReplicationAppointmentTrainings">
+            <EntityTypeMapping TypeName="QuintessenceModel.CrmReplicationAppointmentTraining">
+              <MappingFragment StoreEntitySet="CrmReplicationAppointmentTraining">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="AssociateId" ColumnName="AssociateId" />
+                <ScalarProperty Name="OfficeId" ColumnName="OfficeId" />
+                <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="SyncVersion" ColumnName="SyncVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrmReplicationAssociates">
+            <EntityTypeMapping TypeName="QuintessenceModel.CrmReplicationAssociate">
+              <MappingFragment StoreEntitySet="CrmReplicationAssociate">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="UserGroupId" ColumnName="UserGroupId" />
+                <ScalarProperty Name="TeamLeaderName" ColumnName="TeamLeaderName" />
+                <ScalarProperty Name="TeamLeaderId" ColumnName="TeamLeaderId" />
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="SyncVersion" ColumnName="SyncVersion" />
+                <ScalarProperty Name="SuperOfficeId" ColumnName="SuperOfficeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrmReplicationContacts">
+            <EntityTypeMapping TypeName="QuintessenceModel.CrmReplicationContact">
+              <MappingFragment StoreEntitySet="CrmReplicationContact">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="AssociateId" ColumnName="AssociateId" />
+                <ScalarProperty Name="AccountManagerId" ColumnName="AccountManagerId" />
+                <ScalarProperty Name="CustomerAssistantId" ColumnName="CustomerAssistantId" />
+                <ScalarProperty Name="TeamLeaderId" ColumnName="TeamLeaderId" />
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="SyncVersion" ColumnName="SyncVersion" />
+                <ScalarProperty Name="SuperOfficeId" ColumnName="SuperOfficeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrmReplicationEmails">
+            <EntityTypeMapping TypeName="QuintessenceModel.CrmReplicationEmail">
+              <MappingFragment StoreEntitySet="CrmReplicationEmail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DirectPhone" ColumnName="DirectPhone" />
+                <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="SyncVersion" ColumnName="SyncVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrmReplicationEmailAssociates">
+            <EntityTypeMapping TypeName="QuintessenceModel.CrmReplicationEmailAssociate">
+              <MappingFragment StoreEntitySet="CrmReplicationEmailAssociate">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AssociateId" ColumnName="AssociateId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="SyncVersion" ColumnName="SyncVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrmReplicationJobs">
+            <EntityTypeMapping TypeName="QuintessenceModel.CrmReplicationJob">
+              <MappingFragment StoreEntitySet="CrmReplicationJob">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrmReplicationPersons">
+            <EntityTypeMapping TypeName="QuintessenceModel.CrmReplicationPerson">
+              <MappingFragment StoreEntitySet="CrmReplicationPerson">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="IsRetired" ColumnName="IsRetired" />
+                <ScalarProperty Name="TeamLeaderId" ColumnName="TeamLeaderId" />
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="SyncVersion" ColumnName="SyncVersion" />
+                <ScalarProperty Name="SuperOfficeId" ColumnName="SuperOfficeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrmReplicationProjects">
+            <EntityTypeMapping TypeName="QuintessenceModel.CrmReplicationProject">
+              <MappingFragment StoreEntitySet="CrmReplicationProject">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AssociateId" ColumnName="AssociateId" />
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+                <ScalarProperty Name="ProjectStatusId" ColumnName="ProjectStatusId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="BookyearFrom" ColumnName="BookyearFrom" />
+                <ScalarProperty Name="BookyearTo" ColumnName="BookyearTo" />
+                <ScalarProperty Name="TeamLeaderId" ColumnName="TeamLeaderId" />
+                <ScalarProperty Name="LastSyncedUtc" ColumnName="LastSyncedUtc" />
+                <ScalarProperty Name="SyncVersion" ColumnName="SyncVersion" />
+                <ScalarProperty Name="SuperOfficeId" ColumnName="SuperOfficeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrmReplicationProjectStatus">
+            <EntityTypeMapping TypeName="QuintessenceModel.CrmReplicationProjectStatu">
+              <MappingFragment StoreEntitySet="CrmReplicationProjectStatus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrmReplicationProjectStatusMappings">
+            <EntityTypeMapping TypeName="QuintessenceModel.CrmReplicationProjectStatusMapping">
+              <MappingFragment StoreEntitySet="CrmReplicationProjectStatusMapping">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SourceValue" ColumnName="SourceValue" />
+                <ScalarProperty Name="TargetId" ColumnName="TargetId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrmReplicationSettings">
+            <EntityTypeMapping TypeName="QuintessenceModel.CrmReplicationSetting">
+              <MappingFragment StoreEntitySet="CrmReplicationSettings">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrmReplicationSuperOfficeEventErrorLogs">
+            <EntityTypeMapping TypeName="QuintessenceModel.CrmReplicationSuperOfficeEventErrorLog">
+              <MappingFragment StoreEntitySet="CrmReplicationSuperOfficeEventErrorLog">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CrmReplicationSuperOfficeEventId" ColumnName="CrmReplicationSuperOfficeEventId" />
+                <ScalarProperty Name="LogDateUtc" ColumnName="LogDateUtc" />
+                <ScalarProperty Name="Info" ColumnName="Info" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrmReplicationUserGroups">
+            <EntityTypeMapping TypeName="QuintessenceModel.CrmReplicationUserGroup">
+              <MappingFragment StoreEntitySet="CrmReplicationUserGroup">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrmReplicationJobHistories">
+            <EntityTypeMapping TypeName="QuintessenceModel.CrmReplicationJobHistory">
+              <MappingFragment StoreEntitySet="CrmReplicationJobHistory">
+                <ScalarProperty Name="Info" ColumnName="Info" />
+                <ScalarProperty Name="Succeeded" ColumnName="Succeeded" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="CrmReplicationJobId" ColumnName="CrmReplicationJobId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrmReplicationSuperOfficeEvents">
+            <EntityTypeMapping TypeName="QuintessenceModel.CrmReplicationSuperOfficeEvent">
+              <MappingFragment StoreEntitySet="CrmReplicationSuperOfficeEvent">
+                <ScalarProperty Name="ProcessCount" ColumnName="ProcessCount" />
+                <ScalarProperty Name="ReceivedUtc" ColumnName="ReceivedUtc" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="ByAssociateId" ColumnName="ByAssociateId" />
+                <ScalarProperty Name="ObjectChanges" ColumnName="ObjectChanges" />
+                <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+                <ScalarProperty Name="ObjectType" ColumnName="ObjectType" />
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Project2CrmProject">
+            <EntityTypeMapping TypeName="QuintessenceModel.Project2CrmProject">
+              <MappingFragment StoreEntitySet="Project2CrmProject">
+                <ScalarProperty Name="CrmProjectId" ColumnName="CrmProjectId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Offices">
+            <EntityTypeMapping TypeName="QuintessenceModel.Office">
+              <MappingFragment StoreEntitySet="Office">
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

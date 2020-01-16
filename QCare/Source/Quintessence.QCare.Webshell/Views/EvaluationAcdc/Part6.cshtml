@@ -1,0 +1,66 @@
+﻿@using Resources
+@model Quintessence.QCare.ViewModel.EvaluationFormAcdcPart6Model
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            InitializeButtons();
+        });
+
+        function InitializeButtons() {
+            //Previous
+            $('a[data-function=previous]').click(function (e) {
+                e.preventDefault();
+                var form = $('#Part6Form');
+                $('#Navigation').val('0');
+                form.submit();
+            });
+
+            //Next
+            $('a[data-function=next]').click(function (e) {
+                e.preventDefault();
+                var form = $('#Part6Form');
+                $('#Navigation').val('1');
+                form.submit();
+            });
+        }
+
+    </script>
+}
+
+@using (Html.BeginForm("Part6", "EvaluationAcdc", FormMethod.Post, new { id = "Part6Form" }))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    @Html.HiddenFor(m => m.Navigation)
+    <fieldset>
+        <legend>@Global.EvaluationFormAcdcTitleBlock6</legend>
+        <div>
+
+            <ol>
+                <li value="24">
+                    <p>@Global.EvaluationFormAcdcQuestion24</p>
+                    @Html.TextAreaFor(m => m.Question24, 6, 90, null)
+                </li>
+                <li>
+                    <p>@Html.Raw(Global.EvaluationFormAcdcQuestion25)</p>
+                    @Html.TextAreaFor(m => m.Question25, 6, 90, null)
+                </li>
+                <li>
+                    <p>@Html.Raw(Global.EvaluationFormAcdcQuestion26)</p>
+                    @Html.TextAreaFor(m => m.Question26, 6, 90, null)
+                </li>
+            </ol>
+
+            <div class="right-text">
+                <a href="javascript:void(0);" data-function="previous" class="button">@Global.Previous</a>
+                <a href="javascript:void(0);" data-function="next" class="button">@Global.Next</a>
+            </div>
+        </div>
+    </fieldset>
+    
+}

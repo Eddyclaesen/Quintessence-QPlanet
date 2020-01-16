@@ -1,0 +1,38 @@
+﻿@using Resources
+@model Quintessence.CulturalFit.UI.Webshell.Models.Login.LoginModel
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>
+            @Global.EnterVerificationCode
+        </legend>
+        <p class="notice">
+            @Global.EnterVerificationCode
+        </p>
+        <p>
+            <div>
+                <table>
+                    <tr style="height: 25px;">
+                        <td style="width: 40%; ">@Html.LabelFor(m => m.VerificationCode)</td>
+                        <td style="width: 60%; ">@Html.PasswordFor(m => m.VerificationCode, new Dictionary<string, object> { { "style", "width: 100px; height: 16px;" } })
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            <input id="checkbox" type="checkbox"/><label>@Global.ShowCharacters</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                            @Html.DropDownListFor(m => m.SelectedLanguage, Model.Languages.Select(l => new SelectListItem { Text = l.Name, Value = l.GlobalizationName }))
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+        <input class="login button" type="submit" value="Ok">
+    </fieldset>
+    @Html.ValidationMessageFor(m => m.VerificationCode, @Global.WrongVerificationCode, new { style = "color:red" })
+}

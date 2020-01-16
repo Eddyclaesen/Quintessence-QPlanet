@@ -1,0 +1,26 @@
+﻿@model List<Quintessence.QService.QueryModel.Prm.ProjectFixedPriceView>
+
+<table id="ProjectFixedPriceTable" class="dataTable">
+    <thead>
+        <tr>
+            <th style="width: 25%">Deadline</th>
+            <th style="width: 25%">Amount</th>
+            <th style="width: 50%">Remarks</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var fixedPrice in Model.OrderBy(p => p.Deadline))
+        {
+            <tr>
+                <td>@fixedPrice.Deadline.ToShortDateString()</td>
+                <td>@fixedPrice.Amount.ToString("C")</td>
+                <td>@fixedPrice.InvoiceRemarks</td>
+                <td>
+                    <a href="javascript:void(0);" data-function="EditProjectFixedPrice" class="edit-link" data-id="@fixedPrice.Id"></a>
+                    <a href="javascript:void(0);" data-function="DeleteProjectFixedPrice" class="delete-link" data-id="@fixedPrice.Id"></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

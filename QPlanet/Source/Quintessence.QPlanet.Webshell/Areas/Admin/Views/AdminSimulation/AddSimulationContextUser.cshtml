@@ -1,0 +1,37 @@
+﻿@model Quintessence.QPlanet.ViewModel.Sim.EditSimulationContextUserModel
+
+@using (Html.BeginForm("AddSimulationContextUser", "AdminSimulation", FormMethod.Post, new { id = "AddSimulationContextUserForm" }))
+{
+    @Html.HiddenFor(m => m.SimulationContextId)
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.UserName)</div>
+        <div>@Html.EditorFor(m => m.UserName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.Password)</div>
+        <div>@Html.EditorFor(m => m.Password)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ValidFrom)</div>
+        <div>@Html.TextBox(Html.IdFor(m => m.ValidFrom).ToString(), Model.ValidFrom.ToShortDateString())</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ValidTo)</div>
+        <div>@Html.TextBox(Html.IdFor(m => m.ValidTo).ToString(), Model.ValidTo.ToShortDateString())</div>
+    </div>
+    
+    <br />
+    <br />
+    <br />
+    
+    <div class="right-text">
+        <a href="javascript:void(0);" data-function="SubmitSimulationContextUser" class="button">Save</a>
+    </div>
+}
+
+<script>
+    $(function () {
+        $('#@Html.IdFor(m => m.ValidFrom)').datetimepicker({ dateFormat: "dd/mm/yy", showTimepicker: false });
+        $('#@Html.IdFor(m => m.ValidTo)').datetimepicker({ dateFormat: "dd/mm/yy", showTimepicker: false });
+    });
+</script>

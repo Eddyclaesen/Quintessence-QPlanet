@@ -1,0 +1,36 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Candidate.Models.ProgramDetail.EditDayProgramActionModel
+
+<div style="overflow: auto">
+    <table style="max-width: @(300 * Model.AssessmentRooms.Count)px">
+        <thead>
+            <tr>
+                @foreach (var room in Model.AssessmentRooms)
+                {
+                    <th>
+                        @room.Name
+                        <a href="javascript:void(0);" 
+                           data-function="AddProjectCandidateEvent"
+                           data-room-id="@room.Id">
+                            <img src="@Url.Content("~/Images/Icons/Add16.png")" class="icon"/>
+                        </a>
+                        <a href="javascript:void(0);"
+                           data-function="ClearRoom"
+                            data-room-id="@room.Id">
+                            <img src="@Url.Content("~/Images/Icons/Clear16.png")" class="icon"/>
+                        </a>
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach (var room in Model.AssessmentRooms)
+                {
+                    <td style="min-width: 300px; max-width: 300px; width: 300px; height: 750px; padding: 5px">
+                        <div id="@room.Id" data-function="Calendar" data-year="@Model.Date.Year" data-month="@Model.Date.Month" data-day="@Model.Date.Day" style="min-width: 300px; max-width: 300px; width: 300px"></div>
+                    </td>
+                }
+            </tr>
+        </tbody>
+    </table>
+</div>

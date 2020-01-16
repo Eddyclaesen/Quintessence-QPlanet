@@ -1,0 +1,4 @@
+﻿<%@ ServiceHost Language="C#" 
+                Debug="true" 
+                Factory="Quintessence.CulturalFit.Service.Implementation.Base.UnityServiceHostFactory"
+                Service="Quintessence.CulturalFit.Service.Implementation.TheoremListAdminService" %>

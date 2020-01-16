@@ -1,0 +1,273 @@
+﻿@model Quintessence.QPlanet.ViewModel.Dim.EditDictionaryLevelModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Admin - Edit dictionary level";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">@Model.Level @Model.Name</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li class="current">Level Detail</li>
+        </ul>
+    </nav>
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.treeTable.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.cookie.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/persist.js")" type="text/javascript"></script>
+
+    <script>
+        $(function () {
+            $('#DictionaryIndicatorTable').treeTable({ persist: true });
+
+            InitializeButtons();
+            InitializeAddIndicatorDialog();
+
+            if (0 != parseInt($('#DictionaryNumberOfUsages').attr('data-value'))) {
+                AddNotification('DICUSAGES', 'There are @(Model.DictionaryNumberOfUsages) project(s) using this dictionary. Editing this level may render those project corrupt!');
+            }
+
+            if ('true' == $('#DictionaryIsLive').attr('data-value')) {
+                AddNotification('DICISLIVE', 'The dictionary to which this level belongs marked as Live and is being used in production. Editing this level may render those project corrupt!');
+            }
+        });
+
+        function InitializeAddIndicatorDialog() {
+            $('#AddDictionaryIndicatorDialog').dialog(
+                {
+                    autoOpen: false,
+                    modal: true,
+                    resizable: false,
+                    width: 650,
+                    height: 500,
+                    title: 'Add new level'
+                });
+        }
+
+        function InitializeButtons() {
+            $('a[data-function=SaveDictionaryLevel]').click(function (event) {
+                ShowDetailSaveDialog();
+
+                event.preventDefault();
+
+                var form = $('form');
+
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    dataType: 'JSON',
+                    success: function () {
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Save dictionary level', err);
+                    }
+                });
+            });
+
+            $(this).on('click', 'a[data-function=DeleteDictionaryIndicatorButton]', null, function (event) {
+                event.preventDefault();
+
+                if (!confirm('Are you sure you want to delete this indicator?'))
+                    return;
+
+                ShowDetailSaveDialog();
+
+                $.ajax({
+                    url: '@Url.Action("DeleteDictionaryIndicator")/' + $(this).attr('data-id'),
+                    success: function () {
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Delete dictionary indicator', err);
+                    }
+                });
+            });
+
+            $(this).on('click', 'a[data-function=AddDictionaryIndicatorButton]', null, function (event) {
+                event.preventDefault();
+
+                $('#AddDictionaryIndicatorDialog').loading('Prepare new indicator.');
+                $('#AddDictionaryIndicatorDialog').dialog('open');
+
+                $.ajax({
+                    url: '@Url.Action("AddDictionaryIndicator", new{id = Model.Id})',
+                    success: function (html) {
+                        $('#AddDictionaryIndicatorDialog').html(html);
+                    },
+                    error: function (err) {
+                        ShowDetailErrorDialog('Prepare new indicator', err);
+                    }
+                });
+            });
+
+            $(this).on('click', 'a[data-function=SaveDictionaryIndicator]', null, function (event) {
+                ShowDetailSaveDialog();
+
+                event.preventDefault();
+
+                var form = $('#AddDictionaryIndicatorForm');
+
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    dataType: 'JSON',
+                    success: function () {
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Create dictionary indicator', err);
+                    }
+                });
+            });
+
+            $(this).on('click', 'a[data-function=NormalizeOrderButton]', null, function (event) {
+                ShowDetailSaveDialog();
+
+                event.preventDefault();
+
+                $.ajax({
+                    url: '@Url.Action("NormalizeDictionaryIndicatorOrder", new { id = Model.Id })',
+                    success: function () {
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Normalize dictionary indicators', err);
+                    }
+                });
+            });
+        }
+    </script>
+}
+
+<div class="grid_8">
+    <fieldset>
+        <legend>@Model.Level @(Model.Name.Length > 50 ? Model.Name.Substring(0, 50) + "..." : Model.Name)</legend>
+
+        <div id="DictionaryNumberOfUsages" data-value="@(Model.DictionaryNumberOfUsages)">
+        </div>
+        <div id="DictionaryIsLive" data-value="@(Model.DictionaryIsLive.ToString().ToLowerInvariant())">
+        </div>
+
+        <div class="row">
+            <div>Dictionary</div>
+            <div>@Html.ActionLink(Model.DictionaryName, "EditDictionary", new { id = Model.DictionaryId }, new { target = Model.DictionaryId, title = "Click to edit" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div>Cluster</div>
+            <div>@Html.ActionLink(Model.DictionaryClusterName, "EditDictionaryCluster", new { id = Model.DictionaryClusterId }, new { target = Model.DictionaryId, title = "Click to edit" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div>Competence</div>
+            <div>@Html.ActionLink(Model.DictionaryCompetenceName, "EditDictionaryCompetence", new { id = Model.DictionaryCompetenceId }, new { target = Model.DictionaryId, title = "Click to edit" })
+            </div>
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+            <div class="row">
+                <div>@Html.DisplayNameFor(m => m.Name)</div>
+                <div>@Html.TextAreaFor(m => m.Name, 4, 40, null)</div>
+            </div>
+            <div class="row">
+                <div>@Html.DisplayNameFor(m => m.Level)</div>
+                <div>@Html.EditorFor(m => m.Level)</div>
+            </div>
+            <div class="row"></div>
+    
+            <div class="right-text">
+                <a href="javascript:void();" data-function="SaveDictionaryLevel" class="button">Save</a>
+            </div>
+
+            if (Model.DictionaryLevelTranslations != null)
+            {
+                for (int i = 0; i < Model.DictionaryLevelTranslations.Count; i++)
+                {
+                    @Html.EditorFor(m => m.DictionaryLevelTranslations[i], "BaseEntityViewTemplate")
+                    <b>@Model.DictionaryLevelTranslations[i].LanguageName</b>
+                    <div class="row">
+                        <div>@Html.DisplayNameFor(m => m.DictionaryLevelTranslations[i].Text)</div>
+                        <div>@Html.TextAreaFor(m => m.DictionaryLevelTranslations[i].Text, 4, 40, null)</div>
+                    </div>
+                    <div class="row"></div>
+                }
+            }
+
+            <div class="right-text">
+                <a href="javascript:void();" data-function="SaveDictionaryLevel" class="button">Save</a>
+            </div>
+        }
+    </fieldset>
+</div>
+<div class="grid_8">
+    <fieldset>
+        <legend>Indicators</legend>
+        <table id="DictionaryIndicatorTable" class="dataTable">
+            <thead>
+                <tr>
+                    <th style="width: 100%;">Indicator</th>
+                    <th style="width: 72px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var indicator in Model.DictionaryIndicators.OrderBy(di => di.Order))
+                {
+                    <tr id="node-@indicator.Id" class="expanded">
+                        <td>
+                            @indicator.Order - @indicator.Name
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditDictionaryIndicator", new { id = indicator.Id }, new { @class = "edit-link", target = indicator.DictionaryId })
+                            @if (Model.DictionaryNumberOfUsages == 0 && !Model.DictionaryIsLive)
+                            {
+                                <a href="javascript:void(0);" data-function="DeleteDictionaryIndicatorButton" data-id="@indicator.Id" class="delete-link">
+                                    Delete</a>
+                            }
+                        </td>
+                    </tr>
+                    foreach (var translation in indicator.DictionaryIndicatorTranslations.OrderBy(t => t.LanguageId))
+                    {
+                        <tr class="child-of-node-@indicator.Id">
+                            <td>
+                                @translation.Text
+                            </td>
+                            <td></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <br />
+        <br />
+
+        <div class="right-text">
+            <a href="javascript:void();" data-function="AddDictionaryIndicatorButton" class="button">
+                Add</a>
+            <a href="javascript:void();" data-function="NormalizeOrderButton" class="button">Normalize
+                Order</a>
+        </div>
+    </fieldset>
+</div>
+
+<div id="AddDictionaryIndicatorDialog"></div>

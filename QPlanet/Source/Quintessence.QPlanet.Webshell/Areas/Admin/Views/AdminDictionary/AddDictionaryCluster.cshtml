@@ -1,0 +1,38 @@
+﻿@model Quintessence.QPlanet.ViewModel.Dim.CreateNewDictionaryClusterModel
+@using (Html.BeginForm("AddDictionaryCluster", "AdminDictionary", FormMethod.Post, new { id = "AddDictionaryClusterForm" }))
+{
+    @Html.HiddenFor(m => m.DictionaryId)
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.DictionaryName)</div>
+        <div>@Html.DisplayTextFor(m => m.DictionaryName)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.Name)</div>
+        <div>@Html.EditorFor(m => m.Name)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.Description)</div>
+        <div>@Html.TextAreaFor(m => m.Description, 4, 40, null)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.LanguageId)</div>
+        <div>@Html.DropDownListFor(m => m.LanguageId, Model.CreateLanguageList())</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.Color)</div>
+        <div>@Html.EditorFor(m => m.Color)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.Order)</div>
+        <div>@Html.EditorFor(m => m.Order)</div>
+    </div>
+    <div class="row">
+        <div>@Html.DisplayNameFor(m => m.ImageName)</div>
+        <div>@Html.EditorFor(m => m.ImageName)</div>
+    </div>
+    <div class="row"></div>
+    
+    <div class="right-text">
+        <a href="javascript:void();" data-function="SaveDictionaryCluster" class="button">Save</a>
+    </div>
+}

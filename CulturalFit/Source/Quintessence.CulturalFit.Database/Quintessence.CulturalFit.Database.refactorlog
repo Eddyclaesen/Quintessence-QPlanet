@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="200a50e1-293c-46d7-8631-578ed36d45a6" ChangeDateTime="04/26/2012 15:05:58">
+    <Property Name="ElementName" Value="[dbo].[Theorem].[TranslationGroup]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Theorem]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TranslationGroupId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="4e4646d6-34dc-42ee-99b3-42e81bcceae3" ChangeDateTime="04/26/2012 15:18:37">
+    <Property Name="ElementName" Value="[dbo].[TheoremTranslation].[Translation]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TheoremTranslation]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Text" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="1600efec-e9f7-4916-8260-cdcba6041c2d" ChangeDateTime="04/27/2012 09:44:55">
+    <Property Name="ElementName" Value="[dbo].[TheoremList].[TheoremVersionId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TheoremList]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TheoremListVersionId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d9f1ace8-0b34-49e7-9126-e4cf09a9401f" ChangeDateTime="05/02/2012 14:13:54">
+    <Property Name="ElementName" Value="[dbo].[TheoremTemplate].[Quote]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TheoremTemplate]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DefaultTheoremTemplateTranslationId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="dbc5db54-7221-48d3-aa06-60e482cf17e8" ChangeDateTime="05/02/2012 14:44:22">
+    <Property Name="ElementName" Value="[dbo].[TheoremTemplate].[DefaultTheoremTemplateTranslationId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TheoremTemplate]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Quote" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a28b486f-70a1-43f4-9c9d-f346da7637fa" ChangeDateTime="05/03/2012 07:21:39">
+    <Property Name="ElementName" Value="[dbo].[TheoremListRequestType].[Name]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TheoremListRequestType]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Type" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6fb078c5-5538-4b18-82ec-10a57a1aef69" ChangeDateTime="05/03/2012 07:26:50">
+    <Property Name="ElementName" Value="[dbo].[TheoremListRequest].[Type]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TheoremListRequest]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TheoremListRequestTypeId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="1b0aeed2-a3b0-49ad-85ab-b3463b25ba3c" ChangeDateTime="05/03/2012 07:27:25">
+    <Property Name="ElementName" Value="[dbo].[TheoremList].[Type]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TheoremList]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TheoremListTypeId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="591434fe-adde-41de-8400-3ad3352f0d03" ChangeDateTime="05/10/2012 07:28:56">
+    <Property Name="ElementName" Value="[dbo].[Language].[Short]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Language]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Globalization" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="db7eb68f-5af9-4995-8637-935e57f5f0a8" ChangeDateTime="05/10/2012 07:31:19">
+    <Property Name="ElementName" Value="[dbo].[Language].[Globalization]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Language]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="GlobalizationName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="eb60bbd3-89f1-4fee-aed9-0ad22f6d382d" ChangeDateTime="06/21/2012 07:48:45">
+    <Property Name="ElementName" Value="[dbo].[EmailTemplate].[Body]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[EmailTemplate]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Subject" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b48ef713-7382-4d5d-9d26-5e24ccb61b59" ChangeDateTime="06/21/2012 07:48:48">
+    <Property Name="ElementName" Value="[dbo].[EmailTemplate].[Subject]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[EmailTemplate]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Body" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="532a59a5-8c9d-4d79-987d-85b85aa32f30" ChangeDateTime="06/21/2012 07:49:36">
+    <Property Name="ElementName" Value="[dbo].[EmailTemplate].[LanguageIdc]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[EmailTemplate]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LanguageId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f1a0b8be-6c56-4b4c-b63e-9c060681ebc0" ChangeDateTime="06/29/2012 14:35:50">
+    <Property Name="ElementName" Value="[dbo].[CulturalFitCandidateLink].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CulturalFitCandidateLink]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ParticipantId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="42b2e792-5754-4c59-a4a2-a0233273fd6f" ChangeDateTime="07/18/2012 09:00:57">
+    <Property Name="ElementName" Value="[dbo].[Project2TheoremListRequest].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Project2TheoremListRequest]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ProjectId" />
+  </Operation>
+</Operations>

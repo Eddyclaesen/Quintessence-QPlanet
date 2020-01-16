@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[MailTemplate]
+	ADD CONSTRAINT [PK_MailTemplate] 
+	PRIMARY KEY NONCLUSTERED ([Id])

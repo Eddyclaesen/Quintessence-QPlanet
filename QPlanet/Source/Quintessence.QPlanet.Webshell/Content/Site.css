@@ -1,0 +1,788 @@
+﻿/*Global.css import*/
+@import url("Global.css");
+
+html {
+    overflow-y: scroll;
+}
+
+body, html {
+    /*font-family: Century Gothic, Verdana;*/
+	font-family:Calibri;
+	font-size:13pt;
+    background-color: #FCFCFC;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    min-width: 1280px;
+    min-height: 768px;
+    color: #1E4372;
+}
+
+header {
+    width: 100%;
+    overflow: hidden;
+    /* fallback (Opera) */
+    /*background: #5A8E22;*/
+    /* Mozilla: */
+    /*background: -moz-linear-gradient(top, #5A8E22, #346310);*/
+    /* Chrome, Safari:*/
+    /*background: -webkit-gradient(linear, left top, left bottom, from(#5A8E22), to(#346310));*/
+    /* MSIE */
+    /*filter: progid:DXImageTransform.Microsoft.Gradient( StartColorStr='#5A8E22', EndColorStr='#346310', GradientType=0);*/
+	
+	background: #4b8ca7; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #1b6ca7 , #4b8ca7); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #1b6ca7  , #4b8ca7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
+    border-bottom: 1px solid darkgreen;
+    box-shadow: 0px 0px 25px 0px;
+    position: fixed;
+    padding-bottom: 3px;   
+    z-index:1;
+}
+
+body.mceContentBody {
+    background: red;
+}
+
+.qplanet-logo {
+    background: url('../Images/QPlanet_128.png') no-repeat right;
+}
+
+li.circle {
+    list-style-type: circle;
+    list-style-position: outside;
+    margin-left: 25px;
+}
+
+.validation-summary-errors {
+    padding: 10px 0px;
+    background-color: #FFFFAE;
+    border-top: 1px solid #C5C5C5;
+    border-bottom: 1px solid #C5C5C5;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+
+#Complexity {
+    display:inline-block; 
+    padding-left: 5px;
+}
+
+#Complexity table {
+    width: 150px;
+    height: 20px;
+    border: 2px solid #1E4372;
+}
+
+#Complexity td {
+    width: 50px;
+    background-color: gray;
+    font-size: 8pt;
+    color: white;
+    text-align: center;
+    vertical-align: middle;
+}
+
+nav.area {
+    padding: 0px 20px;
+}
+
+    nav.area ul {
+        list-style: none;
+    }
+
+        nav.area ul li {
+            color: #FCFCFC;
+            display: inline-block;
+        }
+
+            nav.area ul li.current a {
+                color: #FCFCFC;
+                display: block;
+                padding: 10px 20px;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+            nav.area ul li a {
+                color: #FCFCFC;
+                display: block;
+                padding: 10px 20px;
+                text-decoration: none;
+            }
+
+                nav.area ul li a:hover, nav.area ul li a:focus {
+                    background-color: #1E4372;
+                }
+
+nav.action {
+    padding: 0px 20px;
+}
+
+    nav.action ul {
+        list-style: none;
+    }
+
+        nav.action ul li {
+            color: #FCFCFC;
+            display: inline-block;
+        }
+
+            nav.action ul li.current {
+                padding: 10px 20px;
+                background-color: #F8F8F8;
+                color: #3F3F3F;
+            }
+
+            nav.action ul li a {
+                color: #fcfcfc;
+                display: block;
+                padding: 10px 20px;
+                text-decoration: none;
+            }
+
+                nav.action ul li a:hover, nav.area ul li a:focus {
+                    background-color: #1E4372;
+                }
+
+/**********************
+	BUTTON
+***********************/
+
+.button {
+    display: inline-block;
+    border: 1px solid #11253F;
+    color: white;
+    margin: 5px auto;
+    line-height: 20px;
+    padding: 5px 15px 5px 15px;
+    text-decoration: none;
+    /*font-family: century gothic, verdana;
+    font-size: medium;*/
+	font-family:Calibri;
+	font-size:12pt;
+    background: #1E4372;
+    /*Smooth hover*/
+    -webkit-transition: background 0.2s ease 0s;
+    -o-transition: background 0.2s ease 0s;
+    -moz-transition: background 0.2s ease 0s;
+    transition: background 0.2s ease 0s;
+	border-radius:5px;
+	box-shadow:2px 2px 5px lightslategray;
+}
+
+    .button:hover {
+        border: 1px solid #11253F;
+        cursor: pointer;
+        background: #336FBE;
+    }
+
+/**********************
+	SIDE NAVIGATION
+***********************/
+
+nav.navigation ul {
+    padding: 0px;
+    /*width: 150px;*/
+}
+
+nav.navigation li.no-tab {
+    list-style-type: none;
+    background: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+nav.navigation li {
+    list-style-type: none;
+    background: #1E4372;
+    margin: 2px;
+    padding: 4px 10px 4px 5px;
+}
+
+
+    nav.navigation li > a {
+        color: white;
+        border-left: 5px solid #56aa1c;
+        text-decoration: none;
+        padding-left: 5px;
+        /*Smooth hover*/
+        -webkit-transition: border 0.2s ease 0s;
+        -o-transition: border 0.2s ease 0s;
+        -moz-transition: border 0.2s ease 0s;
+        transition: border 0.2s ease 0s;
+    }
+
+    nav.navigation li > a.selected {
+        color: white;
+        border-left: 5px solid white;
+        text-decoration: none;
+        padding-left: 5px;
+        /*Smooth hover*/
+        -webkit-transition: border 0.2s ease 0s;
+        -o-transition: border 0.2s ease 0s;
+        -moz-transition: border 0.2s ease 0s;
+        transition: border 0.2s ease 0s;
+    }
+
+        nav.navigation li > a:hover {
+            border-left: 5px solid white;
+        }
+
+h1 {
+    display: inline-block;
+    font-size: 25px;
+    margin-bottom: 20px;
+    width: 100%;
+    background: #1E4372;
+    padding: 5px 0px;
+    border-left: 5px solid #56aa1c;
+    color: #fff;
+    text-indent: 5px;
+}
+
+h2 {
+    display: inline-block;
+    font-size: 23px;
+    margin-bottom: 20px;
+    width: 100%;
+    background: #1E4372;
+    padding: 5px 0px;
+    border-left: 5px solid #56aa1c;
+    color: #fff;
+    text-indent: 5px;
+}
+
+h3 {
+    display: inline-block;
+    font-size: 21px;
+    margin-bottom: 20px;
+    width: 100%;
+    background: #1E4372;
+    padding: 5px 0px;
+    border-left: 5px solid #56aa1c;
+    color: #fff;
+    text-indent: 5px;
+}
+
+h4 {
+    display: inline-block;
+    font-size: 19px;
+    margin-bottom: 20px;
+    width: 100%;
+    background: #1E4372;
+    padding: 5px 0px;
+    border-left: 5px solid #56aa1c;
+    color: #fff;
+    text-indent: 5px;
+}
+
+h5 {
+    display: inline-block;
+    font-size: 17px;
+    margin-bottom: 20px;
+    width: 100%;
+    background: #1E4372;
+    padding: 5px 0px;
+    border-left: 5px solid #56aa1c;
+    color: #fff;
+    text-indent: 5px;
+}
+
+h6 {
+    display: inline-block;
+    font-size: 15px;
+    margin-bottom: 20px;
+    width: 100%;
+    background: #1E4372;
+    padding: 5px 0px;
+    border-left: 5px solid #56aa1c;
+    color: #fff;
+    text-indent: 5px;
+}
+
+fieldset {
+    border-top: 1px solid #5A8E22;
+    padding: 15px;
+    margin-bottom: 10px;
+    position: relative;
+    background-color: #F8F8F8;
+    box-shadow: 5px 5px 50px #888888;
+}
+
+legend {
+    /*padding: 10px;
+    font-weight: bold;*/
+	padding:15px;
+	font-family:AlternateGotNo2D;
+	font-size:20pt;
+}
+
+input,
+textarea {
+    /*font-family: Century Gothic, Verdana;*/
+	font-family:Calibri;
+    font-size: 15px;
+}
+
+td {
+    vertical-align: top;
+}
+
+select {
+    /*font-family: Century Gothic, Verdana;*/
+	font-family:Calibri;
+    font-size: 15px;
+    border: 1px solid #3F3F3F;
+}
+
+.main {
+    padding: 20px 0px;
+}
+
+header div.profile {
+    padding: 10px 20px;
+    color: #FCFCFC;
+    display: inline-block;
+}
+
+header div.profile a {
+        color: #FCFCFC;
+    }
+
+        header div.profile a:hover {
+        }
+
+p.loading, img.loading {
+    text-align: center;
+    padding: 25px;
+}
+
+/*Customer assistant's overview*/
+.ProjectCandidatesOverviewDataTable{
+    font-size: small;
+}
+
+.ProjectCandidatesOverviewDataTable input[type=text] {
+    font-size: small;
+    width: 75px;
+}
+
+table.list {
+    width: 100%;
+}
+
+    table.list > thead > tr > th {
+        background-color: #E9E9E9;
+        padding: 5px 10px;
+        font-weight: bold;
+    }
+
+table, p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+    table.list > tbody > tr > td {
+        padding: 5px 10px;
+    }
+
+    table.list > tbody > tr.even > td {
+        background-color: #F6F6F6;
+    }
+
+    table.list > tbody > tr.odd > td {
+        background-color: #F0F0F0;
+    }
+
+    table.properties {
+        width: 100%;
+    }
+
+        table.properties > tbody > tr > td.label {
+            width: 40%;
+            text-align: right;
+            padding: 2px;
+            vertical-align: top;
+            min-height: 30px;
+        }
+
+        table.properties > tbody > tr > td.value {
+            width: 60%;
+            padding: 2px;
+            vertical-align: top;
+            min-height: 30px;
+        }
+
+            table.properties > tbody > tr > td.value > input.text-box {
+                width: 100%;
+            }
+
+            table.properties > tbody > tr > td.value > textarea {
+                width: 100%;
+                min-height: 200px;
+            }
+
+table.dataTable tbody tr:hover {
+    background-color: #56aa1c;
+    background-color: rgba(86,170,28,0.3) !important;
+}
+
+table.dataTable tfoot tr
+    {
+        border-top: 1px solid #56aa1c;
+        font-weight: bold;
+    }
+
+div.table {
+    display: table;
+}
+
+div.label {
+    width: 100%;
+    text-align: left;
+    display: table-cell;
+    vertical-align: middle;
+    height: 30px;
+}
+
+div div.value {
+    width: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    height: 30px;
+}
+
+div.value input[type=text],
+div.value input[type=password] {
+    width: 100%;
+}
+
+div.value textarea {
+    width: 100%;
+    height: 100px;
+}
+
+div.value select {
+    width: 100%;
+}
+
+footer {
+    width: 100%;
+    color: #FCFCFC;
+    /* fallback (Opera) */
+    background: #5A8E22;
+    /* Mozilla: */
+    background: -moz-linear-gradient(top, #5A8E22, #346310);
+    /* Chrome, Safari:*/
+    background: -webkit-gradient(linear, left top, left bottom, from(#5A8E22), to(#346310));
+    /* MSIE */
+    filter: progid:DXImageTransform.Microsoft.Gradient( StartColorStr='#5A8E22', EndColorStr='#346310', GradientType=0);
+}
+
+.field-validation-error, label.error {
+    color: #FF2200;
+}
+
+a {
+    color: #5A8E22;
+    text-decoration: none;
+}
+
+img.icon {
+    width: 16px;
+    height: 16px;
+    padding: 0px 5px;
+}
+
+td.CompetenceScore input[type=text] {
+    border: 1px solid #5A8E22;
+    background-color: #ACC690;
+}
+
+/*********************************
+    TABLE LEGEND
+**********************************/
+
+td.legend-item{padding-right:5px;}
+
+td.legend-explanation{padding-right:15px;}
+
+/*********************************
+    IMAGE LINKS
+**********************************/
+
+#logout {
+    background-image:url(../Images/Icons/shutdown16.png);
+    display: inline-block;
+	height:16px;
+    margin: auto 10px;
+	text-indent:-9999px;
+    width: 16px;
+}
+
+span.search-icon {
+    background-image:url(../Images/Icons/search16.png);
+    display: inline-block;
+	height:16px;
+    width: 16px;
+}
+
+a.add-link {
+    background-image:url(../Images/Icons/plus16.png);
+	display:block;
+    float: left;
+	height:16px;
+    margin-right: 10px;
+	text-indent:-9999px;
+    width: 16px;
+}
+
+a.edit-link {
+    background-image:url(../Images/Icons/edit16.png);
+	display:block;
+    float: left;
+	height:16px; /*Height of image*/
+    width: 16px; /*Width of image*/
+    margin-right: 10px; /*To give some space to the right for adjacent icons*/
+	text-indent:-9999px; /*Remove text from anchor tag*/
+}
+
+a.neo-link {
+    background-image:url(../Images/Icons/neo16.png);
+	display:block;
+    float: left;
+	height:16px; /*Height of image*/
+    width: 35px; /*Width of image*/
+    margin-right: 10px; /*To give some space to the right for adjacent icons*/
+	text-indent:-9999px; /*Remove text from anchor tag*/
+}
+
+a.save-link {
+    background-image:url(../Images/Icons/save16.png);
+	display:block;
+    float: left;
+	height:16px;
+    margin-right: 10px;
+	text-indent:-9999px;
+    width: 16px;
+}
+
+a.copy-link {
+    background-image:url(../Images/Icons/copy16.png);
+	display:block;
+    float: left;
+	height:16px;
+    margin-right: 10px;
+	text-indent:-9999px;
+	width:16px;
+}
+
+a.delete-link {
+    background-image:url(../Images/Icons/delete16.png);
+	display:block;
+    float: left;
+	height:16px;
+    margin-right: 10px;
+	text-indent:-9999px;
+	width:16px;
+}
+
+a.pdf-link {
+    background-image:url(../Images/Icons/pdf16.png);
+	display:block;
+    float: left;
+	height:16px;
+    margin-right: 10px;
+	text-indent:-9999px;
+	width:16px;
+}
+
+a.reopen-link {
+    background-image:url(../Images/Icons/reopen16.png);
+	display:block;
+    float: left;
+	height:16px;
+    margin-right: 10px;
+	text-indent:-9999px;
+	width:16px;
+}
+
+a.loading-link {
+    background-image:url(../Images/loading_small.gif);
+	display:block;
+    float: left;
+	height:16px;
+    margin-right: 10px;
+	text-indent:-9999px;
+	width:16px;
+}
+
+/*********************************
+    CSS TABLE
+**********************************/
+
+div.row {
+    clear: both;
+    padding-top: 5px;
+    width: 100%;
+    line-height: 30px;
+}
+
+    div.row > div {
+        display: inline;
+        text-align: left;
+        float: left;
+    }
+
+        div.row > div > input[type=text], div.row > div > select, div.row > div > input[type=password] {
+            width: 250px;
+        }
+
+        div.row > div:first-child {
+            padding-right: 5px;
+            min-width: 30%;
+            text-align: right;
+        }
+
+    div.row div.row {
+        padding-top: 0px;
+        text-wrap: normal;
+    }
+    /*div.row > div:last-child {
+            float: none;
+        }*/
+
+    div.row.last-row {
+        padding-bottom: 5px;
+    }
+/*********************************/
+
+.seperator {
+    width: 100%;
+    border-bottom: 1px dotted #1E4372;
+    margin: 20px 0px 20px 0px;
+}
+
+/*************************
+    FIELDSET FILTER
+**************************/
+
+fieldset.search-filter {
+    font-size: small;
+    display: inline-block;
+    border: 1px solid #56aa1c;
+}
+
+fieldset.search-filter legend {
+    background: #1E4372;
+    color: white;
+}
+
+fieldset.search-filter > div {
+    margin-left: 5px;
+    margin-right: 15px;
+    float: left;
+}
+
+fieldset.search-filter > div :first-child {
+    margin-bottom: 5px;
+}
+
+/*************************
+    INVOICING OVERVIEW
+**************************/
+
+.circle-status-not-done {
+    border-radius: 5px;
+    border-collapse: separate;
+    border: 1px solid white;
+    width: 10px;
+    height: 10px;
+    background: tomato;
+    box-shadow: 0 0 5px #000;
+    float: right;
+}
+
+.circle-status-done {
+    border-radius: 5px;
+    border-collapse: separate;
+    border: 1px solid white;
+    width: 10px;
+    height: 10px;
+    background: greenyellow;
+    box-shadow: 0 0 5px #000;
+    float: right;
+}
+
+select.dropdown-width {
+    width: 125px;
+}
+
+#AccountantInvoicingDataTable,
+#CustomerAssistantInvoicingDataTable,
+#ProjectManagerInvoicingDataTable,
+#AccountantInvoicingDataTable input,
+#CustomerAssistantInvoicingDataTable input,
+#ProjectManagerInvoicingDataTable input,
+#AccountantInvoicingDataTable select,
+#CustomerAssistantInvoicingDataTable select,
+#ProjectManagerInvoicingDataTable select,
+#AccountantInvoicingDataTable textarea,
+#CustomerAssistantInvoicingDataTable textarea,
+#ProjectManagerInvoicingDataTable textarea  {
+    font-size: small;
+}
+
+#AccountantInvoicingDataTable tr,
+#CustomerAssistantInvoicingDataTable tr,
+#ProjectManagerInvoicingDataTable tr,
+table.ProjectCandidatesOverviewDataTable tr {
+    border-bottom: 1px solid gray;
+}
+
+#AccountantInvoicingDataTable tr:last-child,
+#CustomerAssistantInvoicingDataTable tr:last-child,
+#ProjectManagerInvoicingDataTable tr:last-child,
+table.ProjectCandidatesOverviewDataTable tr:last-child {
+    border-bottom: none;
+}
+
+/*************************
+    REPORTING OVERVIEW
+**************************/
+
+#ProjectCandidateReportingOverviewDataTable {
+    font-size: small;
+}
+
+#SelectedSimulationCombinations {
+	width:105%;	
+}
+
+table.dataTable thead th {
+	text-align:left;
+	font-size:12pt;
+}
+
+.dataTables_wrapper {
+	width:100%;
+}
+
+.container_12 .grid_12, .container_16 .grid_16 {
+	width:100%;
+}
+
+.ui-widget {
+	font-family:Calibri;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+	background-color: darkSlateGray;
+}
+
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+	font-family: Calibri;
+}

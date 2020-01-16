@@ -1,0 +1,32 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Candidate.Models.ProgramHome.CheckForUnplannedEventsActionModel
+
+@if (Model.Messages.Count > 0)
+{
+    <div class="right-text">
+        <a href="javascript:void(0);" data-function="RefreshDayProgramButton" class="button">Refresh</a>
+        @Html.ActionLink("Edit", "Edit", "ProgramDetail", new { officeId = Model.OfficeId, year = Model.Date.Year, month = Model.Date.Month, day = Model.Date.Day }, new { target = string.Format("dayprogram{0}{1}{2}", Model.Date.Year, Model.Date.Month, Model.Date.Day), @class = "button" })
+    </div>
+    <table id="UnplannedEventsTable" class="dataTable">
+        <thead>
+            <tr>
+                <th>Messages</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var key in Model.Messages.Keys)
+            {
+                var id = Guid.NewGuid();
+                <tr id="node-@id">
+                    <td>@key</td>
+                </tr>
+                
+                foreach (var message in Model.Messages[key])
+                {
+                <tr class="child-of-node-@id">
+                    <td>@message</td>
+                </tr>
+                }
+            }
+        </tbody>
+    </table>
+}

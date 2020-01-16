@@ -1,0 +1,206 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Admin - Home";
+}
+@section LeftNavigation
+{
+    <ul id="Tabs">
+        <li>
+            <a href="#AdminTranslations"></a>
+        </li>
+    </ul>
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/tiny_mce/jquery.tinymce.js")" type="text/javascript"></script>
+
+    <script>
+        $(function () {
+            RefreshTranslationTable();
+
+            InitializeAddTranslationDialog();
+            InitializeEditTranslationDialog();
+
+            InitializeButtons();
+        });
+
+        function RefreshTranslationTable() {
+            $('#TranslationTablePlaceholder').loading('Retrieving translations');
+            $.ajax({
+                url: '@Url.Action("Translations")',
+                success: function (html) {
+                    $('#TranslationTablePlaceholder').html(html);
+                    $('#TranslationTable').dataTable();
+                },
+                error: function (err) {
+                    ShowDetailErrorDialog('Retrieve translations', err);
+                }
+            });
+        }
+
+        function InitializeAddTranslationDialog() {
+            $('#AddTranslationDialog').dialog({
+                title: 'Add translation',
+                autoOpen: false,
+                modal: true,
+                resizable: false,
+                width: 800,
+                height: 600
+            });
+        }
+
+        function InitializeEditTranslationDialog() {
+            $('#EditTranslationDialog').dialog({
+                title: 'Edit translation',
+                autoOpen: false,
+                modal: true,
+                resizable: false,
+                width: 800,
+                height: 600
+            });
+        }
+
+        function InitializeButtons() {
+            $(this).on('click', 'a[data-function=AddTranslationButton]', null, function (event) {
+                event.preventDefault();
+
+                $('#AddTranslationDialogPlaceholder').loading('Prepare new translation');
+                $('#AddTranslationDialog').dialog('open');
+
+                $.ajax({
+                    url: '@Url.Action("AddTranslation")',
+                    success: function (html) {
+                        $('#AddTranslationDialogPlaceholder').html(html);
+
+                        $('#AddTranslationDialogPlaceholder textarea').each(function () {
+                            $(this).tinymce({
+                                script_url: '@Url.Content("~/Scripts/tiny_mce/tiny_mce.js")',
+                                height: '300',
+                                width: '500',
+                                theme: 'simple',
+                                valid_styles : {'*' : 'font-weight,text-decoration'}
+                            });
+                        });
+                    },
+                    error: function (err) {
+                        $('#AddTranslationDialogPlaceholder').html(err.statusText);
+                        ShowDetailErrorDialog('Prepare new translation', err);
+                    }
+                });
+            });
+
+            $(this).on('click', 'a[data-function=AddTranslationSubmitButton]', null, function (event) {
+                ShowDetailSaveDialog();
+
+                event.preventDefault();
+                var addTranslationForm = $('#AddTranslationForm');
+
+                $.ajax({
+                    url: addTranslationForm.attr('action'),
+                    type: 'POST',
+                    data: addTranslationForm.serialize(),
+                    dataType: 'JSON',
+                    success: function () {
+                        HideDetailSaveDialog();
+                        $('#AddTranslationDialog').dialog('close');
+                        RefreshTranslationTable();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Prepare new translation', err);
+                    }
+                });
+            });
+
+            $(this).on('click', 'a[data-function=EditTranslationButton]', null, function (event) {
+                event.preventDefault();
+
+                $('#EditTranslationDialogPlaceholder').loading('Retrieve translation');
+                $('#EditTranslationDialog').dialog('open');
+
+                $.ajax({
+                    url: '@Url.Action("EditTranslation")/' + $(this).attr('data-id'),
+                    success: function (html) {
+                        $('#EditTranslationDialogPlaceholder').html(html);
+
+                        $('#EditTranslationDialogPlaceholder textarea').each(function () {
+                            $(this).tinymce({
+                                script_url: '@Url.Content("~/Scripts/tiny_mce/tiny_mce.js")',
+                                height: '300',
+                                width: '500',
+                                theme: 'simple',
+                                valid_styles: { '*': 'font-weight,text-decoration' }
+                            });
+                        });
+                    },
+                    error: function (err) {
+                        $('#EditTranslationDialogPlaceholder').html(err.statusText);
+                        ShowDetailErrorDialog('Prepare Retrieve translation', err);
+                    }
+                });
+            });
+
+            $(this).on('click', 'a[data-function=EditTranslationSubmitButton]', null, function (event) {
+                ShowDetailSaveDialog();
+
+                event.preventDefault();
+                var editTranslationForm = $('#EditTranslationForm');
+
+                $.ajax({
+                    url: editTranslationForm.attr('action'),
+                    type: 'POST',
+                    data: editTranslationForm.serialize(),
+                    dataType: 'JSON',
+                    success: function () {
+                        HideDetailSaveDialog();
+                        $('#EditTranslationDialog').dialog('close');
+                        RefreshTranslationTable();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Edit translation', err);
+                    }
+                });
+            });
+
+            $(this).on('click', 'a[data-function=DeleteTranslationButton]', null, function (event) {
+                ShowDetailSaveDialog();
+
+                event.preventDefault();
+
+                $.ajax({
+                    url: '@Url.Action("DeleteTranslation")/' + $(this).attr('data-id'),
+                    success: function () {
+                        HideDetailSaveDialog();
+                        RefreshTranslationTable();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Delete translation', err);
+                    }
+                });
+            });
+
+            $(this).on('click', 'a[data-function=RefreshTranslationTable]', null, function (event) {
+                event.preventDefault();
+
+                RefreshTranslationTable();
+            });
+        }
+    </script>
+}
+
+<fieldset id="AdminTranslations">
+    <legend>Translations</legend>
+
+    <div id="TranslationTablePlaceholder"></div>
+</fieldset>
+
+<div id="AddTranslationDialog">
+    <div id="AddTranslationDialogPlaceholder"></div>
+</div>
+
+<div id="EditTranslationDialog">
+    <div id="EditTranslationDialogPlaceholder"></div>
+</div>

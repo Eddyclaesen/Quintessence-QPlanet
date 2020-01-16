@@ -1,0 +1,190 @@
+﻿@using Quintessence.QService.QueryModel.Prm
+@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectConsultancy.EditProductsheetActionModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Consultancy - Edit product sheet";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">Productsheet</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li class="current">@Model.Project.Name (@Model.Month/@Model.Year)</li>
+        </ul>
+    </nav>
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.treeTable.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.cookie.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/persist.js")" type="text/javascript"></script>
+    <script>
+        $(function () {
+            InitializeUnregisteredProductsTable();
+            InitializeRegisteredProductsTable();
+        });
+
+        function InitializeUnregisteredProductsTable() {
+            $(this).on('change', 'input[data-function=ProductSold]', null, function () {
+                var unitPrice = parseFloat($(this).attr('data-unitprice').replace(',', '.'));
+                var priceControlId = $(this).attr('data-pricecontrolid');
+                var checkboxControlId = $(this).attr('data-checkboxcontolid');
+
+                $('#' + priceControlId).val(unitPrice * parseFloat($(this).val()));
+
+                if (!$('#' + checkboxControlId).is(':checked'))
+                    $('#' + checkboxControlId).attr('checked', true);
+            });
+        }
+
+        function InitializeRegisteredProductsTable() {
+            $('#RegisteredProductsheetTable').treeTable({ persist: true });
+
+            $('#SubmitProductsheetFormButton').click(function () {
+                var form = $('form');
+                ShowDetailSaveDialog();
+                form.submit();
+            });
+
+            $(this).on('click', 'a[data-function=UnregisterProductsheetEntry]', null, function () {
+                ShowDetailSaveDialog();
+
+                $.ajax({
+                    url: '@Url.Action("DeleteProductsheetEntry")/' + $(this).attr('data-id'),
+                    success: function () {
+                        location.reload();
+                    }
+                });
+            });
+        }
+    </script>
+}
+<fieldset id="Productsheet">
+    <legend>Productsheet</legend>
+
+    @using (Html.BeginForm())
+    {
+        @Html.HiddenFor(m => m.ProjectId)
+        @Html.HiddenFor(m => m.Year)
+        @Html.HiddenFor(m => m.Month)
+
+        <h4>Unregistered products</h4>
+        if (Model.ProjectPlanPhaseProducts.Count > 0)
+        {
+        <table id="UnregisteredProductsheetTable" class="dataTable">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Phase</th>
+                    <th>Unit price</th>
+                    <th>Total</th>
+                    <th>Remaining</th>
+                    <th>Sold</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.ProjectPlanPhaseProducts.Count; i++)
+                {
+                    <tr>
+                        <td>@Html.CheckBoxFor(m => m.ProjectPlanPhaseProducts[i].IsChecked)
+                            @Html.HiddenFor(m => m.ProjectPlanPhaseProducts[i].ProjectId)
+                            @Html.HiddenFor(m => m.ProjectPlanPhaseProducts[i].ProductId)
+                            @Html.HiddenFor(m => m.ProjectPlanPhaseProducts[i].ProjectPlanPhaseId)
+                            @Html.HiddenFor(m => m.ProjectPlanPhaseProducts[i].UserId)
+                            @Html.HiddenFor(m => m.ProjectPlanPhaseProducts[i].InvoiceStatusCode)
+                            @Html.HiddenFor(m => m.ProjectPlanPhaseProducts[i].InvoiceRemarks)
+                            @Html.HiddenFor(m => m.ProjectPlanPhaseProducts[i].Description)
+                            @Html.HiddenFor(m => m.ProjectPlanPhaseProducts[i].Total)
+                            @Html.HiddenFor(m => m.ProjectPlanPhaseProducts[i].Remaining)
+                            @Html.HiddenFor(m => m.ProjectPlanPhaseProducts[i].Date)
+                            @Html.HiddenFor(m => m.ProjectPlanPhaseProducts[i].Name)
+                            @Html.LabelFor(m => m.ProjectPlanPhaseProducts[i].IsChecked, Model.ProjectPlanPhaseProducts[i].Name)
+                        </td>
+                        <td>@Model.ProjectPlanPhaseProducts[i].ProjectPlanPhaseName</td>
+                        <td>@Model.ProjectPlanPhaseProducts[i].UnitPrice.ToString("C")</td>
+                        <td>@Model.ProjectPlanPhaseProducts[i].Total</td>
+                        <td>@Model.ProjectPlanPhaseProducts[i].Remaining</td>
+                        <td>@Html.TextBoxFor(m => m.ProjectPlanPhaseProducts[i].Quantity, new
+                       {
+                           data_function = "ProductSold",
+                           data_unitprice = Model.ProjectPlanPhaseProducts[i].UnitPrice,
+                           data_pricecontrolid = Html.IdFor(m => m.ProjectPlanPhaseProducts[i].InvoiceAmount),
+                           data_checkboxcontolid = Html.IdFor(m => m.ProjectPlanPhaseProducts[i].IsChecked),
+                           style = "width: 50px;"
+                       })
+                        </td>
+                        <td>€ @Html.TextBoxFor(m => m.ProjectPlanPhaseProducts[i].InvoiceAmount, new { style = "width: 75px;" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        }
+        else
+        {
+        <p>No unregistered productsheet entries found.</p>
+        }
+        <br />
+        <br />
+
+        <h4>Registered products</h4>
+        if (Model.Entries.Count > 0)
+        {
+        <table id="RegisteredProductsheetTable" class="dataTable">
+            <thead>
+                <tr>
+                    <th>Project phase</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th style="width: 72px">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Entries.Count; i++)
+                {
+                    <tr id="node-@Model.Entries[i].Id">
+                        <td>
+                            @Html.EditorFor(m => m.Entries[i], "BaseEntityViewTemplate")
+                            @Model.Entries[i].ProjectPlanPhaseName
+                        </td>
+                        <td>@Model.Entries[i].Name</td>
+                        <td>@Model.Entries[i].Quantity</td>
+                        <td>@Model.Entries[i].InvoiceAmount.ToString("C")</td>
+                        <td>@Html.DropDownListFor(m => m.Entries[i].InvoiceStatusCode, Model.CreateInvoiceStatusSelectListItem(Model.Entries[i].InvoiceStatusCode), new
+                                {
+                                    data_controlid = "StatusDropDownList"
+                                })</td>
+
+                        <td>
+                            @if (Model.Entries[i].Status != InvoiceStatusType.Invoiced)
+                            {
+                                <a href="javascript:void(0);" data-function="UnregisterProductsheetEntry" class="delete-link" data-id="@Model.Entries[i].Id" title="Delete this productsheet entry."></a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        }
+        else
+        {<p>No registered productsheet entries found.</p>
+        }
+        <br />
+        <br />
+    }
+
+    <div class="right-text">
+        <a href="javascript:void(0);" id="SubmitProductsheetFormButton" class="button">Save</a>
+    </div>
+</fieldset>

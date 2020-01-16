@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Quintessence.QService.QueryModel.Prm.ProjectCategoryDetailSimulationCombinationView>
+
+<table id="SelectedSimulationTable" style="width: 100%">
+    <thead>
+        <tr>
+            <th style="width: 20%;">SimulationSet</th>
+            <th style="width: 20%;">Department</th>
+            <th style="width: 10%;">Level</th>
+            <th style="width: 20%;">Simulation</th>
+            <th style="width: 20%;">Languages</th>
+            <th style="width: 5%;">Prep</th>
+            <th style="width: 5%;">Exec</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var entry in Model)
+        {
+            <tr>
+                <td>@entry.SimulationSetName</td>
+                <td>@entry.SimulationDepartmentName</td>
+                <td>@entry.SimulationLevelName</td>
+                <td>@entry.SimulationName</td>
+                <td>@entry.LanguageNames</td>
+                <td>@entry.Preparation</td>
+                <td>@entry.Execution</td>
+                <td><a href="javascript:void(0);" data-function="DeleteSelectedSimulation" data-id="@entry.Id">Remove</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

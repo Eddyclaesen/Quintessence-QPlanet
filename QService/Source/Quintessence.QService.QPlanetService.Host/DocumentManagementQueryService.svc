@@ -1,0 +1,4 @@
+﻿<%@ ServiceHost Language="C#" 
+                Debug="true" 
+                Factory="Quintessence.QService.QPlanetService.Implementation.Base.UnityServiceHostFactory"
+                Service="Quintessence.QService.QPlanetService.Implementation.QueryServices.DocumentManagementQueryService" %>

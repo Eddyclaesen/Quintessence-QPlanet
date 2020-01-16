@@ -1,0 +1,506 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AcdcCompletedText" xml:space="preserve">
+    <value>You have reached the end of this questionnaire. Press the "Send" button to complete the evaluation.</value>
+  </data>
+  <data name="AuthenticationFailedText" xml:space="preserve">
+    <value>The verification code you entered appears to be invalid. Please try again.</value>
+  </data>
+  <data name="CoachingCompletedText" xml:space="preserve">
+    <value>You have reached the end of this questionnaire. Press the "Send" button to complete the evaluation.</value>
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="CompletedTitle" xml:space="preserve">
+    <value>Evaluation completed</value>
+  </data>
+  <data name="ContactpersonNotPresent" xml:space="preserve">
+    <value>Contactperson was not present</value>
+  </data>
+  <data name="ContactpersonPresent" xml:space="preserve">
+    <value>Contactperson was present</value>
+  </data>
+  <data name="CustomProjectsCompletedText" xml:space="preserve">
+    <value>You have reached the end of this questionnaire. Press the "Send" button to complete the evaluation.</value>
+  </data>
+  <data name="Dissatisfied" xml:space="preserve">
+    <value>Dissatisfied</value>
+  </data>
+  <data name="ErrorText" xml:space="preserve">
+    <value>We encountered a problem while processing the evaluation form. Click the "Back" button to try and go back to previous page or close the browser and try to open the evaluation form again. We apologize for the inconvenience.</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="EvaluationFormAcdcIntroText" xml:space="preserve">
+    <value>At Quintessence Consulting we constantly work to improve the quality of our service. With that in mind we would like to ask you a number of questions about the quality of the assessment and development activities you recently took part in at Quintessence.</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion01" xml:space="preserve">
+    <value>Are you satisfied with how long it takes to plan and set up an assessment centre?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion02" xml:space="preserve">
+    <value>Are you satisfied with the information the participants received to prepare?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion03" xml:space="preserve">
+    <value>Are you satisfied with how long it takes to generate a report?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion04" xml:space="preserve">
+    <value>Are you satisfied with the way in which your competence profile was established?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion05" xml:space="preserve">
+    <value>Were the competences relevant to the job assessed?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion06" xml:space="preserve">
+    <value>Are you satisfied with the service of the client assistants?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion07" xml:space="preserve">
+    <value>Are you satisfied with the process of invoicing?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion08" xml:space="preserve">
+    <value>How important is it for you that the same assessors assess all participants with regard to the same job?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion09" xml:space="preserve">
+    <value>What is your general impression of the quality of the reports?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion10" xml:space="preserve">
+    <value>Please tell us your thoughts on the following aspects of the reports.
+&lt;ul&gt;
+&lt;li&gt;Are they clear?&lt;/li&gt;
+&lt;li&gt;Are they to the point?&lt;/li&gt;
+&lt;li&gt;Is the score in line with the observations?&lt;/li&gt;
+&lt;li&gt;Is the style sufficiently appreciative?&lt;/li&gt;
+&lt;li&gt;Do participants recognise themselves in the observations?&lt;/li&gt;
+&lt;li&gt;Do line managers recognise the participants in the observations?&lt;/li&gt;
+&lt;li&gt;Are they grammatically correct?&lt;/li&gt;
+&lt;li&gt;Are they easy to follow?&lt;/li&gt;
+&lt;/ul&gt;</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion11" xml:space="preserve">
+    <value>Do the reports give you a good idea of the performance you can expect from the participant?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion12" xml:space="preserve">
+    <value>Are adequate points made to back up the recommendation?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion13" xml:space="preserve">
+    <value>Is the summary at the beginning a source of added value for you?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion14" xml:space="preserve">
+    <value>Is the description of the results of the personality questionnaire clear enough?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion15" xml:space="preserve">
+    <value>Are you satisfied with the paragraph about cultural fit?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion16" xml:space="preserve">
+    <value>Is there sufficient uniformity across the reports of the various assessors?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion17" xml:space="preserve">
+    <value>Did the assessor call you the day after the assessment/development centre to give feedback on the assessment/development centre?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion18" xml:space="preserve">
+    <value>Is this call a source of added value for you? What aspects of the phone feedback do you appreciate?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion19" xml:space="preserve">
+    <value>Do you tend to follow the recommendation you are given?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion19_19A" xml:space="preserve">
+    <value>Why?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion19_19B" xml:space="preserve">
+    <value>Why not?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion20" xml:space="preserve">
+    <value>What aspects play a role in the recruitment/selection decision for a given candidate?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion21" xml:space="preserve">
+    <value>What feedback do you get from participants after the assessment or development centre?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion22" xml:space="preserve">
+    <value>How do participants respond after they have received the feedback (by phone or face-to-face)?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion23" xml:space="preserve">
+    <value>How do participants respond to the following?
+            &lt;ul&gt;
+                &lt;li&gt;Negative recommendations&lt;/li&gt;
+                &lt;li&gt;Positive recommendations&lt;/li&gt;
+            &lt;/ul&gt;</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion24" xml:space="preserve">
+    <value>How do you feel we could improve our service?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion25" xml:space="preserve">
+    <value>Do you have specific recommendations to improve our assessment and development offerings?</value>
+  </data>
+  <data name="EvaluationFormAcdcQuestion26" xml:space="preserve">
+    <value>Are there any other comments you would like to make?</value>
+  </data>
+  <data name="EvaluationFormAcdcTitleBlock1" xml:space="preserve">
+    <value>Preparation/Follow-up</value>
+  </data>
+  <data name="EvaluationFormAcdcTitleBlock2" xml:space="preserve">
+    <value>Written report</value>
+  </data>
+  <data name="EvaluationFormAcdcTitleBlock3" xml:space="preserve">
+    <value>Telephone feedback to client</value>
+  </data>
+  <data name="EvaluationFormAcdcTitleBlock4" xml:space="preserve">
+    <value>What happens next</value>
+  </data>
+  <data name="EvaluationFormAcdcTitleBlock5" xml:space="preserve">
+    <value>Feedback to participants</value>
+  </data>
+  <data name="EvaluationFormAcdcTitleBlock6" xml:space="preserve">
+    <value>Suggestions/Recommendations</value>
+  </data>
+  <data name="EvaluationFormCoachingIntroText" xml:space="preserve">
+    <value>At Quintessence Consulting we constantly work to improve the quality of our service. In doing so, your opinion is very important. With that in mind, we would like to ask you a number of questions about the quality of the coaching activities you recently took part in with Quintessence coaches.</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion01" xml:space="preserve">
+    <value>To what degree did you receive sufficient prior information about what coaching is and what you could expect from this coaching path? (quotation, phone call, personal contact)?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion02" xml:space="preserve">
+    <value>What information would you have found useful to have in advance?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion03" xml:space="preserve">
+    <value>Was there an intake interview at which other people than simply the coach and the coachee were present?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion04A" xml:space="preserve">
+    <value>Who was present at this intake interview?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion04A_41A_411" xml:space="preserve">
+    <value>To what degree was attending this intake interview a source of added value for you?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion04A_41A_412" xml:space="preserve">
+    <value>To what degree were clear arrangements made with regard to next steps in the coaching path?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion04A_41A_413" xml:space="preserve">
+    <value>Would you like to make any other comments about the intake interview?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion04A_41B_411" xml:space="preserve">
+    <value>What comments have been made to you about the intake interview?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion04A_41B_412" xml:space="preserve">
+    <value>Would you like to be present in the future?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion04B" xml:space="preserve">
+    <value>Would you like other people to be present in the future?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion05" xml:space="preserve">
+    <value>Was there a feedback interview?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion05_5A" xml:space="preserve">
+    <value>Who was present at this feedback interview?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion05_5A_51A_511" xml:space="preserve">
+    <value>To what degree was attending this feedback interview a source of added value for you?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion05_5A_51A_512" xml:space="preserve">
+    <value>To what degree were you given insight into the steps taken by the coachee within the context of the coaching path? and the results achieved?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion05_5A_51A_513" xml:space="preserve">
+    <value>Do you have any other comments about the feedback interview?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion05_5A_51B_511" xml:space="preserve">
+    <value>What comments have been made to you about the feedback interview?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion05_5A_51B_512" xml:space="preserve">
+    <value>Would you like to be present in the future?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion05_5B" xml:space="preserve">
+    <value>Would you like there to be a feedback interview in the future?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion06" xml:space="preserve">
+    <value>What form did the feedback you received in the course of the coaching plan take?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion07" xml:space="preserve">
+    <value>What form did the feedback you received upon completion of the coaching plan take?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion08" xml:space="preserve">
+    <value>What did you appreciate about this feedback?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion09" xml:space="preserve">
+    <value>With regard to feedback, what would you expect to see done differently or to a greater degree?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion10" xml:space="preserve">
+    <value>Do you feel that the goal set at the start of the coaching plan has been achieved?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion10_10A" xml:space="preserve">
+    <value>What is the current situation with regard to what was achieved? Do you feel that further support is worthwhile? Is a follow-up possible/desirable?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion10_10B" xml:space="preserve">
+    <value>Why might that be the case in your opinion? What work still has to be done and by whom? How should we proceed?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion11" xml:space="preserve">
+    <value>Has the coachee given you any feedback with regard to the coaching plan? If so, what?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion12" xml:space="preserve">
+    <value>Are you satisfied with the service of the client assistants?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion13" xml:space="preserve">
+    <value>Are you satisfied with the process of invoicing?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion14" xml:space="preserve">
+    <value>Do you have specific recommendations to improve our coaching?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion15" xml:space="preserve">
+    <value>Are there any other comments you would like to make?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion16" xml:space="preserve">
+    <value>Would you advise other coworkers or colleagues to work with a coach of Quintessence?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion16_16A" xml:space="preserve">
+    <value>Why?</value>
+  </data>
+  <data name="EvaluationFormCoachingQuestion16_16B" xml:space="preserve">
+    <value>Why not?</value>
+  </data>
+  <data name="EvaluationFormCoachingTitleBlock1" xml:space="preserve">
+    <value>Prior information about coaching</value>
+  </data>
+  <data name="EvaluationFormCoachingTitleBlock2" xml:space="preserve">
+    <value>Intake interview</value>
+  </data>
+  <data name="EvaluationFormCoachingTitleBlock3" xml:space="preserve">
+    <value>Feedback interview</value>
+  </data>
+  <data name="EvaluationFormCoachingTitleBlock4" xml:space="preserve">
+    <value>Coaching interviews and (interim) reports</value>
+  </data>
+  <data name="EvaluationFormCoachingTitleBlock5" xml:space="preserve">
+    <value>Results</value>
+  </data>
+  <data name="EvaluationFormCoachingTitleBlock6" xml:space="preserve">
+    <value>Preparation/Follow-up</value>
+  </data>
+  <data name="EvaluationFormCoachingTitleBlock7" xml:space="preserve">
+    <value>Suggestions/recommendations</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsIntroText" xml:space="preserve">
+    <value>At Quintessence Consulting we constantly work to improve the quality of our service. With that in mind we would like to ask you some questions about the quality of the consulting services Quintessence recently provided you with.</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion01" xml:space="preserve">
+    <value>To what degree do you feel that the goal set at the beginning of the partnership was achieved? What has been achieved and what has not.</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion02" xml:space="preserve">
+    <value>What is the current situation with regard to what has been achieved? Does the project arouse interest and do you build on it? Do you feel that further support is worthwhile? Is a follow-up possible/desirable?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion03" xml:space="preserve">
+    <value>If the project does/did not proceed as expected, what do you feel is the reason? What work still has to be done and by whom? How should we proceed?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion04" xml:space="preserve">
+    <value>How did you find the process at the time and what is your general impression of it now, looking back?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion05" xml:space="preserve">
+    <value>What are your thoughts on how the project was communicated and supervised?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion06" xml:space="preserve">
+    <value>What are your thoughts on the participants? Did we invite the right people to take part? Were they able to make a substantive contribution? Were they able to gain support? Was everyone on board from the start? Did everyone stay on board?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion07" xml:space="preserve">
+    <value>How did you experience the guidance and support during the workshops (speed, standard, structure, responses to difficult questions, material)?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion08" xml:space="preserve">
+    <value>If an adjustment was made, was it the right response at the right time and was it done correctly?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion09" xml:space="preserve">
+    <value>What are your thoughts on how the content and process were communicated to the steering group (clear, timely, relevant)? How was the support of the steering group?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion10" xml:space="preserve">
+    <value>Did we properly understand your demand?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion11" xml:space="preserve">
+    <value>Were we sufficiently reachable and available?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion12" xml:space="preserve">
+    <value>Could you get hold of us when you needed to (to ask questions, share concerns)?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion13" xml:space="preserve">
+    <value>Were you given good material support?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion14" xml:space="preserve">
+    <value>Did invoicing go smoothly during the project?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsQuestion15" xml:space="preserve">
+    <value>What changes would you like to see next time?</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsTitleBlock1" xml:space="preserve">
+    <value>Result/product</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsTitleBlock2" xml:space="preserve">
+    <value>Process</value>
+  </data>
+  <data name="EvaluationFormCustomProjectsTitleBlock3" xml:space="preserve">
+    <value>Working relationship with project team/steering group/client assistants</value>
+  </data>
+  <data name="FinalText" xml:space="preserve">
+    <value>The evaluation has been succesfully submitted. Quintessence thanks you for your cooperation.</value>
+  </data>
+  <data name="FinalTitle" xml:space="preserve">
+    <value>Thank you</value>
+  </data>
+  <data name="FooterText" xml:space="preserve">
+    <value>Antwerp | Ghent | Brussels</value>
+  </data>
+  <data name="IntroLabel" xml:space="preserve">
+    <value>Introduction</value>
+  </data>
+  <data name="LoginCodeLabel" xml:space="preserve">
+    <value>Code:</value>
+  </data>
+  <data name="LoginIntroText" xml:space="preserve">
+    <value>Please fill in the 6-digit code you have received by e-mail.</value>
+  </data>
+  <data name="LoginOkButton" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Neutral" xml:space="preserve">
+    <value>Neutral</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="NotApplicable" xml:space="preserve">
+    <value>Not applicable</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="Satisfied" xml:space="preserve">
+    <value>Satisfied</value>
+  </data>
+  <data name="ShowCharacters" xml:space="preserve">
+    <value>Show characters</value>
+  </data>
+  <data name="ToWhatDegree" xml:space="preserve">
+    <value>To what degree...</value>
+  </data>
+  <data name="VeryDissatisfied" xml:space="preserve">
+    <value>Very dissatisfied</value>
+  </data>
+  <data name="VerySatisfied" xml:space="preserve">
+    <value>Very satisfied</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+</root>

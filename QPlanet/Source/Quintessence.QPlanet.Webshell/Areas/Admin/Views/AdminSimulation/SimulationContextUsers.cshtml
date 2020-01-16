@@ -1,0 +1,54 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Admin.Models.AdminSimulation.SimulationContextUsersActionModel
+
+@using (Html.BeginForm("SimulationContextUsers", "AdminSimulation", FormMethod.Post, new { id = "SimulationContextUserForm" }))
+{
+    <table id="SimulationContextUserTable" class="dataTable">
+        <thead>
+            <tr>
+                <th>UserName</th>
+                <th>Password</th>
+                <th>Valid From</th>
+                <th>Valid To</th>
+                <th style="width: 72px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Users.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.EditorFor(m => m.Users[i], "BaseEntityViewTemplate")
+                        @Html.EditorFor(m => m.Users[i].UserName)
+                    </td>
+                    <td>@Html.TextBoxFor(m => m.Users[i].Password, new { data_function = "SimulationContextUserPasswordTextBox" })
+                        <a href="javascript:void(0);" data-function="CopyToClipboard" data-control-id="@Html.IdFor(m => m.Users[i].Password)">
+                            Copy</a>
+                    </td>
+                    <td>@Html.EditorFor(m => m.Users[i].ValidFrom)</td>
+                    <td>@Html.EditorFor(m => m.Users[i].ValidTo)</td>
+                    <td>
+                        <a href="javascript:void(0);" data-function="DeleteSimulationContextUser" data-simulation-context-user-id="@Model.Users[i].Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+}
+
+<div class="right-text">
+    <a href="javascript:void(0);" data-function="GenerateNewPasswords" class="button">Generate passwords</a>
+    <a href="javascript:void(0);" data-function="GenerateNewYear" class="button">New Year</a>
+    <a href="javascript:void(0);" data-function="AddSimulationContextUserButton" class="button">Add</a>
+    <a href="javascript:void(0);" data-function="SaveSimulationContextUsers" class="button">Save</a>
+</div>
+
+@for (int i = 0; i < Model.Users.Count; i++)
+{
+    <script>
+        $(function() {
+            $('#@Html.IdFor(m => m.Users[i].ValidFrom)').datetimepicker({ dateFormat: "dd/mm/yy" });
+            $('#@Html.IdFor(m => m.Users[i].ValidTo)').datetimepicker({ dateFormat: "dd/mm/yy" });
+        });
+    </script>
+}

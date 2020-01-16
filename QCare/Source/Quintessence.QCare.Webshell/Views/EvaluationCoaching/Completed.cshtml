@@ -1,0 +1,53 @@
+﻿@using Resources
+@model Quintessence.QCare.ViewModel.EvaluationFormBaseModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            InitializeButtons();
+        });
+
+        function InitializeButtons() {
+            //Previous
+            $('a[data-function=previous]').click(function (e) {
+                e.preventDefault();
+                var form = $('#CompletedCoachingForm');
+                $('#Navigation').val('0');
+                form.submit();
+            });
+
+            //Next
+            $('a[data-function=complete]').click(function (e) {
+                e.preventDefault();
+                var form = $('#CompletedCoachingForm');
+                $('#Navigation').val('1');
+                form.submit();
+            });
+        }
+
+    </script>    
+}
+
+@using (Html.BeginForm("Completed", "EvaluationCoaching", FormMethod.Post, new{id="CompletedCoachingForm"}))
+{
+    @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+    @Html.HiddenFor(m => m.Navigation)
+    <fieldset id="completed-fieldset">
+        <legend>@Global.CompletedTitle</legend>
+        <div class="center-text">
+            <p>
+                @Global.CoachingCompletedText
+            </p>
+            <div>
+                <a href="javascript:void(0);" data-function="previous" class="button">@Global.Previous</a>
+                <a href="javascript:void(0);" data-function="complete" class="button">@Global.Complete</a>
+            </div>
+        </div>
+    </fieldset>
+    
+}

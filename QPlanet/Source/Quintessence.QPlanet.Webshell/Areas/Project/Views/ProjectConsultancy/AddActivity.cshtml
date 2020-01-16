@@ -1,0 +1,19 @@
+﻿@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectConsultancy.AddActivityActionModel
+<p>
+    Select an activity type and enter a name.
+</p>
+
+@using (Html.BeginForm("AddActivity", "ProjectConsultancy", FormMethod.Post, new { id = "AddActivityForm" }))
+{
+    <div class="row">
+        <div>Activity type</div>
+        <div>
+            @Html.HiddenFor(m => m.ProjectId)
+            @Html.DropDownListFor(m => m.ActivityTypeId, Model.ActivityTypes.OrderBy(at => at.Name))
+        </div>
+    </div>
+    <div class="row">
+        <div>Activity name</div>
+        <div>@Html.EditorFor(m => m.Name)</div>
+    </div>
+}

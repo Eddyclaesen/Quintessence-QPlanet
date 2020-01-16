@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{56A829FA-2175-4C60-9912-09CAB8FDE30B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Quintessence.QService.DataModel</RootNamespace>
+    <AssemblyName>Quintessence.QService.DataModel</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Pro|AnyCPU'">
+    <OutputPath>bin\Pro\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Dev\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Main|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Main\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Dev01|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Dev01\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Dev02|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Dev02\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Dev03|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Dev03\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Test\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\..\packages\EntityFramework.4.3.1\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cam\Candidate.cs" />
+    <Compile Include="Cam\ProgramComponent.cs" />
+    <Compile Include="Cam\ProgramComponentSpecial.cs" />
+    <Compile Include="Crm\ContactDetail.cs" />
+    <Compile Include="Dim\Dictionary.cs" />
+    <Compile Include="Dim\DictionaryCluster.cs" />
+    <Compile Include="Dim\DictionaryClusterTranslation.cs" />
+    <Compile Include="Dim\DictionaryCompetence.cs" />
+    <Compile Include="Dim\DictionaryCompetenceTranslation.cs" />
+    <Compile Include="Dim\DictionaryIndicator.cs" />
+    <Compile Include="Dim\DictionaryIndicatorTranslation.cs" />
+    <Compile Include="Dim\DictionaryLevel.cs" />
+    <Compile Include="Dim\DictionaryLevelTranslation.cs" />
+    <Compile Include="Dom\TrainingChecklist.cs" />
+    <Compile Include="Inf\Job.cs" />
+    <Compile Include="Inf\Language.cs" />
+    <Compile Include="Inf\MailTemplate.cs" />
+    <Compile Include="Inf\MailTemplateTranslation.cs" />
+    <Compile Include="Inf\Office.cs" />
+    <Compile Include="Prm\AssessmentDevelopmentProject.cs" />
+    <Compile Include="Prm\ComplaintType.cs" />
+    <Compile Include="Prm\ConsultancyProject.cs" />
+    <Compile Include="Prm\IInvoiceInfo.cs" />
+    <Compile Include="Prm\EvaluationFormAcdc.cs" />
+    <Compile Include="Prm\EvaluationFormCoaching.cs" />
+    <Compile Include="Prm\EvaluationFormCustomProjects.cs" />
+    <Compile Include="Prm\ProjectComplaint.cs" />
+    <Compile Include="Prm\EvaluationFormType.cs" />
+    <Compile Include="Prm\EvaluationForm.cs" />
+    <Compile Include="Prm\MailStatusType.cs" />
+    <Compile Include="Prm\ProjectDna2CrmPerson.cs" />
+    <Compile Include="Prm\ProjectDnaCommercialTranslation.cs" />
+    <Compile Include="Prm\ProjectEvaluation.cs" />
+    <Compile Include="Prm\ProjectDna.cs" />
+    <Compile Include="Prm\ProjectDna2ProjectDnaType.cs" />
+    <Compile Include="Prm\ProjectProduct.cs" />
+    <Compile Include="Prm\ProjectReportRecipient.cs" />
+    <Compile Include="Prm\ProjectRevenueDistribution.cs" />
+    <Compile Include="Prm\ProjectRoleTranslation.cs" />
+    <Compile Include="Prm\ProjectTypeCategoryLevel.cs" />
+    <Compile Include="Prm\ProjectTypeCategoryUnitPrice.cs" />
+    <Compile Include="Prm\ReportStatus.cs" />
+    <Compile Include="Prm\ProjectDocumentMetadata.cs" />
+    <Compile Include="Prm\FrameworkAgreement.cs" />
+    <Compile Include="Prm\ProjectCandidateResume.cs" />
+    <Compile Include="Prm\ProjectCandidateClusterScore.cs" />
+    <Compile Include="Prm\ProjectCandidateCompetenceScore.cs" />
+    <Compile Include="Prm\ProjectCandidateIndicatorScore.cs" />
+    <Compile Include="Prm\ProjectCandidateCompetenceSimulationScore.cs" />
+    <Compile Include="Prm\ProjectCandidateIndicatorSimulationScore.cs" />
+    <Compile Include="Prm\IProjectCandidateCategoryDetailType.cs" />
+    <Compile Include="Prm\ProjectCandidateCategoryDetailType1.cs" />
+    <Compile Include="Prm\ProjectCandidateCategoryDetailType2.cs" />
+    <Compile Include="Prm\ProjectCandidateCategoryDetailType3.cs" />
+    <Compile Include="Prm\ProjectCandidateResumeField.cs" />
+    <Compile Include="Prm\ProjectCategoryCaDetail.cs" />
+    <Compile Include="Prm\ProjectCategoryCuDetail.cs" />
+    <Compile Include="Prm\ProductSheetEntry.cs" />
+    <Compile Include="Prm\ProjectCategoryDetailType2.cs" />
+    <Compile Include="Prm\ProjectCategoryDetailType3.cs" />
+    <Compile Include="Prm\ProjectCategoryDetailType1.cs" />
+    <Compile Include="Prm\ProjectFixedPrice.cs" />
+    <Compile Include="Prm\ProjectRole2DictionaryIndicator.cs" />
+    <Compile Include="Prm\ProjectType2ProjectTypeCategory.cs" />
+    <Compile Include="Prm\ProjectTypeCategoryDefaultValue.cs" />
+    <Compile Include="Prm\Proposal.cs" />
+    <Compile Include="Prm\ProjectCandidateReportRecipient.cs" />
+    <Compile Include="Prm\SubProject.cs" />
+    <Compile Include="Prm\Theorem.cs" />
+    <Compile Include="Prm\TheoremList.cs" />
+    <Compile Include="Prm\TheoremListRequest.cs" />
+    <Compile Include="Prm\TheoremListTemplate.cs" />
+    <Compile Include="Prm\TheoremTemplate.cs" />
+    <Compile Include="Prm\TheoremTemplateTranslation.cs" />
+    <Compile Include="Prm\TheoremTranslation.cs" />
+    <Compile Include="Prm\TimesheetEntry.cs" />
+    <Compile Include="Prm\ProjectPlanPhaseProduct.cs" />
+    <Compile Include="Prm\ProjectPlanPhaseActivity.cs" />
+    <Compile Include="Prm\ProjectPlan.cs" />
+    <Compile Include="Prm\ProjectCandidate.cs" />
+    <Compile Include="Prm\Interfaces\IProjectCategoryDetailProjectRole.cs" />
+    <Compile Include="Prm\ProjectPlanPhase.cs" />
+    <Compile Include="Prm\ProjectPriceIndex.cs" />
+    <Compile Include="Prm\ProjectRole.cs" />
+    <Compile Include="Prm\ProjectCategoryAcDetail.cs" />
+    <Compile Include="Prm\ProjectCategoryDcDetail.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail2Competence2Combination.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail2DictionaryIndicator.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail2SimulationCombination.cs" />
+    <Compile Include="Prm\ProjectCategoryEaDetail.cs" />
+    <Compile Include="Prm\ProjectCategoryFaDetail.cs" />
+    <Compile Include="Prm\ProjectCategoryFdDetail.cs" />
+    <Compile Include="Prm\ProjectCategoryPsDetail.cs" />
+    <Compile Include="Prm\ProjectCategorySoDetail.cs" />
+    <Compile Include="Prm\ProjectRole2DictionaryLevel.cs" />
+    <Compile Include="Prm\Project.cs" />
+    <Compile Include="Prm\Project2CrmProject.cs" />
+    <Compile Include="Prm\ProjectCategoryDetail.cs" />
+    <Compile Include="Prm\ProjectType.cs" />
+    <Compile Include="Prm\ProjectTypeCategory.cs" />
+    <Compile Include="Prm\ProjectPlanPhaseEntry.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rep\CandidateReportDefinitionField.cs" />
+    <Compile Include="Rep\CandidateReportDefinition.cs" />
+    <Compile Include="Rep\ReportDefinition.cs" />
+    <Compile Include="Rep\ReportParameter.cs" />
+    <Compile Include="Rep\ReportParameterValue.cs" />
+    <Compile Include="Scm\Activity.cs" />
+    <Compile Include="Scm\ActivityDetailCoaching.cs" />
+    <Compile Include="Scm\ActivityDetailConsulting.cs" />
+    <Compile Include="Scm\ActivityDetailSupport.cs" />
+    <Compile Include="Scm\ActivityDetailTraining2TrainingType.cs" />
+    <Compile Include="Scm\ActivityDetail.cs" />
+    <Compile Include="Scm\ActivityDetailTrainingLanguage.cs" />
+    <Compile Include="Scm\ActivityDetailWorkshop.cs" />
+    <Compile Include="Scm\ActivityDetailWorkshopLanguage.cs" />
+    <Compile Include="Scm\ActivityType.cs" />
+    <Compile Include="Scm\ActivityProfile.cs" />
+    <Compile Include="Scm\ActivityDetailTraining.cs" />
+    <Compile Include="Scm\ActivityType2Profile.cs" />
+    <Compile Include="Scm\ActivityDetailTrainingCandidate.cs" />
+    <Compile Include="Scm\Profile.cs" />
+    <Compile Include="Scm\TrainingType.cs" />
+    <Compile Include="Scm\ProductType.cs" />
+    <Compile Include="Scm\Product.cs" />
+    <Compile Include="Sec\AuthenticationToken.cs" />
+    <Compile Include="Sec\Employee.cs" />
+    <Compile Include="Sec\Operation.cs" />
+    <Compile Include="Sec\Role.cs" />
+    <Compile Include="Sec\User.cs" />
+    <Compile Include="Sim\Simulation.cs" />
+    <Compile Include="Sim\SimulationCombination2Language.cs" />
+    <Compile Include="Sim\SimulationCombination.cs" />
+    <Compile Include="Sim\SimulationContext.cs" />
+    <Compile Include="Sim\SimulationContextUser.cs" />
+    <Compile Include="Sim\SimulationDepartment.cs" />
+    <Compile Include="Sim\SimulationLevel.cs" />
+    <Compile Include="Sim\SimulationSet.cs" />
+    <Compile Include="Sim\SimulationTranslation.cs" />
+    <Compile Include="Wsm\UserProfile.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Quintessence.Infrastructure\Quintessence.Infrastructure.csproj">
+      <Project>{18A071D5-7AE7-4F2F-94DF-4D40DEB81A9C}</Project>
+      <Name>Quintessence.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.Core\Quintessence.QService.Core.csproj">
+      <Project>{22e9834e-db39-410e-ae73-44b2405acfcd}</Project>
+      <Name>Quintessence.QService.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.QueryModel\Quintessence.QService.QueryModel.csproj">
+      <Project>{C861E521-51A1-4909-9563-A9703FE31917}</Project>
+      <Name>Quintessence.QService.QueryModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Base\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

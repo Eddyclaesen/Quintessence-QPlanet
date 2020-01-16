@@ -1,0 +1,25 @@
+﻿@model List<Quintessence.QService.QueryModel.Dim.DictionaryAdminView>
+
+<table class="dataTable">
+    <thead>
+        <tr>
+            <th>Dictionary</th>
+            <th>Contact</th>
+            <th>Projects</th>
+            <th style="max-width: 72px; min-width: 72px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dictionary in Model.OrderBy(d => d.Name))
+        {
+            <tr>
+                <td>@dictionary.Name</td>
+                <td>@dictionary.Contact.FullName</td>
+                <td>@dictionary.NumberOfUsages</td>
+                <td>
+                    @Html.ActionLink("Edit", "EditDictionary", new { id = dictionary.Id }, new { @class = "edit-link", target = dictionary.Id.ToString() })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

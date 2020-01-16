@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[Simulation]
+	ADD CONSTRAINT [PK_Simulation] 
+	PRIMARY KEY NONCLUSTERED ([Id])

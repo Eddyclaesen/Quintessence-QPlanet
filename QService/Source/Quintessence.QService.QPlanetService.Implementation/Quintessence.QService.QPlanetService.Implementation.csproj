@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{838C97F8-6044-447D-AF68-15123F1DFCBE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Quintessence.QService.QPlanetService.Implementation</RootNamespace>
+    <AssemblyName>Quintessence.QService.QPlanetService.Implementation</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Pro|AnyCPU'">
+    <OutputPath>bin\Pro\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Dev\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Main|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Main\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Dev01|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Dev01\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Dev02|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Dev02\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build.Dev03|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Build.Dev03\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Test\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\..\packages\AutoMapper.2.1.267\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\..\packages\EntityFramework.4.3.1\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\..\..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\..\..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint">
+      <HintPath>..\..\..\lib\SharePoint\Microsoft.SharePoint.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SharePoint\Microsoft.SharePoint.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client.Runtime, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SharePoint\Microsoft.SharePoint.Client.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activation" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base\Behaviors\SecureOperationBehaviorAttribute.cs" />
+    <Compile Include="Base\Behaviors\SecureOperationInvoker.cs" />
+    <Compile Include="Base\SecuredUnityServiceBase.cs" />
+    <Compile Include="Base\ServiceHostFactoryHelper.cs" />
+    <Compile Include="Base\UnityServiceBase.cs" />
+    <Compile Include="Base\UnityServiceHostFactory.cs" />
+    <Compile Include="Base\ValidationContextLifetimeManager.cs" />
+    <Compile Include="CommandServices\AuthenticationCommandService.cs" />
+    <Compile Include="CommandServices\CandidateManagementCommandService.cs" />
+    <Compile Include="CommandServices\DocumentManagementCommandService.cs" />
+    <Compile Include="CommandServices\WorkspaceManagementCommandService.cs" />
+    <Compile Include="CommandServices\InfrastructureCommandService.cs" />
+    <Compile Include="CommandServices\ReportManagementCommandService.cs" />
+    <Compile Include="CommandServices\SimulationManagementCommandService.cs" />
+    <Compile Include="CommandServices\CustomerRelationshipManagementCommandService.cs" />
+    <Compile Include="CommandServices\ProjectManagementCommandService.cs" />
+    <Compile Include="CommandServices\DictionaryManagementCommandService.cs" />
+    <Compile Include="CommandServices\SecurityCommandService.cs" />
+    <Compile Include="CommandServices\SupplyChainManagementCommandService.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="QueryServices\AuthenticationQueryService.cs" />
+    <Compile Include="QueryServices\CandidateManagementQueryService.cs" />
+    <Compile Include="QueryServices\FinanceManagementQueryService.cs" />
+    <Compile Include="QueryServices\ReportManagementQueryService.cs" />
+    <Compile Include="QueryServices\WorkspaceManagementQueryService.cs" />
+    <Compile Include="QueryServices\SupplyChainManagementQueryService.cs" />
+    <Compile Include="QueryServices\DocumentManagementQueryService.cs" />
+    <Compile Include="QueryServices\SimulationManagementQueryService.cs" />
+    <Compile Include="QueryServices\ProjectManagementQueryService.cs" />
+    <Compile Include="QueryServices\CustomerRelationshipManagementQueryService.cs" />
+    <Compile Include="QueryServices\DictionaryManagementQueryService.cs" />
+    <Compile Include="QueryServices\InfrastructureQueryService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryServices\SecurityQueryService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service References\SPListsService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Quintessence.Infrastructure\Quintessence.Infrastructure.csproj">
+      <Project>{18A071D5-7AE7-4F2F-94DF-4D40DEB81A9C}</Project>
+      <Name>Quintessence.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.Business.Interfaces\Quintessence.QService.Business.Interfaces.csproj">
+      <Project>{9F748CE1-61ED-4AB2-ADA2-39C5CFEB9553}</Project>
+      <Name>Quintessence.QService.Business.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.Business\Quintessence.QService.Business.csproj">
+      <Project>{368C5CE3-5442-4CF2-AE43-A67B526811FD}</Project>
+      <Name>Quintessence.QService.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.Core\Quintessence.QService.Core.csproj">
+      <Project>{22E9834E-DB39-410E-AE73-44B2405ACFCD}</Project>
+      <Name>Quintessence.QService.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.Data.Interfaces\Quintessence.QService.Data.Interfaces.csproj">
+      <Project>{D1C30158-4472-41D1-A1C9-D6C7F63F4E95}</Project>
+      <Name>Quintessence.QService.Data.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.DataModel\Quintessence.QService.DataModel.csproj">
+      <Project>{56a829fa-2175-4c60-9912-09cab8fde30b}</Project>
+      <Name>Quintessence.QService.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.Data\Quintessence.QService.Data.csproj">
+      <Project>{9FC1F945-B96B-4276-AE32-8BCC07F5D375}</Project>
+      <Name>Quintessence.QService.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.QPlanetService.Contracts\Quintessence.QService.QPlanetService.Contracts.csproj">
+      <Project>{04680AEA-FAD8-4ADA-9D91-386DE6152B63}</Project>
+      <Name>Quintessence.QService.QPlanetService.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.QueryModel\Quintessence.QService.QueryModel.csproj">
+      <Project>{C861E521-51A1-4909-9563-A9703FE31917}</Project>
+      <Name>Quintessence.QService.QueryModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.ReportingServiceData\Quintessence.QService.ReportingServiceData.csproj">
+      <Project>{F80B3A8A-5864-4F43-BEEC-B2DFAA5465EE}</Project>
+      <Name>Quintessence.QService.ReportingServiceData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.Service.Contracts\Quintessence.QService.Service.Contracts.csproj">
+      <Project>{E16355F5-94C4-4A73-8982-C852018936D3}</Project>
+      <Name>Quintessence.QService.Service.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quintessence.QService.SharePointData\Quintessence.QService.SharePointData.csproj">
+      <Project>{045CC37D-CD2B-4D5D-8D46-009845712787}</Project>
+      <Name>Quintessence.QService.SharePointData</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\System.Xml.Linq.XElement.datasource" />
+    <None Include="Service References\SPListsService\Lists.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\SPListsService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SPListsService\Lists.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SPListsService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SPListsService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SPListsService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

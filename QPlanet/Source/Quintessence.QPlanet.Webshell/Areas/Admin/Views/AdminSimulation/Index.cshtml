@@ -1,0 +1,435 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Admin - Simulations";
+}
+
+@section LeftNavigation
+{
+    <ul id="Tabs">
+        <li><a href="#SimulationSets"></a></li>
+        <li><a href="#SimulationDepartments"></a></li>
+        <li><a href="#SimulationLevels"></a></li>
+        <li><a href="#Simulations"></a></li>
+        <li><a href="#SimulationContexts"></a></li>
+    </ul>
+}
+@section AdditionalScripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            InitializeSimulationSetTable();
+            InitializeSimulationDetpartmentTable();
+            InitializeSimulationLevelTable();
+            InitializeSimulationTable();
+            InitializeSimulationMatrixEntryTable();
+            RefreshSimulationContextTable();
+
+            InitializeSimulationContextDialog();
+
+            InitializeButtons();
+        });
+
+        function InitializeSimulationSetTable() {
+            $('#SimulationSetTable').dataTable({
+                "bServerSide": true,
+                "sAjaxSource": '@Url.Action("SimulationSets")',
+                "aoColumns": [{
+                    "type": "text",
+                    "fnRender": function (obj) {
+                        return obj.aData[0];
+
+                    }
+                },
+                {
+                    "type": "text",
+                    "fnRender": function (obj) {
+                        var editUrl = '@Url.Action("EditSimulationSet")/' + obj.aData[1];
+                        var editLink = '<a href="' + editUrl + '" data-function="EditSimulationSet" class="edit-link" target="' + obj.aData[1] + '" data-id="' + obj.aData[1] + '"></a>';
+                        var deleteLink = '<a href="javascript:void(0);" data-function="DeleteSimulationSet" class="delete-link" data-id="' + obj.aData[1] + '"></a>';
+                        return editLink + deleteLink;
+                    }
+                }],
+                "bProcessing": true,
+                "bStateSave": true
+            });
+
+            $(this).on('click', 'a[data-function=DeleteSimulationSet]', null, function () {
+                if (!confirm("Are you sure you want to delete this simulation set?"))
+                    return;
+
+                $.ajax({
+                    url: '@Url.Action("DeleteSimulationSet")/' + $(this).attr('data-id'),
+                    type: 'GET',
+                    success: function (msg) {
+                        $('#SimulationSetTable').dataTable().fnDraw();
+                        $('#SimulationMatrixTable').dataTable().fnDraw();
+                    }
+                });
+            });
+        }
+
+        function InitializeSimulationDetpartmentTable() {
+            $('#SimulationDepartmentTable').dataTable({
+                "bServerSide": true,
+                "sAjaxSource": '@Url.Action("SimulationDepartments")',
+                "aoColumns": [{
+                    "type": "text",
+                    "fnRender": function (obj) {
+                        return obj.aData[0];
+                    }
+                },
+                {
+                    "type": "text",
+                    "fnRender": function (obj) {
+                        var editUrl = '@Url.Action("EditSimulationDepartment")/' + obj.aData[1];
+                        var editLink = '<a href="' + editUrl + '" data-function="EditSimulationDepartment" class="edit-link" target="' + obj.aData[1] + '" data-id="' + obj.aData[1] + '"></a>';
+                        var deleteLink = '<a href="javascript:void(0);" data-function="DeleteSimulationDepartment" class="delete-link" data-id="' + obj.aData[1] + '"></a>';
+                        return editLink + deleteLink;
+                    }
+                }],
+                "bProcessing": true,
+                "bStateSave": true
+            });
+
+            $(this).on('click', 'a[data-function=DeleteSimulationDepartment]', null, function () {
+                if (!confirm("Are you sure you want to delete this simulation department?"))
+                    return;
+
+                $.ajax({
+                    url: '@Url.Action("DeleteSimulationDepartment")/' + $(this).attr('data-id'),
+                    type: 'GET',
+                    success: function (msg) {
+                        $('#SimulationDepartmentTable').dataTable().fnDraw();
+                        $('#SimulationMatrixTable').dataTable().fnDraw();
+                    }
+                });
+            });
+        }
+
+        function InitializeSimulationLevelTable() {
+            $('#SimulationLevelTable').dataTable({
+                "bServerSide": true,
+                "sAjaxSource": '@Url.Action("SimulationLevels")',
+                "aoColumns": [{
+                    "type": "text",
+                    "fnRender": function (obj) {
+                        return obj.aData[0];
+                    }
+                },
+                {
+                    "type": "text",
+                    "fnRender": function (obj) {
+                        var editUrl = '@Url.Action("EditSimulationLevel")/' + obj.aData[1];
+                        var editLink = '<a href="' + editUrl + '" data-function="EditSimulationLevel" class="edit-link" target="' + obj.aData[1] + '" data-id="' + obj.aData[1] + '"></a>';
+                        var deleteLink = '<a href="javascript:void(0);" data-function="DeleteSimulationLevel" class="delete-link" data-id="' + obj.aData[1] + '"></a>';
+                        return editLink + deleteLink;
+                    }
+                }],
+                "bProcessing": true,
+                "bStateSave": true
+            });
+
+            $(this).on('click', 'a[data-function=DeleteSimulationLevel]', null, function () {
+                if (!confirm("Are you sure you want to delete this simulation level?"))
+                    return;
+
+                $.ajax({
+                    url: '@Url.Action("DeleteSimulationLevel")/' + $(this).attr('data-id'),
+                    type: 'GET',
+                    success: function (msg) {
+                        $('#SimulationLevelTable').dataTable().fnDraw();
+                        $('#SimulationMatrixTable').dataTable().fnDraw();
+                    }
+                });
+            });
+        }
+
+        function InitializeSimulationTable() {
+            $('#SimulationTable').dataTable({
+                "bServerSide": true,
+                "sAjaxSource": '@Url.Action("Simulations")',
+                "aoColumns": [{
+                    "type": "text",
+                    "fnRender": function (obj) {
+                        return obj.aData[0];
+                    }
+                },
+                {
+                    "type": "text",
+                    "fnRender": function (obj) {
+                        var editUrl = '@Url.Action("EditSimulation")/' + obj.aData[1];
+                        var editLink = '<a href="' + editUrl + '" data-function="EditSimulation" class="edit-link" target="' + obj.aData[1] + '" data-id="' + obj.aData[2] + '"></a>';
+                        var deleteLink = '<a href="javascript:void(0);" data-function="DeleteSimulation" class="delete-link" data-id="' + obj.aData[1] + '"></a>';
+                        return editLink + deleteLink;
+                    }
+                }],
+                "bProcessing": true,
+                "bStateSave": true
+            });
+
+            $(this).on('click', 'a[data-function=DeleteSimulation]', null, function () {
+                if (!confirm("Are you sure you want to delete this simulation?"))
+                    return;
+
+                $.ajax({
+                    url: '@Url.Action("DeleteSimulation")/' + $(this).attr('data-id'),
+                    type: 'GET',
+                    success: function (msg) {
+                        $('#SimulationTable').dataTable().fnDraw();
+                        $('#SimulationMatrixTable').dataTable().fnDraw();
+                    }
+                });
+            });
+        }
+
+        function InitializeSimulationMatrixEntryTable() {
+            $('#SimulationMatrixTable').dataTable({
+                "bServerSide": true,
+                "sAjaxSource": '@Url.Action("SimulationMatrix")',
+                "aoColumns": [{
+                    "type": "text",
+                    "fnRender": function (obj) {
+                        return obj.aData[0];
+                    }
+                },
+                {
+                    "type": "text",
+                    "fnRender": function (obj) {
+                        return obj.aData[1];
+                    }
+                },
+                {
+                    "type": "text",
+                    "fnRender": function (obj) {
+                        return obj.aData[2];
+                    }
+                },
+                {
+                    "type": "text",
+                    "fnRender": function (obj) {
+                        return obj.aData[3];
+                    }
+                },
+                {
+                    "type": "text",
+                    "fnRender": function (obj) {
+                        return obj.aData[4];
+                    }
+                },
+                {
+                    "type": "text",
+                    "fnRender": function (obj) {
+                        return obj.aData[5];
+                    }
+                },
+                {
+                    "type": "text",
+                    "fnRender": function (obj) {
+                        return obj.aData[6];
+                    }
+                },
+                {
+                    "type": "text",
+                    "fnRender": function (obj) {
+                        var editUrl = '@Url.Action("EditSimulationMatrixEntry")/' + obj.aData[7];
+                        var editLink = '<a href="' + editUrl + '" data-function="EditSimulationMatrixEntry" class="edit-link" target="' + obj.aData[7] + '" data-id="' + obj.aData[1] + '"></a>';
+                        var deleteLink = '<a href="javascript:void(0);" data-function="DeleteSimulationMatrixEntry" class="delete-link" data-id="' + obj.aData[7] + '"></a>';
+                        return editLink + deleteLink;
+                    }
+                }],
+                "bProcessing": true,
+                "bStateSave": true
+            });
+
+            $(this).on('click', 'a[data-function=DeleteSimulationMatrixEntry]', null, function () {
+                if (!confirm("Are you sure you want to delete this combination?"))
+                    return;
+
+                $.ajax({
+                    url: '@Url.Action("DeleteSimulationMatrixEntry")/' + $(this).attr('data-id'),
+                    type: 'GET',
+                    success: function (msg) {
+                        $('#SimulationMatrixTable').dataTable().fnDraw();
+                    }
+                });
+            });
+        }
+        
+        function RefreshSimulationContextTable() {
+            $('#SimulationContextTablePlaceholder').loading('Retrieving simulation context overview.');
+            $.ajax({
+                url: '@Url.Action("SimulationContexts")',
+                success: function(html) {
+                    $('#SimulationContextTablePlaceholder').html(html);
+                    $('#SimulationContextTable').DataTable();
+                },
+                error: function(err) {
+                    alert(err.statusText);
+                    $('#SimulationContextTablePlaceholder').html('Unable to retrieve the simulation contexts: ' + err.statusText);
+                }
+            });
+        }
+        
+        function InitializeSimulationContextDialog() {
+            $('#AddSimulationContextDialog').dialog({
+                title: 'Add new simulation context',
+                autoOpen: false,
+                modal: true,
+                resizable: false,
+                width: 500,
+                height: 225
+            });
+        }
+        
+        function InitializeButtons() {
+            $(this).on('click', 'a[data-function=AddSimulationContext]', null, function () {
+                $('#AddSimluationContextPlaceholder').loading('Preparing new simulation context.');
+                $('#AddSimulationContextDialog').dialog('open');
+                $.ajax({
+                    url: '@Url.Action("AddSimulationContext")',
+                    success: function (html) {
+                        $('#AddSimluationContextPlaceholder').html(html);
+                    },
+                    error: function (err) {
+                        ShowDetailErrorDialog('Add a new context user.', err);
+                    }
+                });
+            });
+
+            $(this).on('click', 'a[data-function=SubmitSimulationContext]', null, function (event) {
+                event.preventDefault();
+
+                ShowDetailSaveDialog();
+
+                var form = $('#AddSimulationContextForm');
+
+                $.ajax({
+                    url: form.attr('action'),
+                    data: form.serialize(),
+                    type: 'POST',
+                    dataType: 'JSON',
+                    success: function () {
+                        $('#AddSimulationContextDialog').dialog('close');
+                        HideDetailSaveDialog();
+                        RefreshSimulationContextTable();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Add a new simulation context.', err);
+                    }
+                });
+            });
+        }
+    </script>
+}
+<fieldset id="SimulationSets">
+    <legend>Simulation sets</legend>
+
+    <table id="SimulationSetTable" style="width: 100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th style="width: 72px">Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <br />
+    <br />
+    <div style="text-align: right">
+        @Html.ActionLink("Create", "CreateSimulationSet", "AdminSimulation", null, new { target = "_blank", @class="button" })
+    </div>
+</fieldset>
+
+<fieldset id="SimulationDepartments">
+    <legend>Departments</legend>
+
+    <table id="SimulationDepartmentTable" style="width: 100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th style="width: 72px">Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <br />
+    <br />
+    <div style="text-align: right">
+        @Html.ActionLink("Create", "CreateSimulationDepartment", "AdminSimulation", null, new { target = "_blank", @class="button" })
+    </div>
+</fieldset>
+
+<fieldset id="SimulationLevels">
+    <legend>Levels</legend>
+
+    <table id="SimulationLevelTable" style="width: 100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th style="width: 72px">Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <br />
+    <br />
+    <div style="text-align: right">
+        @Html.ActionLink("Create", "CreateSimulationLevel", "AdminSimulation", null, new { target = "_blank", @class="button" })
+    </div>
+</fieldset>
+
+<fieldset id="Simulations">
+    <legend>Simulations</legend>
+
+    <table id="SimulationTable" style="width: 100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th style="width: 72px">Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <br />
+    <br />
+    <div style="text-align: right">
+        @Html.ActionLink("Create", "CreateSimulation", "AdminSimulation", null, new { target = "_blank", @class="button" })
+    </div>
+</fieldset>
+
+<fieldset id="SimulationContexts">
+    <legend>Context</legend>
+    
+    <div id="SimulationContextTablePlaceholder"></div>
+</fieldset>
+
+<fieldset id="SimulationCombinations">
+    <legend>Combinations</legend>
+
+    <table id="SimulationMatrixTable" style="width: 100%">
+        <thead>
+            <tr>
+                <th style="width: 15%">Set</th>
+                <th style="width: 15%">Department</th>
+                <th style="width: 15%">Level</th>
+                <th style="width: 20%">Simulation</th>
+                <th style="width: 10%">Preparation time</th>
+                <th style="width: 10%">Execution time</th>
+                <th style="width: 15%">Languages</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <br />
+    <br />
+    <div style="text-align: right">
+        @Html.ActionLink("Create", "CreateSimulationMatrixEntry", "AdminSimulation", null, new { target = "_blank", @class="button" })
+    </div>
+</fieldset>
+
+<div id="AddSimulationContextDialog">
+    <div id="AddSimluationContextPlaceholder"></div>
+</div>

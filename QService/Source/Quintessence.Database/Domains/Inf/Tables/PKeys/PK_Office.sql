@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[Office]
+	ADD CONSTRAINT [PK_Office]
+	PRIMARY KEY NONCLUSTERED (Id)

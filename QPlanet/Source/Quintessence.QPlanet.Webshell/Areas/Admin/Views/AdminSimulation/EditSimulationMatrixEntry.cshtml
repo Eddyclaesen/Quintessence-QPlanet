@@ -1,0 +1,142 @@
+﻿@model Quintessence.QPlanet.ViewModel.Sim.EditSimulationMatrixEntryModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewBag.Title = "Admin - Simulations - Edit simulation matrix entry";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">Simulation combination</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li class="current">Detail</li>
+        </ul>
+    </nav>
+}
+@section AdditionalScripts
+{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.combobox.js")"></script>
+    <script type="text/javascript">
+        $(function () {
+            InitializeButtons();
+            $('#@Html.IdFor(m => m.SimulationSetId)').combobox();
+            $('#@Html.IdFor(m => m.SimulationDepartmentId)').combobox();
+            $('#@Html.IdFor(m => m.SimulationLevelId)').combobox();
+            $('#@Html.IdFor(m => m.SimulationId)').combobox();
+        });
+
+        function InitializeButtons() {
+            $('#SubmitFormButtonLink').click(function () {
+                ShowDetailSaveDialog();
+                $('form').submit();
+            });
+        }
+    </script>
+}
+
+<div class="grid_8">
+    <fieldset>
+        <legend>Simulation combination</legend>
+        @using (Html.BeginForm())
+        {
+            @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+
+            <div class="container_12 nomargin">
+                <div class="grid_5 table">
+                    <div class="label">@Html.LabelFor(m => m.SimulationSetId)</div>
+                </div>
+                <div class="grid_7 table">
+                    <div class="value">@Html.DropDownListFor(m => m.SimulationSetId, Model.SimulationSetSelectListItems)
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="prefix_5 grid_7">@Html.ValidationMessageFor(m => m.SimulationSetId)</div>
+                <div class="clear"></div>
+
+                <div class="grid_5 table">
+                    <div class="label">@Html.LabelFor(m => m.SimulationDepartmentId)</div>
+                </div>
+                <div class="grid_7 table">
+                    <div class="value">@Html.DropDownListFor(m => m.SimulationDepartmentId, Model.SimulationDepartmentSelectListItems)
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="prefix_5 grid_7">@Html.ValidationMessageFor(m => m.SimulationDepartmentId)
+                </div>
+                <div class="clear"></div>
+
+                <div class="grid_5 table">
+                    <div class="label">@Html.LabelFor(m => m.SimulationLevelId)</div>
+                </div>
+                <div class="grid_7 table">
+                    <div class="value">@Html.DropDownListFor(m => m.SimulationLevelId, Model.SimulationLevelSelectListItems)
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="prefix_5 grid_7">@Html.ValidationMessageFor(m => m.SimulationLevelId)
+                </div>
+                <div class="clear"></div>
+
+                <div class="grid_5 table">
+                    <div class="label">@Html.LabelFor(m => m.SimulationId)</div>
+                </div>
+                <div class="grid_7 table">
+                    <div class="value">@Html.DropDownListFor(m => m.SimulationId, Model.SimulationSelectListItems)
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="prefix_5 grid_7">@Html.ValidationMessageFor(m => m.SimulationId)</div>
+                <div class="clear"></div>
+
+                <div class="grid_5 table">
+                    <div class="label">@Html.LabelFor(m => m.Preparation)</div>
+                </div>
+                <div class="grid_7 table">
+                    <div class="value">@Html.EditorFor(m => m.Preparation)</div>
+                </div>
+                <div class="clear"></div>
+                <div class="prefix_5 grid_7">@Html.ValidationMessageFor(m => m.Preparation)</div>
+                <div class="clear"></div>
+
+                <div class="grid_5 table">
+                    <div class="label">@Html.LabelFor(m => m.Execution)</div>
+                </div>
+                <div class="grid_7 table">
+                    <div class="value">@Html.EditorFor(m => m.Execution)</div>
+                </div>
+                <div class="clear"></div>
+                <div class="prefix_5 grid_7">@Html.ValidationMessageFor(m => m.Execution)</div>
+                <div class="clear"></div>
+
+                @if (Model.SimulationLanguages != null)
+                {
+                    <div class="grid_5 table">
+                        <div class="label">Available languages</div>
+                    </div>
+                    <div class="grid_7 table">
+                        <div class="value">
+                            @for (int i = 0; i < Model.SimulationLanguages.Count; i++)
+                            {
+                                @Html.HiddenFor(m => m.SimulationLanguages[i].LanguageId)
+                                @Html.CheckBoxFor(m => m.SimulationLanguages[i].IsChecked)
+                                @Html.LabelFor(m => m.SimulationLanguages[i].IsChecked, Model.SimulationLanguages[i].LanguageName)
+                                <br />
+                            }
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                }
+
+                <div class="right-text">
+                    <a href="javascript:void(0);" id="SubmitFormButtonLink" class="button">Save</a>
+                </div>
+            </div>
+        }
+    </fieldset>
+</div>

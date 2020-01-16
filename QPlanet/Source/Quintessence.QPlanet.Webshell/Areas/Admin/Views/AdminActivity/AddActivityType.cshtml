@@ -1,0 +1,16 @@
+﻿@model Quintessence.QPlanet.ViewModel.Scm.AddActivityTypeModel
+@using (Html.BeginForm("AddActivityType", "AdminActivity", FormMethod.Post, new { id = "AddActivityTypeForm" }))
+{
+    <p>Please enter a name for a new activity type.</p>
+    
+    <div class="row">
+        <div>Name</div>
+        <div>@Html.TextBoxFor(m => m.Name)</div>
+    </div>
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" id="AddActivityTypeButton" title="Add new activity type."
+            class="button">Save</a>
+    </div>
+}

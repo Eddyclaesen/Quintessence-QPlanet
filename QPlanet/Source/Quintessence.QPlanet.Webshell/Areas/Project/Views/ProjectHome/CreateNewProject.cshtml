@@ -1,0 +1,205 @@
+﻿@model Quintessence.QPlanet.ViewModel.Prm.CreateNewProjectModel
+@using (Html.BeginForm("CreateNewProject", "ProjectHome", FormMethod.Post, new { id = "CreateNewProjectForm" }))
+{
+    <div class="container_12">
+        <div class="grid_5 table">
+            <div class="label">@Html.LabelFor(m => m.Name)</div>
+        </div>
+        <div class="grid_5 table">
+            <div class="value">@Html.EditorFor(m => m.Name)</div>
+        </div>
+        <div class="clear"></div>
+
+        <div class="grid_5 table">
+            <div class="label">@Html.LabelFor(m => m.SelectedProjectTypeId)</div>
+        </div>
+        <div class="grid_5 table">
+            <div class="value">@Html.DropDownListFor(m => m.SelectedProjectTypeId, Model.ProjectTypes)
+            </div>
+        </div>
+        <div class="clear"></div>
+
+        <div class="grid_5 table">
+            <div class="label">@Html.LabelFor(m => m.SelectedContactId)</div>
+        </div>
+        <div class="grid_5 table">
+            <div class="value">@Html.HiddenFor(m => m.SelectedContactId)
+                @Html.TextBox("ContactName", string.Empty)
+            </div>
+        </div>
+        <div class="grid_2 table">
+            <div class="value">
+                <a href="javascript:void(0);" id="RemoveSelectedContactButton" class="button">Clear</a>
+            </div>
+        </div>
+        <div class="clear"></div>
+
+        <div class="grid_5 table">
+            <div class="label">@Html.LabelFor(m => m.SelectedCrmProjectId)</div>
+        </div>
+        <div class="grid_5 table">
+            <div class="value" id="ContactCrmActiveProjectsPlaceholder">
+            </div>
+        </div>
+        <div class="clear"></div>
+
+        <div class="grid_5 table">
+            <div class="label">@Html.LabelFor(m => m.SelectedProjectManagerUserId)</div>
+        </div>
+        <div class="grid_5 table">
+            <div class="value">@Html.HiddenFor(m => m.SelectedProjectManagerUserId)
+                @Html.TextBox("ProjectManagerName", Model.SelectedProjectManagerFullName)
+            </div>
+        </div>
+        <div class="grid_2 table">
+            <div class="value">
+                <a href="javascript:void(0);" id="RemoveSelectedProjectManagerUserButton" class="button">Clear</a>
+            </div>
+        </div>
+        <div class="clear"></div>
+
+        <div class="grid_5 table">
+            <div class="label">@Html.LabelFor(m => m.SelectedCustomerAssistantUserId)</div>
+        </div>
+        <div class="grid_5 table">
+            <div class="value">@Html.HiddenFor(m => m.SelectedCustomerAssistantUserId)
+                @Html.TextBox("CustomerAssistantName", string.Empty)
+            </div>
+        </div>
+        <div class="grid_2 table">
+            <div class="value">
+                <a href="javascript:void(0);" id="RemoveSelectedCustomerAssistantUserButton" class="button">Clear</a>
+            </div>
+        </div>
+        <div class="clear"></div>
+
+        <div style="text-align: right">
+            <input type="submit" value="Create" class="button" />
+        </div>
+    </div>
+}
+
+<script>
+    $("#ContactName").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '@Url.Action("SearchContact", "ProjectGeneral", new{area="Project"})/' + request.term,
+                data: request,
+                dataType: "json",
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return {
+                            label: item.label,
+                            value: item.label,
+                            id: item.value
+                        };
+                    }));
+                },
+                error: function (err) {
+                    ShowDetailErrorDialog('Search customer.', err);
+                }
+            });
+        },
+        select: function (event, ui) {
+            $('#SelectedContactId').val(ui.item.id);
+            $('#ContactName').attr('disabled', 'disabled');
+
+            ListContactCrmActiveProjects(ui.item.id);
+            RetrieveCustomerAssistant(ui.item.id);
+        }
+    });
+
+    function ListContactCrmActiveProjects(contactId) {
+        $.ajax({
+            url: '@Url.Action("CrmActiveProjects", "ProjectGeneral", new{area="Project"})/' + contactId,
+            success: function (data) {
+                $('#ContactCrmActiveProjectsPlaceholder').html(data).fadeIn();
+            }
+        });
+    }
+    
+    function RetrieveCustomerAssistant(contactId) {
+        $.ajax({
+            url: '@Url.Action("ContactCustomerAssistant", "ProjectGeneral", new{area="Project"})/' + contactId,
+            success: function (data) {
+                $('#SelectedCustomerAssistantUserId').val(data.User.Id);
+                $("#CustomerAssistantName").val(data.User.FullName);
+                $('#CustomerAssistantName').attr('disabled', 'disabled');
+            }
+        });
+    }
+
+    $("#ProjectManagerName").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '@Url.Action("SearchProjectManager", "ProjectGeneral", new{area="Project"})/' + request.term,
+                data: request,
+                dataType: "json",
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return {
+                            label: item.label,
+                            value: item.label,
+                            id: item.value
+                        };
+                    }));
+                },
+                error: function (err) {
+                    ShowDetailErrorDialog('Search project manager.', err);
+                }
+            });
+        },
+        select: function (event, ui) {
+            $('#SelectedProjectManagerUserId').val(ui.item.id);
+            $('#ProjectManagerName').attr('disabled', 'disabled');
+        }
+    });
+
+    $("#CustomerAssistantName").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '@Url.Action("SearchCustomerAssistant", "ProjectGeneral", new{area="Project"})/' + request.term,
+                data: request,
+                dataType: "json",
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return {
+                            label: item.label,
+                            value: item.label,
+                            id: item.value
+                        };
+                    }));
+                }
+            });
+        },
+        select: function (event, ui) {
+            $('#SelectedCustomerAssistantUserId').val(ui.item.id);
+            $('#CustomerAssistantName').attr('disabled', 'disabled');
+        }
+    });
+
+    $('#RemoveSelectedContactButton').click(function () {
+        $('#SelectedContactId').val(null);
+        $('#ContactCrmActiveProjectsPlaceholder').hide();
+        $('#SelectedCrmProjectId').val(null);
+        $('#ContactName').removeAttr('disabled');
+        $('#ContactName').val(null);
+        $('#ContactName').focus();
+    });
+
+    $('#RemoveSelectedProjectManagerUserButton').click(function () {
+        $('#SelectedProjectManagerUserId').val(null);
+        $('#ProjectManagerName').removeAttr('disabled');
+        $('#ProjectManagerName').val(null);
+        $('#ProjectManagerName').focus();
+    });
+
+    $('#RemoveSelectedCustomerAssistantUserButton').click(function () {
+        $('#SelectedCustomerAssistantUserId').val(null);
+        $('#CustomerAssistantName').removeAttr('disabled');
+        $('#CustomerAssistantName').val(null);
+        $('#CustomerAssistantName').focus();
+    });
+
+    $('#ProjectManagerName').attr('disabled', 'disabled');
+</script>
