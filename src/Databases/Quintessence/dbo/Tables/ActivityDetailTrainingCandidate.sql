@@ -1,0 +1,25 @@
+﻿CREATE TABLE [dbo].[ActivityDetailTrainingCandidate] (
+    [Id]                       UNIQUEIDENTIFIER NOT NULL,
+    [ActivityDetailTrainingId] UNIQUEIDENTIFIER NOT NULL,
+    [CandidateId]              UNIQUEIDENTIFIER NOT NULL,
+    [ContactId]                INT              NOT NULL,
+    [CrmAppointmentId]         INT              NOT NULL,
+    [InvoiceAmount]            DECIMAL (18, 2)  NULL,
+    [InvoiceStatusCode]        INT              NOT NULL,
+    [InvoicedDate]             DATETIME         NULL,
+    [IsCancelled]              BIT              DEFAULT ((0)) NOT NULL,
+    [CancelledDate]            DATETIME         NULL,
+    [CancelledReason]          NVARCHAR (MAX)   NULL,
+    [Audit_CreatedBy]          NVARCHAR (MAX)   DEFAULT (suser_sname()) NOT NULL,
+    [Audit_CreatedOn]          DATETIME         DEFAULT (getdate()) NOT NULL,
+    [Audit_ModifiedBy]         NVARCHAR (MAX)   NULL,
+    [Audit_ModifiedOn]         DATETIME         NULL,
+    [Audit_DeletedBy]          NVARCHAR (MAX)   NULL,
+    [Audit_DeletedOn]          DATETIME         NULL,
+    [Audit_IsDeleted]          BIT              DEFAULT ((0)) NOT NULL,
+    [Audit_VersionId]          UNIQUEIDENTIFIER DEFAULT (newid()) NOT NULL,
+    CONSTRAINT [PK_ActivityDetailTrainingCandidate] PRIMARY KEY NONCLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_ActivityDetailTrainingCandidate_ActivityDetailTraining] FOREIGN KEY ([ActivityDetailTrainingId]) REFERENCES [dbo].[ActivityDetailTraining] ([Id]),
+    CONSTRAINT [FK_ActivityDetailTrainingCandidate_Candidate] FOREIGN KEY ([CandidateId]) REFERENCES [dbo].[Candidate] ([Id])
+);
+

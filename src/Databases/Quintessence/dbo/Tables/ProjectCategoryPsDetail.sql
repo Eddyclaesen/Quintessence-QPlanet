@@ -1,0 +1,10 @@
+﻿CREATE TABLE [dbo].[ProjectCategoryPsDetail] (
+    [Id]                  UNIQUEIDENTIFIER NOT NULL,
+    [ScoringTypeCode]     INT              NOT NULL,
+    [SimulationRemarks]   TEXT             NULL,
+    [SimulationContextId] UNIQUEIDENTIFIER NULL,
+    [MatrixRemarks]       TEXT             NULL,
+    CONSTRAINT [PK_ProjectCategoryPsDetail] PRIMARY KEY NONCLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_ProjectCategoryPsDetail_ProjectCategoryDetail] FOREIGN KEY ([Id]) REFERENCES [dbo].[ProjectCategoryDetail] ([Id])
+);
+
