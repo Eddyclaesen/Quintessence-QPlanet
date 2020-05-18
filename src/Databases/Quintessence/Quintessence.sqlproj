@@ -75,4 +75,7 @@
     </None>
     <None Include="Scripts\Seed.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="QCandidate\StoredProcedures\Assessment_GetByCandidateIdAndDate.sql" />
+  </ItemGroup>
 </Project>
