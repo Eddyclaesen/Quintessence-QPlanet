@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Quintessence.QCandidate.Core.Queries;
-using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Quintessence.QCandidate.Helpers;
 
 namespace Quintessence.QCandidate.Logic.Queries
 {
@@ -11,7 +11,7 @@ namespace Quintessence.QCandidate.Logic.Queries
     {
         public Task<FileStream> Handle(GetSimulationCombinationPdfByIdAndLanguageQuery request, CancellationToken cancellationToken)
         {
-            var filename = GetPdfFileLocation(request.PdfStorageLocation, request.SimulationCombinationId, request.Language);
+            var filename = FileLocationHelper.GetPdfFileLocation(request.PdfStorageLocation, request.SimulationCombinationId, request.Language);
 
             if(File.Exists(filename))
             {
@@ -19,13 +19,6 @@ namespace Quintessence.QCandidate.Logic.Queries
             }
 
             return Task.FromResult<FileStream>(null);
-        }
-
-        private string GetPdfFileLocation(string pdfStorageLocation, Guid simulationCombinationId, string language)
-        {
-            var filename = $"{simulationCombinationId}.pdf";
-
-            return Path.Combine(pdfStorageLocation, language, filename);
         }
     }
 }

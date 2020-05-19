@@ -1,14 +1,17 @@
-﻿using MediatR;
+﻿using System;
+using MediatR;
 
 namespace Quintessence.QCandidate.Core.Queries
 {
     public class HasSimulationCombinationPdfByIdAndLanguageQuery : IRequest<bool>
     {
-        public HasSimulationCombinationPdfByIdAndLanguageQuery(string filename)
+        public HasSimulationCombinationPdfByIdAndLanguageQuery(Guid? simulationCombinationId, string language)
         {
-            Filename = filename;
+            SimulationCombinationId = simulationCombinationId;
+            Language = language;
         }
 
-        public string Filename { get; }
+        public Guid? SimulationCombinationId { get; }
+        public string Language { get; }
     }
 }
