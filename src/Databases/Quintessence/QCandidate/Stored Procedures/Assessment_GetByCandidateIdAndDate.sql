@@ -42,9 +42,9 @@ FROM
 	INNER JOIN dbo.Project p WITH (NOLOCK) ON p.Id = pc.ProjectId
 	INNER JOIN dbo.CrmContact cc WITH (NOLOCK) ON cc.Id = p.ContactId
 	INNER JOIN dbo.ProgramComponent prc WITH (NOLOCK) ON prc.ProjectCandidateId = pc.Id
-	LEFT JOIN dbo.[User] uLeadAssess WITH (NOLOCK) ON uLeadAssess.Id = prc.LeadAssessorUserId
+	LEFT OUTER JOIN dbo.[User] uLeadAssess WITH (NOLOCK) ON uLeadAssess.Id = prc.LeadAssessorUserId
 	LEFT JOIN dbo.[User] uCoAssess WITH (NOLOCK) ON uCoAssess.Id = prc.CoAssessorUserId
-	LEFT JOIN dbo.SimulationCombination sc WITH (NOLOCK) ON sc.Id = prc.SimulationCombinationId
+	LEFT OUTER JOIN dbo.SimulationCombination sc WITH (NOLOCK) ON sc.Id = prc.SimulationCombinationId
 	LEFT JOIN dbo.Simulation s WITH (NOLOCK) ON s.Id = sc.SimulationId
 	INNER JOIN dbo.AssessmentRoom ar WITH (NOLOCK) ON ar.Id = prc.AssessmentRoomId
 	INNER JOIN dbo.Office o WITH (NOLOCK) ON o.Id = ar.OfficeId
@@ -53,4 +53,6 @@ WHERE
 	AND CONVERT(DATE, prc.Start) = @date
 	AND prc.Description NOT LIKE '%Input scoring%'
 	AND CONVERT(VARCHAR, prc.Description) NOT IN('Preparation consultant','Assessor debriefing','Proma','Assessor debriefing GGI')
-ORDER BY prc.Start, prc.[End]
+ORDER BY
+	prc.Start,
+	prc.[End]

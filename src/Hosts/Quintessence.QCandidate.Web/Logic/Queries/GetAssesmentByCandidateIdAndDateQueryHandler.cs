@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
@@ -21,64 +22,62 @@ namespace Quintessence.QCandidate.Logic.Queries
 
         public override async Task<AssessmentDto> Handle(GetAssesmentByCandidateIdAndDateQuery query, CancellationToken cancellationToken)
         {
-            try
+            using(var dbConnection = DbConnectionFactory.Create())
             {
-                using(var dbConnection = DbConnectionFactory.Create())
-                {
-                    var candidateIdParameter = new SqlParameter("candidateId", SqlDbType.UniqueIdentifier) { Value = query.CandidateId };
-                    var dateParameter = new SqlParameter("date", SqlDbType.Date) { Value = query.Date };
+                var candidateIdParameter = new SqlParameter("candidateId", SqlDbType.UniqueIdentifier) {Value = query.CandidateId};
+                var dateParameter = new SqlParameter("date", SqlDbType.Date) {Value = query.Date};
 
-                    var result = new AssessmentDto();
-                    await dbConnection.QueryAsync<CustomerDto, PositionDto, LocationDto, ProgramComponentGeneralInfoDto, RoomDto, UserDto, UserDto, AssessmentDto>(new StoredProcedureCommandDefinition("[QCandidate].[Assessment_GetByCandidateIdAndDate]", candidateIdParameter, dateParameter).ToCommandDefinition(),
-                        (customerDto, positionDto, locationDto, programComponentGeneralInfoDto, roomDto, leadAssessorDto, coAssessorDto) =>
+                var result = new AssessmentDto();
+                await dbConnection.QueryAsync<CustomerDto, PositionDto, LocationDto, ProgramComponentGeneralInfoDto, RoomDto, UserDto, UserDto, AssessmentDto>(new StoredProcedureCommandDefinition("[QCandidate].[Assessment_GetByCandidateIdAndDate]", candidateIdParameter, dateParameter).ToCommandDefinition(),
+                    (customerDto, positionDto, locationDto, programComponentGeneralInfoDto, roomDto, leadAssessorDto, coAssessorDto) =>
+                    {
+                        if(result.Customer == null)
                         {
-                            if(result.Customer == null)
-                            {
-                                result.Customer = customerDto;
-                            }
+                            result.Customer = customerDto;
+                        }
 
-                            if(result.Position == null)
-                            {
-                                result.Position = positionDto;
-                            }
+                        if(result.Position == null)
+                        {
+                            result.Position = positionDto;
+                        }
 
-                            if(result.DayProgram == null)
+                        if(result.DayProgram == null)
+                        {
+                            result.DayProgram = new DayProgramDto
                             {
-                                result.DayProgram = new DayProgramDto
-                                {
-                                    Date = query.Date,
-                                    Location = locationDto,
-                                    ProgramComponents = new List<ProgramComponentDto>()
-                                };
-                            }
-
-                            var programComponent = new ProgramComponentDto
-                            {
-                                Id = programComponentGeneralInfoDto.Id,
-                                Start = programComponentGeneralInfoDto.Start,
-                                End = programComponentGeneralInfoDto.End,
-                                Name = programComponentGeneralInfoDto.Name,
-                                Description = programComponentGeneralInfoDto.Description,
-                                SimulationCombinationId = programComponentGeneralInfoDto.SimulationCombinationId,
-                                Room = roomDto,
-                                LeadAssessor = leadAssessorDto,
-                                CoAssessor = coAssessorDto
+                                Date = query.Date,
+                                Location = locationDto,
+                                ProgramComponents = new List<ProgramComponentDto>()
                             };
+                        }
 
-                            result.DayProgram.ProgramComponents.Add(programComponent);
+                        var programComponent = new ProgramComponentDto
+                        {
+                            Id = programComponentGeneralInfoDto.Id,
+                            Start = programComponentGeneralInfoDto.Start,
+                            End = programComponentGeneralInfoDto.End,
+                            Name = programComponentGeneralInfoDto.Name,
+                            Description = programComponentGeneralInfoDto.Description,
+                            SimulationCombinationId = programComponentGeneralInfoDto.SimulationCombinationId,
+                            Room = roomDto,
+                            LeadAssessor = leadAssessorDto,
+                            CoAssessor = coAssessorDto
+                        };
 
-                            return result;
-                        }, "Id,Id,Id,Id,Id,Id,Id").ConfigureAwait(false);
+                        AddProgramComponent(result.DayProgram, programComponent);
 
-                    return result;
-                }
+                        return result;
+                    }, "Id,Id,Id,Id,Id,Id,Id").ConfigureAwait(false);
+
+                return result;
             }
-            catch(Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-            
+        }
+
+        private void AddProgramComponent(DayProgramDto dayProgramDto, ProgramComponentDto programComponentDto)
+        {
+            var programComponents = dayProgramDto.ProgramComponents?.ToList() ?? new List<ProgramComponentDto>();
+            programComponents.Add(programComponentDto);
+            dayProgramDto.ProgramComponents = programComponents;
         }
     }
 }
