@@ -20,16 +20,19 @@ namespace Quintessence.QCandidate.Controllers
         }
 
         [Route("{action}/{simulationCombinationId}/{language}")]
-        public async Task<ActionResult> GetPdf(Guid simulationCombinationId, string language)
+        public async Task<ActionResult> GetPdf(Guid? simulationCombinationId, string language)
         {
-            var fileStream = await _mediator.Send(new GetSimulationCombinationPdfByIdAndLanguageQuery(_pdfStorageLocation, simulationCombinationId, language));
-
-            if(fileStream == null)
+            if(simulationCombinationId.HasValue)
             {
-                return new EmptyResult();
+                var fileStream = await _mediator.Send(new GetSimulationCombinationPdfByIdAndLanguageQuery(_pdfStorageLocation, simulationCombinationId.Value, language));
+
+                if(fileStream != null)
+                {
+                    return new FileStreamResult(fileStream, "application/pdf");
+                }
             }
 
-            return new FileStreamResult(fileStream, "application/pdf");
+            return new EmptyResult();
         }
     }
 }
