@@ -1,0 +1,593 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>Quintessence</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{eab72fb9-3a4c-4ddb-8a5d-5d77ccea69f8}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>Quintessence</RootNamespace>
+    <AssemblyName>Quintessence</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+    <CompatibilityMode>100</CompatibilityMode>
+    <Recovery>SIMPLE</Recovery>
+    <QueryStoreStaleQueryThreshold>30</QueryStoreStaleQueryThreshold>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Views\" />
+    <Folder Include="Security\" />
+    <Folder Include="dbo\Functions\" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="QCandidate" />
+    <Folder Include="QCandidate\Stored Procedures" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\SimulationCombination2Language.sql" />
+    <Build Include="dbo\Tables\ProjectCandidateAssessor.sql" />
+    <Build Include="dbo\Tables\ActivityDetailCoaching.sql" />
+    <Build Include="dbo\Tables\SimulationContext.sql" />
+    <Build Include="dbo\Tables\SimulationTranslation.sql" />
+    <Build Include="dbo\Tables\ActivityDetailConsulting.sql" />
+    <Build Include="dbo\Tables\ProjectProduct.sql" />
+    <Build Include="dbo\Tables\SimulationContextUser.sql" />
+    <Build Include="dbo\Tables\ActivityDetailSupport.sql" />
+    <Build Include="dbo\Tables\SimulationDepartment.sql" />
+    <Build Include="dbo\Tables\SimulationLevel.sql" />
+    <Build Include="dbo\Tables\ProjectCandidateClusterScore.sql" />
+    <Build Include="dbo\Tables\ActivityDetailTraining2TrainingType.sql" />
+    <Build Include="dbo\Tables\TimesheetEntry.sql" />
+    <Build Include="dbo\Tables\SimulationSet.sql" />
+    <Build Include="dbo\Tables\ProjectCandidateCompetenceScore.sql" />
+    <Build Include="dbo\Tables\ActivityDetailTrainingCandidate.sql" />
+    <Build Include="dbo\Tables\SimulationSet2CrmContact.sql" />
+    <Build Include="dbo\Tables\ProjectCandidateCompetenceSimulationScore.sql" />
+    <Build Include="dbo\Tables\ActivityDetailTrainingLanguage.sql" />
+    <Build Include="dbo\Tables\SubProject.sql" />
+    <Build Include="dbo\Tables\ProjectCandidateIndicatorScore.sql" />
+    <Build Include="dbo\Tables\ActivityDetailWorkshop.sql" />
+    <Build Include="dbo\Tables\SurveyPlanning.sql" />
+    <Build Include="dbo\Tables\ProjectCandidateIndicatorSimulationScore.sql" />
+    <Build Include="dbo\Tables\ActivityDetailWorkshopLanguage.sql" />
+    <Build Include="dbo\Tables\CrmReplicationSettings.sql" />
+    <Build Include="dbo\Tables\Theorem.sql" />
+    <Build Include="dbo\Tables\ProjectCandidateReportRecipient.sql" />
+    <Build Include="dbo\Tables\ActivityProfile.sql" />
+    <Build Include="dbo\Tables\CrmReplicationProjectStatusMapping.sql" />
+    <Build Include="dbo\Tables\TheoremList.sql" />
+    <Build Include="dbo\Tables\ProjectCandidateResume.sql" />
+    <Build Include="dbo\Tables\ProjectCategoryCaDetail.sql" />
+    <Build Include="dbo\Tables\ActivityType.sql" />
+    <Build Include="dbo\Tables\CrmReplicationProjectHistory.sql" />
+    <Build Include="dbo\Tables\TheoremListRequest.sql" />
+    <Build Include="dbo\Tables\ProjectCandidateResumeField.sql" />
+    <Build Include="dbo\Tables\ActivityType2Profile.sql" />
+    <Build Include="dbo\Tables\ActivityDetailTraining.sql" />
+    <Build Include="dbo\Tables\CrmReplicationPersonHistory.sql" />
+    <Build Include="dbo\Tables\TheoremListRequestType.sql" />
+    <Build Include="dbo\Tables\ProjectCandidateStatusType.sql" />
+    <Build Include="dbo\Tables\Advice.sql" />
+    <Build Include="dbo\Tables\ProjectCategoryAcDetail.sql" />
+    <Build Include="dbo\Tables\CrmReplicationEmailHistory.sql" />
+    <Build Include="dbo\Tables\TheoremListTemplate.sql" />
+    <Build Include="dbo\Tables\AssessmentDevelopmentProject.sql" />
+    <Build Include="dbo\Tables\CrmReplicationContactHistory.sql" />
+    <Build Include="dbo\Tables\TheoremListType.sql" />
+    <Build Include="dbo\Tables\AssessmentRoom.sql" />
+    <Build Include="dbo\Tables\ProjectCategoryCuDetail.sql" />
+    <Build Include="dbo\Tables\CrmReplicationAssociateHistory.sql" />
+    <Build Include="dbo\Tables\TheoremTemplate.sql" />
+    <Build Include="dbo\Tables\AssessorColor.sql" />
+    <Build Include="dbo\Tables\ProjectCategoryDcDetail.sql" />
+    <Build Include="dbo\Tables\AuthenticationToken.sql" />
+    <Build Include="dbo\Tables\CrmReplicationEmailAssociateHistory.sql" />
+    <Build Include="dbo\Tables\TheoremTemplateTranslation.sql" />
+    <Build Include="dbo\Tables\ProjectCategoryDetail.sql" />
+    <Build Include="dbo\Tables\Candidate.sql" />
+    <Build Include="dbo\Tables\CrmReplicationAppointmentTrainingHistory.sql" />
+    <Build Include="dbo\Tables\TheoremTranslation.sql" />
+    <Build Include="dbo\Tables\ProjectCategoryDetail2Competence2Combination.sql" />
+    <Build Include="dbo\Tables\CandidateHistory.sql" />
+    <Build Include="dbo\Tables\CrmReplicationAppointmentTimesheetHistory.sql" />
+    <Build Include="dbo\Tables\ProjectCategoryDetail2DictionaryIndicator.sql" />
+    <Build Include="dbo\Tables\CandidateReportDefinition.sql" />
+    <Build Include="dbo\Tables\CrmReplicationAppointmentHistory.sql" />
+    <Build Include="dbo\Tables\TimesheetEntryStatus.sql" />
+    <Build Include="dbo\Tables\ProjectCategoryDetail2SimulationCombination.sql" />
+    <Build Include="dbo\Tables\CandidateReportDefinitionField.sql" />
+    <Build Include="dbo\Tables\CrmReplicationTeamLeaderEvent.sql" />
+    <Build Include="dbo\Tables\TrainingType.sql" />
+    <Build Include="dbo\Tables\ProjectCategoryDetailType1.sql" />
+    <Build Include="dbo\Tables\CandidateScoreReportType.sql" />
+    <Build Include="dbo\Tables\CrmReplicationTeamLeaderEventHistory.sql" />
+    <Build Include="dbo\Tables\Translation.sql" />
+    <Build Include="dbo\Tables\ProjectCategoryDetailType2.sql" />
+    <Build Include="dbo\Tables\ComplaintSeverityType.sql" />
+    <Build Include="dbo\Tables\CrmReplicationTeamLeaderEventErrorLog.sql" />
+    <Build Include="dbo\Tables\User.sql" />
+    <Build Include="dbo\Tables\ProjectComplaint.sql" />
+    <Build Include="dbo\Tables\ProjectCategoryDetailType3.sql" />
+    <Build Include="dbo\Tables\ComplaintStatusType.sql" />
+    <Build Include="dbo\Tables\User2UserGroup.sql" />
+    <Build Include="dbo\Tables\Invoicing_FinancialEntity.sql" />
+    <Build Include="dbo\Tables\UserGroup.sql" />
+    <Build Include="dbo\Tables\ProjectCategoryEaDetail.sql" />
+    <Build Include="dbo\Tables\ComplaintType.sql" />
+    <Build Include="dbo\Tables\UserGroup2Operation.sql" />
+    <Build Include="dbo\Tables\ProjectCategoryFaDetail.sql" />
+    <Build Include="dbo\Tables\ConsultancyProject.sql" />
+    <Build Include="dbo\Tables\UserProfile.sql" />
+    <Build Include="dbo\Tables\CrmReplicationSuperOfficeEvent.sql" />
+    <Build Include="dbo\Tables\ProjectCategoryFdDetail.sql" />
+    <Build Include="dbo\Tables\ContactDetail.sql" />
+    <Build Include="dbo\Tables\UserProfile2Contact.sql" />
+    <Build Include="dbo\Tables\Dictionary.sql" />
+    <Build Include="dbo\Tables\CrmReplicationSuperOfficeEventHistory.sql" />
+    <Build Include="dbo\Tables\ProjectCategoryPsDetail.sql" />
+    <Build Include="dbo\Tables\CrmReplicationAppointment.sql" />
+    <Build Include="dbo\Tables\ProjectCandidate.sql" />
+    <Build Include="dbo\Tables\ProjectCategorySoDetail.sql" />
+    <Build Include="dbo\Tables\Product.sql" />
+    <Build Include="dbo\Tables\CrmReplicationAppointmentTimesheet.sql" />
+    <Build Include="dbo\Tables\CrmReplicationSuperOfficeEventErrorLog.sql" />
+    <Build Include="dbo\Tables\CrmReplicationAppointmentTaskMapping.sql" />
+    <Build Include="dbo\Tables\CrmReplicationAppointmentTraining.sql" />
+    <Build Include="dbo\Tables\CrmReplicationAssociate.sql" />
+    <Build Include="dbo\Tables\CrmReplicationContact.sql" />
+    <Build Include="dbo\Tables\ProjectDna.sql" />
+    <Build Include="dbo\Tables\CrmReplicationEmail.sql" />
+    <Build Include="dbo\Tables\CrmReplicationEmailAssociate.sql" />
+    <Build Include="dbo\Tables\CrmReplicationJob.sql" />
+    <Build Include="dbo\Tables\ProjectDna2CrmPerson.sql" />
+    <Build Include="dbo\Tables\BusinessCentral_Customer.sql" />
+    <Build Include="dbo\Tables\CrmReplicationJobHistory.sql" />
+    <Build Include="dbo\Tables\CrmReplicationPerson.sql" />
+    <Build Include="dbo\Tables\ProjectDna2ProjectDnaType.sql" />
+    <Build Include="dbo\Tables\CrmReplicationProject.sql" />
+    <Build Include="dbo\Tables\ProjectRevenueDistribution.sql" />
+    <Build Include="dbo\Tables\CrmReplicationProjectStatus.sql" />
+    <Build Include="dbo\Tables\ProjectDnaCommercialTranslation.sql" />
+    <Build Include="dbo\Tables\CrmReplicationUserGroup.sql" />
+    <Build Include="dbo\Tables\ProjectDnaType.sql" />
+    <Build Include="dbo\Tables\DictionaryCluster.sql" />
+    <Build Include="dbo\Tables\ProjectDocumentMetadata.sql" />
+    <Build Include="dbo\Tables\DictionaryClusterTranslation.sql" />
+    <Build Include="dbo\Tables\ProjectEvaluation.sql" />
+    <Build Include="dbo\Tables\ProductsheetEntry.sql" />
+    <Build Include="dbo\Tables\DictionaryCompetenceTranslation.sql" />
+    <Build Include="dbo\Tables\ProjectHistory.sql" />
+    <Build Include="dbo\Tables\ProjectPlan.sql" />
+    <Build Include="dbo\Tables\ProjectPlanPhase.sql" />
+    <Build Include="dbo\Tables\DictionaryIndicatorTranslation.sql" />
+    <Build Include="dbo\Tables\ProjectPlanPhaseActivity.sql" />
+    <Build Include="dbo\Tables\DictionaryLevel.sql" />
+    <Build Include="dbo\Tables\ProjectPlanPhaseEntry.sql" />
+    <Build Include="dbo\Tables\DictionaryLevelTranslation.sql" />
+    <Build Include="dbo\Tables\ProjectPlanPhaseProduct.sql" />
+    <Build Include="dbo\Tables\Employee.sql" />
+    <Build Include="dbo\Tables\EvaluationForm.sql" />
+    <Build Include="dbo\Tables\ProjectPriceIndex.sql" />
+    <Build Include="dbo\Tables\Proposal.sql" />
+    <Build Include="dbo\Tables\EvaluationFormAcdc.sql" />
+    <Build Include="dbo\Tables\EvaluationFormCoaching.sql" />
+    <Build Include="dbo\Tables\EvaluationFormCustomProjects.sql" />
+    <Build Include="dbo\Tables\ProjectReportRecipient.sql" />
+    <Build Include="dbo\Tables\EvaluationFormType.sql" />
+    <Build Include="dbo\Tables\ProjectRole.sql" />
+    <Build Include="dbo\Tables\FrameworkAgreement.sql" />
+    <Build Include="dbo\Tables\ProjectRole2DictionaryIndicator.sql" />
+    <Build Include="dbo\Tables\HistoryIdMapping.sql" />
+    <Build Include="dbo\Tables\ProjectRole2DictionaryLevel.sql" />
+    <Build Include="dbo\Tables\Job.sql" />
+    <Build Include="dbo\Tables\ProjectRoleTranslation.sql" />
+    <Build Include="dbo\Tables\ProjectCandidateCategoryDetailType1.sql" />
+    <Build Include="dbo\Tables\JobDefinition.sql" />
+    <Build Include="dbo\Tables\JobSchedule.sql" />
+    <Build Include="dbo\Tables\ProjectType.sql" />
+    <Build Include="dbo\Tables\Language.sql" />
+    <Build Include="dbo\Tables\ProjectType2ProjectTypeCategory.sql" />
+    <Build Include="dbo\Tables\MailStatusType.sql" />
+    <Build Include="dbo\Tables\DictionaryCompetence.sql" />
+    <Build Include="dbo\Tables\ProjectTypeCategory.sql" />
+    <Build Include="dbo\Tables\MailTemplate.sql" />
+    <Build Include="dbo\Tables\MailTemplateTranslation.sql" />
+    <Build Include="dbo\Tables\ProjectTypeCategoryDefaultValue.sql" />
+    <Build Include="dbo\Tables\Office.sql" />
+    <Build Include="dbo\Tables\Setting.sql" />
+    <Build Include="dbo\Tables\ProjectTypeCategoryLevel.sql" />
+    <Build Include="dbo\Tables\ProjectCandidateCategoryDetailType2.sql" />
+    <Build Include="dbo\Tables\OfficeTranslation.sql" />
+    <Build Include="dbo\Tables\ProjectTypeCategoryTranslation.sql" />
+    <Build Include="dbo\Tables\Operation.sql" />
+    <Build Include="dbo\Tables\ProjectTypeCategoryUnitPrice.sql" />
+    <Build Include="dbo\Tables\PricingModel.sql" />
+    <Build Include="dbo\Tables\DictionaryIndicator.sql" />
+    <Build Include="dbo\Tables\ReportDefinition.sql" />
+    <Build Include="dbo\Tables\ReportParameter.sql" />
+    <Build Include="dbo\Tables\ProjectCandidateCategoryDetailType3.sql" />
+    <Build Include="dbo\Tables\ProductType.sql" />
+    <Build Include="dbo\Tables\ReportParameterValue.sql" />
+    <Build Include="dbo\Tables\Profile.sql" />
+    <Build Include="dbo\Tables\ReportStatus.sql" />
+    <Build Include="dbo\Tables\ProgramComponent.sql" />
+    <Build Include="dbo\Tables\ReportType.sql" />
+    <Build Include="dbo\Tables\ProgramComponentSpecial.sql" />
+    <Build Include="dbo\Tables\Role.sql" />
+    <Build Include="dbo\Tables\Project.sql" />
+    <Build Include="dbo\Tables\Role2Operation.sql" />
+    <Build Include="dbo\Tables\Simulation.sql" />
+    <Build Include="dbo\Tables\Project2CrmProject.sql" />
+    <Build Include="dbo\Tables\Activity.sql" />
+    <Build Include="dbo\Tables\ProjectFixedPrice.sql" />
+    <Build Include="dbo\Tables\SimulationCombination.sql" />
+    <Build Include="dbo\Tables\ActivityDetail.sql" />
+    <Build Include="dbo\Views\MailStatusTypeView.sql" />
+    <Build Include="dbo\Views\ProjectCandidateCategoryDetailType2View.sql" />
+    <Build Include="dbo\Views\MailTemplateTranslationView.sql" />
+    <Build Include="dbo\Views\MailTemplateView.sql" />
+    <Build Include="dbo\Views\ProjectCandidateCategoryDetailTypeView.sql" />
+    <Build Include="dbo\Views\OfficeTranslationView.sql" />
+    <Build Include="dbo\Views\ProjectCategoryDetailCompetenceSimulationView.sql" />
+    <Build Include="dbo\Views\OfficeView.sql" />
+    <Build Include="dbo\Views\ProgramComponentView.sql" />
+    <Build Include="dbo\Views\OperationView.sql" />
+    <Build Include="dbo\Views\ProductTypeView.sql" />
+    <Build Include="dbo\Views\ProductView.sql" />
+    <Build Include="dbo\Views\ProfileView.sql" />
+    <Build Include="dbo\Views\ProgramComponentSpecialView.sql" />
+    <Build Include="dbo\Views\Project2CrmProjectView.sql" />
+    <Build Include="dbo\Views\ProjectCandidateClusterScoreView.sql" />
+    <Build Include="dbo\Views\ProjectCandidateCompetenceScoreView.sql" />
+    <Build Include="dbo\Views\ProjectCandidateIndicatorScoreView.sql" />
+    <Build Include="dbo\Views\ProjectCandidateReportRecipientView.sql" />
+    <Build Include="dbo\Views\ProjectCandidateResumeFieldView.sql" />
+    <Build Include="dbo\Views\SimulationTranslationView.sql" />
+    <Build Include="dbo\Views\ProjectCandidateResumeView.sql" />
+    <Build Include="dbo\Views\ProjectComplaintView.sql" />
+    <Build Include="dbo\Views\ProjectDna2CrmPersonView.sql" />
+    <Build Include="dbo\Views\ProjectDna2ProjectDnaTypeView.sql" />
+    <Build Include="dbo\Views\ProjectCandidateCategoryDetailType1View.sql" />
+    <Build Include="dbo\Views\ProjectDnaCommercialTranslationView.sql" />
+    <Build Include="dbo\Views\ProjectDnaTypeView.sql" />
+    <Build Include="dbo\Views\ProjectDnaView.sql" />
+    <Build Include="dbo\Views\ProjectDocumentMetadataView.sql" />
+    <Build Include="dbo\Views\ProjectEvaluationView.sql" />
+    <Build Include="dbo\Views\ProjectFixedPriceView.sql" />
+    <Build Include="dbo\Views\ProjectPlanPhaseEntryView.sql" />
+    <Build Include="dbo\Views\ProjectPlanPhaseProductView.sql" />
+    <Build Include="dbo\Views\ProjectPlanPhaseView.sql" />
+    <Build Include="dbo\Views\ProjectPlanView.sql" />
+    <Build Include="dbo\Views\ProjectPriceIndexView.sql" />
+    <Build Include="dbo\Views\ProjectProductView.sql" />
+    <Build Include="dbo\Views\ProjectReportRecipientView.sql" />
+    <Build Include="dbo\Views\ProjectRoleTranslationView.sql" />
+    <Build Include="dbo\Views\ProjectTypeCategoryDefaultValueView.sql" />
+    <Build Include="dbo\Views\ProjectTypeCategoryLevelView.sql" />
+    <Build Include="dbo\Views\ProjectTypeCategoryTranslationView.sql" />
+    <Build Include="dbo\Views\ProjectTypeCategoryUnitPriceView.sql" />
+    <Build Include="dbo\Views\ProjectTypeCategoryView.sql" />
+    <Build Include="dbo\Views\ProjectTypeView.sql" />
+    <Build Include="dbo\Views\ProjectView.sql" />
+    <Build Include="dbo\Views\ReportDefinitionView.sql" />
+    <Build Include="dbo\Views\ReportParameterView.sql" />
+    <Build Include="dbo\Views\ReportStatusView.sql" />
+    <Build Include="dbo\Views\ReportTypeView.sql" />
+    <Build Include="dbo\Views\RoleView.sql" />
+    <Build Include="dbo\Views\SimulationCombinationLanguageView.sql" />
+    <Build Include="dbo\Views\SimulationContextUserView.sql" />
+    <Build Include="dbo\Views\SimulationContextView.sql" />
+    <Build Include="dbo\Views\SimulationDepartmentView.sql" />
+    <Build Include="dbo\Views\SimulationLevelView.sql" />
+    <Build Include="dbo\Views\SimulationSet2CrmContactView.sql" />
+    <Build Include="dbo\Views\SimulationSetView.sql" />
+    <Build Include="dbo\Views\SimulationView.sql" />
+    <Build Include="dbo\Views\SubProjectView.sql" />
+    <Build Include="dbo\Views\TheoremListTemplateView.sql" />
+    <Build Include="dbo\Views\TheoremListView.sql" />
+    <Build Include="dbo\Views\TheoremTemplateTranslationView.sql" />
+    <Build Include="dbo\Views\TheoremTemplateView.sql" />
+    <Build Include="dbo\Views\DictionaryAdminView.sql" />
+    <Build Include="dbo\Views\TheoremTranslationView.sql" />
+    <Build Include="dbo\Views\DictionaryClusterAdminView.sql" />
+    <Build Include="dbo\Views\TheoremView.sql" />
+    <Build Include="dbo\Views\DictionaryClusterTranslationAdminView.sql" />
+    <Build Include="dbo\Views\TrainingTypeView.sql" />
+    <Build Include="dbo\Views\DictionaryCompetenceAdminView.sql" />
+    <Build Include="dbo\Views\TranslationView.sql" />
+    <Build Include="dbo\Views\DictionaryCompetenceTranslationAdminView.sql" />
+    <Build Include="dbo\Views\UserView.sql" />
+    <Build Include="dbo\Views\DictionaryIndicatorTranslationAdminView.sql" />
+    <Build Include="dbo\Views\QShare_Contacts.sql" />
+    <Build Include="dbo\Views\DictionaryLevelAdminView.sql" />
+    <Build Include="dbo\Views\DictionaryLevelTranslationAdminView.sql" />
+    <Build Include="dbo\Views\DictionaryIndicatorAdminView.sql" />
+    <Build Include="dbo\Views\ActivityDetailTrainingLanguageView.sql" />
+    <Build Include="dbo\Views\ProjectRevenueDistributionView.sql" />
+    <Build Include="dbo\Views\ActivityDetailTrainingTypeView.sql" />
+    <Build Include="dbo\Views\ActivityDetailView.sql" />
+    <Build Include="dbo\Views\ActivityDetailWorkshopLanguageView.sql" />
+    <Build Include="dbo\Views\ActivityDetailWorkshopView.sql" />
+    <Build Include="dbo\Views\ActivityProfileView.sql" />
+    <Build Include="dbo\Views\ActivityTypeProfileView.sql" />
+    <Build Include="dbo\Views\AssessmentDevelopmentProjectView.sql" />
+    <Build Include="dbo\Views\AssessmentRoomView.sql" />
+    <Build Include="dbo\Views\CandidateReportDefinitionView.sql" />
+    <Build Include="dbo\Views\CandidateView.sql" />
+    <Build Include="dbo\Views\ConsultancyProjectView.sql" />
+    <Build Include="dbo\Views\CrmActiveProjectView.sql" />
+    <Build Include="dbo\Views\CrmTimesheetEntryView.sql" />
+    <Build Include="dbo\Views\CrmUnsynchronizedEmployeeView.sql" />
+    <Build Include="dbo\Views\CrmUserEmailView.sql" />
+    <Build Include="dbo\Views\EmployeeView.sql" />
+    <Build Include="dbo\Views\EvaluationFormView.sql" />
+    <Build Include="dbo\Views\MainProjectView.sql" />
+    <Build Include="dbo\Views\ActivityTypeView.sql" />
+    <Build Include="dbo\Views\ProductsheetEntryView.sql" />
+    <Build Include="dbo\Views\ActivityView.sql" />
+    <Build Include="dbo\Views\ProjectCandidateView.sql" />
+    <Build Include="dbo\Views\AdviceView.sql" />
+    <Build Include="dbo\Views\ProjectCategoryDetailView.sql" />
+    <Build Include="dbo\Views\AssessorColorView.sql" />
+    <Build Include="dbo\Views\ProjectCategoryEaDetailView.sql" />
+    <Build Include="dbo\Views\AuthenticationTokenView.sql" />
+    <Build Include="dbo\Views\ProjectCategoryFaDetailView.sql" />
+    <Build Include="dbo\Views\CandidateReportDefinitionFieldView.sql" />
+    <Build Include="dbo\Views\ProjectCategoryFdDetailView.sql" />
+    <Build Include="dbo\Views\CandidateScoreReportTypeView.sql" />
+    <Build Include="dbo\Views\ProjectCategoryPsDetailView.sql" />
+    <Build Include="dbo\Views\ComplaintSeverityTypeView.sql" />
+    <Build Include="dbo\Views\ProjectCategorySoDetailView.sql" />
+    <Build Include="dbo\Views\ComplaintStatusTypeView.sql" />
+    <Build Include="dbo\Views\ProjectPlanPhaseActivityView.sql" />
+    <Build Include="dbo\Views\ComplaintTypeView.sql" />
+    <Build Include="dbo\Views\ProjectProductInvoiceReadyView.sql" />
+    <Build Include="dbo\Views\ContactDetailView.sql" />
+    <Build Include="dbo\Views\ProjectRoleDictionaryLevelView.sql" />
+    <Build Include="dbo\Views\CrmAppointmentView.sql" />
+    <Build Include="dbo\Views\ProposalView.sql" />
+    <Build Include="dbo\Views\CrmAssociate.sql" />
+    <Build Include="dbo\Views\ReportParameterValueView.sql" />
+    <Build Include="dbo\Views\CrmAssociateView.sql" />
+    <Build Include="dbo\Views\SimulationCombinationView.sql" />
+    <Build Include="dbo\Views\CrmContact.sql" />
+    <Build Include="dbo\Views\SimulationMatrixEntryView.sql" />
+    <Build Include="dbo\Views\CrmContactView.sql" />
+    <Build Include="dbo\Views\ProjectRoleView.sql" />
+    <Build Include="dbo\Views\TheoremListRequestView.sql" />
+    <Build Include="dbo\Views\CrmEmailView.sql" />
+    <Build Include="dbo\Views\TimesheetEntryView.sql" />
+    <Build Include="dbo\Views\CrmEmployeeView.sql" />
+    <Build Include="dbo\Views\UserProfileView.sql" />
+    <Build Include="dbo\Views\CrmProject.sql" />
+    <Build Include="dbo\Views\CulturalFitAssociateView.sql" />
+    <Build Include="dbo\Views\ActivityDetailCoachingView.sql" />
+    <Build Include="dbo\Views\CrmProjectStatus.sql" />
+    <Build Include="dbo\Views\ActivityDetailConsultingView.sql" />
+    <Build Include="dbo\Views\CrmProjectStatusView.sql" />
+    <Build Include="dbo\Views\ActivityDetailSupportView.sql" />
+    <Build Include="dbo\Views\CrmProjectView.sql" />
+    <Build Include="dbo\Views\ProjectCandidateCategoryDetailType3View.sql" />
+    <Build Include="dbo\Views\ActivityDetailTrainingView.sql" />
+    <Build Include="dbo\Views\CrmUserGroup.sql" />
+    <Build Include="dbo\Views\CrmTimesheetUnregisteredEntryView.sql" />
+    <Build Include="dbo\Views\CrmUserGroupView.sql" />
+    <Build Include="dbo\Views\ProjectCandidateAssessorView.sql" />
+    <Build Include="dbo\Views\DictionaryClusterTranslationView.sql" />
+    <Build Include="dbo\Views\ProjectCandidateCompetenceSimulationScoreView.sql" />
+    <Build Include="dbo\Views\DictionaryClusterView.sql" />
+    <Build Include="dbo\Views\DictionaryIndicatorMatrixEntryView.sql" />
+    <Build Include="dbo\Views\ProjectCandidateDetailView.sql" />
+    <Build Include="dbo\Views\DictionaryCompetenceTranslationView.sql" />
+    <Build Include="dbo\Views\ProjectCandidateIndicatorSimulationFocusedScoreView.sql" />
+    <Build Include="dbo\Views\DictionaryCompetenceView.sql" />
+    <Build Include="dbo\Views\ProjectCandidateIndicatorSimulationScoreView.sql" />
+    <Build Include="dbo\Views\DictionaryIndicatorTranslationView.sql" />
+    <Build Include="dbo\Views\ProjectCandidateMailingView.sql" />
+    <Build Include="dbo\Views\DictionaryIndicatorView.sql" />
+    <Build Include="dbo\Views\ProjectCandidateProjectView.sql" />
+    <Build Include="dbo\Views\DictionaryLevelTranslationView.sql" />
+    <Build Include="dbo\Views\ProjectCategoryAcDetailView.sql" />
+    <Build Include="dbo\Views\DictionaryLevelView.sql" />
+    <Build Include="dbo\Views\ProjectCategoryCaDetailView.sql" />
+    <Build Include="dbo\Views\DictionaryView.sql" />
+    <Build Include="dbo\Views\ProjectCategoryCuDetailView.sql" />
+    <Build Include="dbo\Views\EvaluationFormAcdcView.sql" />
+    <Build Include="dbo\Views\ProjectCategoryDcDetailView.sql" />
+    <Build Include="dbo\Views\EvaluationFormCoachingView.sql" />
+    <Build Include="dbo\Views\ProjectCategoryDetailDictionaryIndicatorView.sql" />
+    <Build Include="dbo\Views\EvaluationFormCustomProjectsView.sql" />
+    <Build Include="dbo\Views\ProjectCategoryDetailSimulationCombinationView.sql" />
+    <Build Include="dbo\Views\EvaluationFormTypeView.sql" />
+    <Build Include="dbo\Views\ProjectCategoryDetailType1View.sql" />
+    <Build Include="dbo\Views\FrameworkAgreementView.sql" />
+    <Build Include="dbo\Views\ProjectCategoryDetailType2View.sql" />
+    <Build Include="dbo\Views\JobDefinitionView.sql" />
+    <Build Include="dbo\Views\ProjectCategoryDetailType3View.sql" />
+    <Build Include="dbo\Views\JobScheduleView.sql" />
+    <Build Include="dbo\Views\UserProfileContactView.sql" />
+    <Build Include="dbo\Views\JobView.sql" />
+    <Build Include="dbo\Views\ActivityDetailTrainingCandidateView.sql" />
+    <Build Include="dbo\Views\LanguageView.sql" />
+    <Build Include="Security\QUINTDOMAIN_RSUser.sql" />
+    <Build Include="Security\QuintessenceUser.sql" />
+    <Build Include="Security\QUINT_QNT_SP1_FARM.sql" />
+    <Build Include="Security\RoleMemberships.sql" />
+    <Build Include="dbo\Functions\CountLevels.sql" />
+    <Build Include="dbo\Functions\ProjectCandidate_GetLastTheoremListIsCompleted.sql" />
+    <Build Include="dbo\Functions\Office_RetrieveOfficeName.sql" />
+    <Build Include="dbo\Functions\Office_RetrieveOfficeNameById.sql" />
+    <Build Include="dbo\Functions\ProjectCandidate_AssessorsAsString.sql" />
+    <Build Include="dbo\Functions\ProjectCandidate_AssessorUserNamesAsString.sql" />
+    <Build Include="dbo\Functions\ProjectCandidate_ReportRecipientsAsString.sql" />
+    <Build Include="dbo\Functions\SimulationCombinationLanguage_ConcatenateLanguageNames.sql" />
+    <Build Include="dbo\Functions\TheoremListRequest_CheckCulturalFitStatus.sql" />
+    <Build Include="dbo\Functions\GenderToSalutation.sql" />
+    <Build Include="dbo\Functions\Language_RetrieveLanguageId.sql" />
+    <Build Include="dbo\Functions\Office_RetrieveOfficeId.sql" />
+    <Build Include="dbo\Functions\FormattedCrmAppointment.sql" />
+    <Build Include="dbo\Functions\SplitList.sql" />
+    <Build Include="dbo\Functions\Task_RetrieveAssessmentCenterTasks.sql" />
+    <Build Include="dbo\Stored Procedures\AccountantInvoicing_AssessmentDevelopmentProjectFixedPrice.sql" />
+    <Build Include="dbo\Stored Procedures\AccountantInvoicing_ConsultancyProjectFixedPrice.sql" />
+    <Build Include="dbo\Stored Procedures\AccountantInvoicing_ProductSheetEntry.sql" />
+    <Build Include="dbo\Stored Procedures\AccountantInvoicing_ProjectCandidate.sql" />
+    <Build Include="dbo\Stored Procedures\AccountantInvoicing_ProjectCandidateCategoryType1.sql" />
+    <Build Include="dbo\Stored Procedures\AccountantInvoicing_ProjectCandidateCategoryType2.sql" />
+    <Build Include="dbo\Stored Procedures\AccountantInvoicing_ProjectCandidateCategoryType3.sql" />
+    <Build Include="dbo\Stored Procedures\AccountantInvoicing_ProjectProduct.sql" />
+    <Build Include="dbo\Stored Procedures\AccountantInvoicing_TimesheetEntry.sql" />
+    <Build Include="dbo\Stored Procedures\ActivityDetailTraining_ListAppointments.sql" />
+    <Build Include="dbo\Stored Procedures\CrmCandidateAppointment_ListCoAssessors.sql" />
+    <Build Include="dbo\Stored Procedures\CrmCandidateAppointment_ListProjectTrainingAppointments.sql" />
+    <Build Include="dbo\Stored Procedures\CrmCandidateAppointment_ListUnregisteredCrmCandidateAppointments.sql" />
+    <Build Include="dbo\Stored Procedures\CrmCandidateAppointment_RetrieveFormattedCrmAppointment.sql" />
+    <Build Include="dbo\Stored Procedures\CrmCandidateInfo_Create.sql" />
+    <Build Include="dbo\Stored Procedures\CrmReplicationJob_StartProcess.sql" />
+    <Build Include="dbo\Stored Procedures\CrmReplicationJob_StopProcess.sql" />
+    <Build Include="dbo\Stored Procedures\CrmReplicationPerson_Sync.sql" />
+    <Build Include="dbo\Stored Procedures\CrmReplicationProject_Sync.sql" />
+    <Build Include="dbo\Stored Procedures\Dictionary_ListAvailableDictionariesForContact.sql" />
+    <Build Include="dbo\Stored Procedures\Dictionary_ListDictionaryIndicatorMatrixEntries.sql" />
+    <Build Include="dbo\Stored Procedures\External_GenerateType3Code.sql" />
+    <Build Include="dbo\Stored Procedures\External_ListLeiderschapScores.sql" />
+    <Build Include="dbo\Stored Procedures\External_ListNeopirScores.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCandidate_DeleteClusterScores.sql" />
+    <Build Include="dbo\Stored Procedures\FrameworkAgreement_ListYears.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCandidate_DeleteCompetenceScores.sql" />
+    <Build Include="dbo\Stored Procedures\Invoicing_AssessmentDevelopmentProjectFixedPrice.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCandidate_DeleteIndicatorScores.sql" />
+    <Build Include="dbo\Stored Procedures\Invoicing_ConsultancyProjectFixedPrice.sql" />
+    <Build Include="dbo\Stored Procedures\Invoicing_ProductSheetEntry.sql" />
+    <Build Include="dbo\Stored Procedures\Invoicing_ProjectCandidate.sql" />
+    <Build Include="dbo\Stored Procedures\Invoicing_ProjectCandidateCategoryType1.sql" />
+    <Build Include="dbo\Stored Procedures\Invoicing_ProjectCandidateCategoryType2.sql" />
+    <Build Include="dbo\Stored Procedures\Invoicing_ProjectCandidateCategoryType3.sql" />
+    <Build Include="dbo\Stored Procedures\ListProjectCandidateCategoryDetailType2MailTags.sql" />
+    <Build Include="dbo\Stored Procedures\Invoicing_ProjectProduct.sql" />
+    <Build Include="dbo\Stored Procedures\Invoicing_TimesheetEntry.sql" />
+    <Build Include="dbo\Stored Procedures\ListEvaluationFormMailTags.sql" />
+    <Build Include="dbo\Stored Procedures\ListProjectCandidateCategoryDetailType1MailTags.sql" />
+    <Build Include="dbo\Stored Procedures\ListProjectCandidateCategoryDetailType3MailTags.sql" />
+    <Build Include="dbo\Stored Procedures\ListProjectCandidateCulturalFitMailTags.sql" />
+    <Build Include="dbo\Stored Procedures\ListProjectCandidateMailTags.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCandidate_DeleteCompetenceSimulationScore.sql" />
+    <Build Include="dbo\Stored Procedures\Project_ListRecentProjects.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCandidate_DeleteFocusedIndicatorSimulationScore.sql" />
+    <Build Include="dbo\Stored Procedures\Project_SearchCrmProjects.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCandidate_DeleteStandardIndicatorSimulationScore.sql" />
+    <Build Include="dbo\Stored Procedures\Project_ValidateInvoiceStatus.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCandidate_AssistantOverview.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCandidate_ListReportRecipients.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCandidate_ReportingOverview.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCandidate_ValidateInvoiceStatus.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCandidateCancelled_AssistantOverview.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCandidateCategoryDetailType1_ValidateInvoiceStatus.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCandidateCategoryDetailType2_ValidateInvoiceStatus.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCandidateCategoryDetailType3_ValidateInvoiceStatus.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCandidateCategoryType1_AssistantOverview.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCandidateCategoryType2_AssistantOverview.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCandidateCategoryType3_AssistantOverview.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCandidateReserved_AssistantOverview.sql" />
+    <Build Include="dbo\Stored Procedures\Invoicing_ListAllFinancialEntities.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCategoryDetail_ListDictionaryIndicators.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectDna_ListProjectDnaContactPersons.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectDna_ListProjectDnaTypes.sql" />
+    <Build Include="dbo\Stored Procedures\Proposal_ListYears.sql" />
+    <Build Include="dbo\Stored Procedures\QCare_ListEvaluationFormAnswers.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_GetCandidateCoAssessor.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ListProjectCompetenceIndicators.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ListProjectCompetences.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectCandidateGetAssessors.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCategoryDetail_ListProjectRoleDictionaryLevels.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectCandidateIncludeInReport.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectCandidateListClusterScoresByProjectCandidateId.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectCandidateListCompetences.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectCandidateListCompetenceScoreClustersByProjectCandidateId.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectCandidateListCompetenceScoresByClusterScoreId.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectCandidateListCompetenceScoresByProjectCandidateId.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectCandidateListCompetenceScoresByProjectCandidateIdAndDictionaryClusterId.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectCandidateListFocusedIndicatorsByCompetenceIdAndProjectCandidateId.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectCandidateListIndicatorScoresByCompetenceScoreId.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectCandidateMainProjectCategoryType.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectCandidateProjectRole.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectCandidateResumeFieldByCode.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectCandidateRetrieveScoreReportTypeCode.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectDetailAcdc.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectDetailCandidateCategoryDetailTypes1.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectDetailCandidateCategoryDetailTypes2.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectDetailCandidateCategoryDetailTypes3.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectDetailCompetenceMatrix.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectDetailCompetenceMatrixRemarks.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectDetailSimulationRemarks.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectDetailSimulations.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ProjectDnaListProjectDnaTypes.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_ReportCandidateGenericInfo.sql" />
+    <Build Include="dbo\Stored Procedures\Reporting_RetrieveTranslation.sql" />
+    <Build Include="dbo\Stored Procedures\Simulation_CreateCombination.sql" />
+    <Build Include="dbo\Stored Procedures\Simulation_ListSimulationCombinationLanguages.sql" />
+    <Build Include="dbo\Stored Procedures\CrmReplicationAppointment_Sync.sql" />
+    <Build Include="dbo\Stored Procedures\CrmReplicationAppointmentTimesheet_Sync.sql" />
+    <Build Include="dbo\Stored Procedures\CrmReplicationAppointmentTraining_Sync.sql" />
+    <Build Include="dbo\Stored Procedures\CrmReplicationAssociate_Sync.sql" />
+    <Build Include="dbo\Stored Procedures\CrmReplicationContact_Sync.sql" />
+    <Build Include="dbo\Stored Procedures\CrmReplicationEmail_Sync.sql" />
+    <Build Include="dbo\Stored Procedures\CrmReplicationEmailAssociate_Sync.sql" />
+    <Build Include="dbo\Stored Procedures\StartSingleNeoQplanet.sql" />
+    <Build Include="dbo\Stored Procedures\ListCulturalFitMailTags.sql" />
+    <Build Include="dbo\Stored Procedures\Project_InvoiceAmountOverview.sql" />
+    <Build Include="dbo\Stored Procedures\TheoremListRequest_Reporting_GetQuestionnaireOverview.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCandidate_ListSimulationContextLogins.sql" />
+    <Build Include="Security\QCandidate.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="QCandidate\Stored Procedures\Assessment_GetByCandidateIdAndDate.sql" />
+  </ItemGroup>
+</Project>

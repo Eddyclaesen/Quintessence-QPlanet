@@ -1,0 +1,14 @@
+﻿ALTER ROLE [db_owner] ADD MEMBER [QUINTDOMAIN\RSUser];
+
+
+GO
+ALTER ROLE [db_owner] ADD MEMBER [QuintessenceUser];
+
+
+GO
+ALTER ROLE [db_datareader] ADD MEMBER [QUINTDOMAIN\RSUser];
+
+
+GO
+ALTER ROLE [db_datareader] ADD MEMBER [QUINT\QNT_SP1_FARM];
+

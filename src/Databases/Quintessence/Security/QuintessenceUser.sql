@@ -1,0 +1,2 @@
+﻿CREATE USER [QuintessenceUser] WITHOUT LOGIN WITH DEFAULT_SCHEMA=[dbo];
+
