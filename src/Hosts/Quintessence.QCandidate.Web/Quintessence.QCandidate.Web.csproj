@@ -53,6 +53,7 @@
 
   <ItemGroup>
     <Folder Include="Contracts\Requests\" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

@@ -7,6 +7,6 @@ namespace Quintessence.QCandidate.Contracts.Responses
     {
         public DateTime Date { get; set; }
         public LocationDto Location { get; set; }
-        public ICollection<ProgramComponentDto> ProgramComponents { get; set; }
+        public IEnumerable<ProgramComponentDto> ProgramComponents { get; set; }
     }
 }
