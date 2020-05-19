@@ -32,6 +32,8 @@ namespace Quintessence.QCandidate
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
+            services.AddMvcCore()
+                .AddRazorViewEngine();
             services.AddMediatR(typeof(GetAssesmentByCandidateIdAndDateQueryHandler).Assembly);
             services.AddScoped<IDbConnectionFactory>(_ =>
                 new SqlDbConnectionFactory(Configuration.GetConnectionString("QPlanet")));
