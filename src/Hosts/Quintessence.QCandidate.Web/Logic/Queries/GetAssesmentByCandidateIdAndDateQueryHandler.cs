@@ -59,7 +59,7 @@ namespace Quintessence.QCandidate.Logic.Queries
                             result.DayProgram.Location = obj[3] as LocationDto;
                         }
 
-                        var programComponent = obj[4] as ProgramComponentDto ?? new ProgramComponentDto();
+                        var programComponent = obj[4] as ProgramComponentDto;
                         programComponent.Room = obj[5] as RoomDto;
                         programComponent.LeadAssessor = obj[6] as UserDto;
                         programComponent.CoAssessor = obj[7] as UserDto;
