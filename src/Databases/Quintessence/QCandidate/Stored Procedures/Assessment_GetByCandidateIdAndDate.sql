@@ -15,7 +15,6 @@ SELECT
 		p.Name,
 
 	--DayProgram
-		@date AS Date,
 		--Location
 			o.Id,
 			o.FullName AS Name,
@@ -25,6 +24,7 @@ SELECT
 			prc.[End],
 			s.[Name],
 			prc.Description,
+			prc.SimulationCombinationId,
 			--Room
 				ar.Id,
 				ar.[Name],
@@ -35,8 +35,7 @@ SELECT
 			--CoAssessor
 				uCoAssess.Id,
 				uCoAssess.FirstName,
-				uCoAssess.LastName,
-			prc.SimulationCombinationId
+				uCoAssess.LastName			
 FROM
 	dbo.candidate c WITH (NOLOCK)
 	INNER JOIN dbo.ProjectCandidate pc WITH (NOLOCK) ON pc.CandidateId = c.Id
