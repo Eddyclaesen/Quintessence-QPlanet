@@ -24,50 +24,57 @@ namespace Quintessence.QCandidate.Logic.Queries
         {
             using(var dbConnection = DbConnectionFactory.Create())
             {
-                var candidateIdParameter = new SqlParameter("candidateId", SqlDbType.UniqueIdentifier) {Value = query.CandidateId};
-                var dateParameter = new SqlParameter("date", SqlDbType.Date) {Value = query.Date};
-
                 var result = new AssessmentDto();
-                await dbConnection.QueryAsync<CustomerDto, PositionDto, LocationDto, ProgramComponentGeneralInfoDto, RoomDto, UserDto, UserDto, AssessmentDto>(new StoredProcedureCommandDefinition("[QCandidate].[Assessment_GetByCandidateIdAndDate]", candidateIdParameter, dateParameter).ToCommandDefinition(),
-                    (customerDto, positionDto, locationDto, programComponentGeneralInfoDto, roomDto, leadAssessorDto, coAssessorDto) =>
+                await dbConnection.QueryAsync<AssessmentDto>("[QCandidate].[Assessment_GetByCandidateIdAndDate]",
+                    new[]
+                    {
+                        typeof(CustomerDto),
+                        typeof(PositionDto),
+                        typeof(DayProgramDto),
+                        typeof(LocationDto),
+                        typeof(ProgramComponentDto),
+                        typeof(RoomDto),
+                        typeof(UserDto),
+                        typeof(UserDto)
+                    },
+                    obj =>
                     {
                         if(result.Customer == null)
                         {
-                            result.Customer = customerDto;
+                            result.Customer = obj[0] as CustomerDto;
                         }
 
                         if(result.Position == null)
                         {
-                            result.Position = positionDto;
+                            result.Position = obj[1] as PositionDto;
                         }
 
                         if(result.DayProgram == null)
                         {
-                            result.DayProgram = new DayProgramDto
-                            {
-                                Date = query.Date,
-                                Location = locationDto,
-                                ProgramComponents = new List<ProgramComponentDto>()
-                            };
+                            result.DayProgram = obj[2] as DayProgramDto ?? new DayProgramDto();
                         }
 
-                        var programComponent = new ProgramComponentDto
+                        if(result.DayProgram.Location == null)
                         {
-                            Id = programComponentGeneralInfoDto.Id,
-                            Start = programComponentGeneralInfoDto.Start,
-                            End = programComponentGeneralInfoDto.End,
-                            Name = programComponentGeneralInfoDto.Name,
-                            Description = programComponentGeneralInfoDto.Description,
-                            SimulationCombinationId = programComponentGeneralInfoDto.SimulationCombinationId,
-                            Room = roomDto,
-                            LeadAssessor = leadAssessorDto,
-                            CoAssessor = coAssessorDto
-                        };
+                            result.DayProgram.Location = obj[3] as LocationDto;
+                        }
+
+                        var programComponent = obj[4] as ProgramComponentDto ?? new ProgramComponentDto();
+                        programComponent.Room = obj[5] as RoomDto;
+                        programComponent.LeadAssessor = obj[6] as UserDto;
+                        programComponent.CoAssessor = obj[7] as UserDto;
 
                         AddProgramComponent(result.DayProgram, programComponent);
 
                         return result;
-                    }, "Id,Id,Id,Id,Id,Id,Id").ConfigureAwait(false);
+                    },
+                    param: new
+                    {
+                        candidateId = query.CandidateId,
+                        date = query.Date
+                    },
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Id,Id,Date,Id,Id,Id,Id,Id").ConfigureAwait(false);
 
                 return result;
             }
