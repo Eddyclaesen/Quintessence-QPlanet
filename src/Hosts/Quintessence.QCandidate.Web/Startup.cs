@@ -34,7 +34,7 @@ namespace Quintessence.QCandidate
 
             services.AddMvcCore()
                 .AddRazorViewEngine();
-            services.AddMediatR(typeof(GetAssesmentByCandidateIdAndDateQueryHandler).Assembly);
+            services.AddMediatR(typeof(GetAssessmentByCandidateIdAndDateQueryHandler).Assembly);
             services.AddScoped<IDbConnectionFactory>(_ =>
                 new SqlDbConnectionFactory(Configuration.GetConnectionString("QPlanet")));
         }

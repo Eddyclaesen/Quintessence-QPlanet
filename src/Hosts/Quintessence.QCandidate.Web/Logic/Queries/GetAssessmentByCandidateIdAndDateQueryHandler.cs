@@ -1,26 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Dapper;
-using Kenze.Infrastructure.Dapper;
+﻿using Dapper;
 using Kenze.Infrastructure.Interfaces;
 using Quintessence.QCandidate.Contracts.Responses;
 using Quintessence.QCandidate.Core.Queries;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Quintessence.QCandidate.Logic.Queries
 {
-    public class GetAssesmentByCandidateIdAndDateQueryHandler : DapperQueryHandler<GetAssesmentByCandidateIdAndDateQuery, AssessmentDto>
+    public class GetAssessmentByCandidateIdAndDateQueryHandler : DapperQueryHandler<GetAssessmentByCandidateIdAndDateQuery, AssessmentDto>
     {
-        public GetAssesmentByCandidateIdAndDateQueryHandler(IDbConnectionFactory dbConnectionFactory)
+        public GetAssessmentByCandidateIdAndDateQueryHandler(IDbConnectionFactory dbConnectionFactory)
             : base(dbConnectionFactory)
         {
         }
 
-        public override async Task<AssessmentDto> Handle(GetAssesmentByCandidateIdAndDateQuery query, CancellationToken cancellationToken)
+        public override async Task<AssessmentDto> Handle(GetAssessmentByCandidateIdAndDateQuery query, CancellationToken cancellationToken)
         {
             using(var dbConnection = DbConnectionFactory.Create())
             {

@@ -21,7 +21,7 @@ namespace Quintessence.QCandidate.Controllers
         {
             var candidateId = new Guid("9257A17C-A805-40CA-9777-5F6067344B48");
             var date = new DateTime(2018, 10, 22);
-            var assessment = await _mediator.Send(new GetAssesmentByCandidateIdAndDateQuery(candidateId, date))
+            var assessment = await _mediator.Send(new GetAssessmentByCandidateIdAndDateQuery(candidateId, date))
                 .ConfigureAwait(true);
             return View(assessment);
         }
