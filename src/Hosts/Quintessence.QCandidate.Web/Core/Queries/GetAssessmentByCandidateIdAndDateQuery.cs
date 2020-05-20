@@ -4,9 +4,9 @@ using Quintessence.QCandidate.Contracts.Responses;
 
 namespace Quintessence.QCandidate.Core.Queries
 {
-    public class GetAssesmentByCandidateIdAndDateQuery : IRequest<AssessmentDto>
+    public class GetAssessmentByCandidateIdAndDateQuery : IRequest<AssessmentDto>
     {
-        public GetAssesmentByCandidateIdAndDateQuery(Guid candidateId, DateTime date)
+        public GetAssessmentByCandidateIdAndDateQuery(Guid candidateId, DateTime date)
         {
             CandidateId = candidateId;
             Date = date;

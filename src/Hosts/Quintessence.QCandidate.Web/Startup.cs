@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Quintessence.QCandidate.Filters.Actions;
 using Quintessence.QCandidate.Logic.Queries;
+using Quintessence.QCandidate.Models;
 
 namespace Quintessence.QCandidate
 {
@@ -32,9 +33,13 @@ namespace Quintessence.QCandidate
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-            services.AddMediatR(typeof(GetAssesmentByCandidateIdAndDateQueryHandler).Assembly);
+            services.AddMvcCore()
+                .AddRazorViewEngine();
+            services.AddMediatR(typeof(GetAssessmentByCandidateIdAndDateQueryHandler).Assembly);
             services.AddScoped<IDbConnectionFactory>(_ =>
                 new SqlDbConnectionFactory(Configuration.GetConnectionString("QPlanet")));
+
+            services.Configure<Settings>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

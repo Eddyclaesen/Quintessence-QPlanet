@@ -1,0 +1,22 @@
+﻿@using Quintessence.QCandidate.Controllers
+@model Quintessence.QCandidate.Contracts.Responses.AssessmentDto
+
+@{
+    ViewData["Title"] = "Get";
+    var simulationCombinationId = Model.DayProgram?.ProgramComponents?.FirstOrDefault(c => c.SimulationCombinationId != null)?.SimulationCombinationId;
+    var pdfUrl = $"{Url.Action(nameof(SimulationCombinationsController.GetPdf), "SimulationCombinations", new { simulationCombinationId = simulationCombinationId })}#toolbar=0";
+}
+
+<h1>Get</h1>
+
+<div>
+    <h4>AssessmentDto</h4>
+    <hr />
+
+    @*TODO: Replace by result of HasSimulationCombinationPdfByIdAndLanguageQueryHandler invocation*@
+    @if(simulationCombinationId.HasValue)
+    {
+        <iframe src="@pdfUrl" width="100%" height="500px">
+        </iframe>
+    }
+</div>
