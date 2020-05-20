@@ -130,6 +130,22 @@
                             @Html.EditorFor(m => m.Reference)
                         </td>
                     </tr>
+                    <tr>
+                        <td class="label">
+                            @Html.DisplayNameFor(m => m.HasQCandidateAccess)
+                        </td>
+                        <td class="value">
+                            @if(Model.HasQCandidateAccess)
+                            {
+                                @Html.HiddenFor(m => m.HasQCandidateAccess)
+                                @Html.DisplayFor(m => m.HasQCandidateAccess)
+                            }
+                            else
+                            {
+                                @Html.EditorFor(m => m.HasQCandidateAccess)
+                            }
+                        </td>
+                    </tr>
                 </tbody>
             </table> 
             
