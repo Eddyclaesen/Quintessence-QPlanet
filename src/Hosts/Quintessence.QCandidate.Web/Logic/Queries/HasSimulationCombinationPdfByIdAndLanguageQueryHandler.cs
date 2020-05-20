@@ -20,12 +20,7 @@ namespace Quintessence.QCandidate.Logic.Queries
 
         public Task<bool> Handle(HasSimulationCombinationPdfByIdAndLanguageQuery request, CancellationToken cancellationToken)
         {
-            if(!request.SimulationCombinationId.HasValue)
-            {
-                return Task.FromResult(false);
-            }
-
-            var filePath = FileLocationHelper.GetPdfFileLocation(_settings.PdfStorageLocation, request.SimulationCombinationId.Value, request.Language);
+            var filePath = FileLocationHelper.GetPdfFileLocation(_settings.PdfStorageLocation, request.SimulationCombinationId, request.Language);
 
             return Task.FromResult(File.Exists(filePath));
 
