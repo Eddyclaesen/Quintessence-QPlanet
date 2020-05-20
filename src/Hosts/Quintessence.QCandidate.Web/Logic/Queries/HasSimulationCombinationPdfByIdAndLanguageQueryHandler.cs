@@ -3,24 +3,32 @@ using MediatR;
 using Quintessence.QCandidate.Core.Queries;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Quintessence.QCandidate.Helpers;
+using Quintessence.QCandidate.Models;
 
 namespace Quintessence.QCandidate.Logic.Queries
 {
     public class HasSimulationCombinationPdfByIdAndLanguageQueryHandler : IRequestHandler<HasSimulationCombinationPdfByIdAndLanguageQuery, bool>
     {
-        private readonly string _pdfStorageLocation;
-        public HasSimulationCombinationPdfByIdAndLanguageQueryHandler(IConfiguration configuration)
+        private readonly Settings _settings;
+
+        public HasSimulationCombinationPdfByIdAndLanguageQueryHandler(IOptionsMonitor<Settings> settings)
         {
-            _pdfStorageLocation = configuration.GetValue<string>("PdfStorageLocation");
+            _settings = settings.CurrentValue;
         }
 
         public Task<bool> Handle(HasSimulationCombinationPdfByIdAndLanguageQuery request, CancellationToken cancellationToken)
         {
-            var filePath = FileLocationHelper.GetPdfFileLocation(_pdfStorageLocation, request.SimulationCombinationId, request.Language);
-            
+            if(!request.SimulationCombinationId.HasValue)
+            {
+                return Task.FromResult(false);
+            }
+
+            var filePath = FileLocationHelper.GetPdfFileLocation(_settings.PdfStorageLocation, request.SimulationCombinationId.Value, request.Language);
+
             return Task.FromResult(File.Exists(filePath));
+
         }
     }
 }

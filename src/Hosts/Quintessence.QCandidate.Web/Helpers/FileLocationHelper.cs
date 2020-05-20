@@ -5,10 +5,9 @@ namespace Quintessence.QCandidate.Helpers
 {
     public static class FileLocationHelper
     {
-        public static string GetPdfFileLocation(string pdfBasePath, Guid? simulationCombinationId, string language)
+        public static string GetPdfFileLocation(string pdfBasePath, Guid simulationCombinationId, string language)
         {
             if(string.IsNullOrWhiteSpace(pdfBasePath)
-               || !simulationCombinationId.HasValue
                || string.IsNullOrWhiteSpace(language))
             {
                 return null;

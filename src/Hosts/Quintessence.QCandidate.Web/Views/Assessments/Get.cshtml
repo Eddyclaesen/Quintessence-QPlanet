@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Get";
     var simulationCombinationId = Model.DayProgram?.ProgramComponents?.FirstOrDefault(c => c.SimulationCombinationId != null)?.SimulationCombinationId;
-    var pdfUrl = Url.Action(nameof(SimulationCombinationsController.GetPdf), "SimulationCombinations", new {simulationCombinationId = simulationCombinationId, language = "NL"});
+    var pdfUrl = $"{Url.Action(nameof(SimulationCombinationsController.GetPdf), "SimulationCombinations", new {simulationCombinationId = simulationCombinationId, language = "NL"})}#toolbar=0";
 }
 
 <h1>Get</h1>

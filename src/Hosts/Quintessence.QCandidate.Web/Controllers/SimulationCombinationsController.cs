@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Quintessence.QCandidate.Core.Queries;
 using System;
 using System.Threading.Tasks;
@@ -11,28 +10,22 @@ namespace Quintessence.QCandidate.Controllers
     public class SimulationCombinationsController : Controller
     {
         private readonly IMediator _mediator;
-        private readonly string _pdfStorageLocation;
 
-        public SimulationCombinationsController(IMediator mediator, IConfiguration configuration)
+        public SimulationCombinationsController(IMediator mediator)
         {
             _mediator = mediator;
-            _pdfStorageLocation = configuration.GetValue<string>("PdfStorageLocation");
         }
 
-        [Route("{action}/{simulationCombinationId}/{language}")]
-        public async Task<ActionResult> GetPdf(Guid? simulationCombinationId, string language)
+        [Route("{action}/{simulationCombinationId}")]
+        public async Task<ActionResult> GetPdf(Guid simulationCombinationId)
         {
-            if(simulationCombinationId.HasValue)
-            {
-                var fileStream = await _mediator.Send(new GetSimulationCombinationPdfByIdAndLanguageQuery(_pdfStorageLocation, simulationCombinationId.Value, language));
+            //TODO: Determine language
+            var language = "NL";
+            var fileStream = await _mediator.Send(new GetSimulationCombinationPdfByIdAndLanguageQuery(simulationCombinationId, language));
 
-                if(fileStream != null)
-                {
-                    return new FileStreamResult(fileStream, "application/pdf");
-                }
-            }
-
-            return new EmptyResult();
+            return fileStream != null
+                ? (ActionResult) new FileStreamResult(fileStream, "application/pdf")
+                : new EmptyResult();
         }
     }
 }
