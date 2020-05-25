@@ -1,0 +1,56 @@
+@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QCandidate</title>
+    <link href="~/css/style.css" rel="stylesheet">
+    <link href="~/css/materialize.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="top-nav">
+        <div class="container right-align">
+            <div class="social-media">
+                <a href="https://www.facebook.com/QuintessenceConsulting"><img src="~/img/facebook-dark.svg" /></a>
+                <a href="https://www.linkedin.com/company/quintessence"><img src="~/img/linkedin-dark.svg" /></a>
+                <a href="https://twitter.com/Quintessence_Be"><img src="~/img/twitter-dark.svg" /></a>
+                <a href="https://www.youtube.com/channel/UCWddCvy4ZzV06N7YYAp_qoQ"><img src="~/img/youtube-dark.svg" /></a>
+            </div>
+
+            <a href="#" class="language-active">nl</a>
+            <a href="#">fr</a>
+            <a href="#">en</a>
+        </div>
+    </div>
+    <nav>
+        <div class="nav-wrapper container">
+            <a href="#" class="brand-logo"><img src="~/img/logo.svg"></a>
+            <ul class="navigation">
+                <li>Dagplanning</li>
+            </ul>
+            <ul class="right user-information">
+                <li>Firstname Lastname</li>
+                <li><a href="#" class="btn">Log uit</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    @RenderBody()
+
+    <footer>
+        <div class="container">
+            <span class="copyright">©2020 Quintessence</span>
+            <div class="social-media right">
+                <a href="https://www.facebook.com/QuintessenceConsulting"><img src="~/img/facebook.svg" /></a>
+                <a href="https://www.linkedin.com/company/quintessence"><img src="~/img/linkedin.svg" /></a>
+                <a href="https://twitter.com/Quintessence_Be"><img src="~/img/twitter.svg" /></a>
+                <a href="https://www.youtube.com/channel/UCWddCvy4ZzV06N7YYAp_qoQ"><img src="~/img/youtube.svg" /></a>
+            </div>
+        </div>
+    </footer>
+
+<script src="~/js/materialize.min.js"></script>
+@*<script src="~/lib/jquery-3.5.1.js"></script>*@
+@RenderSection("Scripts", required: false)
+</body>
+</html>

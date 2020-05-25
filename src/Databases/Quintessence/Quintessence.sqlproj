@@ -586,6 +586,7 @@
     <Build Include="dbo\Stored Procedures\TheoremListRequest_Reporting_GetQuestionnaireOverview.sql" />
     <Build Include="dbo\Stored Procedures\ProjectCandidate_ListSimulationContextLogins.sql" />
     <Build Include="Security\QCandidate.sql" />
+    <Build Include="QCandidate\Stored Procedures\ProgramComponent_GetById.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="QCandidate\Stored Procedures\Assessment_GetByCandidateIdAndDate.sql" />
