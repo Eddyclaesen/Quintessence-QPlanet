@@ -72,24 +72,26 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
                     GivenName = firstName,
                     Surname = lastName,
                     DisplayName = $"{firstName} {lastName}",
-                    UserPrincipalName = userPrincipalName,
+                    //UserPrincipalName = userPrincipalName,
                     Mail = email,
-                    MailNickname = Guid.NewGuid().ToString(),
+                    //MailNickname = Guid.NewGuid().ToString(),
                     AccountEnabled = true,
-                    UserType = "Member",
-                    
-                    //Identities = new List<ObjectIdentity>
-                    //{
-                    //    new ObjectIdentity()
-                    //    {
-                    //        SignInType = "emailAddress",
-                    //        Issuer = tenantId,
-                    //        IssuerAssignedId = "casey.jensen@example.com"
-                    //    }
-                    //},
+                    //UserType = "Member",
+
+                    Identities = new List<ObjectIdentity>
+                    {
+                        new ObjectIdentity()
+                        {
+                            SignInType = "emailAddress",
+                            Issuer = _settings.TenantId,
+                            IssuerAssignedId = email
+                        }
+                    },
                     PasswordProfile = new PasswordProfile()
                     {
-                        Password = "Kenze123"//GenerateNewPassword(4, 8, 4)
+                        Password = "Kenze123",//GenerateNewPassword(4, 8, 4)
+                        ForceChangePasswordNextSignIn = false,
+                        ForceChangePasswordNextSignInWithMfa = false
                     },
                     PasswordPolicies = "DisablePasswordExpiration",
                     AdditionalData = extensionInstance
