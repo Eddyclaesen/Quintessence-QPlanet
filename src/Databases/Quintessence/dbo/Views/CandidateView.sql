@@ -1,7 +1,7 @@
 ﻿CREATE VIEW dbo.CandidateView
 AS
 SELECT        c.Id, c.FirstName, c.LastName, c.Email, c.Gender, c.LanguageId, c.Audit_CreatedBy, c.Audit_CreatedOn, c.Audit_ModifiedBy, c.Audit_ModifiedOn, c.Audit_DeletedBy, c.Audit_DeletedOn, c.Audit_IsDeleted, c.Audit_VersionId, 
-                         c.LegacyId, c.Phone, lv.Name AS LanguageName, c.Reference
+                         c.LegacyId, c.Phone, lv.Name AS LanguageName, c.Reference, c.HasQCandidateAccess, c.QCandidateUserId
 FROM            dbo.Candidate AS c WITH (NOLOCK) INNER JOIN
                          dbo.LanguageView AS lv ON c.LanguageId = lv.Id
 WHERE        (c.Audit_IsDeleted = 0)

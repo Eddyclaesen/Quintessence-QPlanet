@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Quintessence.QService.QueryModel.Base;
 using Quintessence.QService.QueryModel.Prm;
@@ -39,5 +40,9 @@ namespace Quintessence.QService.QueryModel.Cam
 
         [DataMember]
         public List<ProjectCandidateView> ProjectCandidates { get; set; }
+        [DataMember]
+        public bool HasQCandidateAccess { get; set; }
+        [DataMember]
+        public Guid? QCandidateUserId { get; set; }
     }
 }
