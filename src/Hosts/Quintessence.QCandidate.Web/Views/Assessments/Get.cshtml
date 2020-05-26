@@ -14,9 +14,9 @@
             ? "PDF"
             : null,
         documentlink = c.SimulationCombinationId.HasValue
-                       && c.Start.Date == DateTime.Today
+                       //&& c.Start.Date == DateTime.Today
             ? Mediator.Send(new HasSimulationCombinationPdfByIdAndLanguageQuery(c.SimulationCombinationId.Value, "NL")).Result
-                ? $"{Url.Action(nameof(ProgramComponentController.Details), "ProgramComponent", new { id = c.Id })}"
+                ? $"{Url.Action(nameof(ProgramComponentsController.Details), "ProgramComponents", new { id = c.Id })}"
                 : null
             : null,
         assessors = TimeslotHelper.GetAssessorsString(c.LeadAssessor, c.CoAssessor),

@@ -7,11 +7,11 @@ using Quintessence.QCandidate.Core.Queries;
 namespace Quintessence.QCandidate.Controllers
 {
     [Route("[Controller]")]
-    public class ProgramComponentController : Controller
+    public class ProgramComponentsController : Controller
     {
         private readonly IMediator _mediator;
 
-        public ProgramComponentController(IMediator mediator)
+        public ProgramComponentsController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -21,8 +21,8 @@ namespace Quintessence.QCandidate.Controllers
         {
             var programComponent = await _mediator.Send(new GetProgramComponentByIdQuery(id));
 
-            ViewBag.CanShowPdf = (programComponent != null
-                                     && programComponent.Start.Date == DateTime.Today);
+            ViewBag.CanShowPdf = true; /*(programComponent != null
+                                     && programComponent.Start.Date == DateTime.Today);*/
 
             return View(programComponent);
         }
