@@ -1,22 +1,80 @@
-﻿@using Quintessence.QCandidate.Controllers
+﻿@using MediatR
+@using Quintessence.QCandidate.Controllers
+@using Quintessence.QCandidate.Core.Queries
+@using Quintessence.QCandidate.Helpers
 @model Quintessence.QCandidate.Contracts.Responses.AssessmentDto
+@inject IMediator Mediator
 
 @{
-    ViewData["Title"] = "Get";
-    var simulationCombinationId = Model.DayProgram?.ProgramComponents?.FirstOrDefault(c => c.SimulationCombinationId != null)?.SimulationCombinationId;
-    var pdfUrl = $"{Url.Action(nameof(SimulationCombinationsController.GetPdf), "SimulationCombinations", new { simulationCombinationId = simulationCombinationId })}#toolbar=0";
+    var mappedEvents = Model.DayProgram.ProgramComponents.Select(c => new
+    {
+        title = c.Description ?? c.Name,
+        location = c.Room.Name,
+        documentname = c.SimulationCombinationId.HasValue
+            ? "PDF"
+            : null,
+        documentlink = c.SimulationCombinationId.HasValue
+                       //&& c.Start.Date == DateTime.Today
+            ? Mediator.Send(new HasSimulationCombinationPdfByIdAndLanguageQuery(c.SimulationCombinationId.Value, "NL")).Result
+                ? $"{Url.Action(nameof(ProgramComponentsController.Details), "ProgramComponents", new { id = c.Id })}"
+                : null
+            : null,
+        assessors = TimeslotHelper.GetAssessorsString(c.LeadAssessor, c.CoAssessor),
+        time = TimeslotHelper.GetTimeString(c.Start, c.End),
+        start = TimeslotHelper.CalculatePixelOffset(c.Start),
+        end = TimeslotHelper.CalculatePixelOffset(c.End)
+    }).ToList();
 }
 
-<h1>Get</h1>
+<div class="container">
+    <div class="context">
+        <span class="company">@Model.Customer.Name</span> <span class="project">@Model.Position.Name</span>
+        <h1>@Model.DayProgram.Date.ToLongDateString()</h1>
+        <span class="location">Locatie: @Model.DayProgram.Location.Name</span>
+    </div>
 
-<div>
-    <h4>AssessmentDto</h4>
-    <hr />
-
-    @*TODO: Replace by result of HasSimulationCombinationPdfByIdAndLanguageQueryHandler invocation*@
-    @if(simulationCombinationId.HasValue)
-    {
-        <iframe src="@pdfUrl" width="100%" height="500px">
-        </iframe>
-    }
+    @*<div class="assessment-context">
+        <h2>Assessment context</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam et scelerisque tortor. Donec vel aliquam tortor. Sed suscipit tortor eu enim condimentum condimentum. Nulla egestas arcu nec nunc suscipit, eu semper odio lobortis. Maecenas at dolor sit amet quam ultrices mattis. Nam eleifend, ligula at vestibulum bibendum, lectus neque consequat tellus, id malesuada nunc est non dolor. Sed non sagittis dui. Vivamus ullamcorper ultrices magna id vehicula. Praesent quis molestie sapien.</p>
+    </div>*@
 </div>
+<div class="container calendar-wrap">
+    <div class="calendar-container">
+        <div class="timings">
+            <div> <span> 8:00 </span></div>
+            <div> 8:30 </div>
+            <div> <span> 9:00 </span></div>
+            <div> 9:30 </div>
+            <div> <span> 10:00 </span></div>
+            <div> 10:30 </div>
+            <div> <span> 11:00 </span></div>
+            <div> 11:30 </div>
+            <div> <span> 12:00 </span></div>
+            <div> 12:30 </div>
+            <div> <span> 13:00 </span></div>
+            <div> 13:30 </div>
+            <div> <span> 14:00 </span></div>
+            <div> 14:30 </div>
+            <div> <span> 15:00 </span></div>
+            <div> 15:30 </div>
+            <div> <span> 16:00 </span></div>
+            <div> 16:30 </div>
+            <div> <span> 17:00 </span></div>
+            <div> 17:30 </div>
+            <div> <span> 18:00 </span></div>
+            <div> 18:30 </div>
+            <div> <span> 19:00 </span></div>
+        </div>
+
+        <div class="days" id="events">
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/script.js"></script>
+    <script type="text/javascript">
+        layOutDay(@Html.Raw(Json.Serialize(mappedEvents)));
+    </script>
+}

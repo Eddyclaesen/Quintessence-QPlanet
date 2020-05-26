@@ -69,6 +69,7 @@
     <Folder Include="dbo\Stored Procedures\" />
     <Folder Include="QCandidate" />
     <Folder Include="QCandidate\Stored Procedures" />
+    <Folder Include="Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\SimulationCombination2Language.sql" />
@@ -586,8 +587,12 @@
     <Build Include="dbo\Stored Procedures\TheoremListRequest_Reporting_GetQuestionnaireOverview.sql" />
     <Build Include="dbo\Stored Procedures\ProjectCandidate_ListSimulationContextLogins.sql" />
     <Build Include="Security\QCandidate.sql" />
+    <Build Include="QCandidate\Stored Procedures\ProgramComponent_GetById.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="QCandidate\Stored Procedures\Assessment_GetByCandidateIdAndDate.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\Release.sql" />
   </ItemGroup>
 </Project>
