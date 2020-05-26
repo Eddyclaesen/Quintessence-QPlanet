@@ -160,8 +160,10 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
                 user.FirstName = request.FirstName;
                 user.LastName = request.LastName;
 
-                if (ValidationContainer.ValidateObject(user))
+                if(ValidationContainer.ValidateObject(user))
+                {
                     repository.Save(user);
+                }
 
                 var userProfileRequest = new CreateNewUserProfileRequest
                 {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using AutoMapper;
 using Quintessence.QService.Business.Interfaces.CommandRepositories;
 using Quintessence.QService.DataModel.Cam;
@@ -12,7 +13,9 @@ using Quintessence.QService.QPlanetService.Contracts.ServiceContracts.QueryServi
 using Quintessence.QService.QPlanetService.Implementation.Base;
 using Microsoft.Practices.Unity;
 using Quintessence.QService.QueryModel.Prm;
-
+using Microsoft.Graph;
+using Microsoft.Identity.Client;
+using Quintessence.QService.QueryModel.Inf;
 
 namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
 {
@@ -32,6 +35,29 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
                 Mapper.DynamicMap(request, entity, typeof(CreateCandidateRequest), typeof(Candidate));
 
                 repository.Save(entity);
+
+                if(entity.HasQCandidateAccess
+                   && !entity.QCandidateUserId.HasValue)
+                {
+                    //Create user in Azure AD B2C
+                    var settings = new AzureAdB2CSettings
+                    {
+                        ApplicationId = "cb70571a-aa65-4e68-96dc-dfc27d8a94a0",
+                        TenantId = "kenzequintessenceb2cdev.onmicrosoft.com",
+                        ClientSecret = "53H1~0j_wvPj7B}}FdL1dv3,",
+                        B2cExtensionApplicationId = "b6df2c72-70d1-4d04-bbe4-c9711bc1293e"
+                    };
+                    var graphService = new GraphService(settings);
+                    var infrastructureService = Container.Resolve<IInfrastructureQueryService>();
+                    var languages = infrastructureService.ListLanguages();
+                    var language = languages.FirstOrDefault(l => l.Id == request.LanguageId)?.Code;
+                    var users = graphService.GetAllUsers();
+                    var qCandidateUserId = graphService.CreateUser(request.FirstName, request.LastName, language, request.Email, entity.Id);
+
+                    entity.QCandidateUserId = qCandidateUserId;
+
+                    repository.Save(entity);
+                }
 
                 return entity.Id;
             });
