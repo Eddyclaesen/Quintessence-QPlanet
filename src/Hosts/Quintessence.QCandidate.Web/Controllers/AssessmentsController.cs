@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Quintessence.QCandidate.Controllers
 {
-    [Route("[Controller]")]
     public class AssessmentsController : Controller
     {
         private readonly IMediator _mediator;
@@ -16,7 +15,6 @@ namespace Quintessence.QCandidate.Controllers
             _mediator = mediator;
         }
 
-        [Route("/")]
         public async Task<IActionResult> Get()
         {
             //TODO: Determine candidate id
