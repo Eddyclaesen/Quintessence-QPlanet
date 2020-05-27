@@ -1,21 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
 using AutoMapper;
+using Microsoft.Practices.Unity;
 using Quintessence.QService.Business.Interfaces.CommandRepositories;
 using Quintessence.QService.DataModel.Cam;
-using Quintessence.QService.DataModel.Prm;
 using Quintessence.QService.QPlanetService.Contracts.DataContracts.CandidateManagement;
 using Quintessence.QService.QPlanetService.Contracts.DataContracts.ProjectManagement;
 using Quintessence.QService.QPlanetService.Contracts.ServiceContracts.CommandServiceContracts;
 using Quintessence.QService.QPlanetService.Contracts.ServiceContracts.QueryServiceContracts;
 using Quintessence.QService.QPlanetService.Implementation.Base;
-using Microsoft.Practices.Unity;
-using Quintessence.QService.QueryModel.Prm;
-using Microsoft.Graph;
-using Microsoft.Identity.Client;
-using Quintessence.QService.QueryModel.Inf;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
 {
@@ -40,19 +34,12 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
                    && !entity.QCandidateUserId.HasValue)
                 {
                     //Create user in Azure AD B2C
-                    var settings = new AzureAdB2CSettings
-                    {
-                        ApplicationId = "cb70571a-aa65-4e68-96dc-dfc27d8a94a0",
-                        TenantId = "kenzequintessenceb2cdev.onmicrosoft.com",
-                        ClientSecret = "53H1~0j_wvPj7B}}FdL1dv3,",
-                        B2cExtensionApplicationId = "b6df2c72-70d1-4d04-bbe4-c9711bc1293e"
-                    };
-                    var graphService = new GraphService(settings);
+                    var graphService = Container.Resolve<IGraphService>();
                     var infrastructureService = Container.Resolve<IInfrastructureQueryService>();
                     var languages = infrastructureService.ListLanguages();
-                    var language = languages.FirstOrDefault(l => l.Id == request.LanguageId)?.Code;
-                    var users = graphService.GetAllUsers();
-                    var qCandidateUserId = graphService.CreateUser(request.FirstName, request.LastName, language, request.Email, entity.Id);
+                    var language = languages.SingleOrDefault(l => l.Id == request.LanguageId)?.Code;
+                    var password = GenerateNewPassword(3, 3, 2);
+                    var qCandidateUserId = graphService.CreateUser(request.FirstName, request.LastName, language, request.Email, entity.Id, password);
 
                     entity.QCandidateUserId = qCandidateUserId;
 
@@ -73,12 +60,33 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
             ExecuteTransaction(() =>
             {
                 var repository = Container.Resolve<ICandidateManagementCommandRepository>();
-
                 var candidate = repository.Retrieve<Candidate>(request.Id);
-
                 Mapper.DynamicMap(request, candidate);
 
                 repository.Save(candidate);
+
+                if(request.HasQCandidateAccess)
+                {
+                    var graphService = Container.Resolve<IGraphService>();
+                    var infrastructureService = Container.Resolve<IInfrastructureQueryService>();
+                    var languages = infrastructureService.ListLanguages();
+                    var language = languages.SingleOrDefault(l => l.Id == request.LanguageId)?.Code;
+
+                    if(!candidate.QCandidateUserId.HasValue)
+                    {
+                        //Create user in Azure AD B2C
+                        var password = GenerateNewPassword(3, 3, 2);
+                        var qCandidateUserId = graphService.CreateUser(request.FirstName, request.LastName, language, request.Email, candidate.Id, password);
+                        candidate.QCandidateUserId = qCandidateUserId;
+
+                        repository.Save(candidate);
+                    }
+                    else
+                    {
+                        //Update user in Azure AD B2C
+                        graphService.UpdateUser(candidate.QCandidateUserId.Value, request.FirstName, request.LastName, language, request.Email);
+                    }
+                }
             });
         }
         #endregion
@@ -310,8 +318,35 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
         }
 
         #endregion
+        
+        private static string GenerateNewPassword(int lowercase, int uppercase, int numerics)
+        {
+            var lowers = "abcdefghijklmnopqrstuvwxyz";
+            var uppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var number = "0123456789";
 
+            var random = new Random();
+            var generated = "!";
 
+            for(var i = 0; i < lowercase; ++i)
+                generated = generated.Insert(
+                    random.Next(generated.Length),
+                    lowers[random.Next(lowers.Length - 1)].ToString()
+                );
 
+            for(var i = 0; i < uppercase; ++i)
+                generated = generated.Insert(
+                    random.Next(generated.Length),
+                    uppers[random.Next(uppers.Length - 1)].ToString()
+                );
+
+            for(var i = 0; i < numerics; ++i)
+                generated = generated.Insert(
+                    random.Next(generated.Length),
+                    number[random.Next(number.Length - 1)].ToString()
+                );
+
+            return generated.Replace("!", string.Empty);
+        }
     }
 }

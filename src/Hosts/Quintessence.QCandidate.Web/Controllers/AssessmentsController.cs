@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using MediatR;
 using Quintessence.QCandidate.Core.Queries;
 using System.Threading.Tasks;
+using Quintessence.QCandidate.Models;
 
 namespace Quintessence.QCandidate.Controllers
 {
@@ -17,13 +19,15 @@ namespace Quintessence.QCandidate.Controllers
 
         public async Task<IActionResult> Get()
         {
-            //TODO: Determine candidate id
-            var candidateId = new Guid("9257A17C-A805-40CA-9777-5F6067344B48");
+            var candidateIdClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId");
+            Guid.TryParse(candidateIdClaim?.Value, out var candidateId);
+
             //TODO: Use current date
             var date = new DateTime(2018, 10, 22);
-            var assessment = await _mediator.Send(new GetAssessmentByCandidateIdAndDateQuery(candidateId, date));
+            var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateQuery(candidateId, date));
+            var assessmentModel = new AssessmentModel(_mediator, Url, assessmentDto);
 
-            return View(assessment);
+            return View(assessmentModel);
         }
     }
 }

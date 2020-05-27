@@ -1,4 +1,5 @@
 @using Microsoft.AspNetCore.Http
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +30,7 @@
                 <li>Dagplanning</li>
             </ul>
             <ul class="right user-information">
-                <li>Firstname Lastname</li>
+                <li>@User.Identity.Name</li>
                 <li><a href="#" class="btn">Log uit</a></li>
             </ul>
         </div>
@@ -49,8 +50,8 @@
         </div>
     </footer>
 
-<script src="~/js/materialize.min.js"></script>
-@*<script src="~/lib/jquery-3.5.1.js"></script>*@
-@RenderSection("Scripts", required: false)
+    <script src="~/js/materialize.min.js"></script>
+    @*<script src="~/lib/jquery-3.5.1.js"></script>*@
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

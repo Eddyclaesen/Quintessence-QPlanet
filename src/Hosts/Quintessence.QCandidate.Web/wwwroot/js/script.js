@@ -61,8 +61,8 @@ function getCollisions (events) {
     let title = event.title;
     let assessors = event.assessors;
     let location = event.location;
-    let documentname = event.documentname;
-    let documentlink = event.documentlink;
+    let documentname = event.documentName;
+    let documentlink = event.documentLink;
     let order = 1;
 
     while (start < end) {
@@ -142,8 +142,8 @@ myNode.innerHTML = '';
     let title = event.title;
     let assessors = event.assessors;
     let location = event.location;
-    let documentname = event.documentname;
-    let documentlink = event.documentlink;
+    let documentname = event.documentName;
+    let documentlink = event.documentLink;
     let units = width[id];
     if (!units) {units = 1};
     let left = (containerWidth / width[id]) * (leftOffSet[id] - 1) + 10;

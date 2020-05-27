@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using Quintessence.QService.QPlanetService.Contracts.DataContracts.Shared;
 
 namespace Quintessence.QService.QPlanetService.Contracts.DataContracts.CandidateManagement
@@ -26,5 +27,9 @@ namespace Quintessence.QService.QPlanetService.Contracts.DataContracts.Candidate
 
         [DataMember]
         public string Reference { get; set; }
+        [DataMember]
+        public bool HasQCandidateAccess { get; set; }
+        [DataMember]
+        public Guid? QCandidateUserId { get; set; }
     }
 }

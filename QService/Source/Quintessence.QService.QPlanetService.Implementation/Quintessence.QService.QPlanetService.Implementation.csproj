@@ -215,6 +215,7 @@
     <Compile Include="Base\UnityServiceHostFactory.cs" />
     <Compile Include="Base\ValidationContextLifetimeManager.cs" />
     <Compile Include="CommandServices\AuthenticationCommandService.cs" />
+    <Compile Include="AzureAdB2CSettings.cs" />
     <Compile Include="CommandServices\CandidateManagementCommandService.cs" />
     <Compile Include="CommandServices\DocumentManagementCommandService.cs" />
     <Compile Include="CommandServices\GraphService.cs" />
@@ -228,6 +229,7 @@
     <Compile Include="CommandServices\SecurityCommandService.cs" />
     <Compile Include="CommandServices\SupplyChainManagementCommandService.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="IAzureAdB2CSettings.cs" />
     <Compile Include="QueryServices\AuthenticationQueryService.cs" />
     <Compile Include="QueryServices\CandidateManagementQueryService.cs" />
     <Compile Include="QueryServices\FinanceManagementQueryService.cs" />

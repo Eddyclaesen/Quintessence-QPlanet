@@ -7,24 +7,24 @@ using Microsoft.Identity.Client;
 
 namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
 {
-    public class AzureAdB2CSettings
+    public interface IGraphService
     {
-        public string TenantId { get; set; }
-        public string ApplicationId { get; set; }
-        public string B2cExtensionApplicationId { get; set; }
-        public string ClientSecret { get; set; }
+        Guid CreateUser(string firstName, string lastName, string language, string email, Guid qPlanetId, string password);
+        void UpdateUser(Guid id, string firstName, string lastName, string language, string email);
     }
 
-    public class GraphService
+    public class GraphService : IGraphService
     {
-        private readonly AzureAdB2CSettings _settings;
+        private readonly IAzureAdB2CSettings _settings;
 
         private readonly string[] _defaultUserAttributes = new[]
         {
             "Id",
             "GivenName",
             "Surname",
-            "UserPrincipalName"
+            "UserPrincipalName",
+            "Identities",
+            "PasswordProfile"
         };
 
         private readonly string[] _customUserAttributes = new[]
@@ -33,36 +33,16 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
             "QPlanet_CandidateId"
         };
 
-        public GraphService(AzureAdB2CSettings settings)
+        public GraphService(IAzureAdB2CSettings settings)
         {
             _settings = settings;
         }
 
-        public List<User> GetAllUsers()
-        {
-            var graphClient = GetGraphClient();
-            var users = graphClient.Users.Request().Select(GetAttributeSelectionString()).GetAsync().Result.ToList();
-
-            return users;
-        }
-
-        public User GetUser(Guid id)
-        {
-            var graphClient = GetGraphClient();
-            var user = graphClient.Users[id.ToString()].Request().Select(GetAttributeSelectionString()).GetAsync().Result;
-
-            return user;
-        }
-
-        public Guid CreateUser(string firstName, string lastName, string language, string email, Guid qPlanetId)
+        public Guid CreateUser(string firstName, string lastName, string language, string email, Guid qPlanetId, string password)
         {
             IDictionary<string, object> extensionInstance = new Dictionary<string, object>();
-            var helper = new B2cCustomAttributeHelper(_settings.B2cExtensionApplicationId);
-            extensionInstance.Add(helper.GetCompleteAttributeName("Language"), language);
-            extensionInstance.Add(helper.GetCompleteAttributeName("QPlanet_CandidateId"), qPlanetId.ToString());
-
-            var emailFirstPart = email.Split(new[] {'@'}, StringSplitOptions.None).First();
-            var userPrincipalName = $"{emailFirstPart}@kenzequintessenceb2cdev.onmicrosoft.com";
+            extensionInstance.Add(GetCompleteAttributeName("Language"), language);
+            extensionInstance.Add(GetCompleteAttributeName("QPlanet_CandidateId"), qPlanetId.ToString());
 
             var graphClient = GetGraphClient();
             var user = graphClient.Users
@@ -71,12 +51,9 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
                 {
                     GivenName = firstName,
                     Surname = lastName,
-                    DisplayName = $"{firstName} {lastName}",
-                    //UserPrincipalName = userPrincipalName,
+                    DisplayName = GetDisplayName(firstName, lastName),
                     Mail = email,
-                    //MailNickname = Guid.NewGuid().ToString(),
                     AccountEnabled = true,
-                    //UserType = "Member",
 
                     Identities = new List<ObjectIdentity>
                     {
@@ -87,18 +64,48 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
                             IssuerAssignedId = email
                         }
                     },
-                    PasswordProfile = new PasswordProfile()
-                    {
-                        Password = "Kenze123",//GenerateNewPassword(4, 8, 4)
-                        ForceChangePasswordNextSignIn = false,
-                        ForceChangePasswordNextSignInWithMfa = false
-                    },
+                    PasswordProfile = GetPasswordProfile(password),
                     PasswordPolicies = "DisablePasswordExpiration",
                     AdditionalData = extensionInstance
                 }).Result;
 
             return new Guid(user.Id);
         }
+
+        public void UpdateUser(Guid id, string firstName, string lastName, string language, string email)
+        {
+            IDictionary<string, object> extensionInstance = new Dictionary<string, object>();
+            extensionInstance.Add(GetCompleteAttributeName("Language"), language);
+
+            var updatedUser = new User
+            {
+                GivenName = firstName,
+                Surname = lastName,
+                DisplayName = GetDisplayName(firstName, lastName),
+                Mail = email,
+                //sign-in e-mail address will not be changed, since the candidate
+                //received this as part of his/her login details
+                AdditionalData = extensionInstance
+            };
+
+            var graphClient = GetGraphClient();
+            graphClient.Users[id.ToString()]
+                .Request()
+                .UpdateAsync(updatedUser)
+                .Wait();
+        }
+
+        private PasswordProfile GetPasswordProfile(string password)
+        {
+            return new PasswordProfile()
+            {
+                Password = password,
+                ForceChangePasswordNextSignIn = false,
+                ForceChangePasswordNextSignInWithMfa = false
+            };
+        }
+
+        private string GetDisplayName(string firstName, string lastName) => $"{firstName} {lastName}";
 
         private GraphServiceClient GetGraphClient()
         {
@@ -125,64 +132,24 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
 
         private List<string> GetAttributes()
         {
-            var helper = new B2cCustomAttributeHelper(_settings.B2cExtensionApplicationId);
-
-            return _defaultUserAttributes.Union(_customUserAttributes.Select(a => helper.GetCompleteAttributeName(a))).ToList();
+            return _defaultUserAttributes.Union(_customUserAttributes.Select(GetCompleteAttributeName)).ToList();
         }
 
         private string GetAttributeSelectionString()
         {
             return string.Join(",", GetAttributes());
         }
-
-        private static string GenerateNewPassword(int lowercase, int uppercase, int numerics)
+        
+        private string GetCompleteAttributeName(string attributeName)
         {
-            string lowers = "abcdefghijklmnopqrstuvwxyz";
-            string uppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            string number = "0123456789";
-
-            Random random = new Random();
-
-            string generated = "!";
-            for(int i = 1; i <= lowercase; i++)
-                generated = generated.Insert(
-                    random.Next(generated.Length),
-                    lowers[random.Next(lowers.Length - 1)].ToString()
-                );
-
-            for(int i = 1; i <= uppercase; i++)
-                generated = generated.Insert(
-                    random.Next(generated.Length),
-                    uppers[random.Next(uppers.Length - 1)].ToString()
-                );
-
-            for(int i = 1; i <= numerics; i++)
-                generated = generated.Insert(
-                    random.Next(generated.Length),
-                    number[random.Next(number.Length - 1)].ToString()
-                );
-
-            return generated.Replace("!", string.Empty);
-        }
-
-        internal class B2cCustomAttributeHelper
-        {
-            internal readonly string _b2cExtensionAppClientId;
-
-            internal B2cCustomAttributeHelper(string b2cExtensionAppClientId)
+            if(string.IsNullOrWhiteSpace(attributeName))
             {
-                _b2cExtensionAppClientId = b2cExtensionAppClientId.Replace("-", "");
+                throw new ArgumentException("Parameter cannot be null", nameof(attributeName));
             }
 
-            internal string GetCompleteAttributeName(string attributeName)
-            {
-                if(string.IsNullOrWhiteSpace(attributeName))
-                {
-                    throw new System.ArgumentException("Parameter cannot be null", nameof(attributeName));
-                }
+            var b2cExtensionAppClientId = _settings.B2cExtensionApplicationId.Replace("-", "");
 
-                return $"extension_{_b2cExtensionAppClientId}_{attributeName}";
-            }
+            return $"extension_{b2cExtensionAppClientId}_{attributeName}";
         }
     }
 }
