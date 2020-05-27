@@ -60,7 +60,7 @@ namespace Quintessence.QService.QPlanetService.Contracts.ServiceContracts.QueryS
 
         [OperationContract]
         [FaultContract(typeof(ValidationContainer))]
-        CreateProjectCandidateInvitationMailResponse CreateProjectCandidateInvitationMail(Guid id);
+        CreateProjectCandidateInvitationMailResponse CreateProjectCandidateInvitationMail(Guid id, string qCandidateUrl);
 
         [OperationContract]
         [FaultContract(typeof(ValidationContainer))]

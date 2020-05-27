@@ -160,5 +160,8 @@ namespace Quintessence.QService.QueryModel.Prm
 
         [DataMember]
         public bool Extra2Done { get; set; }
+        [DataMember]
+        public bool CandidateHasQCandidateAccess { get; set; }
+        public Guid? CandidateQCandidateUserId { get; set; }
     }
 }

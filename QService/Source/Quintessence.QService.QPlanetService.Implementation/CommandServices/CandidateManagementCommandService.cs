@@ -23,28 +23,9 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
             return ExecuteTransaction(() =>
             {
                 var repository = Container.Resolve<ICandidateManagementCommandRepository>();
-
                 var entity = repository.Prepare<Candidate>();
-
                 Mapper.DynamicMap(request, entity, typeof(CreateCandidateRequest), typeof(Candidate));
-
                 repository.Save(entity);
-
-                if(entity.HasQCandidateAccess
-                   && !entity.QCandidateUserId.HasValue)
-                {
-                    //Create user in Azure AD B2C
-                    var graphService = Container.Resolve<IGraphService>();
-                    var infrastructureService = Container.Resolve<IInfrastructureQueryService>();
-                    var languages = infrastructureService.ListLanguages();
-                    var language = languages.SingleOrDefault(l => l.Id == request.LanguageId)?.Code;
-                    var password = GenerateNewPassword(3, 3, 2);
-                    var qCandidateUserId = graphService.CreateUser(request.FirstName, request.LastName, language, request.Email, entity.Id, password);
-
-                    entity.QCandidateUserId = qCandidateUserId;
-
-                    repository.Save(entity);
-                }
 
                 return entity.Id;
             });
@@ -65,27 +46,16 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
 
                 repository.Save(candidate);
 
-                if(request.HasQCandidateAccess)
+                if(candidate.HasQCandidateAccess
+                   && candidate.QCandidateUserId.HasValue)
                 {
+                    //Update user in Azure AD B2C
                     var graphService = Container.Resolve<IGraphService>();
                     var infrastructureService = Container.Resolve<IInfrastructureQueryService>();
                     var languages = infrastructureService.ListLanguages();
                     var language = languages.SingleOrDefault(l => l.Id == request.LanguageId)?.Code;
 
-                    if(!candidate.QCandidateUserId.HasValue)
-                    {
-                        //Create user in Azure AD B2C
-                        var password = GenerateNewPassword(3, 3, 2);
-                        var qCandidateUserId = graphService.CreateUser(request.FirstName, request.LastName, language, request.Email, candidate.Id, password);
-                        candidate.QCandidateUserId = qCandidateUserId;
-
-                        repository.Save(candidate);
-                    }
-                    else
-                    {
-                        //Update user in Azure AD B2C
-                        graphService.UpdateUser(candidate.QCandidateUserId.Value, request.FirstName, request.LastName, language, request.Email);
-                    }
+                    graphService.UpdateUser(candidate.QCandidateUserId.Value, request.FirstName, request.LastName, language, request.Email);
                 }
             });
         }
@@ -115,6 +85,20 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
                 var candidate = repository.Retrieve<Candidate>(candidateId);
 
                 candidate.LanguageId = languageId;
+
+                repository.Save(candidate);
+            });
+        }
+
+        public void ChangeCandidateQCandidateUserId(Guid candidateId, Guid? qCandidateUserId)
+        {
+            LogTrace();
+
+            ExecuteTransaction(() =>
+            {
+                var repository = Container.Resolve<ICandidateManagementCommandRepository>();
+                var candidate = repository.Retrieve<Candidate>(candidateId);
+                candidate.QCandidateUserId = qCandidateUserId;
 
                 repository.Save(candidate);
             });
@@ -319,34 +303,5 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
 
         #endregion
         
-        private static string GenerateNewPassword(int lowercase, int uppercase, int numerics)
-        {
-            var lowers = "abcdefghijklmnopqrstuvwxyz";
-            var uppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            var number = "0123456789";
-
-            var random = new Random();
-            var generated = "!";
-
-            for(var i = 0; i < lowercase; ++i)
-                generated = generated.Insert(
-                    random.Next(generated.Length),
-                    lowers[random.Next(lowers.Length - 1)].ToString()
-                );
-
-            for(var i = 0; i < uppercase; ++i)
-                generated = generated.Insert(
-                    random.Next(generated.Length),
-                    uppers[random.Next(uppers.Length - 1)].ToString()
-                );
-
-            for(var i = 0; i < numerics; ++i)
-                generated = generated.Insert(
-                    random.Next(generated.Length),
-                    number[random.Next(number.Length - 1)].ToString()
-                );
-
-            return generated.Replace("!", string.Empty);
-        }
     }
 }

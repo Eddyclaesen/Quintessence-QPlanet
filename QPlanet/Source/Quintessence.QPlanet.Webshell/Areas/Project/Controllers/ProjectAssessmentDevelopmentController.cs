@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -1621,7 +1622,8 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Controllers
             {
                 try
                 {
-                    var response = this.InvokeService<IInfrastructureQueryService, CreateProjectCandidateInvitationMailResponse>(service => service.CreateProjectCandidateInvitationMail(id));
+                    var qCandidateUrl = ConfigurationManager.AppSettings["QCandidateUrl"];
+                    var response = this.InvokeService<IInfrastructureQueryService, CreateProjectCandidateInvitationMailResponse>(service => service.CreateProjectCandidateInvitationMail(id, qCandidateUrl));
                     return Json((new { to = response.To, subject = response.Subject, body = response.Body, bcc = response.Bcc }), JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception exception)
