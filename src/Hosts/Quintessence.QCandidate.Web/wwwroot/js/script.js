@@ -55,14 +55,14 @@ function getCollisions (events) {
   }
 
   events.forEach((event, id) => {
-    let end = event.end;
-    let start = event.start;
+    let end = event.endPixelOffset;
+    let start = event.startPixelOffset;
     let time = event.time;
     let title = event.title;
     let assessors = event.assessors;
     let location = event.location;
-    let documentname = event.documentname;
-    let documentlink = event.documentlink;
+    let documentname = event.documentName;
+    let documentlink = event.documentLink;
     let order = 1;
 
     while (start < end) {
@@ -134,16 +134,16 @@ myNode.innerHTML = '';
   getAttributes(events);
 
   events.forEach((event, id) => {
-    let height = (event.end - event.start) / minutesinDay * containerHeight;
-    let top = event.start / minutesinDay * containerHeight; 
-    let end = event.end;
-    let start = event.start;
+    let height = (event.endPixelOffset - event.startPixelOffset) / minutesinDay * containerHeight;
+    let top = event.startPixelOffset / minutesinDay * containerHeight; 
+    let end = event.endPixelOffset;
+    let start = event.startPixelOffset;
     let time = event.time;
     let title = event.title;
     let assessors = event.assessors;
     let location = event.location;
-    let documentname = event.documentname;
-    let documentlink = event.documentlink;
+    let documentname = event.documentName;
+    let documentlink = event.documentLink;
     let units = width[id];
     if (!units) {units = 1};
     let left = (containerWidth / width[id]) * (leftOffSet[id] - 1) + 10;

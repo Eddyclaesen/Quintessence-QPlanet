@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Quintessence.QCandidate.Core.Queries;
+using Quintessence.QCandidate.Models;
 
 namespace Quintessence.QCandidate.Controllers
 {
@@ -19,12 +20,15 @@ namespace Quintessence.QCandidate.Controllers
         [Route("{action}/{id}")]
         public async Task<IActionResult> Details(Guid id)
         {
-            var programComponent = await _mediator.Send(new GetProgramComponentByIdQuery(id));
+            var programComponentDto = await _mediator.Send(new GetProgramComponentByIdQuery(id));
+            var programComponentModel = new ProgramComponentModel
+            {
+                Title = programComponentDto?.Description ?? programComponentDto?.Name,
+                CanShowPdf = true,
+                PdfUrl = $"{Url.Action("GetPdf", "SimulationCombinations", new { simulationCombinationId = programComponentDto?.SimulationCombinationId })}#toolbar=0"
+            };
 
-            ViewBag.CanShowPdf = true; /*(programComponent != null
-                                     && programComponent.Start.Date == DateTime.Today);*/
-
-            return View(programComponent);
+            return View(programComponentModel);
         }
     }
 }

@@ -2,35 +2,13 @@
 @using Quintessence.QCandidate.Controllers
 @using Quintessence.QCandidate.Core.Queries
 @using Quintessence.QCandidate.Helpers
-@model Quintessence.QCandidate.Contracts.Responses.AssessmentDto
-@inject IMediator Mediator
-
-@{
-    var mappedEvents = Model.DayProgram.ProgramComponents.Select(c => new
-    {
-        title = c.Description ?? c.Name,
-        location = c.Room.Name,
-        documentname = c.SimulationCombinationId.HasValue
-            ? "PDF"
-            : null,
-        documentlink = c.SimulationCombinationId.HasValue
-                       //&& c.Start.Date == DateTime.Today
-            ? Mediator.Send(new HasSimulationCombinationPdfByIdAndLanguageQuery(c.SimulationCombinationId.Value, "NL")).Result
-                ? $"{Url.Action(nameof(ProgramComponentsController.Details), "ProgramComponents", new { id = c.Id })}"
-                : null
-            : null,
-        assessors = TimeslotHelper.GetAssessorsString(c.LeadAssessor, c.CoAssessor),
-        time = TimeslotHelper.GetTimeString(c.Start, c.End),
-        start = TimeslotHelper.CalculatePixelOffset(c.Start),
-        end = TimeslotHelper.CalculatePixelOffset(c.End)
-    }).ToList();
-}
+@model Quintessence.QCandidate.Models.Assessments.AssessmentModel
 
 <div class="container">
     <div class="context">
-        <span class="company">@Model.Customer.Name</span> <span class="project">@Model.Position.Name</span>
-        <h1>@Model.DayProgram.Date.ToLongDateString()</h1>
-        <span class="location">Locatie: @Model.DayProgram.Location.Name</span>
+        <span class="company">@Model.CustomerName</span> <span class="project">@Model.PositionName</span>
+        <h1>@Model.Date.ToLongDateString()</h1>
+        <span class="location">Locatie: @Model.LocationName</span>
     </div>
 
     @*<div class="assessment-context">
@@ -75,6 +53,6 @@
 @section Scripts {
     <script src="~/js/script.js"></script>
     <script type="text/javascript">
-        layOutDay(@Html.Raw(Json.Serialize(mappedEvents)));
+        layOutDay(@Html.Raw(Json.Serialize(Model.Events)));
     </script>
 }

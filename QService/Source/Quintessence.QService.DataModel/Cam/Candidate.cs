@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Quintessence.Infrastructure.Model.DataModel;
 using Quintessence.Infrastructure.Model.DataModel;
 
@@ -19,5 +20,9 @@ namespace Quintessence.QService.DataModel.Cam
         public string Phone { get; set; }
 
         public string Reference { get; set; }
+
+        public bool HasQCandidateAccess { get; set; }
+
+        public Guid? QCandidateUserId { get; set; }
     }
 }

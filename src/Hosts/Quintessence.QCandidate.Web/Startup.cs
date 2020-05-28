@@ -1,9 +1,13 @@
 ﻿using Kenze.Infrastructure;
 using Kenze.Infrastructure.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -33,13 +37,22 @@ namespace Quintessence.QCandidate
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-            services.AddMvcCore()
+            services.AddMvcCore(options =>
+                {
+                    var policy = new AuthorizationPolicyBuilder()
+                        .RequireAuthenticatedUser()
+                        .Build();
+                    options.Filters.Add(new AuthorizeFilter(policy));
+                })
                 .AddRazorViewEngine();
             services.AddMediatR(typeof(GetAssessmentByCandidateIdAndDateQueryHandler).Assembly);
             services.AddScoped<IDbConnectionFactory>(_ =>
                 new SqlDbConnectionFactory(Configuration.GetConnectionString("QPlanet")));
 
             services.Configure<Settings>(Configuration);
+
+            services.AddAuthentication(AzureADB2CDefaults.AuthenticationScheme)
+                .AddAzureADB2C(options => Configuration.Bind("AzureAdB2C", options));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,17 +70,17 @@ namespace Quintessence.QCandidate
 
             app.UseStaticFiles();
             app.UseHttpsRedirection();
-
             app.UseRouting();
 
-            // Uncomment the following line(s) if you require authentication or authorization.
-            // Keep in mind that this call needs to be done AFTER UseRouting
-            // app.UseAuthentication();
-            // app.UseAuthorization();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
+            
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Assessments}/{action=Get}");
+                endpoints.MapRazorPages();
             });
 
         }

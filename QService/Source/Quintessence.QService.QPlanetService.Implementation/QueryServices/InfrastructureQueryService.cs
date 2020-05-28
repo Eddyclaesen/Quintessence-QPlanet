@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.ServiceModel.Security;
 using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
+using Quintessence.QService.Business.Interfaces.CommandRepositories;
 using Quintessence.QService.Business.Interfaces.QueryRepositories;
+using Quintessence.QService.DataModel.Cam;
+using Quintessence.QService.QPlanetService.Contracts.DataContracts.CandidateManagement;
 using Quintessence.QService.QPlanetService.Contracts.DataContracts.InfrastructureManagement;
 using Quintessence.QService.QPlanetService.Contracts.DataContracts.ProjectManagement;
 using Quintessence.QService.QPlanetService.Contracts.ServiceContracts.CommandServiceContracts;
@@ -14,7 +18,9 @@ using Quintessence.QService.QueryModel.Cam;
 using Quintessence.QService.QueryModel.Inf;
 using Quintessence.QService.QPlanetService.Contracts.ServiceContracts.QueryServiceContracts;
 using Quintessence.QService.QPlanetService.Implementation.Base;
+using Quintessence.QService.QPlanetService.Implementation.CommandServices;
 using Quintessence.QService.QueryModel.Prm;
+using AutoMapper;
 
 namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
 {
@@ -255,6 +261,33 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
                     var repository = Container.Resolve<IInfrastructureQueryRepository>();
                     var prmQueryService = Container.Resolve<IProjectManagementQueryService>();
                     var projectCandidate = prmQueryService.RetrieveProjectCandidateDetail(id);
+                    var username = projectCandidate.CandidateEmail;
+                    string password = null;
+                    string languageCode = null;
+                    var qCandidateAccess = QCandidateAccess.NoAccess;
+
+                    if(projectCandidate.CandidateHasQCandidateAccess)
+                    {
+                        var infrastructureService = Container.Resolve<IInfrastructureQueryService>();
+                        var languages = infrastructureService.ListLanguages();
+                        languageCode = languages.SingleOrDefault(l => l.Id == projectCandidate.CandidateLanguageId)?.Code;
+
+                        if(!projectCandidate.CandidateQCandidateUserId.HasValue)
+                        {
+                            //Create user in Azure AD B2C
+                            var graphService = Container.Resolve<IGraphService>();
+                            password = GenerateNewPassword(3, 3, 2);
+                            var qCandidateUserId = graphService.CreateUser(projectCandidate.CandidateFirstName, projectCandidate.CandidateLastName, languageCode, projectCandidate.CandidateEmail, projectCandidate.CandidateId, password);
+
+                            var candidateManagementCommandService = Container.Resolve<ICandidateManagementCommandService>();
+                            candidateManagementCommandService.SetCandidateQCandidateUserId(projectCandidate.CandidateId, qCandidateUserId);
+                            qCandidateAccess = QCandidateAccess.UserCreated;
+                        }
+                        else
+                        {
+                            qCandidateAccess = QCandidateAccess.UserAlreadyExists;
+                        }
+                    }
 
                     var projectCandidateCategoryDetails = prmQueryService.ListProjectCandidateCategoryDetailTypes(projectCandidate.Id);
                     var projectCategoryDetails = prmQueryService.ListProjectCategoryDetails(projectCandidate.ProjectId);
@@ -329,6 +362,8 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
                             //Add simulation context logins to email
                             var simulationContextLogins = prmQueryService.ListSimulationContextLogins(projectCandidate.Id);
                             body = body.Replace(@"&lt;!--SIMCONLOGINS--&gt;", CreateSimulationContextLoginsEmailBody(simulationContextLogins));
+                            //Add QCandidate login to email
+                            body = body.Replace(@"&lt;!--QCANDIDATELOGIN--&gt;", CreateQCandidateLoginsEmailBody(qCandidateAccess, languageCode, username, password));
 
                             body = body.Replace(@"&lt;!--SUBCATEGORIES--&gt;", subCategoryStringBuilder.ToString());
 
@@ -366,6 +401,82 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
                     builder.Append(string.Format("<br />"));
                 }
             }
+            return builder.ToString();
+        }
+
+        private static string CreateQCandidateLoginsEmailBody(QCandidateAccess qCandidateAccess, string language, string username, string password)
+        {
+            if(qCandidateAccess == QCandidateAccess.NoAccess)
+            {
+                return string.Empty;
+            }
+
+            var builder = new StringBuilder();
+            var url = ConfigurationManager.AppSettings["QCandidateUrl"];
+
+            if(qCandidateAccess == QCandidateAccess.UserCreated)
+            {
+                var gotAccess = string.Empty;
+                var usernameLabel = string.Empty;
+                var passwordLabel = string.Empty;
+                var qCandidateUrl = $"<a href=\"{url}\"><strong>{url}</strong></a>";
+
+                switch(language?.ToLower())
+                {
+                    case "nl":
+                        gotAccess = $"U heeft toegang tot ons QCandidate-platform op: {qCandidateUrl} en u kunt hierop inloggen met de volgende informatie:";
+                        usernameLabel = "Gebruikersnaam";
+                        passwordLabel = "Paswoord";
+                        break;
+                    case "en":
+                        gotAccess = $"You have access to our QCandidate-platform at: {qCandidateUrl} and can login to it using the following information:";
+                        usernameLabel = "Username";
+                        passwordLabel = "Password";
+                        break;
+                    case "fr":
+                        gotAccess = $"Vous avez accès à notre plateforme QCandidate sur: {qCandidateUrl} et pouvez vous y connecter en utilisant les informations suivantes:";
+                        usernameLabel = "Nom d'utilisateur";
+                        passwordLabel = "Mot de passe";
+                        break;
+                    case "de":
+                        gotAccess = $"Sie haben Zugriff auf unsere QCandidate-Plattform unter: {qCandidateUrl} und können sich mit folgenden Informationen anmelden:";
+                        usernameLabel = "Nutzername";
+                        passwordLabel = "Passwort";
+                        break;
+                }
+
+                builder.Append(gotAccess);
+                builder.Append("<br /><strong><span style=\"color: #002649; font-family: calibri; font-size: 11pt;\">");
+                builder.Append($"{usernameLabel}: {username}<br />");
+                builder.Append($"{passwordLabel}: {password}<br />");
+                builder.Append("</span></strong></p>");
+            }
+            else if(qCandidateAccess == QCandidateAccess.UserAlreadyExists)
+            {
+                var gotAccess = string.Empty;
+                var qCandidateUrl = $"<a href=\"{url}\"><strong>{url}</strong></a>";
+
+                switch(language?.ToLower())
+                {
+                    case "nl":
+                        gotAccess = $"U heeft toegang tot ons QCandidate-platform op: {qCandidateUrl} en kunt hierop inloggen met de eerder verzonden informatie.";
+                        break;
+                    case "en":
+                        gotAccess = $"You have access to our QCandidate-platform at: {qCandidateUrl} and can login to it using the information sent previously.";
+                        break;
+                    case "fr":
+                        gotAccess = $"Vous avez accès à notre plateforme QCandidate sur: {qCandidateUrl} et pouvez vous y connecter en utilisant les informations envoyées précédemment.";
+                        break;
+                    case "de":
+                        gotAccess = $"Sie haben Zugriff auf unsere QCandidate-Plattform unter: {qCandidateUrl} und können sich mit den zuvor gesendeten Informationen anmelden.";
+                        break;
+                }
+
+                builder.Append(gotAccess);
+            }
+
+            builder.Append("<br />");
+
             return builder.ToString();
         }
 
@@ -514,6 +625,43 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
 
             //No tags found.
             return text;
+        }
+
+        private static string GenerateNewPassword(int lowercase, int uppercase, int numerics)
+        {
+            var lowers = "abcdefghijklmnopqrstuvwxyz";
+            var uppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var number = "0123456789";
+
+            var random = new Random();
+            var generated = "!";
+
+            for(var i = 0; i < lowercase; ++i)
+                generated = generated.Insert(
+                    random.Next(generated.Length),
+                    lowers[random.Next(lowers.Length - 1)].ToString()
+                );
+
+            for(var i = 0; i < uppercase; ++i)
+                generated = generated.Insert(
+                    random.Next(generated.Length),
+                    uppers[random.Next(uppers.Length - 1)].ToString()
+                );
+
+            for(var i = 0; i < numerics; ++i)
+                generated = generated.Insert(
+                    random.Next(generated.Length),
+                    number[random.Next(number.Length - 1)].ToString()
+                );
+
+            return generated.Replace("!", string.Empty);
+        }
+
+        private enum QCandidateAccess
+        {
+            NoAccess = 0,
+            UserCreated = 1,
+            UserAlreadyExists = 2
         }
     }
 }
