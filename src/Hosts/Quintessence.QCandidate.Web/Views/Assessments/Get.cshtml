@@ -2,13 +2,13 @@
 @using Quintessence.QCandidate.Controllers
 @using Quintessence.QCandidate.Core.Queries
 @using Quintessence.QCandidate.Helpers
-@model Quintessence.QCandidate.Models.AssessmentModel
+@model Quintessence.QCandidate.Models.Assessments.AssessmentModel
 
 <div class="container">
     <div class="context">
-        <span class="company">@Model.Customer</span> <span class="project">@Model.Position</span>
+        <span class="company">@Model.CustomerName</span> <span class="project">@Model.PositionName</span>
         <h1>@Model.Date.ToLongDateString()</h1>
-        <span class="location">Locatie: @Model.Location</span>
+        <span class="location">Locatie: @Model.LocationName</span>
     </div>
 
     @*<div class="assessment-context">

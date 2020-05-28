@@ -245,7 +245,7 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
             });
         }
 
-        public CreateProjectCandidateInvitationMailResponse CreateProjectCandidateInvitationMail(Guid id, string qCandidateUrl)
+        public CreateProjectCandidateInvitationMailResponse CreateProjectCandidateInvitationMail(Guid id)
         {
             LogTrace();
 
@@ -280,12 +280,11 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
                             var qCandidateUserId = graphService.CreateUser(projectCandidate.CandidateFirstName, projectCandidate.CandidateLastName, languageCode, projectCandidate.CandidateEmail, projectCandidate.CandidateId, password);
 
                             var candidateManagementCommandService = Container.Resolve<ICandidateManagementCommandService>();
-                            candidateManagementCommandService.ChangeCandidateQCandidateUserId(projectCandidate.CandidateId, qCandidateUserId);
+                            candidateManagementCommandService.SetCandidateQCandidateUserId(projectCandidate.CandidateId, qCandidateUserId);
                             qCandidateAccess = QCandidateAccess.UserCreated;
                         }
                         else
                         {
-                            //Update user in Azure AD B2C
                             qCandidateAccess = QCandidateAccess.UserAlreadyExists;
                         }
                     }
@@ -364,7 +363,7 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
                             var simulationContextLogins = prmQueryService.ListSimulationContextLogins(projectCandidate.Id);
                             body = body.Replace(@"&lt;!--SIMCONLOGINS--&gt;", CreateSimulationContextLoginsEmailBody(simulationContextLogins));
                             //Add QCandidate login to email
-                            body = body.Replace(@"&lt;!--QCANDIDATELOGIN--&gt;", CreateQCandidateLoginsEmailBody(qCandidateAccess, languageCode, username, password, qCandidateUrl));
+                            body = body.Replace(@"&lt;!--QCANDIDATELOGIN--&gt;", CreateQCandidateLoginsEmailBody(qCandidateAccess, languageCode, username, password));
 
                             body = body.Replace(@"&lt;!--SUBCATEGORIES--&gt;", subCategoryStringBuilder.ToString());
 
@@ -405,7 +404,7 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
             return builder.ToString();
         }
 
-        private static string CreateQCandidateLoginsEmailBody(QCandidateAccess qCandidateAccess, string language, string username, string password, string url)
+        private static string CreateQCandidateLoginsEmailBody(QCandidateAccess qCandidateAccess, string language, string username, string password)
         {
             if(qCandidateAccess == QCandidateAccess.NoAccess)
             {
@@ -413,6 +412,7 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
             }
 
             var builder = new StringBuilder();
+            var url = ConfigurationManager.AppSettings["QCandidateUrl"];
 
             if(qCandidateAccess == QCandidateAccess.UserCreated)
             {

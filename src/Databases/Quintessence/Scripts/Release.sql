@@ -116,6 +116,11 @@ WHERE
 	prc.Id = @id
 GO
 
+ALTER TABLE [dbo].[Candidate]
+ADD [HasQCandidateAccess] BIT DEFAULT(0) NOT NULL,
+	[QCandidateUserId] UNIQUEIDENTIFIER NULL
+GO
+
 ALTER VIEW [dbo].[CandidateView]
 AS
 SELECT

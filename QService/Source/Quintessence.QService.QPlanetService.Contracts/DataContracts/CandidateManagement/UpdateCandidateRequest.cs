@@ -27,8 +27,10 @@ namespace Quintessence.QService.QPlanetService.Contracts.DataContracts.Candidate
 
         [DataMember]
         public string Reference { get; set; }
+
         [DataMember]
         public bool HasQCandidateAccess { get; set; }
+
         [DataMember]
         public Guid? QCandidateUserId { get; set; }
     }

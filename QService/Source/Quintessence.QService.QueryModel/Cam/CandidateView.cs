@@ -40,8 +40,10 @@ namespace Quintessence.QService.QueryModel.Cam
 
         [DataMember]
         public List<ProjectCandidateView> ProjectCandidates { get; set; }
+
         [DataMember]
         public bool HasQCandidateAccess { get; set; }
+
         [DataMember]
         public Guid? QCandidateUserId { get; set; }
     }
