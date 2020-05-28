@@ -1,4 +1,7 @@
 @using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
 
 <!DOCTYPE html>
 <html>
@@ -27,7 +30,7 @@
         <div class="nav-wrapper container">
             <a href="#" class="brand-logo"><img src="~/img/logo.svg"></a>
             <ul class="navigation">
-                <li>Dagplanning</li>
+                <li>@Localizer["DayPlanning"]</li>
             </ul>
             <ul class="right user-information">
                 <li>@User.Identity.Name</li>
