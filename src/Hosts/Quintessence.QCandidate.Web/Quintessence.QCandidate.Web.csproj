@@ -41,7 +41,6 @@
     <None Remove="wwwroot\img\youtube-dark.svg" />
     <None Remove="wwwroot\img\youtube.svg" />
     <None Remove="wwwroot\js\materialize.js" />
-    <None Remove="wwwroot\js\script.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -129,9 +128,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\js\materialize.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="wwwroot\js\script.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

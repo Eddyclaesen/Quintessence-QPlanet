@@ -23,22 +23,20 @@ namespace Quintessence.QCandidate.Controllers
         public async Task<IActionResult> Get()
         {
             var candidateIdClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId");
-            Guid.TryParse(candidateIdClaim?.Value, out var candidateId);
-
-            //TODO: Use current date
-            var date = new DateTime(2018, 10, 22);
-            var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateQuery(candidateId, date));
+            var candidateId = new Guid(candidateIdClaim.Value);
+            
+            var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateQuery(candidateId, DateTime.Now));
             var events = await MapProgramComponents(assessmentDto);
-            var assessmentModel = new AssessmentModel(assessmentDto.Position?.Name, assessmentDto.Customer?.Name,
-                assessmentDto.DayProgram?.Location?.Name, assessmentDto.DayProgram?.Date ?? date,
+            var assessmentModel = new Assessment(assessmentDto.Position.Name, assessmentDto.Customer.Name,
+                assessmentDto.DayProgram.Location.Name, assessmentDto.DayProgram.Date,
                 events);
 
             return View(assessmentModel);
         }
 
-        private async Task<List<ProgramComponentModel>> MapProgramComponents(AssessmentDto assessment)
+        private async Task<List<ProgramComponent>> MapProgramComponents(AssessmentDto assessment)
         {
-            var result = new List<ProgramComponentModel>();
+            var result = new List<ProgramComponent>();
             var languageClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_Language");
 
             //DayProgram is null when no day program was found for that day
@@ -48,26 +46,39 @@ namespace Quintessence.QCandidate.Controllers
                 {
                     var title = programComponent.Description ?? programComponent.Name;
                     var location = programComponent.Room.Name;
-                    var documentName = programComponent.SimulationCombinationId.HasValue
-                        ? "PDF"
-                        : null;
-                    var documentLink = programComponent.SimulationCombinationId.HasValue
-                        //&& c.Start.Date == DateTime.Today
-                        ? await _mediator.Send(new HasSimulationCombinationPdfByIdAndLanguageQuery(programComponent.SimulationCombinationId.Value, languageClaim?.Value))
-                            ? Url.Action("Details", "ProgramComponents", new {id = programComponent.Id})
-                            : null
-                        : null;
-                    var assessors = TimeslotHelper.GetAssessorsString(programComponent.LeadAssessor, programComponent.CoAssessor);
-                    var time = TimeslotHelper.GetTimeString(programComponent.Start, programComponent.End);
-                    var startPixelOffset = TimeslotHelper.CalculatePixelOffset(programComponent.Start);
-                    var endPixelOffset = TimeslotHelper.CalculatePixelOffset(programComponent.End);
+                    var showDetailsLink = false;
+                    
+                    if (programComponent.SimulationCombinationId.HasValue && programComponent.Start.Date == DateTime.Now.Date)
+                    {
+                        showDetailsLink = await _mediator.Send(new HasSimulationCombinationPdfByIdAndLanguageQuery(programComponent.SimulationCombinationId.Value, languageClaim?.Value));
+                    }
+                       
+                    var assessors = GetAssessorsString(programComponent.LeadAssessor, programComponent.CoAssessor);
 
-                    var programComponentModel = new ProgramComponentModel(title, location, documentName, documentLink, assessors, time, startPixelOffset, endPixelOffset);
+                    var programComponentModel = new ProgramComponent(programComponent.Id, title, location, showDetailsLink, assessors, programComponent.Start, programComponent.End);
                     result.Add(programComponentModel);
                 }
             }
 
             return result;
+        }
+
+        private static string GetAssessorsString(UserDto leadAssessor, UserDto coAssessor)
+        {
+            var assessors = new[] { GetAssessorString(leadAssessor), GetAssessorString(coAssessor) };
+
+            return string.Join("/ ", assessors.Where(a => a != null));
+        }
+
+        private static string GetAssessorString(UserDto user)
+        {
+            if (string.IsNullOrWhiteSpace(user?.FirstName)
+               && string.IsNullOrWhiteSpace(user?.LastName))
+            {
+                return null;
+            }
+
+            return $"{user.FirstName} {user.LastName}".Trim();
         }
     }
 }

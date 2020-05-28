@@ -21,10 +21,10 @@ namespace Quintessence.QCandidate.Controllers
         public async Task<IActionResult> Details(Guid id)
         {
             var programComponentDto = await _mediator.Send(new GetProgramComponentByIdQuery(id));
-            var programComponentModel = new ProgramComponentModel
+            var programComponentModel = new ProgramComponent
             {
                 Title = programComponentDto?.Description ?? programComponentDto?.Name,
-                CanShowPdf = true,
+                CanShowPdf = programComponentDto.Start.Date == DateTime.Now.Date,
                 PdfUrl = $"{Url.Action("GetPdf", "SimulationCombinations", new { simulationCombinationId = programComponentDto?.SimulationCombinationId })}#toolbar=0"
             };
 
