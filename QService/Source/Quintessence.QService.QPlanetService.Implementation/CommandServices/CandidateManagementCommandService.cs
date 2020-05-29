@@ -90,7 +90,7 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
             });
         }
 
-        public void ChangeCandidateQCandidateUserId(Guid candidateId, Guid? qCandidateUserId)
+        public void SetCandidateQCandidateUserId(Guid candidateId, Guid qCandidateUserId)
         {
             LogTrace();
 

@@ -1622,8 +1622,7 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Controllers
             {
                 try
                 {
-                    var qCandidateUrl = ConfigurationManager.AppSettings["QCandidateUrl"];
-                    var response = this.InvokeService<IInfrastructureQueryService, CreateProjectCandidateInvitationMailResponse>(service => service.CreateProjectCandidateInvitationMail(id, qCandidateUrl));
+                    var response = this.InvokeService<IInfrastructureQueryService, CreateProjectCandidateInvitationMailResponse>(service => service.CreateProjectCandidateInvitationMail(id));
                     return Json((new { to = response.To, subject = response.Subject, body = response.Body, bcc = response.Bcc }), JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception exception)

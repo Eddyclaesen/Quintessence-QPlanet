@@ -1,0 +1,25 @@
+﻿@model Quintessence.QCandidate.Models.Assessments.ProgramComponent
+
+
+<li class="program-component" data-date="@Model.Start.ToString("HH:mm") - @Model.End.ToString("HH:mm")">
+    <h3>@Html.DisplayFor(m => Model.Title)</h3>
+    <p>@Html.DisplayFor(m => Model.Location)
+    @{ 
+        if (!string.IsNullOrEmpty(Model.Assessors))
+        {
+            @Html.Raw("- ") @Html.DisplayFor(m => Model.Assessors)
+        }
+    }
+    
+    
+    </p>
+    @{ 
+        if (Model.ShowDetailsLink)
+        {
+        <a href="@Url.Action(nameof(Quintessence.QCandidate.Controllers.ProgramComponentsController.Details), "ProgramComponents", new { id = Model.Id })">Documentation</a>
+        }
+    }
+</li>
+
+
+

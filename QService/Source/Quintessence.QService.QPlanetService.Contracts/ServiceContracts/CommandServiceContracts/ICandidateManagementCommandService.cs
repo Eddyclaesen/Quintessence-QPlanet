@@ -32,7 +32,7 @@ namespace Quintessence.QService.QPlanetService.Contracts.ServiceContracts.Comman
         
         [OperationContract]
         [FaultContract(typeof(ValidationContainer))]
-        void ChangeCandidateQCandidateUserId(Guid candidateId, Guid? qCandidateUserId);
+        void SetCandidateQCandidateUserId(Guid candidateId, Guid qCandidateUserId);
 
         [OperationContract]
         [FaultContract(typeof(ValidationContainer))]
