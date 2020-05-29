@@ -73,7 +73,7 @@ namespace Quintessence.QCandidate.Logic.Queries
                     commandType: CommandType.StoredProcedure,
                     splitOn: "Id,Id,Date,Id,Id,Id,Id,Id").ConfigureAwait(false);
 
-                return result;
+                return result.Customer != null ? result : null;
             }
         }
 

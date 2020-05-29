@@ -60,9 +60,17 @@ time, audio {
         transition: opacity 0.5s;
     }
 
-    .top-nav a.language-active {
-        color: #525252;
-    }
+.top-nav .languages {
+    float: right;
+}
+
+.top-nav .languages .language-form {
+        float: left;
+}
+
+.top-nav a.language-active {
+  color: #525252;
+}
 
 /* Main navigation */
 nav, .nav-wrapper {

@@ -26,12 +26,16 @@ namespace Quintessence.QCandidate.Controllers
             var candidateId = new Guid(candidateIdClaim.Value);
             
             var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateQuery(candidateId, DateTime.Now));
-            var events = await MapProgramComponents(assessmentDto);
-            var assessmentModel = new Assessment(assessmentDto.Position.Name, assessmentDto.Customer.Name,
-                assessmentDto.DayProgram.Location.Name, assessmentDto.DayProgram.Date,
-                events);
+            Assessment assessment = null;
+            if (assessmentDto != null)
+            {
+                var programComponents = await MapProgramComponents(assessmentDto);
+                assessment = new Assessment(assessmentDto.Position.Name, assessmentDto.Customer.Name,
+                    assessmentDto.DayProgram.Location.Name, assessmentDto.DayProgram.Date,
+                    programComponents);
+            }
 
-            return View(assessmentModel);
+            return View(assessment);
         }
 
         private async Task<List<ProgramComponent>> MapProgramComponents(AssessmentDto assessment)

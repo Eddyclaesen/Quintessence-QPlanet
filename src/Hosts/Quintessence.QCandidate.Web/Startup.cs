@@ -1,4 +1,5 @@
-﻿using Kenze.Infrastructure;
+﻿using System.Globalization;
+using Kenze.Infrastructure;
 using Kenze.Infrastructure.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
@@ -6,8 +7,10 @@ using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -44,7 +47,9 @@ namespace Quintessence.QCandidate
                         .Build();
                     options.Filters.Add(new AuthorizeFilter(policy));
                 })
-                .AddRazorViewEngine();
+                .AddRazorViewEngine()
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix/*, opts => { opts.ResourcesPath = "Resources"; }*/);
+
             services.AddMediatR(typeof(GetAssessmentByCandidateIdAndDateQueryHandler).Assembly);
             services.AddScoped<IDbConnectionFactory>(_ =>
                 new SqlDbConnectionFactory(Configuration.GetConnectionString("QPlanet")));
@@ -68,6 +73,22 @@ namespace Quintessence.QCandidate
                 app.UseHsts();
             }
 
+            //var localizationOption = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+
+            var supportedCultures = new[]
+            {
+                new CultureInfo("nl"),
+                new CultureInfo("en"),
+                new CultureInfo("fr")
+            };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("nl"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
+
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseRouting();
@@ -80,7 +101,6 @@ namespace Quintessence.QCandidate
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Assessments}/{action=Get}");
-                endpoints.MapRazorPages();
             });
 
         }
