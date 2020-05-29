@@ -6,7 +6,7 @@
     <div class="context">
         <span class="company">@Model.Customer</span> <span class="project">@Model.Position</span>
         <h1>@Model.Date.ToLongDateString()</h1>
-        <span class="location">@Localizer["Location 2"]: @Model.Location</span>
+        <span class="location"@Model.Location</span>
     </div>
 
     @*<div class="assessment-context">
