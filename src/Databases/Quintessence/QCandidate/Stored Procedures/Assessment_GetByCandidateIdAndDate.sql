@@ -62,8 +62,8 @@ FROM
 WHERE
 	c.Id = @candidateId
 	AND CONVERT(DATE, prc.Start) = @date
-	AND prc.Description NOT LIKE '%Input scoring%'
-	AND CONVERT(VARCHAR, prc.Description) NOT IN('Preparation consultant','Assessor debriefing','Proma','Assessor debriefing GGI')
+	AND ISNULL(prc.Description,'') NOT LIKE '%Input scoring%'
+    AND CONVERT(VARCHAR, ISNULL(prc.Description,'')) NOT IN ('Preparation consultant','Assessor debriefing','Proma','Assessor debriefing GGI')
 ORDER BY
 	prc.Start,
 	prc.[End]
