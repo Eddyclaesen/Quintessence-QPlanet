@@ -194,6 +194,7 @@
     <Compile Include="Areas\Candidate\CandidateAreaRegistration.cs" />
     <Compile Include="Areas\Candidate\Controllers\CandidateController.cs" />
     <Compile Include="Areas\Candidate\Controllers\ProgramHomeExController.cs" />
+    <Compile Include="Areas\Candidate\Controllers\ProgramHomeOnController.cs" />
     <Compile Include="Areas\Candidate\Controllers\ProgramHomeUserController.cs" />
     <Compile Include="Areas\Candidate\Controllers\ProgramDetailController.cs" />
     <Compile Include="Areas\Candidate\Controllers\ProgramHomeQbController.cs" />
