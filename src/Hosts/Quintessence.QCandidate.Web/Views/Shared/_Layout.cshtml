@@ -55,7 +55,7 @@
             </ul>
             <ul class="right user-information">
                 <li>@User.Identity.Name</li>
-                <li><a href="#" class="btn">@Localizer["LogOut"]</a></li>
+                <li><a href="@Url.Action("Logout", "Accounts")" class="btn">@Localizer["LogOut"]</a></li>
             </ul>
         </div>
     </nav>
