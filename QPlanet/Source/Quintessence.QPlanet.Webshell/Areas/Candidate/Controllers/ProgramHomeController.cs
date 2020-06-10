@@ -89,6 +89,23 @@ namespace Quintessence.QPlanet.Webshell.Areas.Candidate.Controllers
             }
         }
 
+        public ActionResult IndexOn()
+        {
+            using(DurationLog.Create())
+            {
+                try
+                {
+                    var office = this.InvokeService<IInfrastructureQueryService, OfficeView>(service => service.RetrieveOffice(new RetrieveOfficeRequest { ShortName = "ON" }));
+                    return View("ProgramHomeIndex", office);
+                }
+                catch(Exception exception)
+                {
+                    LogManager.LogError(exception);
+                    return HandleError(exception, isPartial: true);
+                }
+            }
+        }
+
         public ActionResult DayProgram(int officeId, int year, int month, int day)
         {
             using (DurationLog.Create())

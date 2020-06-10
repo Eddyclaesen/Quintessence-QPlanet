@@ -168,6 +168,7 @@ namespace Quintessence.QPlanet.Webshell.Controllers
             yield return new AreaActionLink { Area = CandidateArea, Action = "IndexQb", Controller = "ProgramHomeQb", Current = IsCurrentControllerOfType<ProgramHomeQbController>(), LinkText = "Program QB", LinkTitle = "Program QB" };
             yield return new AreaActionLink { Area = CandidateArea, Action = "IndexQg", Controller = "ProgramHomeQg", Current = IsCurrentControllerOfType<ProgramHomeQgController>(), LinkText = "Program QG", LinkTitle = "Program QG" };
             yield return new AreaActionLink { Area = CandidateArea, Action = "IndexEx", Controller = "ProgramHomeEx", Current = IsCurrentControllerOfType<ProgramHomeExController>(), LinkText = "Program EX", LinkTitle = "Program EX" };
+            yield return new AreaActionLink { Area = CandidateArea, Action = "IndexOn", Controller = "ProgramHomeOn", Current = IsCurrentControllerOfType<ProgramHomeOnController>(), LinkText = "Program ON", LinkTitle = "Program ON" };
         }
 
         private IEnumerable<AreaActionLink> CreateFinanceAreaActionLinks()
