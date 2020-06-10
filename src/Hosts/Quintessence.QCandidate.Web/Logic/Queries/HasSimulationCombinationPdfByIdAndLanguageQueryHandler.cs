@@ -1,11 +1,11 @@
-﻿using System.IO;
-using MediatR;
+﻿using MediatR;
+using Microsoft.Extensions.Options;
+using Quintessence.QCandidate.Configuration;
 using Quintessence.QCandidate.Core.Queries;
+using Quintessence.QCandidate.Helpers;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
-using Quintessence.QCandidate.Helpers;
-using Quintessence.QCandidate.Models;
 
 namespace Quintessence.QCandidate.Logic.Queries
 {

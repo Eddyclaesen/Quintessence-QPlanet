@@ -1,12 +1,6 @@
-﻿namespace Quintessence.QCandidate.Models
+﻿namespace Quintessence.QCandidate.Configuration
 {
-    public class Settings
-    {
-        public string PdfStorageLocation { get; set; }
-        public AzureAdB2C AzureAdB2C { get; set; }
-    }
-
-    public class AzureAdB2C
+    public class AzureAdB2CSettings
     {
         public string Instance { get; set; }
         public string Tenant { get; set; }

@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using Kenze.Infrastructure;
+﻿using Kenze.Infrastructure;
 using Kenze.Infrastructure.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
@@ -14,9 +13,10 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Quintessence.QCandidate.Configuration;
 using Quintessence.QCandidate.Filters.Actions;
 using Quintessence.QCandidate.Logic.Queries;
-using Quintessence.QCandidate.Models;
+using System.Globalization;
 
 namespace Quintessence.QCandidate
 {
@@ -55,6 +55,7 @@ namespace Quintessence.QCandidate
                 new SqlDbConnectionFactory(Configuration.GetConnectionString("QPlanet")));
 
             services.Configure<Settings>(Configuration);
+            services.Configure<AzureAdB2CSettings>(Configuration.GetSection("AzureAdB2C"));
 
             services.AddAuthentication(AzureADB2CDefaults.AuthenticationScheme)
                 .AddAzureADB2C(options => Configuration.Bind("AzureAdB2C", options));

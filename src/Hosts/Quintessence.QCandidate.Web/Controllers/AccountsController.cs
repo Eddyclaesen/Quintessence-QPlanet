@@ -6,17 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Extensions.Options;
-using Quintessence.QCandidate.Models;
+using Quintessence.QCandidate.Configuration;
 
 namespace Quintessence.QCandidate.Controllers
 {
     public class AccountsController : Controller
     {
-        private readonly Settings _settings;
+        private readonly AzureAdB2CSettings _adB2CSettings;
 
-        public AccountsController(IOptionsMonitor<Settings> settings)
+        public AccountsController(IOptionsMonitor<AzureAdB2CSettings> adB2CSettings)
         {
-            _settings = settings.CurrentValue;
+            _adB2CSettings = adB2CSettings.CurrentValue;
         }
 
         [HttpPost]
@@ -47,7 +47,7 @@ namespace Quintessence.QCandidate.Controllers
 
             //Specify the protocol, so an absolute url is generated, which is needed by azure ad b2c
             var rootUrl = HttpUtility.UrlEncode(Url.Action("Get", "Assessments", null, Request.Scheme));
-            var redirectUrl = $"{_settings.AzureAdB2C.Tenant}{_settings.AzureAdB2C.Domain}/oauth2/v2.0/logout?p={_settings.AzureAdB2C.SignUpSignInPolicyId}&post_logout_redirect_uri={rootUrl}";
+            var redirectUrl = $"{_adB2CSettings.Tenant}{_adB2CSettings.Domain}/oauth2/v2.0/logout?p={_adB2CSettings.SignUpSignInPolicyId}&post_logout_redirect_uri={rootUrl}";
             
             return Redirect(redirectUrl);
         }
