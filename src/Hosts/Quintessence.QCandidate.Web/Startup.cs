@@ -40,13 +40,13 @@ namespace Quintessence.QCandidate
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-            services.AddMvcCore(options =>
+            services.AddMvcCore(/*options =>
                 {
                     var policy = new AuthorizationPolicyBuilder()
                         .RequireAuthenticatedUser()
                         .Build();
                     options.Filters.Add(new AuthorizeFilter(policy));
-                })
+                }*/)
                 .AddRazorViewEngine()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix/*, opts => { opts.ResourcesPath = "Resources"; }*/);
 
@@ -93,10 +93,10 @@ namespace Quintessence.QCandidate
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseRouting();
-
+            /*
             app.UseAuthentication();
             app.UseAuthorization();
-            
+            */
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
