@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Configuration;
 using Microsoft.Practices.Unity;
 using Quintessence.Infrastructure.Validation;
 using Quintessence.QService.Business.CommandRepositories;
@@ -40,6 +41,14 @@ namespace Quintessence.QService.QPlanetService.Implementation.Base
             try
             {
                 UnityContainer.RegisterInstance<IConfiguration>(new Configuration());
+                UnityContainer.RegisterInstance<IAzureAdB2CSettings>(new AzureAdB2CSettings
+                {
+                    ApplicationId = ConfigurationManager.AppSettings["AzureAdB2C.ApplicationId"],
+                    B2cExtensionApplicationId = ConfigurationManager.AppSettings["AzureAdB2C.B2cExtensionApplicationId"],
+                    ClientSecret = ConfigurationManager.AppSettings["AzureAdB2C.ClientSecret"],
+                    TenantId = ConfigurationManager.AppSettings["AzureAdB2C.TenantId"]
+                });
+                UnityContainer.RegisterType<IGraphService, GraphService>();
                 UnityContainer.RegisterInstance<ValidationContextLifetimeManager>(new ValidationContextLifetimeManager());
                 UnityContainer.RegisterType<ValidationContainer>(UnityContainer.Resolve<ValidationContextLifetimeManager>());
                 UnityContainer.RegisterInstance(new ValidationRuleEngine(UnityContainer));

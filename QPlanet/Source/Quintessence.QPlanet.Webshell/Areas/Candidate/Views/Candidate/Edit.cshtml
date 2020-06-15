@@ -68,10 +68,11 @@
 <div class="grid_6">
     <fieldset>
         <legend>Candidate information</legend>
-        @using (Html.BeginForm(ViewContext.RouteData.Values["action"].ToString(), "Candidate", FormMethod.Post, new { id = "CandidateForm" }))
+        @using(Html.BeginForm(ViewContext.RouteData.Values["action"].ToString(), "Candidate", FormMethod.Post, new { id = "CandidateForm" }))
         {
-            @Html.EditorFor(m => m, "BaseEntityViewTemplate");
-                                                          
+            @Html.HiddenFor(m => m.QCandidateUserId)
+            @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+
             <table class="properties">
                 <tbody>
                     <tr>
@@ -130,11 +131,27 @@
                             @Html.EditorFor(m => m.Reference)
                         </td>
                     </tr>
+                    <tr>
+                        <td class="label">
+                            @Html.DisplayNameFor(m => m.HasQCandidateAccess)
+                        </td>
+                        <td class="value">
+                            @if(Model.HasQCandidateAccess)
+                            {
+                                @Html.HiddenFor(m => m.HasQCandidateAccess)
+                                @Html.DisplayFor(m => m.HasQCandidateAccess)
+                            }
+                            else
+                            {
+                                @Html.EditorFor(m => m.HasQCandidateAccess)
+                            }
+                        </td>
+                    </tr>
                 </tbody>
-            </table> 
-            
+            </table>
+
             <div class="right-text">
-                <input type="submit" class="button" id="SubmitFormButtonLink" value="@(ViewBag.ViewMode == ViewMode.Edit ? "Save" : "Create")"/>
+                <input type="submit" class="button" id="SubmitFormButtonLink" value="@(ViewBag.ViewMode == ViewMode.Edit ? "Save" : "Create")" />
             </div>
         }
     </fieldset>

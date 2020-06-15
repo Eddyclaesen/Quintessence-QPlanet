@@ -1,0 +1,11 @@
+﻿@model Quintessence.QCandidate.Models.ProgramComponent
+
+<div class="context">
+    <h1>@Model.Title</h1>
+</div>
+
+@if (Model.CanShowPdf)
+{
+    <iframe src="@Model.PdfUrl" width="100%" height="1075px">
+    </iframe>
+}

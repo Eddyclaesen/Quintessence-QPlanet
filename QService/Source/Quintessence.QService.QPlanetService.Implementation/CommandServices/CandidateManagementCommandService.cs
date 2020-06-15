@@ -1,18 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
+using Microsoft.Practices.Unity;
 using Quintessence.QService.Business.Interfaces.CommandRepositories;
 using Quintessence.QService.DataModel.Cam;
-using Quintessence.QService.DataModel.Prm;
 using Quintessence.QService.QPlanetService.Contracts.DataContracts.CandidateManagement;
 using Quintessence.QService.QPlanetService.Contracts.DataContracts.ProjectManagement;
 using Quintessence.QService.QPlanetService.Contracts.ServiceContracts.CommandServiceContracts;
 using Quintessence.QService.QPlanetService.Contracts.ServiceContracts.QueryServiceContracts;
 using Quintessence.QService.QPlanetService.Implementation.Base;
-using Microsoft.Practices.Unity;
-using Quintessence.QService.QueryModel.Prm;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
 {
@@ -26,11 +23,8 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
             return ExecuteTransaction(() =>
             {
                 var repository = Container.Resolve<ICandidateManagementCommandRepository>();
-
                 var entity = repository.Prepare<Candidate>();
-
                 Mapper.DynamicMap(request, entity, typeof(CreateCandidateRequest), typeof(Candidate));
-
                 repository.Save(entity);
 
                 return entity.Id;
@@ -47,12 +41,22 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
             ExecuteTransaction(() =>
             {
                 var repository = Container.Resolve<ICandidateManagementCommandRepository>();
-
                 var candidate = repository.Retrieve<Candidate>(request.Id);
-
                 Mapper.DynamicMap(request, candidate);
 
                 repository.Save(candidate);
+
+                if(candidate.HasQCandidateAccess
+                   && candidate.QCandidateUserId.HasValue)
+                {
+                    //Update user in Azure AD B2C
+                    var graphService = Container.Resolve<IGraphService>();
+                    var infrastructureService = Container.Resolve<IInfrastructureQueryService>();
+                    var languages = infrastructureService.ListLanguages();
+                    var language = languages.SingleOrDefault(l => l.Id == request.LanguageId)?.Code;
+
+                    graphService.UpdateUser(candidate.QCandidateUserId.Value, request.FirstName, request.LastName, language, request.Email);
+                }
             });
         }
         #endregion
@@ -81,6 +85,20 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
                 var candidate = repository.Retrieve<Candidate>(candidateId);
 
                 candidate.LanguageId = languageId;
+
+                repository.Save(candidate);
+            });
+        }
+
+        public void SetCandidateQCandidateUserId(Guid candidateId, Guid qCandidateUserId)
+        {
+            LogTrace();
+
+            ExecuteTransaction(() =>
+            {
+                var repository = Container.Resolve<ICandidateManagementCommandRepository>();
+                var candidate = repository.Retrieve<Candidate>(candidateId);
+                candidate.QCandidateUserId = qCandidateUserId;
 
                 repository.Save(candidate);
             });
@@ -284,8 +302,6 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
         }
 
         #endregion
-
-
-
+        
     }
 }

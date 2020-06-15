@@ -29,6 +29,10 @@ namespace Quintessence.QService.QPlanetService.Contracts.ServiceContracts.Comman
         [OperationContract]
         [FaultContract(typeof(ValidationContainer))]
         void ChangeCandidateLanguage(int languageId, Guid candidateId);
+        
+        [OperationContract]
+        [FaultContract(typeof(ValidationContainer))]
+        void SetCandidateQCandidateUserId(Guid candidateId, Guid qCandidateUserId);
 
         [OperationContract]
         [FaultContract(typeof(ValidationContainer))]

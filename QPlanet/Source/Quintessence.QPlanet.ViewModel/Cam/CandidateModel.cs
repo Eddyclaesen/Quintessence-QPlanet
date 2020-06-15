@@ -48,5 +48,9 @@ namespace Quintessence.QPlanet.ViewModel.Cam
                                                                                                 Selected = g.ToString() == Gender
                                                                                             }).ToList();
         }
+
+        [Display(Name = "Has QCandidate Access")]
+        public bool HasQCandidateAccess { get; set; }
+        public Guid? QCandidateUserId { get; set; }
     }
 }

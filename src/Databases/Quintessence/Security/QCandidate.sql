@@ -1,0 +1,2 @@
+﻿CREATE SCHEMA [QCandidate]
+    AUTHORIZATION [dbo];

@@ -1,0 +1,18 @@
+﻿CREATE TABLE [dbo].[ProjectCandidateResume] (
+    [Id]                 UNIQUEIDENTIFIER NOT NULL,
+    [ProjectCandidateId] UNIQUEIDENTIFIER NOT NULL,
+    [AdviceId]           INT              NOT NULL,
+    [Reasoning]          TEXT             NULL,
+    [Audit_CreatedBy]    NVARCHAR (MAX)   DEFAULT (suser_sname()) NOT NULL,
+    [Audit_CreatedOn]    DATETIME         DEFAULT (getdate()) NOT NULL,
+    [Audit_ModifiedBy]   NVARCHAR (MAX)   NULL,
+    [Audit_ModifiedOn]   DATETIME         NULL,
+    [Audit_DeletedBy]    NVARCHAR (MAX)   NULL,
+    [Audit_DeletedOn]    DATETIME         NULL,
+    [Audit_IsDeleted]    BIT              DEFAULT ((0)) NOT NULL,
+    [Audit_VersionId]    UNIQUEIDENTIFIER DEFAULT (newid()) NOT NULL,
+    CONSTRAINT [PK_ProjectCandidateResume] PRIMARY KEY NONCLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_ProjectCandidateResume_Advice] FOREIGN KEY ([AdviceId]) REFERENCES [dbo].[Advice] ([Id]),
+    CONSTRAINT [FK_ProjectCandidateResume_ProjectCandidate] FOREIGN KEY ([ProjectCandidateId]) REFERENCES [dbo].[ProjectCandidate] ([Id])
+);
+
