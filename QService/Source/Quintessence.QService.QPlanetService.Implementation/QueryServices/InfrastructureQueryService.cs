@@ -429,12 +429,12 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
                         passwordLabel = "Paswoord";
                         break;
                     case "en":
-                        gotAccess = $"You can access our QCandidate platform by clicking: {qCandidateUrl} and log in using the following credentials:";
+                        gotAccess = $"You can access our QCandidate platform on the day mentioned above by clicking: {qCandidateUrl} and log in using the following credentials:";
                         usernameLabel = "Username";
                         passwordLabel = "Password";
                         break;
                     case "fr":
-                        gotAccess = $"Vous pouvez accéder à notre portail QCandidate en cliquant sur le lien {qCandidateUrl} et en utilisant les données suivantes:";
+                        gotAccess = $"Vous pouvez accéder à notre portail QCandidate le jour même en cliquant sur le lien {qCandidateUrl} et en utilisant les données suivantes:";
                         usernameLabel = "Nom d'utilisateur";
                         passwordLabel = "Mot de passe";
                         break;
@@ -462,10 +462,10 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
                         gotAccess = $"Op de dag van uw assessment heeft u toegang tot de simulaties en andere relevante informatie via ons QCandidate-platform op: {qCandidateUrl} en kunt hierop inloggen met de eerder verzonden informatie.";
                         break;
                     case "en":
-                        gotAccess = $"You can access our QCandidate platform by clicking: {qCandidateUrl} and log in using the credentials previously sent.";
+                        gotAccess = $"You can access our QCandidate platform on the day mentioned above by clicking: {qCandidateUrl} and log in using the credentials previously sent.";
                         break;
                     case "fr":
-                        gotAccess = $"Vous pouvez accéder à notre portail QCandidate en cliquant sur le lien {qCandidateUrl} et en utilisant les données envoyées précédemment.";
+                        gotAccess = $"Vous pouvez accéder à notre portail QCandidate le jour même en cliquant sur le lien {qCandidateUrl} et en utilisant les données envoyées précédemment.";
                         break;
                     case "de":
                         gotAccess = $"Sie haben Zugriff auf unsere QCandidate-Plattform unter: {qCandidateUrl} und können sich mit den zuvor gesendeten Informationen anmelden.";
