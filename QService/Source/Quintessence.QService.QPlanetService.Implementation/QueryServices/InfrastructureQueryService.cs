@@ -424,7 +424,7 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
                 switch(language?.ToLower())
                 {
                     case "nl":
-                        gotAccess = $"U heeft toegang tot ons QCandidate-platform op: {qCandidateUrl} en u kunt hierop inloggen met de volgende informatie:";
+                        gotAccess = $"Op de dag van uw assessment heeft u toegang tot de simulaties en andere relevante informatie via ons QCandidate-platform op: {qCandidateUrl} en u kunt hierop inloggen met de volgende informatie:";
                         usernameLabel = "Gebruikersnaam";
                         passwordLabel = "Paswoord";
                         break;
@@ -459,7 +459,7 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
                 switch(language?.ToLower())
                 {
                     case "nl":
-                        gotAccess = $"U heeft toegang tot ons QCandidate-platform op: {qCandidateUrl} en kunt hierop inloggen met de eerder verzonden informatie.";
+                        gotAccess = $"Op de dag van uw assessment heeft u toegang tot de simulaties en andere relevante informatie via ons QCandidate-platform op: {qCandidateUrl} en kunt hierop inloggen met de eerder verzonden informatie.";
                         break;
                     case "en":
                         gotAccess = $"You have access to our QCandidate-platform at: {qCandidateUrl} and can login to it using the information sent previously.";
