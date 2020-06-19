@@ -60,17 +60,17 @@ time, audio {
         transition: opacity 0.5s;
     }
 
-.top-nav .languages {
-    float: right;
-}
+    .top-nav .languages {
+        float: right;
+    }
 
-.top-nav .languages .language-form {
-        float: left;
-}
+        .top-nav .languages .language-form {
+            float: left;
+        }
 
-.top-nav a.language-active {
-  color: #525252;
-}
+    .top-nav a.language-active {
+        color: #525252;
+    }
 
 /* Main navigation */
 nav, .nav-wrapper {
@@ -183,13 +183,6 @@ nav {
     font-size: 130%;
 }
 
-.timeline a {
-    color: #58ad40;
-    display: block;
-    margin-top: 12px;
-    text-decoration: underline;
-}
-
 .assessor {
     color: #9e9e9e;
     display: inline-block;
@@ -218,6 +211,13 @@ ul:not(.browser-default) {
     font-weight: 200;
     max-width: 50%;
 }
+
+    .timeline a {
+        color: #58ad40;
+        display: block;
+        margin-top: 12px;
+        text-decoration: underline;
+    }
 
     .timeline h2,
     .timeline h3 {
@@ -267,6 +267,16 @@ ul:not(.browser-default) {
             content: "";
             top: 5px;
         }
+
+/* ProgramComponent Detail*/
+.noaccess {
+    height: 1080px;
+}
+
+    .noaccess .content {
+        background: #F0F0F0;
+        padding: 50px;
+    }
 
 /* Footer */
 

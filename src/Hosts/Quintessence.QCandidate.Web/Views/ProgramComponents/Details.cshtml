@@ -1,11 +1,32 @@
-﻿@model Quintessence.QCandidate.Models.ProgramComponent
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Localization
 
-<div class="context">
-    <h1>@Model.Title</h1>
+
+@model Quintessence.QCandidate.Models.ProgramComponent
+
+@inject IViewLocalizer Localizer
+
+<div class="container">
+    <div class="context">
+        <h1>@Model.Title</h1>
+    </div>
 </div>
 
-@if (Model.CanShowPdf)
+
+@if (Model.PdfExists)
 {
-    <iframe src="@Model.PdfUrl" width="100%" height="1075px">
-    </iframe>
+
+    if (Model.CanShowPdf)
+    {
+        <iframe src="@Model.PdfUrl" width="100%" height="1075px">
+        </iframe>
+    }
+    else
+    {
+        <div class="container noaccess">
+            <div class="content">
+                @Localizer["NoAccessYet"]
+            </div>
+        </div>
+    }
 }

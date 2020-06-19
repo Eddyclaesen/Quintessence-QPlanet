@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Quintessence.QCandidate.Core.Queries;
 using System;
@@ -20,8 +21,8 @@ namespace Quintessence.QCandidate.Controllers
         [Route("{action}/{simulationCombinationId}")]
         public async Task<ActionResult> GetPdf(Guid simulationCombinationId)
         {
-            var languageClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_Language");
-            var fileStream = await _mediator.Send(new GetSimulationCombinationPdfByIdAndLanguageQuery(simulationCombinationId, languageClaim?.Value));
+            var language = HttpContext.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name;
+            var fileStream = await _mediator.Send(new GetSimulationCombinationPdfByIdAndLanguageQuery(simulationCombinationId, language));
 
             return fileStream != null
                 ? (ActionResult) new FileStreamResult(fileStream, "application/pdf")

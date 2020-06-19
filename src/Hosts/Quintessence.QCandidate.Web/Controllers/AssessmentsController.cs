@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Quintessence.QCandidate.Contracts.Responses;
 using Quintessence.QCandidate.Models.Assessments;
 using Quintessence.QCandidate.Helpers;
+using Microsoft.AspNetCore.Localization;
 
 namespace Quintessence.QCandidate.Controllers
 {
@@ -24,7 +25,7 @@ namespace Quintessence.QCandidate.Controllers
         {
             var candidateIdClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId");
             var candidateId = new Guid(candidateIdClaim.Value);
-            
+
             var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateQuery(candidateId, DateTime.Now));
             Assessment assessment = null;
             if (assessmentDto != null)
@@ -41,10 +42,10 @@ namespace Quintessence.QCandidate.Controllers
         private async Task<List<ProgramComponent>> MapProgramComponents(AssessmentDto assessment)
         {
             var result = new List<ProgramComponent>();
-            var languageClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_Language");
+            var language = HttpContext.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name;
 
             //DayProgram is null when no day program was found for that day
-            if(assessment.DayProgram?.ProgramComponents != null)
+            if (assessment.DayProgram?.ProgramComponents != null)
             {
                 foreach(var programComponent in assessment.DayProgram.ProgramComponents)
                 {
@@ -54,7 +55,7 @@ namespace Quintessence.QCandidate.Controllers
                     
                     if (programComponent.SimulationCombinationId.HasValue && programComponent.Start.Date == DateTime.Now.Date)
                     {
-                        showDetailsLink = await _mediator.Send(new HasSimulationCombinationPdfByIdAndLanguageQuery(programComponent.SimulationCombinationId.Value, languageClaim?.Value));
+                        showDetailsLink = await _mediator.Send(new HasSimulationCombinationPdfByIdAndLanguageQuery(programComponent.SimulationCombinationId.Value, language));
                     }
                        
                     var assessors = GetAssessorsString(programComponent.LeadAssessor, programComponent.CoAssessor);
