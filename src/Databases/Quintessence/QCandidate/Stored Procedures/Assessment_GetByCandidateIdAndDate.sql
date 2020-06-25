@@ -1,9 +1,16 @@
 ﻿CREATE PROCEDURE [QCandidate].[Assessment_GetByCandidateIdAndDate]
 	@candidateId UNIQUEIDENTIFIER,
-	@date DATE
+	@date DATE,
+	@language char(2)
 AS
 
 	SET NOCOUNT ON;
+	DECLARE @LanguageId int
+	SET @LanguageId = case @language
+		when 'nl' then 1
+		when 'fr' then 2
+		else 3
+	end
 
 SELECT
 	--Customer
@@ -23,7 +30,19 @@ SELECT
 			prc.Id,
 			prc.[Start],
 			prc.[End],
-			s.[Name],
+			CASE 
+					WHEN (uLeadAssess.FirstName is null and sc.Preparation > 0) THEN s.[Name]+ CASE @LanguageId 
+																									WHEN 1 THEN ' (voorbereiding)'
+																									WHEN 2 THEN ' (préparation)'
+																									ELSE ' (preparation)'
+																									END
+					WHEN (uLeadAssess.FirstName is not null and sc.Execution > 0) THEN s.[Name]+ CASE @LanguageId
+																									WHEN 1 THEN ' (uitvoering)'
+																									WHEN 2 THEN ' (execution)'
+																									ELSE ' (execution)'
+																									END
+					ELSE s.[Name]
+					END AS [Name],
 			prc.Description,
 			prc.SimulationCombinationId,
 			--Room
@@ -36,7 +55,9 @@ SELECT
 			--CoAssessor
 				uCoAssess.Id,
 				uCoAssess.FirstName,
-				uCoAssess.LastName			
+				uCoAssess.LastName
+				--sc.Preparation,
+				--sc.Execution		
 FROM
 	dbo.candidate c WITH (NOLOCK)
 	INNER JOIN dbo.ProjectCandidate pc WITH (NOLOCK)
@@ -52,8 +73,8 @@ FROM
 	LEFT OUTER JOIN dbo.[User] uCoAssess WITH (NOLOCK)
 		ON uCoAssess.Id = prc.CoAssessorUserId
 	LEFT OUTER JOIN (dbo.SimulationCombination sc WITH (NOLOCK)
-		INNER JOIN dbo.Simulation s WITH (NOLOCK)
-			ON s.Id = sc.SimulationId)
+		INNER JOIN dbo.SimulationTranslationView s WITH (NOLOCK)
+			ON s.SimulationId = sc.SimulationId)
 		ON sc.Id = prc.SimulationCombinationId	
 	INNER JOIN dbo.AssessmentRoom ar WITH (NOLOCK)
 		ON ar.Id = prc.AssessmentRoomId
@@ -62,8 +83,11 @@ FROM
 WHERE
 	c.Id = @candidateId
 	AND CONVERT(DATE, prc.Start) = @date
+	--AND prc.Description NOT LIKE '%Input scoring%'
+	--AND CONVERT(VARCHAR, prc.Description) NOT IN('Preparation consultant','Assessor debriefing','Proma','Assessor debriefing GGI')
 	AND ISNULL(prc.Description,'') NOT LIKE '%Input scoring%'
-    AND CONVERT(VARCHAR, ISNULL(prc.Description,'')) NOT IN ('Preparation consultant','Assessor debriefing','Proma','Assessor debriefing GGI')
+	AND CONVERT(VARCHAR, ISNULL(prc.Description,'')) NOT IN('Preparation consultant','Assessor debriefing','Proma','Assessor debriefing GGI')
+	AND ISNULL(s.LanguageId, @LanguageId) = @LanguageId
 ORDER BY
 	prc.Start,
 	prc.[End]
