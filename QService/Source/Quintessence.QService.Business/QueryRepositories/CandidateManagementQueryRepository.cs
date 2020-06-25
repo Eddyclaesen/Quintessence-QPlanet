@@ -180,6 +180,8 @@ namespace Quintessence.QService.Business.QueryRepositories
                     {
                         var programComponents = context.ProgramComponents
                             .Where(pc => pc.AssessmentRoomOfficeId == officeId)
+                            .Where(pc => pc.Start >= dateTime)
+                            .Take(1000)
                             .ToList();
 
                         return programComponents;
