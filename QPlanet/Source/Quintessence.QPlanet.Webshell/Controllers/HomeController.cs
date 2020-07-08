@@ -29,16 +29,21 @@ namespace Quintessence.QPlanet.Webshell.Controllers
             var assessorsEXToday = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(4, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Today.Day)));
             var assessorsEXTomorrow = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(4, DateTime.Today.AddDays(1)));
 
+            var assessorsONToday = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(5, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Today.Day)));
+            var assessorsONTomorrow = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(5, DateTime.Today.AddDays(1)));
+
             var assessorsToday = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(1, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Today.Day)));
             var assessorsTomorrow = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(1, DateTime.Today.AddDays(1)));
 
             assessorsToday.AddRange(assessorsQBToday);
             assessorsToday.AddRange(assessorsQGToday);
             assessorsToday.AddRange(assessorsEXToday);
+            assessorsToday.AddRange(assessorsONToday);
 
             assessorsTomorrow.AddRange(assessorsQBTomorrow);
             assessorsTomorrow.AddRange(assessorsQGTomorrow);
             assessorsTomorrow.AddRange(assessorsEXTomorrow);
+            assessorsTomorrow.AddRange(assessorsONTomorrow);
 
             bool alreadyExistsToday = assessorsToday.Any(x => x.AssessorId == token.UserId);
             bool alreadyExistsTomorrow = assessorsTomorrow.Any(x => x.AssessorId == token.UserId);
