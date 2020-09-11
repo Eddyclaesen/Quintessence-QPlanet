@@ -29,7 +29,7 @@ namespace Quintessence.QPlanet.ViewModel.Prm
         [Display(Name = "Customer")]
         public string ContactName { get; set; }
 
-        [Display(Name = "Teamleader Project")]
+        [Display(Name = "CRM Project")]
         public int? CrmProjectId { get; set; }
 
         [Required]

@@ -186,7 +186,7 @@ namespace Quintessence.QPlanet.Webshell.Controllers
             yield return new AreaActionLink { Area = AdminArea, Action = "Index", Controller = "AdminDictionary", Current = IsCurrentControllerOfType<AdminDictionaryController>(), LinkText = "Dic.", LinkTitle = "Dictionaries" };
             yield return new AreaActionLink { Area = AdminArea, Action = "Index", Controller = "AdminSimulation", Current = IsCurrentControllerOfType<AdminSimulationController>(), LinkText = "Sim.", LinkTitle = "Simulations" };
             yield return new AreaActionLink { Area = AdminArea, Action = "Index", Controller = "AdminUser", Current = IsCurrentControllerOfType<AdminUserController>(), LinkText = "Users", LinkTitle = "Users" };
-            yield return new AreaActionLink { Area = AdminArea, Action = "Index", Controller = "AdminJob", Current = IsCurrentControllerOfType<AdminJobController>(), LinkText = "Jobs", LinkTitle = "Jobs" };
+            //yield return new AreaActionLink { Area = AdminArea, Action = "Index", Controller = "AdminJob", Current = IsCurrentControllerOfType<AdminJobController>(), LinkText = "Jobs", LinkTitle = "Jobs" };
         }
 
         private string CurrentArea

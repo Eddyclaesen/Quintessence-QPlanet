@@ -2,7 +2,12 @@
 @using Quintessence.QCandidate.Controllers
 @using Quintessence.QCandidate.Core.Queries
 @using Quintessence.QCandidate.Helpers
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Localization
+
 @model Quintessence.QCandidate.Models.Assessments.Assessment
+
+@inject IViewLocalizer Localizer
 
 @{ 
 if (Model != null) 
@@ -11,7 +16,7 @@ if (Model != null)
         <div class="context">
             <span class="company">@Model.CustomerName</span> <span class="project">@Model.PositionName</span>
             <h1>@Model.Date.ToLongDateString()</h1>
-            <span class="location">Locatie: @Model.LocationName</span>
+            <span class="location">@Model.LocationName</span>
         </div>
 
         @*<div class="assessment-context">
@@ -33,7 +38,14 @@ if (Model != null)
     }
 else {
 
-    <div style="height:1075px; width:100%; clear:both;"></div>
+    <div style="height:1075px; width:100%; clear:both;">
+        <div class="row">
+            <div class="col-md-12 center" style="margin-top: 10%;">
+                <h5>@Localizer["WelcomeQCandidate"]</h5>
+                <p>@Localizer["WelcomeMessage"]</p>
+            </div>
+        </div>
+    </div>
 
     }
 }

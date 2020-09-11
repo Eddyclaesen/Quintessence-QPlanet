@@ -86,8 +86,9 @@ WHERE
 	--AND prc.Description NOT LIKE '%Input scoring%'
 	--AND CONVERT(VARCHAR, prc.Description) NOT IN('Preparation consultant','Assessor debriefing','Proma','Assessor debriefing GGI')
 	AND ISNULL(prc.Description,'') NOT LIKE '%Input scoring%'
-	AND CONVERT(VARCHAR, ISNULL(prc.Description,'')) NOT IN('Preparation consultant','Assessor debriefing','Proma','Assessor debriefing GGI')
+	AND CONVERT(VARCHAR, ISNULL(prc.Description,'')) NOT IN ('Preparation consultant','Assessor debriefing','Proma','Assessor debriefing GGI')
 	AND ISNULL(s.LanguageId, @LanguageId) = @LanguageId
+	AND prc.Audit_IsDeleted = 0
 ORDER BY
 	prc.Start,
 	prc.[End]
