@@ -7,6 +7,7 @@
             <th>Last name</th>
             <th>Gender</th>
             <th>Code</th>
+            <th>Date</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -24,6 +25,7 @@
                 <td>@(Model.UnregisteredCandidates[i].LastName ?? "-")</td>
                 <td>@(Model.UnregisteredCandidates[i].Gender)</td>
                 <td>@(Model.UnregisteredCandidates[i].Code ?? "-")</td>
+                <td>@(Model.UnregisteredCandidates[i].AppointmentDate)</td>
                 <td>
                     @if (!string.IsNullOrEmpty(Model.UnregisteredCandidates[i].FirstName) && !string.IsNullOrEmpty(Model.UnregisteredCandidates[i].LastName))
                     {
