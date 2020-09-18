@@ -204,6 +204,9 @@
             $('#CreateNewProjectButton').click(function (event) {
                 event.preventDefault();
 
+                if (!confirm('Are you sure all entries are correct?'))
+                    return;
+
                 var form = $('#CreateProjectForm');
 
                 ShowDetailSaveDialog();

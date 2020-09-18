@@ -1,9 +1,11 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Quintessence.QCandidate.Contracts.Responses;
 using Quintessence.QCandidate.Core.Queries;
 using Quintessence.QCandidate.Infrastructure.Interfaces;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -68,7 +70,9 @@ namespace Quintessence.QCandidate.Logic.Queries
                     param: new
                     {
                         candidateId = query.CandidateId,
-                        date = query.Date
+                        date = query.Date,
+                        language = CultureInfo.CurrentCulture.ToString()
+                        
                     },
                     commandType: CommandType.StoredProcedure,
                     splitOn: "Id,Id,Date,Id,Id,Id,Id,Id").ConfigureAwait(false);

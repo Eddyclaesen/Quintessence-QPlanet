@@ -308,7 +308,14 @@ namespace Quintessence.QService.Business.CommandRepositories
                                         ((ProjectCategoryDetailType3)projectCategoryDetail).Name = subCategoryType.Name;
                                         ((ProjectCategoryDetailType3)projectCategoryDetail).SurveyPlanningId = int.Parse(defaultValues.SingleOrDefault(text => text.Code.ToUpper() == "SURVEYPLANNINGID").Value);
                                         ((ProjectCategoryDetailType3)projectCategoryDetail).Description = defaultValues.SingleOrDefault(text => text.Code.ToUpper() == "DESCRIPTION").Value;
-                                        ((ProjectCategoryDetailType3)projectCategoryDetail).IncludeInCandidateReport = false; //Default false
+                                        if (((ProjectCategoryDetailType3)projectCategoryDetail).Name == "NEO-pir")
+                                        {
+                                            ((ProjectCategoryDetailType3)projectCategoryDetail).IncludeInCandidateReport = true; 
+                                        }
+                                        else
+                                        {
+                                            ((ProjectCategoryDetailType3)projectCategoryDetail).IncludeInCandidateReport = false; //Default false
+                                        }                                                                              
                                         ((ProjectCategoryDetailType3)projectCategoryDetail).MailTextStandalone = defaultValues.SingleOrDefault(text => text.Code.ToUpper() == "MAILTEXTSTANDALONE").Value;
                                         ((ProjectCategoryDetailType3)projectCategoryDetail).MailTextIntegrated = defaultValues.SingleOrDefault(text => text.Code.ToUpper() == "MAILTEXTINTEGRATED").Value;
                                         break;

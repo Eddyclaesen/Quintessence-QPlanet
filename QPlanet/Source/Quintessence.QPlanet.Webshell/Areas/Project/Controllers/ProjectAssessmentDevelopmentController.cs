@@ -775,7 +775,7 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Controllers
             {
                 try
                 {
-                    var unregisteredCandidates = this.InvokeService<ICustomerRelationshipManagementQueryService, List<CrmUnregisteredCandidateAppointmentView>>(service => service.ListCrmUnregisteredCandidateAppointments(id));
+                    var unregisteredCandidates = this.InvokeService<ICustomerRelationshipManagementQueryService, List<CrmUnregisteredCandidateAppointmentView>>(service => service.ListCrmUnregisteredCandidateAppointments(id)).OrderBy(x => x.FirstName).ToList();
                     var model = new UnregisteredCandidatesModel
                         {
                             UnregisteredCandidates = unregisteredCandidates,
