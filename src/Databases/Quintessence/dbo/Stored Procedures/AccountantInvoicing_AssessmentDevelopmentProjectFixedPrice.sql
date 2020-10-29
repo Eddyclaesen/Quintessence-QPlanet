@@ -1,4 +1,5 @@
-﻿CREATE PROCEDURE [dbo].[AccountantInvoicing_AssessmentDevelopmentProjectFixedPrice]
+﻿
+CREATE PROCEDURE [dbo].[AccountantInvoicing_AssessmentDevelopmentProjectFixedPrice]
 	@Date	DATETIME = NULL,
 	@Id		UNIQUEIDENTIFIER = NULL
 AS
@@ -6,7 +7,7 @@ BEGIN
 	SET NOCOUNT ON;
 	
 	SELECT		[ProjectFixedPriceView].[Id]													AS  [Id],							
-				[ProjectFixedPriceView].[ProjectId]												AS  [ProjectId],	
+				[ProjectFixedPriceView].[ProjectId]												AS  [ProjectId],
 				[ProjectView].[Name]															AS  [ProjectName],
 				[CrmContactView].[Id]															AS  [ContactId],	
 				[CrmContactView].[Name]															AS	[ContactName],
@@ -33,7 +34,8 @@ BEGIN
 				[ProjectFixedPriceView].[Audit_DeletedBy]										AS  [AuditDeletedBy],				
 				[ProjectFixedPriceView].[Audit_DeletedOn]										AS  [AuditDeletedOn],				
 				[ProjectFixedPriceView].[Audit_IsDeleted]										AS  [AuditIsDeleted],				
-				[ProjectFixedPriceView].[Audit_VersionId]										AS  [AuditVersionId]	
+				[ProjectFixedPriceView].[Audit_VersionId]										AS  [AuditVersionId],
+				[ProjectFixedPriceView].[FinancialEntityId]										AS	[FinancialEntityId]
 
 	FROM		[ProjectFixedPriceView]
 

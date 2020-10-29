@@ -1,4 +1,5 @@
-﻿CREATE PROCEDURE [dbo].[Invoicing_ConsultancyProjectFixedPrice]
+﻿
+CREATE PROCEDURE [dbo].[Invoicing_ConsultancyProjectFixedPrice]
 	@Date					DATETIME,
 	@CustomerAssistantId	UNIQUEIDENTIFIER = NULL,
 	@ProjectManagerId		UNIQUEIDENTIFIER = NULL
@@ -39,7 +40,8 @@ BEGIN
 				[ProjectFixedPriceView].[Audit_DeletedBy]										AS  [AuditDeletedBy],				
 				[ProjectFixedPriceView].[Audit_DeletedOn]										AS  [AuditDeletedOn],				
 				[ProjectFixedPriceView].[Audit_IsDeleted]										AS  [AuditIsDeleted],				
-				[ProjectFixedPriceView].[Audit_VersionId]										AS  [AuditVersionId]	
+				[ProjectFixedPriceView].[Audit_VersionId]										AS  [AuditVersionId],
+				[ProjectFixedPriceView].[FinancialEntityId]										AS	[FinancialEntityId]
 
 	FROM		[ProjectFixedPriceView]
 

@@ -40,7 +40,8 @@ BEGIN
 				[ProductSheetEntryView].[Audit_DeletedBy]											AS  [AuditDeletedBy],				
 				[ProductSheetEntryView].[Audit_DeletedOn]											AS  [AuditDeletedOn],				
 				[ProductSheetEntryView].[Audit_IsDeleted]											AS  [AuditIsDeleted],				
-				[ProductSheetEntryView].[Audit_VersionId]											AS  [AuditVersionId]	
+				[ProductSheetEntryView].[Audit_VersionId]											AS  [AuditVersionId],
+				[ProductSheetEntryView].[FinancialEntityId]											AS	[FinancialEntityId]
 
 	FROM		[ProductSheetEntryView]
 
