@@ -1,9 +1,12 @@
 ﻿using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
 using Quintessence.QCandidate.Contracts.Responses;
 using Quintessence.QCandidate.Core.Queries;
+using Quintessence.QCandidate.Infrastructure.Dapper;
 using Quintessence.QCandidate.Infrastructure.Interfaces;
 
 namespace Quintessence.QCandidate.Logic.Queries
@@ -17,40 +20,26 @@ namespace Quintessence.QCandidate.Logic.Queries
 
         public override async Task<ProgramComponentDto> Handle(GetProgramComponentByIdQuery query, CancellationToken cancellationToken)
         {
-            using(var dbConnection = DbConnectionFactory.Create())
+            var idParameter = new SqlParameter("id", SqlDbType.UniqueIdentifier) { Value = query.Id };
+
+            var command = new StoredProcedureCommandDefinition("[QCandidate].[ProgramComponent_GetById]", idParameter).ToCommandDefinition();
+
+            using (var dbConnection = DbConnectionFactory.Create())
             {
-                var result = new ProgramComponentDto();
-                await dbConnection.QueryAsync<ProgramComponentDto>("[QCandidate].[ProgramComponent_GetById]",
-                    new[]
+
+                var programComponents = await dbConnection.QueryAsync<ProgramComponentDto, RoomDto, UserDto, UserDto, ProgramComponentDto>(command,
+                    (programComponentDto, roomDto, leadAssessorUserDto, coAssessorUserDto) =>
                     {
-                        typeof(ProgramComponentDto),
-                        typeof(RoomDto),
-                        typeof(UserDto),
-                        typeof(UserDto)
+                        programComponentDto.Room = roomDto;
+                        programComponentDto.LeadAssessor = leadAssessorUserDto;
+                        programComponentDto.CoAssessor = coAssessorUserDto;
+
+                        return programComponentDto;
                     },
-                    obj =>
-                    {
-                        result = obj[0] as ProgramComponentDto;
+                    splitOn: "Id, Id, Id");
 
-                        if(result == null)
-                        {
-                            return null;
-                        }
 
-                        result.Room = obj[1] as RoomDto;
-                        result.LeadAssessor = obj[2] as UserDto;
-                        result.CoAssessor = obj[3] as UserDto;
-
-                        return result;
-                    },
-                    param: new
-                    {
-                        id = query.Id,
-                    },
-                    commandType: CommandType.StoredProcedure,
-                    splitOn: "Id,Id,Id").ConfigureAwait(false);
-
-                return result;
+                return programComponents.Single();
             }
         }
     }
