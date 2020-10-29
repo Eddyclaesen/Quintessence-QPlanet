@@ -587,7 +587,7 @@
     <Build Include="QCandidate\Stored Procedures\ProgramComponent_GetById.sql" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="QCandidate\Stored Procedures\Assessment_GetByCandidateIdAndDate.sql" />
+    <Build Include="QCandidate\Stored Procedures\Assessment_GetByCandidateIdAndDateAndLanguage.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Release.sql" />
