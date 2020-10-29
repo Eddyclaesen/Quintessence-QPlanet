@@ -26,9 +26,10 @@
     [Audit_DeletedOn]              DATETIME         NULL,
     [Audit_IsDeleted]              BIT              DEFAULT ((0)) NOT NULL,
     [Audit_VersionId]              UNIQUEIDENTIFIER DEFAULT (newid()) NOT NULL,
-    [FinancialEntityId]            UNIQUEIDENTIFIER NULL,
     CONSTRAINT [PK_ProjectCandidateCategoryDetailType1] PRIMARY KEY CLUSTERED ([ProjectCandidateId] ASC, [ProjectCategoryDetailType1Id] ASC),
     CONSTRAINT [FK_ProjectCandidateCategoryDetailType1_ProjectCandidate] FOREIGN KEY ([ProjectCandidateId]) REFERENCES [dbo].[ProjectCandidate] ([Id]),
     CONSTRAINT [FK_ProjectCandidateCategoryDetailType1_ProjectCategoryDetailType1] FOREIGN KEY ([ProjectCategoryDetailType1Id]) REFERENCES [dbo].[ProjectCategoryDetailType1] ([Id])
 );
+
+
 

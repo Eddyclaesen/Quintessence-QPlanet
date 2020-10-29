@@ -20,10 +20,10 @@
     [Audit_VersionId]     UNIQUEIDENTIFIER DEFAULT (newid()) NOT NULL,
     [Deadline]            DATETIME         NULL,
     [NoInvoice]           BIT              DEFAULT ((0)) NOT NULL,
-    [FinancialEntityId]   UNIQUEIDENTIFIER NULL,
     CONSTRAINT [PK_ProjectProduct] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_ProjectProduct_Invoicing_FinancialEntity] FOREIGN KEY ([FinancialEntityId]) REFERENCES [dbo].[Invoicing_FinancialEntity] ([Id]),
     CONSTRAINT [FK_ProjectProduct_ProductType] FOREIGN KEY ([ProductTypeId]) REFERENCES [dbo].[ProductType] ([Id]),
     CONSTRAINT [FK_ProjectProduct_Project] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Project] ([Id])
 );
+
+
 

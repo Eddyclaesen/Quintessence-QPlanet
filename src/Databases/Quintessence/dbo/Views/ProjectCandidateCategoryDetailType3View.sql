@@ -1,5 +1,4 @@
-﻿
-CREATE VIEW [dbo].[ProjectCandidateCategoryDetailType3View] AS
+﻿CREATE VIEW [dbo].[ProjectCandidateCategoryDetailType3View] AS
 	SELECT		[ProjectCandidateCategoryDetailType3].[Id]									AS	[Id],
 				[ProjectCandidateCategoryDetailType3].[ProjectCandidateId]					AS	[ProjectCandidateId],
 				[ProjectCandidateCategoryDetailType3].[ProjectCategoryDetailType3Id]		AS	[ProjectCategoryDetailTypeId],
@@ -29,8 +28,7 @@ CREATE VIEW [dbo].[ProjectCandidateCategoryDetailType3View] AS
 				[ProjectCandidateCategoryDetailType3].[Audit_DeletedBy]						AS	[Audit_DeletedBy],
 				[ProjectCandidateCategoryDetailType3].[Audit_DeletedOn]						AS	[Audit_DeletedOn],
 				[ProjectCandidateCategoryDetailType3].[Audit_IsDeleted]						AS	[Audit_IsDeleted],
-				[ProjectCandidateCategoryDetailType3].[Audit_VersionId]						AS	[Audit_VersionId],
-				[ProjectCandidateCategoryDetailType3].[FinancialEntityId]					AS	[FinancialEntityId]
+				[ProjectCandidateCategoryDetailType3].[Audit_VersionId]						AS	[Audit_VersionId]	
 
 	FROM		[ProjectCandidateCategoryDetailType3]	WITH (NOLOCK)
 

@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[Invoicing_TimesheetEntry]
+﻿CREATE PROCEDURE [dbo].[Invoicing_TimesheetEntry]
 	@Date					DATETIME,
 	@CustomerAssistantId	UNIQUEIDENTIFIER = NULL,
 	@ProjectManagerId		UNIQUEIDENTIFIER = NULL
@@ -41,8 +40,7 @@ BEGIN
 				[TimesheetEntryView].[Audit_DeletedBy]												AS  [AuditDeletedBy],				
 				[TimesheetEntryView].[Audit_DeletedOn]												AS  [AuditDeletedOn],				
 				[TimesheetEntryView].[Audit_IsDeleted]												AS  [AuditIsDeleted],				
-				[TimesheetEntryView].[Audit_VersionId]												AS  [AuditVersionId],
-				[TimesheetEntryView].[FinancialEntityId]											AS	[FinancialEntityId]
+				[TimesheetEntryView].[Audit_VersionId]												AS  [AuditVersionId]	
 
 	FROM		[TimesheetEntryView]
 

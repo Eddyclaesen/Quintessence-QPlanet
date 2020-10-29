@@ -50,14 +50,14 @@
     [Audit_VersionId]                   UNIQUEIDENTIFIER CONSTRAINT [DF__tmp_ms_xx__Audit__5DA0D232] DEFAULT (newid()) NOT NULL,
     [InternalCandidate]                 BIT              CONSTRAINT [DF_ProjectCandidate_InternalCandidate] DEFAULT ((0)) NOT NULL,
     [OnlineAssessment]                  BIT              CONSTRAINT [DF_ProjectCandidate_OnlineAssessment] DEFAULT ((0)) NULL,
-    [FinancialEntityId]                 UNIQUEIDENTIFIER NULL,
     CONSTRAINT [PK_ProjectCandidate] PRIMARY KEY NONCLUSTERED ([Id] ASC),
     CONSTRAINT [FK_ProjectCandidate_Candidate] FOREIGN KEY ([CandidateId]) REFERENCES [dbo].[Candidate] ([Id]),
-    CONSTRAINT [FK_ProjectCandidate_Invoicing_FinancialEntity] FOREIGN KEY ([FinancialEntityId]) REFERENCES [dbo].[Invoicing_FinancialEntity] ([Id]),
     CONSTRAINT [FK_ProjectCandidate_Language] FOREIGN KEY ([ReportLanguageId]) REFERENCES [dbo].[Language] ([Id]),
     CONSTRAINT [FK_ProjectCandidate_Project] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Project] ([Id]),
     CONSTRAINT [FK_ProjectCandidate_ReportStatus] FOREIGN KEY ([ReportStatusId]) REFERENCES [dbo].[ReportStatus] ([Id])
 );
+
+
 
 
 GO
@@ -111,7 +111,16 @@ BEGIN
 				and pp.Name = 'Motivation Questionnaire')
 		BEGIN
 			UPDATE Quintessence.dbo.ProjectCandidateView
-			SET Remarks = 'MQ: https://drive.eu.shl.com/?linkid=KZi4zr6VWWWnGRIjTt5Bkr0MBGAumPUX8IDODS6ncAGbVD1eAbb4xg'
+			SET Remarks = 'MQ: https://quintessencebe.sharepoint.com/SHL/Shared%20Documents/Forms/AllItems.aspx'
 			WHERE Id = (SELECT Id from inserted)
+		END
+
+	--ACTIVATE HasQCandidateAccess FOR FOD FIN
+	IF (select ContactId from ProjectView 
+		where Id = (select ProjectId from inserted)) = 6586
+		BEGIN
+			UPDATE Candidate
+			SET HasQCandidateAccess = 1
+			WHERE Id = (select CandidateId from inserted)
 		END
 END

@@ -34,8 +34,7 @@ BEGIN
 				[ProjectProductView].[Audit_DeletedBy]											AS  [AuditDeletedBy],				
 				[ProjectProductView].[Audit_DeletedOn]											AS  [AuditDeletedOn],				
 				[ProjectProductView].[Audit_IsDeleted]											AS  [AuditIsDeleted],				
-				[ProjectProductView].[Audit_VersionId]											AS  [AuditVersionId],
-				[ProjectProductView].[FinancialEntityId]										AS	[FinancialEntityId]
+				[ProjectProductView].[Audit_VersionId]											AS  [AuditVersionId]	
 
 	FROM		[ProjectProductView]
 
