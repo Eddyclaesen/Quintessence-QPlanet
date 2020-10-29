@@ -1,10 +1,16 @@
-﻿
-CREATE PROCEDURE [QCandidate].[Assessment_GetByCandidateIdAndDate]
+﻿CREATE PROCEDURE [QCandidate].[Assessment_GetByCandidateIdAndDate]
 	@candidateId UNIQUEIDENTIFIER,
-	@date DATE
+	@date DATE,
+	@language char(2)
 AS
 
 	SET NOCOUNT ON;
+	DECLARE @LanguageId int
+	SET @LanguageId = case @language
+		when 'nl' then 1
+		when 'fr' then 2
+		else 3
+	end
 
 SELECT
 	--Customer
@@ -25,12 +31,12 @@ SELECT
 			prc.[Start],
 			prc.[End],
 			CASE 
-					WHEN (uLeadAssess.FirstName is null and sc.Preparation > 0) THEN s.[Name]+ CASE c.LanguageId 
+					WHEN (uLeadAssess.FirstName is null and sc.Preparation > 0) THEN s.[Name]+ CASE @LanguageId 
 																									WHEN 1 THEN ' (voorbereiding)'
 																									WHEN 2 THEN ' (préparation)'
 																									ELSE ' (preparation)'
 																									END
-					WHEN (uLeadAssess.FirstName is not null and sc.Execution > 0) THEN s.[Name]+ CASE c.LanguageId
+					WHEN (uLeadAssess.FirstName is not null and sc.Execution > 0) THEN s.[Name]+ CASE @LanguageId
 																									WHEN 1 THEN ' (uitvoering)'
 																									WHEN 2 THEN ' (execution)'
 																									ELSE ' (execution)'
@@ -80,8 +86,8 @@ WHERE
 	--AND prc.Description NOT LIKE '%Input scoring%'
 	--AND CONVERT(VARCHAR, prc.Description) NOT IN('Preparation consultant','Assessor debriefing','Proma','Assessor debriefing GGI')
 	AND ISNULL(prc.Description,'') NOT LIKE '%Input scoring%'
-	AND CONVERT(VARCHAR, ISNULL(prc.Description,'')) NOT IN('Preparation consultant','Assessor debriefing','Proma','Assessor debriefing GGI')
-	AND ISNULL(s.LanguageId, c.LanguageId) = c.LanguageId
+	AND CONVERT(VARCHAR, ISNULL(prc.Description,'')) NOT IN ('Preparation consultant','Assessor debriefing','Proma','Assessor debriefing GGI')
+	AND ISNULL(s.LanguageId, @LanguageId) = @LanguageId
 	AND prc.Audit_IsDeleted = 0
 ORDER BY
 	prc.Start,

@@ -1,4 +1,5 @@
-﻿CREATE PROCEDURE [dbo].[AccountantInvoicing_ProjectCandidateCategoryType1]
+﻿
+CREATE PROCEDURE [dbo].[AccountantInvoicing_ProjectCandidateCategoryType1]
 	@Date			DATETIME = NULL,
 	@Id				UNIQUEIDENTIFIER = NULL
 AS
@@ -34,7 +35,8 @@ BEGIN
 				[ProjectCandidateCategoryDetailType1View].[Audit_DeletedBy]							AS  [AuditDeletedBy],				
 				[ProjectCandidateCategoryDetailType1View].[Audit_DeletedOn]							AS  [AuditDeletedOn],				
 				[ProjectCandidateCategoryDetailType1View].[Audit_IsDeleted]							AS  [AuditIsDeleted],				
-				[ProjectCandidateCategoryDetailType1View].[Audit_VersionId]							AS  [AuditVersionId]	
+				[ProjectCandidateCategoryDetailType1View].[Audit_VersionId]							AS  [AuditVersionId],
+				[ProjectCandidateCategoryDetailType1View].[FinancialEntityId]						AS	[FinancialEntityId]	
 
 	FROM		[ProjectCandidateCategoryDetailType1View]
 

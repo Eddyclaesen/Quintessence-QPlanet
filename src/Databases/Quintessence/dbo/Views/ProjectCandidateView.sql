@@ -63,15 +63,12 @@ SELECT
     dbo.ProjectCandidate.OnlineAssessment, 
     dbo.CandidateView.Phone AS CandidatePhone,
     dbo.CandidateView.HasQCandidateAccess AS CandidateHasQCandidateAccess,
-    dbo.CandidateView.QCandidateUserId AS CandidateQCandidateUserId
-FROM
-	dbo.ProjectCandidate WITH (NOLOCK)
-	INNER JOIN dbo.CandidateView
-		ON dbo.ProjectCandidate.CandidateId = dbo.CandidateView.Id
-	LEFT OUTER JOIN dbo.CrmAppointmentView
-		ON dbo.CrmAppointmentView.Id = dbo.ProjectCandidate.CrmCandidateAppointmentId
-WHERE
-	(dbo.ProjectCandidate.Audit_IsDeleted = 0)
+    dbo.CandidateView.QCandidateUserId AS CandidateQCandidateUserId,
+    dbo.ProjectCandidate.FinancialEntityId
+FROM            dbo.ProjectCandidate WITH (NOLOCK) INNER JOIN
+                         dbo.CandidateView ON dbo.ProjectCandidate.CandidateId = dbo.CandidateView.Id LEFT OUTER JOIN
+                         dbo.CrmAppointmentView ON dbo.CrmAppointmentView.Id = dbo.ProjectCandidate.CrmCandidateAppointmentId
+WHERE        (dbo.ProjectCandidate.Audit_IsDeleted = 0)
 
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
