@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Quintessence.QCandidate.Models
+namespace Quintessence.QCandidate.Models.ProgramComponents
 {
     public class ProgramComponent
     {

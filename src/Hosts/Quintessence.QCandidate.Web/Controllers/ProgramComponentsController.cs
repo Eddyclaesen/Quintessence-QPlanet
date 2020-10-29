@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Quintessence.QCandidate.Core.Queries;
-using Quintessence.QCandidate.Models;
+using Quintessence.QCandidate.Models.ProgramComponents;
 
 namespace Quintessence.QCandidate.Controllers
 {
