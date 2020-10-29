@@ -49,6 +49,10 @@
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.35" />
+    <PackageReference Include="kenze.domain" Version="1.3.201911131" />
+    <PackageReference Include="kenze.infrastructure" Version="1.3.201911131" />
+    <PackageReference Include="kenze.infrastructure.dapper" Version="1.3.201912191" />
+    <PackageReference Include="kenze.infrastructure.entityframeworkcore" Version="1.3.201912054" />
     <PackageReference Include="MediatR" Version="8.0.1" Condition="'$(MediatR)' == 'true'" />
     <PackageReference Include="MediatR" Version="8.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" Condition="'$(MediatR)' == 'true'" />
@@ -82,6 +86,8 @@
 
   <ItemGroup>
     <Folder Include="Core\Domain\" />
+    <Folder Include="Core\Commands\" />
+    <Folder Include="Infrastructure\EntityFrameworkCore\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Kenze.Infrastructure;
+using Kenze.Infrastructure.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
 using Microsoft.AspNetCore.Authorization;
@@ -13,8 +15,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Quintessence.QCandidate.Configuration;
 using Quintessence.QCandidate.Filters.Actions;
-using Quintessence.QCandidate.Infrastructure;
-using Quintessence.QCandidate.Infrastructure.Interfaces;
 using Quintessence.QCandidate.Logic.Queries;
 using System.Globalization;
 

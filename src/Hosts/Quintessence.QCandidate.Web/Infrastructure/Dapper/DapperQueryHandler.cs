@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Kenze.Infrastructure.Interfaces;
 using MediatR;
-using Quintessence.QCandidate.Infrastructure.Interfaces;
 
 namespace Quintessence.QCandidate.Logic.Queries
 {

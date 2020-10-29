@@ -1,7 +1,7 @@
 ﻿using Dapper;
+using Kenze.Infrastructure.Interfaces;
 using Quintessence.QCandidate.Contracts.Responses;
 using Quintessence.QCandidate.Core.Queries;
-using Quintessence.QCandidate.Infrastructure.Interfaces;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
+using Kenze.Infrastructure.Dapper;
+using Kenze.Infrastructure.Interfaces;
 using Quintessence.QCandidate.Contracts.Responses;
 using Quintessence.QCandidate.Core.Queries;
-using Quintessence.QCandidate.Infrastructure.Dapper;
-using Quintessence.QCandidate.Infrastructure.Interfaces;
 
 namespace Quintessence.QCandidate.Logic.Queries
 {
