@@ -23,12 +23,12 @@
     [Audit_DeletedOn]     DATETIME         NULL,
     [Audit_IsDeleted]     BIT              DEFAULT ((0)) NOT NULL,
     [Audit_VersionId]     UNIQUEIDENTIFIER DEFAULT (newid()) NOT NULL,
-    [FinancialEntityId]   UNIQUEIDENTIFIER NULL,
     CONSTRAINT [PK_TimesheetEntry] PRIMARY KEY NONCLUSTERED ([Id] ASC),
     CONSTRAINT [FK_TimesheetEntry_ActivityProfile] FOREIGN KEY ([ActivityProfileId]) REFERENCES [dbo].[ActivityProfile] ([Id]),
-    CONSTRAINT [FK_TimesheetEntry_Invoicing_FinancialEntity] FOREIGN KEY ([FinancialEntityId]) REFERENCES [dbo].[Invoicing_FinancialEntity] ([Id]),
     CONSTRAINT [FK_TimesheetEntry_Project] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Project] ([Id]),
     CONSTRAINT [FK_TimesheetEntry_ProjectPlanPhase] FOREIGN KEY ([ProjectPlanPhaseId]) REFERENCES [dbo].[ProjectPlanPhase] ([Id]),
     CONSTRAINT [FK_TimesheetEntry_User] FOREIGN KEY ([UserId]) REFERENCES [dbo].[User] ([Id])
 );
+
+
 

@@ -17,9 +17,9 @@
     [Audit_DeletedOn]     DATETIME         NULL,
     [Audit_IsDeleted]     BIT              DEFAULT ((0)) NOT NULL,
     [Audit_VersionId]     UNIQUEIDENTIFIER DEFAULT (newid()) NOT NULL,
-    [FinancialEntityId]   UNIQUEIDENTIFIER NULL,
     CONSTRAINT [PK_ProjectFixedPrice] PRIMARY KEY NONCLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_ProjectFixedPrice_Invoicing_FinancialEntity] FOREIGN KEY ([FinancialEntityId]) REFERENCES [dbo].[Invoicing_FinancialEntity] ([Id]),
     CONSTRAINT [FK_ProjectFixedPrice_Project] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Project] ([Id])
 );
+
+
 
