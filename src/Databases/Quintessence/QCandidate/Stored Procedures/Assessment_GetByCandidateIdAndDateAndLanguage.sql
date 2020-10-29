@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [QCandidate].[Assessment_GetByCandidateIdAndDate]
+﻿CREATE PROCEDURE [QCandidate].[Assessment_GetByCandidateIdAndDateAndLanguage]
 	@candidateId UNIQUEIDENTIFIER,
 	@date DATE,
 	@language char(2)

@@ -24,7 +24,7 @@ namespace Quintessence.QCandidate.Logic.Queries
                 var result = new AssessmentDto();
 
                 // This way of working is needed because too many return types would be used otherwise
-                await dbConnection.QueryAsync<AssessmentDto>("[QCandidate].[Assessment_GetByCandidateIdAndDate]",
+                await dbConnection.QueryAsync<AssessmentDto>("[QCandidate].[Assessment_GetByCandidateIdAndDateAndLanguage]",
                     new[]
                     {
                         typeof(CustomerDto),
