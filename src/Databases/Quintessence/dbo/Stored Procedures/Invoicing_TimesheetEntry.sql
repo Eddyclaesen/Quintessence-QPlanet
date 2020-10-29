@@ -41,9 +41,7 @@ BEGIN
 				[TimesheetEntryView].[Audit_DeletedBy]												AS  [AuditDeletedBy],				
 				[TimesheetEntryView].[Audit_DeletedOn]												AS  [AuditDeletedOn],				
 				[TimesheetEntryView].[Audit_IsDeleted]												AS  [AuditIsDeleted],				
-				[TimesheetEntryView].[Audit_VersionId]												AS  [AuditVersionId],
-				[TimesheetEntryView].[FinancialEntityId]											AS	[FinancialEntityId]
-
+				[TimesheetEntryView].[Audit_VersionId]												AS  [AuditVersionId]
 	FROM		[TimesheetEntryView]
 
 	INNER JOIN	[UserView] [Consultant]
