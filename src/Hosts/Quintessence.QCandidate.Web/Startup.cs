@@ -50,7 +50,7 @@ namespace Quintessence.QCandidate
                 .AddRazorViewEngine()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix/*, opts => { opts.ResourcesPath = "Resources"; }*/);
 
-            services.AddMediatR(typeof(GetAssessmentByCandidateIdAndDateQueryHandler).Assembly);
+            services.AddMediatR(typeof(GetAssessmentByCandidateIdAndDateAndLanguageQueryHandler).Assembly);
             services.AddScoped<IDbConnectionFactory>(_ =>
                 new SqlDbConnectionFactory(Configuration.GetConnectionString("QPlanet")));
 

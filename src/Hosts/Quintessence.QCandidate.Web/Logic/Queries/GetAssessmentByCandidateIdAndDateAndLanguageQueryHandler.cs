@@ -1,27 +1,25 @@
 ﻿using Dapper;
-using Microsoft.AspNetCore.Mvc.Versioning;
 using Quintessence.QCandidate.Contracts.Responses;
 using Quintessence.QCandidate.Core.Queries;
 using Quintessence.QCandidate.Infrastructure.Interfaces;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Quintessence.QCandidate.Logic.Queries
 {
-    public class GetAssessmentByCandidateIdAndDateQueryHandler : DapperQueryHandler<GetAssessmentByCandidateIdAndDateQuery, AssessmentDto>
+    public class GetAssessmentByCandidateIdAndDateAndLanguageQueryHandler : DapperQueryHandler<GetAssessmentByCandidateIdAndDateAndLanguageQuery, AssessmentDto>
     {
-        public GetAssessmentByCandidateIdAndDateQueryHandler(IDbConnectionFactory dbConnectionFactory)
+        public GetAssessmentByCandidateIdAndDateAndLanguageQueryHandler(IDbConnectionFactory dbConnectionFactory)
             : base(dbConnectionFactory)
         {
         }
 
-        public override async Task<AssessmentDto> Handle(GetAssessmentByCandidateIdAndDateQuery query, CancellationToken cancellationToken)
+        public override async Task<AssessmentDto> Handle(GetAssessmentByCandidateIdAndDateAndLanguageQuery query, CancellationToken cancellationToken)
         {
-            using(var dbConnection = DbConnectionFactory.Create())
+            using (var dbConnection = DbConnectionFactory.Create())
             {
                 var result = new AssessmentDto();
                 await dbConnection.QueryAsync<AssessmentDto>("[QCandidate].[Assessment_GetByCandidateIdAndDate]",
@@ -71,8 +69,7 @@ namespace Quintessence.QCandidate.Logic.Queries
                     {
                         candidateId = query.CandidateId,
                         date = query.Date,
-                        language = CultureInfo.CurrentCulture.ToString()
-                        
+                        language = query.Language
                     },
                     commandType: CommandType.StoredProcedure,
                     splitOn: "Id,Id,Date,Id,Id,Id,Id,Id").ConfigureAwait(false);
