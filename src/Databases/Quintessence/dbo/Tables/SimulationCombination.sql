@@ -6,6 +6,7 @@
     [SimulationId]           UNIQUEIDENTIFIER NOT NULL,
     [Preparation]            INT              NOT NULL,
     [Execution]              INT              NOT NULL,
+    [QCandidateLayout]       INT              DEFAULT(1)  NOT NULL,
     [Audit_CreatedBy]        NVARCHAR (MAX)   DEFAULT (suser_sname()) NOT NULL,
     [Audit_CreatedOn]        DATETIME         DEFAULT (getdate()) NOT NULL,
     [Audit_ModifiedBy]       NVARCHAR (MAX)   NULL,
