@@ -10,6 +10,7 @@ using Quintessence.QPlanet.Infrastructure.Tools;
 using Quintessence.QPlanet.ViewModel.Sim;
 using Quintessence.QPlanet.Webshell.Areas.Admin.Models.AdminSimulation;
 using Quintessence.QPlanet.Webshell.Infrastructure.Controllers;
+using Quintessence.QPlanet.Webshell.Models.General;
 using Quintessence.QPlanet.Webshell.Models.Shared;
 using Quintessence.QService.QPlanetService.Contracts.DataContracts.Shared;
 using Quintessence.QService.QPlanetService.Contracts.DataContracts.SimulationManagement;
@@ -146,7 +147,7 @@ namespace Quintessence.QPlanet.Webshell.Areas.Admin.Controllers
             try
             {
                 var request = new ListSimulationMatrixEntriesRequest { DataTablePaging = Mapper.Map<DataTablePaging>(parameters) };
-                var response = this.InvokeService<ISimulationManagementQueryService, ListSimulationMatrixEntriesResponse>(service => service.ListSimulationMatrixEntries(request));
+                 var response = this.InvokeService<ISimulationManagementQueryService, ListSimulationMatrixEntriesResponse>(service => service.ListSimulationMatrixEntries(request));
                 var simulationMatrixEntries = response.SimulationMatrixEntries;
 
                 var model = new
@@ -158,7 +159,7 @@ namespace Quintessence.QPlanet.Webshell.Areas.Admin.Controllers
                         .ThenBy(ss => ss.SimulationDepartmentName)
                         .ThenBy(ss => ss.SimulationLevelName)
                         .ThenBy(ss => ss.SimulationName)
-                        .Select(u => new[] { u.SimulationSetName, u.SimulationDepartmentName, u.SimulationLevelName, u.SimulationName, u.Preparation.ToString(CultureInfo.InvariantCulture), u.Execution.ToString(CultureInfo.InvariantCulture), u.LanguageNames, u.Id.ToString() })
+                        .Select(u => new[] { u.SimulationSetName, u.SimulationDepartmentName, u.SimulationLevelName, u.SimulationName, u.Preparation.ToString(CultureInfo.InvariantCulture), u.Execution.ToString(CultureInfo.InvariantCulture), u.LanguageNames, QCandidateLayoutType.FromId<QCandidateLayoutType>(u.QCandidateLayout).Name,  u.Id.ToString() })
                         .ToList()
                 };
 

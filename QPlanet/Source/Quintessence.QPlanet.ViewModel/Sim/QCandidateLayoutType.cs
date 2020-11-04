@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Kenze.Domain;
+﻿using Quintessence.QPlanet.ViewModel.Base;
 
-namespace Quintessence.QCandidate.Core.Domain
+namespace Quintessence.QPlanet.ViewModel.Sim
 {
     public class QCandidateLayoutType : Enumeration
     {
@@ -18,6 +14,6 @@ namespace Quintessence.QCandidate.Core.Domain
             : base(id, name)
         {
         }
-        
-    }
+
+	}
 }

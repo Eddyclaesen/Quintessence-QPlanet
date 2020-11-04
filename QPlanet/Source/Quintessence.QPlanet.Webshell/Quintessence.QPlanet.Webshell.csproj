@@ -33,6 +33,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -331,6 +332,7 @@
     <Compile Include="Infrastructure\Models\Login\Credential.cs" />
     <Compile Include="Infrastructure\Models\Profile\ProfileInfo.cs" />
     <Compile Include="Infrastructure\Models\Shared\DataTableParameterModel.cs" />
+    <Compile Include="Models\General\HtmlHelper.cs" />
     <Compile Include="Models\General\HelpActionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
