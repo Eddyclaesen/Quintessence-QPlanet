@@ -31,7 +31,7 @@
             $('#@Html.IdFor(m => m.SimulationDepartmentId)').combobox();
             $('#@Html.IdFor(m => m.SimulationLevelId)').combobox();
             $('#@Html.IdFor(m => m.SimulationId)').combobox();
-            $('#@Html.IdFor(m => m.QCandidateLayout)').combobox();
+            $('#@Html.IdFor(m => m.QCandidateLayoutId)').combobox();
 
         });
 
@@ -125,10 +125,10 @@
         <div class="clear"></div>
 
         <div class="grid_5 table">
-            <div class="label">@Html.LabelFor(m => m.QCandidateLayout)</div>
+            <div class="label">@Html.LabelFor(m => m.QCandidateLayoutId)</div>
         </div>
         <div class="grid_7 table">
-            <div class="value">@Html.DropDownListFor(m => m.QCandidateLayout, Model.QcCandidateLayouts)</div>
+            <div class="value">@Html.DropDownListFor(m => m.QCandidateLayoutId, Model.QCandidateLayouts)</div>
         </div>
         <div class="clear"></div>
 

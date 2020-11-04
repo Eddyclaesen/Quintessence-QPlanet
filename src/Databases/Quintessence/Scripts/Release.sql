@@ -123,7 +123,7 @@ CREATE TABLE [dbo].[tmp_ms_xx_SimulationCombination] (
     [SimulationId]           UNIQUEIDENTIFIER NOT NULL,
     [Preparation]            INT              NOT NULL,
     [Execution]              INT              NOT NULL,
-    [QCandidateLayout]       INT              NOT NULL,
+    [QCandidateLayoutId]     INT              NOT NULL,
     [Audit_CreatedBy]        NVARCHAR (MAX)   DEFAULT (suser_sname()) NOT NULL,
     [Audit_CreatedOn]        DATETIME         DEFAULT (getdate()) NOT NULL,
     [Audit_ModifiedBy]       NVARCHAR (MAX)   NULL,
@@ -138,7 +138,7 @@ CREATE TABLE [dbo].[tmp_ms_xx_SimulationCombination] (
 IF EXISTS (SELECT TOP 1 1 
            FROM   [dbo].[SimulationCombination])
     BEGIN
-        INSERT INTO [dbo].[tmp_ms_xx_SimulationCombination] ([Id], [SimulationSetId], [SimulationDepartmentId], [SimulationLevelId], [SimulationId], [Preparation], [Execution], [QCandidateLayout], [Audit_CreatedBy], [Audit_CreatedOn], [Audit_ModifiedBy], [Audit_ModifiedOn], [Audit_DeletedBy], [Audit_DeletedOn], [Audit_IsDeleted], [Audit_VersionId])
+        INSERT INTO [dbo].[tmp_ms_xx_SimulationCombination] ([Id], [SimulationSetId], [SimulationDepartmentId], [SimulationLevelId], [SimulationId], [Preparation], [Execution], [QCandidateLayoutId], [Audit_CreatedBy], [Audit_CreatedOn], [Audit_ModifiedBy], [Audit_ModifiedOn], [Audit_DeletedBy], [Audit_DeletedOn], [Audit_IsDeleted], [Audit_VersionId])
         SELECT [Id],
                [SimulationSetId],
                [SimulationDepartmentId],

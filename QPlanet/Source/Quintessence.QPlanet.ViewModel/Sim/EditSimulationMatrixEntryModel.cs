@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Web.Mvc;
 using Quintessence.QPlanet.ViewModel.Base;
 using Quintessence.QService.QueryModel.Sim;
 
@@ -44,7 +45,7 @@ namespace Quintessence.QPlanet.ViewModel.Sim
         public int Execution { get; set; }
 
         [Display(Name = "QCandidateLayout")] 
-        public int QCandidateLayout { get; set; }
+        public int QCandidateLayoutId { get; set; }
 
         public IList<SimulationLanguageModel> SimulationLanguages { get; set; }
 
@@ -58,9 +59,13 @@ namespace Quintessence.QPlanet.ViewModel.Sim
 
         public IEnumerable<SimulationSetView> SimulationSets { get; set; }
 
-        public IEnumerable<QCandidateSelectListItemModel> QcCandidateLayouts
+        public IEnumerable<SelectListItem> QCandidateLayouts
         {
-            get { return QCandidateLayoutType.GetAll<QCandidateLayoutType>().Select(ss => new QCandidateSelectListItemModel(ss.Id, ss.Name));  }
+            get { return QCandidateLayout.GetAll<QCandidateLayout>().Select(ss => new SelectListItem()
+            {
+                Value = ss.Id.ToString(),
+                Text = ss.Name
+            });  }
         }
 
         public IEnumerable<SimulationDepartmentView> SimulationDepartments { get; set; }

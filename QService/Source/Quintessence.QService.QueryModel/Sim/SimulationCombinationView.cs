@@ -29,6 +29,6 @@ namespace Quintessence.QService.QueryModel.Sim
         public string LanguageNames { get; set; }
 
         [DataMember] 
-        public int QCandidateLayout { get; set; }
+        public int QCandidateLayoutId { get; set; }
     }
 }

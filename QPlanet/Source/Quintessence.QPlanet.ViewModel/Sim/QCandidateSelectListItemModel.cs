@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using Quintessence.QService.QueryModel.Base;
 
 namespace Quintessence.QPlanet.ViewModel.Sim
-{
+{/*
     public class QCandidateSelectListItemModel : SelectListItem
     {
         public QCandidateSelectListItemModel(int id, string name)
@@ -28,5 +28,5 @@ namespace Quintessence.QPlanet.ViewModel.Sim
             set { Text = value; }
         }
 
-    }
+    }*/
 }

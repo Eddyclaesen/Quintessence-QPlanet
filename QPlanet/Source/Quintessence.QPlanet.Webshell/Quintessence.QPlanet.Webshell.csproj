@@ -332,7 +332,6 @@
     <Compile Include="Infrastructure\Models\Login\Credential.cs" />
     <Compile Include="Infrastructure\Models\Profile\ProfileInfo.cs" />
     <Compile Include="Infrastructure\Models\Shared\DataTableParameterModel.cs" />
-    <Compile Include="Models\General\HtmlHelper.cs" />
     <Compile Include="Models\General\HelpActionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

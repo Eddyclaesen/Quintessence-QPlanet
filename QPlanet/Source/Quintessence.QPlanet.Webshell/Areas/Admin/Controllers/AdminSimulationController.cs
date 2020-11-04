@@ -159,7 +159,7 @@ namespace Quintessence.QPlanet.Webshell.Areas.Admin.Controllers
                         .ThenBy(ss => ss.SimulationDepartmentName)
                         .ThenBy(ss => ss.SimulationLevelName)
                         .ThenBy(ss => ss.SimulationName)
-                        .Select(u => new[] { u.SimulationSetName, u.SimulationDepartmentName, u.SimulationLevelName, u.SimulationName, u.Preparation.ToString(CultureInfo.InvariantCulture), u.Execution.ToString(CultureInfo.InvariantCulture), u.LanguageNames, QCandidateLayoutType.FromId<QCandidateLayoutType>(u.QCandidateLayout).Name,  u.Id.ToString() })
+                        .Select(u => new[] { u.SimulationSetName, u.SimulationDepartmentName, u.SimulationLevelName, u.SimulationName, u.Preparation.ToString(CultureInfo.InvariantCulture), u.Execution.ToString(CultureInfo.InvariantCulture), u.LanguageNames, QCandidateLayout.FromId<QCandidateLayout>(u.QCandidateLayoutId).Name,  u.Id.ToString() })
                         .ToList()
                 };
 

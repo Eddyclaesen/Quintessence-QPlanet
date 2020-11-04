@@ -25,6 +25,6 @@ namespace Quintessence.QService.QPlanetService.Contracts.DataContracts.Simulatio
         public int Execution { get; set; }
 
         [DataMember]
-        public int QCandidateLayout { get; set; }
+        public int QCandidateLayoutId { get; set; }
     }
 }

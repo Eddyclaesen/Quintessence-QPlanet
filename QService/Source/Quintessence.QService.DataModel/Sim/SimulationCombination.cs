@@ -18,7 +18,7 @@ namespace Quintessence.QService.DataModel.Sim
 
         public int Execution { get; set; }
 
-        public int QCandidateLayout { get; set; }
+        public int QCandidateLayoutId { get; set; }
         
 
         
