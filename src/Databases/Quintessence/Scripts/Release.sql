@@ -284,3 +284,36 @@ GO
 ALTER TABLE [dbo].[SimulationCombinationMemos] WITH NOCHECK
     ADD CONSTRAINT [FK_SimulationCombinationMemos_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
 
+    GO
+PRINT N'Creating [dbo].[SimulationCombinationMemoTranslations]...';
+
+
+GO
+CREATE TABLE [dbo].[SimulationCombinationMemoTranslations] (
+    [Id]                          UNIQUEIDENTIFIER NOT NULL,
+    [SimulationCombinationMemoId] UNIQUEIDENTIFIER NOT NULL,
+    [LanguageId]                  INT              NOT NULL,
+    [Title]                       NVARCHAR (255)   NOT NULL,
+    CONSTRAINT [PK_SimulationCombinationMemoTranslations] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombinationMemoTranslations_SimulationCombinationMemos]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombinationMemoTranslations] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombinationMemoTranslations_SimulationCombinationMemos] FOREIGN KEY ([SimulationCombinationMemoId]) REFERENCES [dbo].[SimulationCombinationMemos] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombinationMemoTranslations_Language]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombinationMemoTranslations] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombinationMemoTranslations_Language] FOREIGN KEY ([LanguageId]) REFERENCES [dbo].[Language] ([Id]);
+
+
+
