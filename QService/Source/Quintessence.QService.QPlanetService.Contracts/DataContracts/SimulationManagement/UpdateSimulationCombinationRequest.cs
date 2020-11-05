@@ -27,6 +27,9 @@ namespace Quintessence.QService.QPlanetService.Contracts.DataContracts.Simulatio
         public int Execution { get; set; }
 
         [DataMember]
+        public int QCandidateLayoutId { get; set; }
+
+        [DataMember]
         public List<int> AvailableLanguageIds { get; set; }
     }
 }

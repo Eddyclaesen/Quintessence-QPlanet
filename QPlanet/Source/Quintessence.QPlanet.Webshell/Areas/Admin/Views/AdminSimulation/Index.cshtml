@@ -223,18 +223,23 @@
                         return obj.aData[5];
                     }
                 },
+                    {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            return obj.aData[6];
+                        }
+                    },                {
+                        "type": "text",
+                        "fnRender": function (obj) {
+                            return obj.aData[7];
+                        }
+                    },
                 {
                     "type": "text",
                     "fnRender": function (obj) {
-                        return obj.aData[6];
-                    }
-                },
-                {
-                    "type": "text",
-                    "fnRender": function (obj) {
-                        var editUrl = '@Url.Action("EditSimulationMatrixEntry")/' + obj.aData[7];
-                        var editLink = '<a href="' + editUrl + '" data-function="EditSimulationMatrixEntry" class="edit-link" target="' + obj.aData[7] + '" data-id="' + obj.aData[1] + '"></a>';
-                        var deleteLink = '<a href="javascript:void(0);" data-function="DeleteSimulationMatrixEntry" class="delete-link" data-id="' + obj.aData[7] + '"></a>';
+                        var editUrl = '@Url.Action("EditSimulationMatrixEntry")/' + obj.aData[8];
+                        var editLink = '<a href="' + editUrl + '" data-function="EditSimulationMatrixEntry" class="edit-link" target="' + obj.aData[8] + '" data-id="' + obj.aData[1] + '"></a>';
+                        var deleteLink = '<a href="javascript:void(0);" data-function="DeleteSimulationMatrixEntry" class="delete-link" data-id="' + obj.aData[8] + '"></a>';
                         return editLink + deleteLink;
                     }
                 }],
@@ -255,7 +260,7 @@
                 });
             });
         }
-        
+
         function RefreshSimulationContextTable() {
             $('#SimulationContextTablePlaceholder').loading('Retrieving simulation context overview.');
             $.ajax({
@@ -270,7 +275,7 @@
                 }
             });
         }
-        
+
         function InitializeSimulationContextDialog() {
             $('#AddSimulationContextDialog').dialog({
                 title: 'Add new simulation context',
@@ -281,7 +286,7 @@
                 height: 225
             });
         }
-        
+
         function InitializeButtons() {
             $(this).on('click', 'a[data-function=AddSimulationContext]', null, function () {
                 $('#AddSimluationContextPlaceholder').loading('Preparing new simulation context.');
@@ -338,7 +343,7 @@
     <br />
     <br />
     <div style="text-align: right">
-        @Html.ActionLink("Create", "CreateSimulationSet", "AdminSimulation", null, new { target = "_blank", @class="button" })
+        @Html.ActionLink("Create", "CreateSimulationSet", "AdminSimulation", null, new { target = "_blank", @class = "button" })
     </div>
 </fieldset>
 
@@ -357,7 +362,7 @@
     <br />
     <br />
     <div style="text-align: right">
-        @Html.ActionLink("Create", "CreateSimulationDepartment", "AdminSimulation", null, new { target = "_blank", @class="button" })
+        @Html.ActionLink("Create", "CreateSimulationDepartment", "AdminSimulation", null, new { target = "_blank", @class = "button" })
     </div>
 </fieldset>
 
@@ -376,7 +381,7 @@
     <br />
     <br />
     <div style="text-align: right">
-        @Html.ActionLink("Create", "CreateSimulationLevel", "AdminSimulation", null, new { target = "_blank", @class="button" })
+        @Html.ActionLink("Create", "CreateSimulationLevel", "AdminSimulation", null, new { target = "_blank", @class = "button" })
     </div>
 </fieldset>
 
@@ -395,13 +400,13 @@
     <br />
     <br />
     <div style="text-align: right">
-        @Html.ActionLink("Create", "CreateSimulation", "AdminSimulation", null, new { target = "_blank", @class="button" })
+        @Html.ActionLink("Create", "CreateSimulation", "AdminSimulation", null, new { target = "_blank", @class = "button" })
     </div>
 </fieldset>
 
 <fieldset id="SimulationContexts">
     <legend>Context</legend>
-    
+
     <div id="SimulationContextTablePlaceholder"></div>
 </fieldset>
 
@@ -418,6 +423,7 @@
                 <th style="width: 10%">Preparation time</th>
                 <th style="width: 10%">Execution time</th>
                 <th style="width: 15%">Languages</th>
+                <th style="width: 10%">QCandidate Layout</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -426,7 +432,7 @@
     <br />
     <br />
     <div style="text-align: right">
-        @Html.ActionLink("Create", "CreateSimulationMatrixEntry", "AdminSimulation", null, new { target = "_blank", @class="button" })
+        @Html.ActionLink("Create", "CreateSimulationMatrixEntry", "AdminSimulation", null, new { target = "_blank", @class = "button" })
     </div>
 </fieldset>
 
