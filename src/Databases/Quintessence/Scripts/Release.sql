@@ -253,3 +253,34 @@ ALTER TABLE [dbo].[SimulationCombination] WITH NOCHECK
 exec sp_refreshview [dbo.SimulationCombinationView];
 
 exec sp_refreshview [dbo.SimulationMatrixEntryView];
+
+
+GO
+PRINT N'Creating [dbo].[SimulationCombinationMemos]...';
+
+
+GO
+CREATE TABLE [dbo].[SimulationCombinationMemos] (
+    [Id]                      UNIQUEIDENTIFIER NOT NULL,
+    [SimulationCombinationId] UNIQUEIDENTIFIER NOT NULL,
+    [Position]                INT              NOT NULL,
+    CONSTRAINT [PK_SimulationCombinationMemos] PRIMARY KEY NONCLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[SimulationCombinationMemos].[IX_SimulationCombination_Position]...';
+
+
+GO
+CREATE UNIQUE CLUSTERED INDEX [IX_SimulationCombinationMemos_SimulationCombinationId_Position]
+    ON [dbo].[SimulationCombinationMemos]([SimulationCombinationId] ASC, [Position] ASC);
+
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombinationMemos_Simulation]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombinationMemos] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombinationMemos_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
+
