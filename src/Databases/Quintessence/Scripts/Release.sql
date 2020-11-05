@@ -273,7 +273,7 @@ PRINT N'Creating [dbo].[SimulationCombinationMemos].[IX_SimulationCombination_Po
 
 
 GO
-CREATE CLUSTERED INDEX [IX_SimulationCombinationMemos_SimulationCombinationId_Position]
+CREATE UNIQUE CLUSTERED INDEX [IX_SimulationCombinationMemos_SimulationCombinationId_Position]
     ON [dbo].[SimulationCombinationMemos]([SimulationCombinationId] ASC, [Position] ASC);
 
 GO
