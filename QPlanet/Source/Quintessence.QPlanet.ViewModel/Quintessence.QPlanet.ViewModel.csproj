@@ -385,7 +385,6 @@
     <Compile Include="Sim\EditSimulationTranslationModel.cs" />
     <Compile Include="Base\Enumeration.cs" />
     <Compile Include="Sim\QCandidateLayout.cs" />
-    <Compile Include="Sim\QCandidateSelectListItemModel.cs" />
     <Compile Include="Sim\SimulationLanguageModel.cs" />
     <Compile Include="Sim\SimulationMatrixEntryModel.cs" />
     <Compile Include="Sim\SimulationSetSelectListItemModel.cs" />
