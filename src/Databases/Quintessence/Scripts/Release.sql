@@ -256,31 +256,31 @@ exec sp_refreshview [dbo.SimulationMatrixEntryView];
 
 
 GO
-PRINT N'Creating [dbo].[SimulationCombinationMemo]...';
+PRINT N'Creating [dbo].[SimulationCombinationMemos]...';
 
 
 GO
-CREATE TABLE [dbo].[SimulationCombinationMemo] (
+CREATE TABLE [dbo].[SimulationCombinationMemos] (
     [Id]                      UNIQUEIDENTIFIER NOT NULL,
     [SimulationCombinationId] UNIQUEIDENTIFIER NOT NULL,
     [Position]                INT              NOT NULL,
-    CONSTRAINT [PK_SimulationCombinationMemo] PRIMARY KEY NONCLUSTERED ([Id] ASC)
+    CONSTRAINT [PK_SimulationCombinationMemos] PRIMARY KEY NONCLUSTERED ([Id] ASC)
 );
 
 
 GO
-PRINT N'Creating [dbo].[SimulationCombinationMemo].[IX_SimulationCombination_Position]...';
+PRINT N'Creating [dbo].[SimulationCombinationMemos].[IX_SimulationCombination_Position]...';
 
 
 GO
-CREATE CLUSTERED INDEX [IX_SimulationCombination_Position]
-    ON [dbo].[SimulationCombinationMemo]([SimulationCombinationId] ASC, [Position] ASC);
+CREATE CLUSTERED INDEX [IX_SimulationCombinationMemos_SimulationCombinationId_Position]
+    ON [dbo].[SimulationCombinationMemos]([SimulationCombinationId] ASC, [Position] ASC);
 
 GO
 PRINT N'Creating [dbo].[FK_SimulationCombinationMemos_Simulation]...';
 
 
 GO
-ALTER TABLE [dbo].[SimulationCombinationMemo] WITH NOCHECK
-    ADD CONSTRAINT [FK_SimulationCombinationMemos_Simulation] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
+ALTER TABLE [dbo].[SimulationCombinationMemos] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombinationMemos_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
 
