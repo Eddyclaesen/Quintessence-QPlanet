@@ -291,10 +291,10 @@ PRINT N'Creating [dbo].[SimulationCombinationMemoTranslations]...';
 GO
 CREATE TABLE [dbo].[SimulationCombinationMemoTranslations] (
     [Id]                          UNIQUEIDENTIFIER NOT NULL,
-    [SimulationCombinationMemoId] UNIQUEIDENTIFIER NULL,
-    [LanguageId]                  INT              NULL,
-    [Title]                       NVARCHAR (255)   NULL,
-    CONSTRAINT [PK_SimulationCombinationMemoTranslations] PRIMARY KEY NONCLUSTERED ([Id] ASC)
+    [SimulationCombinationMemoId] UNIQUEIDENTIFIER NOT NULL,
+    [LanguageId]                  INT              NOT NULL,
+    [Title]                       NVARCHAR (255)   NOT NULL,
+    CONSTRAINT [PK_SimulationCombinationMemoTranslations] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
 
