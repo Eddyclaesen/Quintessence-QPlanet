@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace Quintessence.QCandidate.Models.ProgramComponents
+namespace Quintessence.QCandidate.Models.PdfProgramComponents
 {
-    public class ProgramComponent
+    public class PdfProgramComponent
     {
         private DateTime _start;
 
-        public ProgramComponent(string title, DateTime start, bool pdfExists, string pdfUrl)
+        public PdfProgramComponent(string title, DateTime start, bool pdfExists, string pdfUrl)
         {
             Title = title;
             _start = start;

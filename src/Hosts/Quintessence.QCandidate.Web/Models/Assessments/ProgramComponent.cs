@@ -1,10 +1,12 @@
 ﻿using System;
+using Kenze.Domain;
+using Quintessence.QCandidate.Core.Domain;
 
 namespace Quintessence.QCandidate.Models.Assessments
 {
     public class ProgramComponent
     {
-        public ProgramComponent(Guid id, string title, string location, bool showDetailsLink, string assessors, DateTime start, DateTime end)
+        public ProgramComponent(Guid id, string title, string location, bool showDetailsLink, string assessors, DateTime start, DateTime end, int qCandidateLayout)
         {
             Id = id;
             Title = title;
@@ -13,6 +15,7 @@ namespace Quintessence.QCandidate.Models.Assessments
             Assessors = assessors;
             Start = start;
             End = end;
+            QCandidateLayout = Enumeration.FromId<QCandidateLayout>(qCandidateLayout);
         }
 
         public Guid Id { get; }
@@ -22,5 +25,6 @@ namespace Quintessence.QCandidate.Models.Assessments
         public string Assessors { get; }
         public DateTime Start { get; }
         public DateTime End { get; }
+        public QCandidateLayout QCandidateLayout { get; }
     }
 }

@@ -7,7 +7,6 @@ using Quintessence.QCandidate.Core.Queries;
 using System.Threading.Tasks;
 using Quintessence.QCandidate.Contracts.Responses;
 using Quintessence.QCandidate.Models.Assessments;
-using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 
 namespace Quintessence.QCandidate.Controllers
@@ -25,8 +24,8 @@ namespace Quintessence.QCandidate.Controllers
         {
             var candidateIdClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId");
             var candidateId = new Guid(candidateIdClaim.Value);
-
             var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateAndLanguageQuery(candidateId, DateTime.Now, CultureInfo.CurrentCulture.ToString()));
+
             Assessment assessment = null;
             if (assessmentDto != null)
             {
@@ -42,7 +41,6 @@ namespace Quintessence.QCandidate.Controllers
         private async Task<List<ProgramComponent>> MapProgramComponents(AssessmentDto assessment)
         {
             var result = new List<ProgramComponent>();
-            var language = HttpContext.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name;
 
             //DayProgram is null when no day program was found for that day
             if (assessment.DayProgram?.ProgramComponents != null)
@@ -51,16 +49,10 @@ namespace Quintessence.QCandidate.Controllers
                 {
                     var title = programComponent.Description ?? programComponent.Name;
                     var location = programComponent.Room.Name;
-                    var showDetailsLink = false;
-                    
-                    if (programComponent.SimulationCombinationId.HasValue && programComponent.Start.Date == DateTime.Now.Date)
-                    {
-                        showDetailsLink = await _mediator.Send(new HasSimulationCombinationPdfByIdAndLanguageQuery(programComponent.SimulationCombinationId.Value, language));
-                    }
                        
                     var assessors = GetAssessorsString(programComponent.LeadAssessor, programComponent.CoAssessor);
 
-                    var programComponentModel = new ProgramComponent(programComponent.Id, title, location, showDetailsLink, assessors, programComponent.Start, programComponent.End);
+                    var programComponentModel = new ProgramComponent(programComponent.Id, title, location, false, assessors, programComponent.Start, programComponent.End, programComponent.QCandidateLayoutId);
                     result.Add(programComponentModel);
                 }
             }

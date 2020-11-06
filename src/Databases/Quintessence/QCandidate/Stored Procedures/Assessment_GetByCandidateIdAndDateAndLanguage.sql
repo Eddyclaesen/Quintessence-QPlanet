@@ -55,7 +55,8 @@ SELECT
 			--CoAssessor
 				uCoAssess.Id,
 				uCoAssess.FirstName,
-				uCoAssess.LastName
+				uCoAssess.LastName,
+				sc.QCandidateLayoutId
 				--sc.Preparation,
 				--sc.Execution		
 FROM
