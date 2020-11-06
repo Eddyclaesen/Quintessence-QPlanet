@@ -1,4 +1,6 @@
-﻿@using Quintessence.QCandidate.Core.Domain
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Quintessence.QCandidate.Core.Domain
+@inject IViewLocalizer Localizer
 @model Quintessence.QCandidate.Models.Assessments.ProgramComponent
 
 
@@ -6,28 +8,31 @@
     <h3>@Html.DisplayFor(m => Model.Title)</h3>
     <p>
         @Html.DisplayFor(m => Model.Location)
-    @{
-        if (!string.IsNullOrEmpty(Model.Assessors))
-        {
-            @Html.Raw("- ") @Html.DisplayFor(m => Model.Assessors)
+        @{
+            if (!string.IsNullOrEmpty(Model.Assessors))
+            {
+                @Html.Raw("- ") @Html.DisplayFor(m => Model.Assessors)
+            }
         }
+
+
+    </p>
+    @switch (Model.QCandidateLayout.Name)
+    {
+        case nameof(QCandidateLayout.Pdf):
+            if (Model.ShowDetailsLink)
+            {
+                <a href="@Url.Action(nameof(Quintessence.QCandidate.Controllers.PdfProgramComponentsController.Details), "PdfProgramComponents", new { id = Model.Id })">@Localizer["PdfDocument"]</a>
+            }
+            break;
+        case nameof(QCandidateLayout.Memo):
+                <a href="@Url.Action(nameof(Quintessence.QCandidate.Controllers.MemoProgramComponentsController.Details), "MemoProgramComponents", new { id = Model.Id })">@Localizer["Memo"]</a>
+            break;
+
     }
 
 
-</p>
-@switch (Model.QCandidateLayout.Name)
-{
-    case nameof(QCandidateLayout.Pdf) : <a href="@Url.Action(nameof(Quintessence.QCandidate.Controllers.PdfProgramComponentsController.Details), "PdfProgramComponents", new { id = Model.Id })">PDF Documentation</a>
-        break;
-    case nameof(QCandidateLayout.Memo): <a href="@Url.Action(nameof(Quintessence.QCandidate.Controllers.MemoProgramComponentsController.Details), "MemoProgramComponents", new { id = Model.Id })">Memo Documentation</a>
-        break;
-    case nameof(QCandidateLayout.Show): <p>Placeholder text when QCandidateLayout = Show</p>
-        break;
-
-}
-
-
-</ li >
+    </ li >
 
 
 

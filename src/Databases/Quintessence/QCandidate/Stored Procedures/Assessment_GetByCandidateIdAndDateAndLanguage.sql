@@ -45,6 +45,7 @@ SELECT
 					END AS [Name],
 			prc.Description,
 			prc.SimulationCombinationId,
+			CASE WHEN (sc.QCandidateLayoutId IS NULL) THEN 1 ELSE sc.QCandidateLayoutId END AS QCandidateLayoutId,
 			--Room
 				ar.Id,
 				ar.[Name],
@@ -55,8 +56,7 @@ SELECT
 			--CoAssessor
 				uCoAssess.Id,
 				uCoAssess.FirstName,
-				uCoAssess.LastName,
-				sc.QCandidateLayoutId
+				uCoAssess.LastName
 				--sc.Preparation,
 				--sc.Execution		
 FROM

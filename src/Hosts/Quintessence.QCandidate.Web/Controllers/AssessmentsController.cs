@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Kenze.Domain;
+using MediatR;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+using Quintessence.QCandidate.Contracts.Responses;
+using Quintessence.QCandidate.Core.Domain;
+using Quintessence.QCandidate.Core.Queries;
+using Quintessence.QCandidate.Models.Assessments;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using MediatR;
-using Quintessence.QCandidate.Core.Queries;
-using System.Threading.Tasks;
-using Quintessence.QCandidate.Contracts.Responses;
-using Quintessence.QCandidate.Models.Assessments;
 using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Quintessence.QCandidate.Controllers
 {
@@ -41,19 +44,32 @@ namespace Quintessence.QCandidate.Controllers
         private async Task<List<ProgramComponent>> MapProgramComponents(AssessmentDto assessment)
         {
             var result = new List<ProgramComponent>();
+            var language = HttpContext.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name;
 
             //DayProgram is null when no day program was found for that day
             if (assessment.DayProgram?.ProgramComponents != null)
             {
                 foreach(var programComponent in assessment.DayProgram.ProgramComponents)
                 {
-                    var title = programComponent.Description ?? programComponent.Name;
-                    var location = programComponent.Room.Name;
-                       
-                    var assessors = GetAssessorsString(programComponent.LeadAssessor, programComponent.CoAssessor);
+                    var showComponent = Enumeration.FromId<QCandidateLayout>(programComponent.QCandidateLayoutId);
 
-                    var programComponentModel = new ProgramComponent(programComponent.Id, title, location, false, assessors, programComponent.Start, programComponent.End, programComponent.QCandidateLayoutId);
-                    result.Add(programComponentModel);
+                    if (showComponent.Name != nameof(QCandidateLayout.Hide))
+                    {
+                        var title = programComponent.Description ?? programComponent.Name;
+                        var location = programComponent.Room.Name;
+
+                        var assessors = GetAssessorsString(programComponent.LeadAssessor, programComponent.CoAssessor);
+                        var showDetailsLink = false;
+
+                        if (programComponent.SimulationCombinationId.HasValue && programComponent.Start.Date == DateTime.Now.Date)
+                        {
+                            showDetailsLink = await _mediator.Send(new HasSimulationCombinationPdfByIdAndLanguageQuery(programComponent.SimulationCombinationId.Value, language));
+                        }
+
+                        var programComponentModel = new ProgramComponent(programComponent.Id, title, location, showDetailsLink, assessors, programComponent.Start, programComponent.End, programComponent.QCandidateLayoutId);
+                        result.Add(programComponentModel);
+
+                    }
                 }
             }
 
