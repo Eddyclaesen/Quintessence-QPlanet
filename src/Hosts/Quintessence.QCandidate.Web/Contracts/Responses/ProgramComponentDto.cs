@@ -14,7 +14,7 @@ namespace Quintessence.QCandidate.Contracts.Responses
         public UserDto LeadAssessor { get; set; }
         public UserDto CoAssessor { get; set; }
         public Guid? SimulationCombinationId { get; set; }
-        public int? QCandidateLayoutId { get; set; }
+        public int QCandidateLayoutId { get; set; }
 
     }
 }

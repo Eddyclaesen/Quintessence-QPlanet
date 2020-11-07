@@ -146,7 +146,7 @@ IF EXISTS (SELECT TOP 1 1
                [SimulationId],
                [Preparation],
                [Execution],
-               1,
+               0,
                [Audit_CreatedBy],
                [Audit_CreatedOn],
                [Audit_ModifiedBy],
@@ -315,17 +315,10 @@ PRINT N'Creating [dbo].[FK_SimulationCombinationMemoTranslations_Language]...';
 GO
 ALTER TABLE [dbo].[SimulationCombinationMemoTranslations] WITH NOCHECK
     ADD CONSTRAINT [FK_SimulationCombinationMemoTranslations_Language] FOREIGN KEY ([LanguageId]) REFERENCES [dbo].[Language] ([Id]);
-
-
-
-USE [Quintessence_QPlanet]
 GO
-/****** Object:  StoredProcedure [QCandidate].[Assessment_GetByCandidateIdAndDateAndLanguage]    Script Date: 05/11/2020 13:30:46 ******/
-SET ANSI_NULLS ON
+
 GO
-SET QUOTED_IDENTIFIER ON
-GO
-ALTER PROCEDURE [QCandidate].[Assessment_GetByCandidateIdAndDateAndLanguage]
+CREATE PROCEDURE [QCandidate].[Assessment_GetByCandidateIdAndDateAndLanguage]
 	@candidateId UNIQUEIDENTIFIER,
 	@date DATE,
 	@language char(2)
@@ -372,7 +365,7 @@ SELECT
 					END AS [Name],
 			prc.Description,
 			prc.SimulationCombinationId,
-			CASE WHEN (sc.QCandidateLayoutId IS NULL) THEN 1 ELSE sc.QCandidateLayoutId END AS QCandidateLayoutId,
+			ISNULL(sc.QCandidateLayoutId, 0) AS QCandidateLayoutId,
 			--Room
 				ar.Id,
 				ar.[Name],
@@ -411,8 +404,6 @@ FROM
 WHERE
 	c.Id = @candidateId
 	AND CONVERT(DATE, prc.Start) = @date
-	--AND prc.Description NOT LIKE '%Input scoring%'
-	--AND CONVERT(VARCHAR, prc.Description) NOT IN('Preparation consultant','Assessor debriefing','Proma','Assessor debriefing GGI')
 	AND ISNULL(prc.Description,'') NOT LIKE '%Input scoring%'
 	AND CONVERT(VARCHAR, ISNULL(prc.Description,'')) NOT IN ('Preparation consultant','Assessor debriefing','Proma','Assessor debriefing GGI')
 	AND ISNULL(s.LanguageId, @LanguageId) = @LanguageId
@@ -420,4 +411,3 @@ WHERE
 ORDER BY
 	prc.Start,
 	prc.[End]
-

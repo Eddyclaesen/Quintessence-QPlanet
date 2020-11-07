@@ -56,16 +56,11 @@ namespace Quintessence.QCandidate.Controllers
                     var location = programComponent.Room.Name;
 
                     var assessors = GetAssessorsString(programComponent.LeadAssessor, programComponent.CoAssessor);
-                    QCandidateLayout qCandidateLayout = null;
+                    QCandidateLayout qCandidateLayout = Enumeration.FromId<QCandidateLayout>(programComponent.QCandidateLayoutId);
 
-                    if (programComponent.QCandidateLayoutId.HasValue)
-                    {
-                        qCandidateLayout = Enumeration.FromId<QCandidateLayout>(programComponent.QCandidateLayoutId.Value);
-                    }
+                    var showDetailsLink = qCandidateLayout != QCandidateLayout.None && programComponent.Start.Date == DateTime.Now;
 
-                    var showDetailsLink = (qCandidateLayout != null) || (qCandidateLayout != QCandidateLayout.Hide);
-
-                    if (showDetailsLink && qCandidateLayout == QCandidateLayout.Pdf && programComponent.Start.Date == DateTime.Now.Date)
+                    if (qCandidateLayout == QCandidateLayout.Pdf)
                     {
                         showDetailsLink = await _mediator.Send(new HasSimulationCombinationPdfByIdAndLanguageQuery(programComponent.SimulationCombinationId.Value, language));
                     }

@@ -4,35 +4,33 @@
 @model Quintessence.QCandidate.Models.Assessments.ProgramComponent
 
 
-<li class="program-component" data-date="@Model.Start.ToString("HH:mm") - @Model.End.ToString("HH:mm")">
-    <h3>@Html.DisplayFor(m => Model.Title)</h3>
-    <p>
-        @Html.DisplayFor(m => Model.Location)
-        @{
-            if (!string.IsNullOrEmpty(Model.Assessors))
+    <li class="program-component" data-date="@Model.Start.ToString("HH:mm") - @Model.End.ToString("HH:mm")">
+        <h3>@Html.DisplayFor(m => Model.Title)</h3>
+        <p>
+            @Html.DisplayFor(m => Model.Location)
+            @{
+                if (!string.IsNullOrEmpty(Model.Assessors))
+                {
+                    @Html.Raw("- ") @Html.DisplayFor(m => Model.Assessors)
+                }
+            }
+
+
+        </p>
+
+        @if (Model.ShowDetailsLink)
+        {
+            if (Model.QCandidateLayout == QCandidateLayout.Pdf)
+            { 
+                @Html.ActionLink(Localizer.GetString("PdfDocument"), nameof(Quintessence.QCandidate.Controllers.PdfProgramComponentsController.Details), "PdfProgramComponents", new { Id = Model.Id})
+            }
+            if (Model.QCandidateLayout == QCandidateLayout.Memo)
             {
-                @Html.Raw("- ") @Html.DisplayFor(m => Model.Assessors)
+                @Html.ActionLink(Localizer.GetString("Memo"), nameof(Quintessence.QCandidate.Controllers.MemoProgramComponentsController.Details), "MemoProgramComponents", new { id = Model.Id })
             }
         }
 
-
-    </p>
-    @switch (Model.QCandidateLayout.Name)
-    {
-        case nameof(QCandidateLayout.Pdf):
-            if (Model.ShowDetailsLink)
-            {
-                <a href="@Url.Action(nameof(Quintessence.QCandidate.Controllers.PdfProgramComponentsController.Details), "PdfProgramComponents", new { id = Model.Id })">@Localizer["PdfDocument"]</a>
-            }
-            break;
-        case nameof(QCandidateLayout.Memo):
-                <a href="@Url.Action(nameof(Quintessence.QCandidate.Controllers.MemoProgramComponentsController.Details), "MemoProgramComponents", new { id = Model.Id })">@Localizer["Memo"]</a>
-            break;
-
-    }
-
-
-    </ li >
+        </ li >
 
 
 
