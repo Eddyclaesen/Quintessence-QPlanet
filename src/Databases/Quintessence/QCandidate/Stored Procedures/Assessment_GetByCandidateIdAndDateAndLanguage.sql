@@ -45,7 +45,7 @@ SELECT
 					END AS [Name],
 			prc.Description,
 			prc.SimulationCombinationId,
-			CASE WHEN (sc.QCandidateLayoutId IS NULL) THEN 1 ELSE sc.QCandidateLayoutId END AS QCandidateLayoutId,
+			sc.QCandidateLayoutId AS QCandidateLayoutId,
 			--Room
 				ar.Id,
 				ar.[Name],

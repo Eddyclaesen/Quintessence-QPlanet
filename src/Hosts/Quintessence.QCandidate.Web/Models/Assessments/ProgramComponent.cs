@@ -6,7 +6,7 @@ namespace Quintessence.QCandidate.Models.Assessments
 {
     public class ProgramComponent
     {
-        public ProgramComponent(Guid id, string title, string location, bool showDetailsLink, string assessors, DateTime start, DateTime end, int qCandidateLayout)
+        public ProgramComponent(Guid id, string title, string location, bool showDetailsLink, string assessors, DateTime start, DateTime end, QCandidateLayout qCandidateLayout)
         {
             Id = id;
             Title = title;
@@ -15,7 +15,7 @@ namespace Quintessence.QCandidate.Models.Assessments
             Assessors = assessors;
             Start = start;
             End = end;
-            QCandidateLayout = Enumeration.FromId<QCandidateLayout>(qCandidateLayout);
+            QCandidateLayout = qCandidateLayout;
         }
 
         public Guid Id { get; }

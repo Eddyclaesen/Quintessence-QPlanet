@@ -49,27 +49,31 @@ namespace Quintessence.QCandidate.Controllers
             //DayProgram is null when no day program was found for that day
             if (assessment.DayProgram?.ProgramComponents != null)
             {
-                foreach(var programComponent in assessment.DayProgram.ProgramComponents)
+                foreach (var programComponent in assessment.DayProgram.ProgramComponents)
                 {
-                    var showComponent = Enumeration.FromId<QCandidateLayout>(programComponent.QCandidateLayoutId);
 
-                    if (showComponent.Name != nameof(QCandidateLayout.Hide))
+                    var title = programComponent.Description ?? programComponent.Name;
+                    var location = programComponent.Room.Name;
+
+                    var assessors = GetAssessorsString(programComponent.LeadAssessor, programComponent.CoAssessor);
+                    QCandidateLayout qCandidateLayout = null;
+
+                    if (programComponent.QCandidateLayoutId.HasValue)
                     {
-                        var title = programComponent.Description ?? programComponent.Name;
-                        var location = programComponent.Room.Name;
-
-                        var assessors = GetAssessorsString(programComponent.LeadAssessor, programComponent.CoAssessor);
-                        var showDetailsLink = false;
-
-                        if (programComponent.SimulationCombinationId.HasValue && programComponent.Start.Date == DateTime.Now.Date)
-                        {
-                            showDetailsLink = await _mediator.Send(new HasSimulationCombinationPdfByIdAndLanguageQuery(programComponent.SimulationCombinationId.Value, language));
-                        }
-
-                        var programComponentModel = new ProgramComponent(programComponent.Id, title, location, showDetailsLink, assessors, programComponent.Start, programComponent.End, programComponent.QCandidateLayoutId);
-                        result.Add(programComponentModel);
-
+                        qCandidateLayout = Enumeration.FromId<QCandidateLayout>(programComponent.QCandidateLayoutId.Value);
                     }
+
+                    var showDetailsLink = (qCandidateLayout != null) || (qCandidateLayout != QCandidateLayout.Hide);
+
+                    if (showDetailsLink && qCandidateLayout == QCandidateLayout.Pdf && programComponent.Start.Date == DateTime.Now.Date)
+                    {
+                        showDetailsLink = await _mediator.Send(new HasSimulationCombinationPdfByIdAndLanguageQuery(programComponent.SimulationCombinationId.Value, language));
+                    }
+
+                    var programComponentModel = new ProgramComponent(programComponent.Id, title, location, showDetailsLink, assessors, programComponent.Start, programComponent.End, qCandidateLayout);
+                    result.Add(programComponentModel);
+
+
                 }
             }
 
