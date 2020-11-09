@@ -14,6 +14,6 @@
 )
 GO
 
-CREATE UNIQUE CLUSTERED INDEX IX_CalendarDays_MemoProgramComponentId ON [QCandidate].[CalendarDays] ([MemoProgramComponentId]);
+CREATE CLUSTERED INDEX IX_CalendarDays_MemoProgramComponentId ON [QCandidate].[CalendarDays] ([MemoProgramComponentId]);
 
 GO

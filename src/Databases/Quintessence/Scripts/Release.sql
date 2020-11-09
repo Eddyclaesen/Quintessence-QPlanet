@@ -448,7 +448,7 @@ CREATE TABLE [QCandidate].[CalendarDays]
 )
 GO
 
-CREATE UNIQUE CLUSTERED INDEX IX_CalendarDays_MemoProgramComponentId ON [QCandidate].[CalendarDays] ([MemoProgramComponentId]);
+CREATE CLUSTERED INDEX IX_CalendarDays_MemoProgramComponentId ON [QCandidate].[CalendarDays] ([MemoProgramComponentId]);
 
 GO
 
@@ -471,7 +471,7 @@ CREATE TABLE [QCandidate].[Memos]
 
 GO
 
-CREATE UNIQUE CLUSTERED INDEX IX_Memos_MemoProgramComponentId ON [QCandidate].[Memos] ([MemoProgramComponentId]);
+CREATE CLUSTERED INDEX IX_Memos_MemoProgramComponentId ON [QCandidate].[Memos] ([MemoProgramComponentId]);
 
 GO
 

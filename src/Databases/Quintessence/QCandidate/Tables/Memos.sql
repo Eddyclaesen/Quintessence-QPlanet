@@ -16,6 +16,6 @@
 
 GO
 
-CREATE UNIQUE CLUSTERED INDEX IX_Memos_MemoProgramComponentId ON [QCandidate].[Memos] ([MemoProgramComponentId]);
+CREATE CLUSTERED INDEX IX_Memos_MemoProgramComponentId ON [QCandidate].[Memos] ([MemoProgramComponentId]);
 
 GO
