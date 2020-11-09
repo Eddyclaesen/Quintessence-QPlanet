@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [QCandidate].[MemoProgramComponents]
 (
-	[Id] INT NOT NULL, 
+	[Id] UNIQUEIDENTIFIER NOT NULL, 
     [UserId] UNIQUEIDENTIFIER NOT NULL, 
     [SimulationCombinationId] UNIQUEIDENTIFIER NOT NULL,
     [CreatedBy]        NVARCHAR (MAX)    NOT NULL,

@@ -414,111 +414,64 @@ ORDER BY
 
 
 
-GO
-PRINT N'Creating [QCandidate].[CalendarDays]...';
 
 
-GO
-CREATE TABLE [QCandidate].[CalendarDays] (
-    [Id]                     UNIQUEIDENTIFIER NOT NULL,
-    [MemoProgramComponentId] UNIQUEIDENTIFIER NOT NULL,
-    [Day]                    DATETIME         NOT NULL,
-    [Note]                   NVARCHAR (MAX)   NOT NULL,
-    [CreatedBy]              NVARCHAR (MAX)   NOT NULL,
-    [CreatedOn]              DATETIME         NOT NULL,
-    [ModifiedBy]             NVARCHAR (MAX)   NULL,
-    [ModifiedOn]             DATETIME         NULL,
-    [ConcurrencyLock]        TIMESTAMP        NOT NULL,
-    CONSTRAINT [PK_CalendarDay] PRIMARY KEY CLUSTERED ([Id] ASC)
-);
-
-
-GO
-PRINT N'Creating [QCandidate].[MemoProgramComponents]...';
-
-
-GO
-CREATE TABLE [QCandidate].[MemoProgramComponents] (
-    [Id]                      INT              NOT NULL,
-    [UserId]                  UNIQUEIDENTIFIER NOT NULL,
+CREATE TABLE [QCandidate].[MemoProgramComponents]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL, 
+    [UserId] UNIQUEIDENTIFIER NOT NULL, 
     [SimulationCombinationId] UNIQUEIDENTIFIER NOT NULL,
-    [CreatedBy]               NVARCHAR (MAX)   NOT NULL,
-    [CreatedOn]               DATETIME         NOT NULL,
-    [ModifiedBy]              NVARCHAR (MAX)   NULL,
-    [ModifiedOn]              DATETIME         NULL,
-    [ConcurrencyLock]         TIMESTAMP        NOT NULL,
-    CONSTRAINT [PK_MemoProgramComponent] PRIMARY KEY CLUSTERED ([Id] ASC)
-);
+    [CreatedBy]        NVARCHAR (MAX)    NOT NULL,
+    [CreatedOn]        DATETIME          NOT NULL,
+    [ModifiedBy]       NVARCHAR (MAX)   NULL,
+    [ModifiedOn]       DATETIME         NULL,
+    [ConcurrencyLock]        TIMESTAMP  NOT NULL,
+    CONSTRAINT [PK_MemoProgramComponent] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_MemoProgramComponent_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id])
+)
 
+
+
+CREATE TABLE [QCandidate].[CalendarDays]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL, 
+    [MemoProgramComponentId] UNIQUEIDENTIFIER NOT NULL, 
+    [Day] DATETIME NOT NULL, 
+    [Note] NVARCHAR(MAX) NOT NULL,
+    [CreatedBy]        NVARCHAR (MAX)    NOT NULL,
+    [CreatedOn]        DATETIME          NOT NULL,
+    [ModifiedBy]       NVARCHAR (MAX)   NULL,
+    [ModifiedOn]       DATETIME         NULL,
+    [ConcurrencyLock]        TIMESTAMP  NOT NULL,
+    CONSTRAINT [PK_CalendarDay] PRIMARY KEY NONCLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_CalendarDay_MemoProgramComponent] FOREIGN KEY ([MemoProgramComponentId]) REFERENCES [QCandidate].[MemoProgramComponents] ([Id])
+)
+GO
+
+CREATE UNIQUE CLUSTERED INDEX IX_CalendarDays_MemoProgramComponentId ON [QCandidate].[CalendarDays] ([MemoProgramComponentId]);
 
 GO
-PRINT N'Creating [QCandidate].[Memos]...';
 
 
-GO
-CREATE TABLE [QCandidate].[Memos] (
-    [Id]                     UNIQUEIDENTIFIER NOT NULL,
-    [MemoProgramComponentId] UNIQUEIDENTIFIER NOT NULL,
-    [Position]               INT              NOT NULL,
-    [OriginId]               UNIQUEIDENTIFIER NOT NULL,
-    [CreatedBy]              NVARCHAR (MAX)   NOT NULL,
-    [CreatedOn]              DATETIME         NOT NULL,
-    [ModifiedBy]             NVARCHAR (MAX)   NULL,
-    [ModifiedOn]             DATETIME         NULL,
-    [ConcurrencyLock]        TIMESTAMP        NOT NULL,
-    CONSTRAINT [PK_Memo] PRIMARY KEY CLUSTERED ([Id] ASC)
-);
-
-
-GO
-PRINT N'Creating [QCandidate].[FK_CalendarDay_MemoProgramComponent]...';
-
+CREATE TABLE [QCandidate].[Memos]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL, 
+    [MemoProgramComponentId] UNIQUEIDENTIFIER NOT NULL, 
+    [Position] INT NOT NULL, 
+    [OriginId] UNIQUEIDENTIFIER NOT NULL,
+    [CreatedBy]        NVARCHAR (MAX)    NOT NULL,
+    [CreatedOn]        DATETIME          NOT NULL,
+    [ModifiedBy]       NVARCHAR (MAX)   NULL,
+    [ModifiedOn]       DATETIME         NULL,
+    [ConcurrencyLock]        TIMESTAMP  NOT NULL,
+    CONSTRAINT [PK_Memo] PRIMARY KEY NONCLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Memo_MemoProgramComponent] FOREIGN KEY ([MemoProgramComponentId]) REFERENCES [QCandidate].[MemoProgramComponents] ([Id]),
+    CONSTRAINT [FK_Memo_SimulationCombinationMemo] FOREIGN KEY ([OriginId]) REFERENCES [dbo].[SimulationCombinationMemos] ([Id])
+)
 
 GO
-ALTER TABLE [QCandidate].[CalendarDays] WITH NOCHECK
-    ADD CONSTRAINT [FK_CalendarDay_MemoProgramComponent] FOREIGN KEY ([MemoProgramComponentId]) REFERENCES [dbo].[ProgramComponent] ([Id]);
 
-
-GO
-PRINT N'Creating [QCandidate].[FK_MemoProgramComponent_SimulationCombination]...';
-
+CREATE UNIQUE CLUSTERED INDEX IX_Memos_MemoProgramComponentId ON [QCandidate].[Memos] ([MemoProgramComponentId]);
 
 GO
-ALTER TABLE [QCandidate].[MemoProgramComponents] WITH NOCHECK
-    ADD CONSTRAINT [FK_MemoProgramComponent_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
 
-
-GO
-PRINT N'Creating [QCandidate].[FK_Memo_MemoProgramComponent]...';
-
-
-GO
-ALTER TABLE [QCandidate].[Memos] WITH NOCHECK
-    ADD CONSTRAINT [FK_Memo_MemoProgramComponent] FOREIGN KEY ([MemoProgramComponentId]) REFERENCES [dbo].[ProgramComponent] ([Id]);
-
-
-GO
-PRINT N'Creating [QCandidate].[FK_Memo_SimulationCombinationMemo]...';
-
-
-GO
-ALTER TABLE [QCandidate].[Memos] WITH NOCHECK
-    ADD CONSTRAINT [FK_Memo_SimulationCombinationMemo] FOREIGN KEY ([OriginId]) REFERENCES [dbo].[SimulationCombinationMemos] ([Id]);
-
-
-GO
-PRINT N'Creating [QCandidate].[Assessment_GetByCandidateIdAndDateAndLanguage]...';
-
-GO
-PRINT N'Checking existing data against newly created constraints';
-
-
-
-GO
-ALTER TABLE [QCandidate].[CalendarDays] WITH CHECK CHECK CONSTRAINT [FK_CalendarDay_MemoProgramComponent];
-
-ALTER TABLE [QCandidate].[MemoProgramComponents] WITH CHECK CHECK CONSTRAINT [FK_MemoProgramComponent_SimulationCombination];
-
-ALTER TABLE [QCandidate].[Memos] WITH CHECK CHECK CONSTRAINT [FK_Memo_MemoProgramComponent];
-
-ALTER TABLE [QCandidate].[Memos] WITH CHECK CHECK CONSTRAINT [FK_Memo_SimulationCombinationMemo];

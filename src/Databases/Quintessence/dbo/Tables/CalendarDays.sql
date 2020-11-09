@@ -9,6 +9,11 @@
     [ModifiedBy]       NVARCHAR (MAX)   NULL,
     [ModifiedOn]       DATETIME         NULL,
     [ConcurrencyLock]        TIMESTAMP  NOT NULL,
-    CONSTRAINT [PK_CalendarDay] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_CalendarDay_MemoProgramComponent] FOREIGN KEY ([MemoProgramComponentId]) REFERENCES [dbo].[ProgramComponent] ([Id])
+    CONSTRAINT [PK_CalendarDay] PRIMARY KEY NONCLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_CalendarDay_MemoProgramComponent] FOREIGN KEY ([MemoProgramComponentId]) REFERENCES [QCandidate].[MemoProgramComponents] ([Id])
 )
+GO
+
+CREATE UNIQUE CLUSTERED INDEX IX_CalendarDays_MemoProgramComponentId ON [QCandidate].[CalendarDays] ([MemoProgramComponentId]);
+
+GO
