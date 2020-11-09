@@ -70,6 +70,7 @@
     <Folder Include="QCandidate" />
     <Folder Include="QCandidate\Stored Procedures" />
     <Folder Include="Scripts" />
+    <Folder Include="QCandidate\Tables" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\SimulationCombination2Language.sql" />
@@ -587,6 +588,9 @@
     <Build Include="QCandidate\Stored Procedures\ProgramComponent_GetById.sql" />
     <Build Include="dbo\Tables\SimulationCombinationMemos.sql" />
     <Build Include="dbo\Tables\SimulationCombinationMemoTranslations.sql" />
+    <Build Include="QCandidate\Tables\CalendarDays.sql" />
+    <Build Include="QCandidate\Tables\Memos.sql" />
+    <Build Include="QCandidate\Tables\MemoProgramComponents.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="QCandidate\Stored Procedures\Assessment_GetByCandidateIdAndDateAndLanguage.sql" />
