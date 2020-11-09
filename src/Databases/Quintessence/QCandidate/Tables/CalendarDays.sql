@@ -9,8 +9,8 @@
     [ModifiedBy]       NVARCHAR (MAX)   NULL,
     [ModifiedOn]       DATETIME         NULL,
     [ConcurrencyLock]        TIMESTAMP  NOT NULL,
-    CONSTRAINT [PK_CalendarDay] PRIMARY KEY NONCLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_CalendarDay_MemoProgramComponent] FOREIGN KEY ([MemoProgramComponentId]) REFERENCES [QCandidate].[MemoProgramComponents] ([Id])
+    CONSTRAINT [PK_CalendarDays] PRIMARY KEY NONCLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_CalendarDays_MemoProgramComponents] FOREIGN KEY ([MemoProgramComponentId]) REFERENCES [QCandidate].[MemoProgramComponents] ([Id])
 )
 GO
 

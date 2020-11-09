@@ -8,6 +8,6 @@
     [ModifiedBy]       NVARCHAR (MAX)   NULL,
     [ModifiedOn]       DATETIME         NULL,
     [ConcurrencyLock]        TIMESTAMP  NOT NULL,
-    CONSTRAINT [PK_MemoProgramComponent] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_MemoProgramComponent_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id])
+    CONSTRAINT [PK_MemoProgramComponents] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_MemoProgramComponents_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id])
 )
