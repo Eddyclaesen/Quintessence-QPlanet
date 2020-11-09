@@ -45,6 +45,7 @@ SELECT
 					END AS [Name],
 			prc.Description,
 			prc.SimulationCombinationId,
+			ISNULL(sc.QCandidateLayoutId, 0) AS QCandidateLayoutId,
 			--Room
 				ar.Id,
 				ar.[Name],

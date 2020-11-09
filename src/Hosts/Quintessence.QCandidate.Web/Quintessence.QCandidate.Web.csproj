@@ -87,6 +87,7 @@
   <ItemGroup>
     <Folder Include="Core\Commands\" />
     <Folder Include="Infrastructure\EntityFrameworkCore\" />
+    <Folder Include="Pages\" />
   </ItemGroup>
 
   <ItemGroup>
