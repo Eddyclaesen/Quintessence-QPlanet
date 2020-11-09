@@ -597,7 +597,4 @@
   <ItemGroup>
     <None Include="Scripts\Release.sql" />
   </ItemGroup>
-  <ItemGroup>
-    <RefactorLog Include="Quintessence.refactorlog" />
-  </ItemGroup>
 </Project>
