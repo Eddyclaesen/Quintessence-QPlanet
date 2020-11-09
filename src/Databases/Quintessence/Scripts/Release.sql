@@ -418,9 +418,9 @@ ORDER BY
 
 CREATE TABLE [QCandidate].[MemoProgramComponents]
 (
-	[Id] UNIQUEIDENTIFIER NOT NULL, 
-    [UserId] UNIQUEIDENTIFIER NOT NULL, 
+	[Id] UNIQUEIDENTIFIER NOT NULL,  
     [SimulationCombinationId] UNIQUEIDENTIFIER NOT NULL,
+    [UserId] UNIQUEIDENTIFIER NOT NULL,
     [CreatedBy]        NVARCHAR (MAX)    NOT NULL,
     [CreatedOn]        DATETIME          NOT NULL,
     [ModifiedBy]       NVARCHAR (MAX)   NULL,
