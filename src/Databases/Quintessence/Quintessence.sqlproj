@@ -587,11 +587,17 @@
     <Build Include="QCandidate\Stored Procedures\ProgramComponent_GetById.sql" />
     <Build Include="dbo\Tables\SimulationCombinationMemos.sql" />
     <Build Include="dbo\Tables\SimulationCombinationMemoTranslations.sql" />
+    <Build Include="dbo\Tables\Memos.sql" />
+    <Build Include="dbo\Tables\CalendarDays.sql" />
+    <Build Include="dbo\Tables\MemoProgramComponents.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="QCandidate\Stored Procedures\Assessment_GetByCandidateIdAndDateAndLanguage.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Release.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Quintessence.refactorlog" />
   </ItemGroup>
 </Project>
