@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Quintessence.QCandidate.Core.Commands;
 using Quintessence.QCandidate.Core.Domain;
 using Quintessence.QCandidate.Infrastructure.EntityFrameworkCore.Commands;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Quintessence.QCandidate.Logic.Commands
 {
@@ -20,7 +19,7 @@ namespace Quintessence.QCandidate.Logic.Commands
         public async Task<MemoProgramComponent> Handle(CreateMemoProgramComponentCommand request, CancellationToken cancellationToken)
         {
             var memoProgramComponent = new MemoProgramComponent(request.SimulationCombinationId, request.UserId, request.Memos, request.CalendarDays);
-
+            
             _repository.Add(memoProgramComponent);
 
             await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
