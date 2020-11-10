@@ -20,6 +20,7 @@ namespace Quintessence.QCandidate.Infrastructure.EntityFrameworkCore.Commands
         public MemoProgramComponent Add(MemoProgramComponent memoProgramComponent)
         {
             _unitOfWork.Set<MemoProgramComponent>().Add(memoProgramComponent);
+            _unitOfWork.SaveChanges();
 
             return memoProgramComponent;
         }

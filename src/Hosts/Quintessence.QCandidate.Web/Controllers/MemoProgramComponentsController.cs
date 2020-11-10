@@ -32,7 +32,7 @@ namespace Quintessence.QCandidate.Controllers
             var memos = new List<Memo>();
             var calendarDays = new List<CalendarDay>();
 
-            var creatememo = new CreateMemoProgramComponentCommand(new Guid("AAE0F86A-174E-4B31-81F5-B4A91DD55C77"), new Guid("7E6A3147-E23F-487D-AD4E-8608C199EF07"), memos, calendarDays);
+            var creatememo = new CreateMemoProgramComponentCommand(new Guid("68CF2F62-BC82-408F-A752-E1FD901CB52B"), new Guid("7E6A3147-E23F-487D-AD4E-8608C199EF07"), memos, calendarDays);
 
             await _mediator.Send(creatememo);
 

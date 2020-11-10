@@ -12,13 +12,17 @@ namespace Quintessence.QCandidate.Infrastructure.EntityFrameworkCore.Commands
             base.Configure(builder);
 
             builder.ToTable("MemoProgramComponents");
-
+            
             builder.Property(entity => entity.SimulationCombinationId)
                 .IsRequired();
+
+            builder.Property(entity => entity.UserId).IsRequired();
 
             builder.HasMany(entity => entity.Memos);
 
             builder.HasMany(entity => entity.CalendarDays);
+
+
         }
     }
 }
