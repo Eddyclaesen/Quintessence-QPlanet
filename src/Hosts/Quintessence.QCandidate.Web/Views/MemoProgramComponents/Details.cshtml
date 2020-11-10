@@ -1,4 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using System.IO
+
+@model Quintessence.QCandidate.Models.MemoProgramComponents.MemoProgramComponent
 
 @inject IViewLocalizer Localizer
 
@@ -47,23 +50,7 @@
 
         <!-- Functieomschrijving -->
         <div id="functieomschrijving" class="col s12">
-            <h2>Opdracht</h2>
-            <p>Uw taak bestaat erin de memo’s in uw postbak door te nemen en te behandelen. U bepaalt zelf de prioriteit van de verschillende memo’s en de manier waarop u er gevolg aan geeft. </p>
-
-            <p>Na de voorbereidingstijd van 45 minuten heeft u een gesprek met uw leidinggevende, Chris Frateur, Manager Productie, over de informatie in de memo’s uit uw postbak. Volgende zaken worden van u verwacht tijdens het gesprek:</p>
-
-            <ul>
-                <li>Uw mening ten aanzien van de thema’s</li>
-                <li>De beslissingen die u neemt</li>
-                <li>Een eerste concrete planning voor de komende twee weken. U kan hiervoor de agenda in bijlage gebruiken.</li>
-                <li>Gelieve ook rekening te houden met de doelstellingen 20XX zoals geformuleerd in de Offidi Balanced Score card. </li>
-            </ul>
-
-            <p>We benadrukken dat het geen reproductie-oefening betreft: u hoeft de beschikbare informatie niet uit het hoofd te kennen en u kan steeds teruggrijpen naar de verstrekte informatie. </p>
-
-            <p>Bij het behandelen van de memo’s houdt u zich aan de informatie die u aantreft; het is niet toegelaten mensen en situaties te fantaseren die niet stroken met de context. Uiteraard kan u wel aangeven wat uw hypothesen, uw intenties en uw plannen zijn.</p>
-
-            <p>Wij wensen u veel succes!</p>
+            @Html.Raw(Model.FunctionDescription)
         </div>
         <div id="context" class="col s12">
             <iframe id="pdfFrame" src="pdf/info.pdf#toolbar=0&navpanes=0" width="100%" height="600px"></iframe>
