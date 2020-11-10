@@ -2,8 +2,211 @@
 
 @inject IViewLocalizer Localizer
 
+@section Styles {
+    <link href="/css/memoprogramcomponentdetails.css" rel="stylesheet" />
+}
+
 <div class="container">
     <div class="context">
-        <h1>MEMO </h1>
+        <a href="index.html" class="btn">Onderdeel afsluiten</a>
+        <h1>Assessment</h1>
     </div>
 </div>
+
+<div class="row assessment-tabs">
+    <div class="tab-wrapper">
+        <div class="container">
+            <ul class="tabs">
+                <li class="tab col s2"><a class="active" href="#inleiding">Inleiding</a></li>
+                <li class="tab col s3"><a href="#functieomschrijving">Functieomschrijving</a></li>
+                <li class="tab col s2"><a href="#context">Context</a></li>
+                <li class="tab col s2"><a href="#memos">Memos</a></li>
+                <li class="tab col s2"><a href="#agenda">Agenda</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container assessment-content">
+
+
+        <!-- Inleiding -->
+        <div id="inleiding" class="col s12">
+
+            <!-- Nieuwe inleiding -->
+            <div class="block-new">
+                <h2>Situering</h2>
+                <p>Het is maandag 16 april, 9 uur. U treedt vandaag in functie als teamleider productie. U bent nog niet in de mogelijkheid geweest om kennis te maken met uw collega’s. </p>
+
+                <p>Uw voorganger, Christian Melssen, heeft elders een betrekking opgenomen en is sneller moeten vertrekken dan in eerste instantie was vooropgesteld. Hij kan u dus niet begeleiden tijdens de eerste dagen in uw nieuwe functie. </p>
+            </div>
+
+            <h2>Situering</h2>
+            <p>Het is maandag 16 april, 9 uur. U treedt vandaag in functie als teamleider productie. U bent nog niet in de mogelijkheid geweest om kennis te maken met uw collega’s. </p>
+
+            <p>Uw voorganger, Christian Melssen, heeft elders een betrekking opgenomen en is sneller moeten vertrekken dan in eerste instantie was vooropgesteld. Hij kan u dus niet begeleiden tijdens de eerste dagen in uw nieuwe functie. </p>
+        </div>
+
+        <!-- Functieomschrijving -->
+        <div id="functieomschrijving" class="col s12">
+            <h2>Opdracht</h2>
+            <p>Uw taak bestaat erin de memo’s in uw postbak door te nemen en te behandelen. U bepaalt zelf de prioriteit van de verschillende memo’s en de manier waarop u er gevolg aan geeft. </p>
+
+            <p>Na de voorbereidingstijd van 45 minuten heeft u een gesprek met uw leidinggevende, Chris Frateur, Manager Productie, over de informatie in de memo’s uit uw postbak. Volgende zaken worden van u verwacht tijdens het gesprek:</p>
+
+            <ul>
+                <li>Uw mening ten aanzien van de thema’s</li>
+                <li>De beslissingen die u neemt</li>
+                <li>Een eerste concrete planning voor de komende twee weken. U kan hiervoor de agenda in bijlage gebruiken.</li>
+                <li>Gelieve ook rekening te houden met de doelstellingen 20XX zoals geformuleerd in de Offidi Balanced Score card. </li>
+            </ul>
+
+            <p>We benadrukken dat het geen reproductie-oefening betreft: u hoeft de beschikbare informatie niet uit het hoofd te kennen en u kan steeds teruggrijpen naar de verstrekte informatie. </p>
+
+            <p>Bij het behandelen van de memo’s houdt u zich aan de informatie die u aantreft; het is niet toegelaten mensen en situaties te fantaseren die niet stroken met de context. Uiteraard kan u wel aangeven wat uw hypothesen, uw intenties en uw plannen zijn.</p>
+
+            <p>Wij wensen u veel succes!</p>
+        </div>
+        <div id="context" class="col s12">
+            <iframe id="pdfFrame" src="pdf/info.pdf#toolbar=0&navpanes=0" width="100%" height="600px"></iframe>
+        </div>
+        <div id="memos" class="col s12">
+            <div class="row">
+                <div class="col s3">
+                    <h2>Memos</h2>
+                    <div id="simple-list" class="row">
+                        <div id="memo-list" class="list-group col">
+                            <div class="list-group-item active" onclick="openMemo(event, 'memo1')"> <span class="drag-icon"><i class="material-icons">drag_handle</i></span> <span class="truncate">Maandelijkse vergadering</span> <i class="material-icons">chevron_right</i></div>
+                            <div class="list-group-item" onclick="openMemo(event, 'memo2')"> <span class="drag-icon"><i class="material-icons">drag_handle</i></span> <span class="truncate">Ons team</span> <i class="material-icons">chevron_right</i></div>
+                            <div class="list-group-item" onclick="openMemo(event, 'memo3')"> <span class="drag-icon"><i class="material-icons">drag_handle</i></span> <span class="truncate">Personeelsadministratie</span> <i class="material-icons">chevron_right</i></div>
+                            <div class="list-group-item" onclick="openMemo(event, 'memo4')"> <span class="drag-icon"><i class="material-icons">drag_handle</i></span> <span class="truncate">Kwaliteitsaudit</span> <i class="material-icons">chevron_right</i></div>
+                            <div class="list-group-item-new" onclick="openMemo(event, 'memo5')"> <span class="drag-icon"><i class="material-icons">drag_handle</i></span> <span class="truncate">Opleiding Offidi Installateur</span> <i class="material-icons">chevron_right</i></div>
+                            <div class="list-group-item-new" onclick="openMemo(event, 'memo6')"> <span class="drag-icon"><i class="material-icons">drag_handle</i></span> <span class="truncate">Netheid &amp; veiligheid</span> <i class="material-icons">chevron_right</i></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="memos" class="col s9 memo-wrapper">
+                    <div id="memo1" class="memo active"><img src="img/1_nl.png" /></div>
+                    <div id="memo2" class="memo"><img src="img/2_nl.png" /></div>
+                    <div id="memo3" class="memo"><img src="img/3_nl.png" /></div>
+                    <div id="memo4" class="memo"><img src="img/4_nl.png" /></div>
+                    <div id="memo5" class="memo"><img src="img/5_nl.png" /></div>
+                    <div id="memo6" class="memo"><img src="img/6_nl.png" /></div>
+                </div>
+            </div>
+        </div>
+        <div id="agenda" class="col s12">
+            <h2>Agenda</h2>
+            <div class="calendar">
+                <div class="calendar-block">
+                    <div class="calendar-date">Maandag 2 april</div><textarea class="calendar-text"></textarea>
+                </div>
+                <div class="calendar-block">
+                    <div class="calendar-date">Dinsdag 3 april</div><textarea class="calendar-text"></textarea>
+                </div>
+                <div class="calendar-block">
+                    <div class="calendar-date">Woensdag 4 april</div><textarea class="calendar-text"></textarea>
+                </div>
+                <div class="calendar-block">
+                    <div class="calendar-date">Donderdag 5 april</div><textarea class="calendar-text"></textarea>
+                </div>
+                <div class="calendar-block">
+                    <div class="calendar-date">Vrijdag 6 april</div><textarea class="calendar-text"></textarea>
+                </div>
+
+
+                <div class="calendar-block">
+                    <div class="calendar-date">Maandag 9 april</div><textarea class="calendar-text"></textarea>
+                </div>
+                <div class="calendar-block">
+                    <div class="calendar-date">Dinsdag 10 april</div><textarea class="calendar-text"></textarea>
+                </div>
+                <div class="calendar-block">
+                    <div class="calendar-date">Woensdag 11 april</div><textarea class="calendar-text"></textarea>
+                </div>
+                <div class="calendar-block">
+                    <div class="calendar-date">Donderdag 12 april</div><textarea class="calendar-text"></textarea>
+                </div>
+                <div class="calendar-block">
+                    <div class="calendar-date">Vrijdag 13 april</div><textarea class="calendar-text"></textarea>
+                </div>
+
+
+                <div class="calendar-block">
+                    <div class="calendar-date">Maandag 16 april</div><textarea class="calendar-text"></textarea>
+                </div>
+                <div class="calendar-block">
+                    <div class="calendar-date">Dinsdag 17 april</div><textarea class="calendar-text"></textarea>
+                </div>
+                <div class="calendar-block">
+                    <div class="calendar-date">Woensdag 18 april</div><textarea class="calendar-text"></textarea>
+                </div>
+                <div class="calendar-block">
+                    <div class="calendar-date">Donderdag 19 april</div><textarea class="calendar-text"></textarea>
+                </div>
+                <div class="calendar-block">
+                    <div class="calendar-date">Vrijdag 20 april</div><textarea class="calendar-text"></textarea>
+                </div>
+
+
+                <div class="calendar-block">
+                    <div class="calendar-date">Maandag 23 april</div><textarea class="calendar-text"></textarea>
+                </div>
+                <div class="calendar-block">
+                    <div class="calendar-date">Dinsdag 24 april</div><textarea class="calendar-text"></textarea>
+                </div>
+                <div class="calendar-block">
+                    <div class="calendar-date">Woensdag 25 april</div><textarea class="calendar-text"></textarea>
+                </div>
+                <div class="calendar-block">
+                    <div class="calendar-date">Donderdag 26 april</div><textarea class="calendar-text"></textarea>
+                </div>
+                <div class="calendar-block">
+                    <div class="calendar-date">Vrijdag 27 april</div><textarea class="calendar-text"></textarea>
+                </div>
+
+
+                <div class="calendar-block">
+                    <div class="calendar-date">Maandag 30 april</div><textarea class="calendar-text"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="~/js/Sortable.js"></script>
+
+    <script>
+
+        var el = document.getElementsByClassName("tabs")[0];
+        var instance = M.Tabs.init(el);
+
+        var memos = document.getElementById('memo-list');
+
+        // Example 1 - Simple list
+        new Sortable(memos, {
+            animation: 150,
+            ghostClass: 'ghost-background-class'
+        });
+
+        function openMemo(evt, memoName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("memo");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("list-group-item");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            tablinks = document.getElementsByClassName("list-group-item-new");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            document.getElementById(memoName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+}
