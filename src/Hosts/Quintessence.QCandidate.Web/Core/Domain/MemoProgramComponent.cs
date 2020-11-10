@@ -10,13 +10,13 @@ namespace Quintessence.QCandidate.Core.Domain
         public MemoProgramComponent(Guid simulationCombinationId, Guid userId, ICollection<Memo> memos, ICollection<CalendarDay> calendarDays)
         {
             SimulationCombinationId = simulationCombinationId;
-            Userid = userId;
+            UserId = userId;
             Memos = memos;
             CalendarDays = calendarDays;
         }
 
         public Guid SimulationCombinationId { get; private set; }
-        public Guid Userid { get; private set; }
+        public Guid UserId { get; private set; }
         public ICollection<Memo> Memos { get; private set; }
         public ICollection<CalendarDay> CalendarDays { get; private set; }
         

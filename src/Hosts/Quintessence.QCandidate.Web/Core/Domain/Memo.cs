@@ -16,5 +16,10 @@ namespace Quintessence.QCandidate.Core.Domain
         public int Position { get; private set; }
         public Guid OriginId { get; private set; }
 
+        public void UpdatePosition(int position)
+        {
+            Position = position;
+        }
+
     }
 }

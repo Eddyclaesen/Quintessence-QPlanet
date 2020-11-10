@@ -15,6 +15,12 @@ namespace Quintessence.QCandidate.Core.Domain
         public Guid MemoProgramComponentId { get; private set; }
         public DateTime Day { get; private set; }
         public string Note { get; private set; }
+
+
+        public void UpdateNote(string note)
+        {
+            Note = note;
+        }
         
     }
 }
