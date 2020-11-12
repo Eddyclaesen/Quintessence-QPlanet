@@ -12,7 +12,6 @@ namespace Quintessence.QCandidate.Infrastructure.EntityFrameworkCore.Commands
             base.Configure(builder);
 
             builder.ToTable("CalendarDays");
-            builder.Property(entity => entity.MemoProgramComponentId).IsRequired();
             builder.Property(entity => entity.Day).IsRequired();
             builder.Property(entity => entity.Note).IsRequired();
 

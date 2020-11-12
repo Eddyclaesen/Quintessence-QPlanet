@@ -7,23 +7,23 @@ using System.Threading.Tasks;
 
 namespace Quintessence.QCandidate.Logic.Commands
 {
-    public class ChangeMemosOrderCommandHandler : IRequestHandler<ChangeMemosOrderCommand, MemoProgramComponent>
+    public class ChangeMemosPositionCommandHandler : IRequestHandler<ChangeMemosPositionCommand, MemoProgramComponent>
     {
         private readonly IMemoProgramComponentRepository _repository;
 
-        public ChangeMemosOrderCommandHandler(IMemoProgramComponentRepository repository)
+        public ChangeMemosPositionCommandHandler(IMemoProgramComponentRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<MemoProgramComponent> Handle(ChangeMemosOrderCommand request, CancellationToken cancellationToken)
+        public async Task<MemoProgramComponent> Handle(ChangeMemosPositionCommand request, CancellationToken cancellationToken)
         {
             var memoProgram = _repository.FindAsync(request.MemoProgramComponentId).Result;
             foreach (var resultMemo in memoProgram.Memos)
             {
                 if (request.MemoPositions.ContainsKey(resultMemo.Id))
                 {
-                    resultMemo.UpdatePosition(request.MemoPositions[resultMemo.Id]);
+                    resultMemo.Update(request.MemoPositions[resultMemo.Id]);
                 }
                     
             }

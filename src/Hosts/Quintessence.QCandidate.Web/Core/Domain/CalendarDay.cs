@@ -1,11 +1,14 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
 using Kenze.Domain;
 
 namespace Quintessence.QCandidate.Core.Domain
 {
     public class CalendarDay : ChangeableEntity<Guid>
     {
+        private CalendarDay()
+        {
+        }
+        
         public CalendarDay(Guid memoProgramComponentId, DateTime day, string note)
         {
             MemoProgramComponentId = memoProgramComponentId;
@@ -13,11 +16,9 @@ namespace Quintessence.QCandidate.Core.Domain
             Note = note;
         }
 
-        public Guid MemoProgramComponentId { get; set; }
+        public Guid MemoProgramComponentId { get; private set; }
         public DateTime Day { get; private set; }
         public string Note { get; private set; }
-
-        public MemoProgramComponent MemoProgramComponent { get; set; }
 
         public void UpdateNote(string note)
         {

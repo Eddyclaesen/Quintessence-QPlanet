@@ -17,11 +17,9 @@ using Quintessence.QCandidate.Configuration;
 using Quintessence.QCandidate.Filters.Actions;
 using Quintessence.QCandidate.Logic.Queries;
 using System.Globalization;
-using System.Reflection;
 using System.Security.Principal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Quintessence.QCandidate.Core.Domain;
 using Quintessence.QCandidate.Infrastructure.EntityFrameworkCore.Commands;
 using Quintessence.QCandidate.Logic.Commands;
 
@@ -66,7 +64,12 @@ namespace Quintessence.QCandidate
             services.AddScoped<IDbConnectionFactory>(_ =>
                 new SqlDbConnectionFactory(Configuration.GetConnectionString("QPlanet")));
 
-            services.AddDbContext<DbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("QPlanet")));
+            services.AddTransient(_ =>
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<DbContext>();
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("QPlanet"));
+                return optionsBuilder.Options;
+            });
 
             services.AddScoped<QCandidateUnitOfWork>();
             services.AddScoped(typeof(IMemoProgramComponentRepository), typeof(MemoProgramComponentRepository));
