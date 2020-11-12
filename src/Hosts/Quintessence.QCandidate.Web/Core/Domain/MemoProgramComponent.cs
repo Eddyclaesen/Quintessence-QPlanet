@@ -27,10 +27,9 @@ namespace Quintessence.QCandidate.Core.Domain
 
             while ((startDate.Month == 4) && (startDate.Year == 2018))
             {
-                var calendarDay = new CalendarDay(startDate);
                 if (weekDays.Contains(startDate.DayOfWeek))
                 {
-                    calendarDays.Add(calendarDay);
+                    calendarDays.Add(new CalendarDay(startDate));
                 }
 
                 startDate = startDate.AddDays(1);
