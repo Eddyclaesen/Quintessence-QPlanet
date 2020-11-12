@@ -18,10 +18,13 @@ namespace Quintessence.QCandidate.Infrastructure.EntityFrameworkCore.Commands
 
             builder.Property(entity => entity.UserId).IsRequired();
 
-            builder.HasMany(entity => entity.Memos);
+            builder.HasMany(entity => entity.Memos)
+                .WithOne()
+                .HasForeignKey(memo => memo.MemoProgramComponentId);
 
-            builder.HasMany(entity => entity.CalendarDays);
-
+            builder.HasMany(entity => entity.CalendarDays)
+                .WithOne()
+                .HasForeignKey(memo => memo.MemoProgramComponentId); ;
 
         }
     }

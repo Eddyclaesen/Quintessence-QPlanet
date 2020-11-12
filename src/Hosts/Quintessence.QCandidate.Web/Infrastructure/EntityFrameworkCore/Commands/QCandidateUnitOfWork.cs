@@ -2,7 +2,6 @@
 using Kenze.Infrastructure.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Quintessence.QCandidate.Core.Domain;
 
 namespace Quintessence.QCandidate.Infrastructure.EntityFrameworkCore.Commands
 {
@@ -22,9 +21,6 @@ namespace Quintessence.QCandidate.Infrastructure.EntityFrameworkCore.Commands
             modelBuilder.ApplyConfiguration(new CalendarDayConfiguration());
             modelBuilder.ApplyConfiguration(new MemoConfiguration());
             modelBuilder.ApplyConfiguration(new MemoProgramComponentConfiguration());
-
-            modelBuilder.Entity<MemoProgramComponent>().HasMany<Memo>(x => x.Memos);
-            modelBuilder.Entity<MemoProgramComponent>().HasMany<CalendarDay>(x => x.CalendarDays);
 
         }
     }
