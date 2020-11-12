@@ -3,10 +3,13 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Quintessence.QCandidate.Configuration;
-using Quintessence.QCandidate.Models.MemoProgramComponents;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Quintessence.QCandidate.Core.Domain;
+using Quintessence.QCandidate.Core.Queries;
+using MemoProgramComponent = Quintessence.QCandidate.Models.MemoProgramComponents.MemoProgramComponent;
 
 
 namespace Quintessence.QCandidate.Controllers
@@ -28,13 +31,18 @@ namespace Quintessence.QCandidate.Controllers
         [Route("{action}/{id}")]
         public async Task<IActionResult> Details(Guid id)
         {
-            id = Guid.Parse("01FBB298-AE9A-4BFF-BD9A-A2750FF5A0B5");
+            //id from parameter => ProgramComponent.Id
+            var programComponentDto = await _mediator.Send(new GetProgramComponentByIdQuery(id));
+            //var simulationCombinationId = programComponentDto.SimulationCombinationId.Value;
 
-            var basePath = Path.Combine(_htmlStorageLocation, id.ToString());
+
+            var simulationCombinationId = Guid.Parse("01FBB298-AE9A-4BFF-BD9A-A2750FF5A0B5"); // SimulationCombinationId
+
+            var basePath = Path.Combine(_htmlStorageLocation, simulationCombinationId.ToString());
             var language = HttpContext.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name;
             var functionDescription = System.IO.File.ReadAllText(Path.Combine(basePath, FunctionDescriptionsFolder, $"{language.ToUpperInvariant()}.html"));
 
-            var model = new MemoProgramComponent(id, functionDescription);
+            var model = new MemoProgramComponent(id,null, functionDescription, null,new List<Memo>(), new List<CalendarDay>() );
 
             return View(model);
         }

@@ -1,0 +1,28 @@
+﻿INSERT INTO Quintessence_QPlanet.QCandidate.MemoProgramComponents (Id, UserId, SimulationCombinationId, CreatedBy, CreatedOn, ModifiedBy, ModifiedOn)
+VALUES (newid(), CONVERT(uniqueidentifier,'7E6A3147-E23F-487D-AD4E-8608C199EF07'), CONVERT(uniqueidentifier, 'AAE0F86A-174E-4B31-81F5-B4A91DD55C77') , 'script', '2020-11-10 11:21:35.000', null, null)
+
+INSERT INTO Quintessence_QPlanet.QCandidate.CalendarDays (Id, MemoProgramComponentId, Day, Note, CreatedBy, CreatedOn)
+values(newid(), CONVERT(uniqueidentifier, '1DDA8169-E8BD-490C-8990-77703DB22654'), '2020-11-10', 'script', 'script', '2020-11-10')
+
+INSERT INTO Quintessence_QPlanet.QCandidate.Memos(Id, MemoProgramComponentId, Position, OriginId, CreatedBy, CreatedOn)
+values(newid(), CONVERT(uniqueidentifier, '1DDA8169-E8BD-490C-8990-77703DB22654'), 1, CONVERT(uniqueidentifier, 'FAF08EAC-BB2E-4771-AA42-6F42D9D26A10'), 'script', '2020-11-10')
+INSERT INTO Quintessence_QPlanet.QCandidate.Memos(Id, MemoProgramComponentId, Position, OriginId, CreatedBy, CreatedOn)
+values(newid(), CONVERT(uniqueidentifier, '1DDA8169-E8BD-490C-8990-77703DB22654'), 2, CONVERT(uniqueidentifier, 'F7BA8EF8-F5E5-4537-A9AA-FC25DBFDC2F4'), 'script', '2020-11-10')
+INSERT INTO Quintessence_QPlanet.QCandidate.Memos(Id, MemoProgramComponentId, Position, OriginId, CreatedBy, CreatedOn)
+values(newid(), CONVERT(uniqueidentifier, '1DDA8169-E8BD-490C-8990-77703DB22654'), 3, CONVERT(uniqueidentifier, 'BC8133CD-A8FE-4DFB-8B3E-4D410A7945B2'), 'script', '2020-11-10')
+INSERT INTO Quintessence_QPlanet.QCandidate.Memos(Id, MemoProgramComponentId, Position, OriginId, CreatedBy, CreatedOn)
+values(newid(), CONVERT(uniqueidentifier, '1DDA8169-E8BD-490C-8990-77703DB22654'), 4, CONVERT(uniqueidentifier, 'AAFAF9F0-1468-47E5-B50A-DD85A8234E52'), 'script', '2020-11-10')
+INSERT INTO Quintessence_QPlanet.QCandidate.Memos(Id, MemoProgramComponentId, Position, OriginId, CreatedBy, CreatedOn)
+values(newid(), CONVERT(uniqueidentifier, '1DDA8169-E8BD-490C-8990-77703DB22654'), 5, CONVERT(uniqueidentifier, 'FE4E6A00-1FA0-42D4-9B51-D65FB07E0AC9'), 'script', '2020-11-10')
+
+
+insert into SimulationCombinationMemos (Id, SimulationCombinationId, Position)
+values (newid(), CONVERT(uniqueidentifier, 'AAE0F86A-174E-4B31-81F5-B4A91DD55C77'), 1 )
+insert into SimulationCombinationMemos (Id, SimulationCombinationId, Position)
+values (newid(), CONVERT(uniqueidentifier, 'AAE0F86A-174E-4B31-81F5-B4A91DD55C77'), 2 )
+insert into SimulationCombinationMemos (Id, SimulationCombinationId, Position)
+values (newid(), CONVERT(uniqueidentifier, 'AAE0F86A-174E-4B31-81F5-B4A91DD55C77'), 3 )
+insert into SimulationCombinationMemos (Id, SimulationCombinationId, Position)
+values (newid(), CONVERT(uniqueidentifier, 'AAE0F86A-174E-4B31-81F5-B4A91DD55C77'), 4 )
+insert into SimulationCombinationMemos (Id, SimulationCombinationId, Position)
+values (newid(), CONVERT(uniqueidentifier, 'AAE0F86A-174E-4B31-81F5-B4A91DD55C77'), 5 )

@@ -19,6 +19,8 @@ using Quintessence.QCandidate.Configuration;
 using Quintessence.QCandidate.Filters.Actions;
 using Quintessence.QCandidate.Logic.Queries;
 using System.Globalization;
+using System.Security.Principal;
+using Microsoft.AspNetCore.Http;
 
 namespace Quintessence.QCandidate
 {
@@ -53,6 +55,10 @@ namespace Quintessence.QCandidate
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix/*, opts => { opts.ResourcesPath = "Resources"; }*/);
 
             services.AddMediatR(typeof(GetAssessmentByCandidateIdAndDateAndLanguageQueryHandler).Assembly);
+
+            services.AddTransient<IPrincipal>(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
+            services.AddTransient<IPrincipalProvider, PrincipalProvider>();
+
             services.AddScoped<IDbConnectionFactory>(_ =>
                 new SqlDbConnectionFactory(Configuration.GetConnectionString("QPlanet")));
 

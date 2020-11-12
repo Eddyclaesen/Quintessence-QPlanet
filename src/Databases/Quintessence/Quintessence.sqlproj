@@ -597,5 +597,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Release.sql" />
+    <None Include="Scripts\SeedMemoProgramComponent.sql" />
   </ItemGroup>
 </Project>
