@@ -18,14 +18,11 @@ namespace Quintessence.QCandidate.Logic.Commands
 
         public async Task<MemoProgramComponent> Handle(UpdateCalendarDayCommand request, CancellationToken cancellationToken)
         {
-            var memoProgram = _repository.FindAsync(request.MemoProgramComponentId).Result;
+            var memoProgram = await _repository.FindAsync(request.MemoProgramComponentId);
 
             foreach (var calendarDay in memoProgram.CalendarDays)
             {
-                if (calendarDay.Id == request.CalendarDayId)
-                {
-                    calendarDay.UpdateNote(request.Text);
-                }
+                calendarDay.UpdateNote(request.Text);
             }
 
             await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);

@@ -23,8 +23,8 @@ namespace Quintessence.QCandidate.Core.Domain
 
         public Guid SimulationCombinationId { get; private set; }
         public Guid UserId { get; private set; }
-        public List<Memo> Memos { get; private set; }
-        public List<CalendarDay> CalendarDays { get; private set; }
+        public ICollection<Memo> Memos { get; private set; }
+        public ICollection<CalendarDay> CalendarDays { get; private set; }
         
     }
 }

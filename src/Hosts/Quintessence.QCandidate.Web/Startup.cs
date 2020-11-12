@@ -59,11 +59,6 @@ namespace Quintessence.QCandidate
 
             
             services.AddMediatR(typeof(GetAssessmentByCandidateIdAndDateAndLanguageQueryHandler).Assembly);
-            services.AddMediatR(typeof(ChangeMemosOrderCommandHandler).Assembly );
-            services.AddMediatR(typeof(CreateMemoProgramComponentCommandHandler).Assembly);
-            services.AddMediatR(typeof(UpdateCalendarDayCommandHandler).Assembly);
-
-
 
             services.AddTransient<IPrincipal>(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
             services.AddTransient<IPrincipalProvider, PrincipalProvider>();
