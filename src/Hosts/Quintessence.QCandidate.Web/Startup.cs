@@ -17,6 +17,11 @@ using Quintessence.QCandidate.Configuration;
 using Quintessence.QCandidate.Filters.Actions;
 using Quintessence.QCandidate.Logic.Queries;
 using System.Globalization;
+using System.Security.Principal;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Quintessence.QCandidate.Infrastructure.EntityFrameworkCore.Commands;
+using Quintessence.QCandidate.Logic.Commands;
 
 namespace Quintessence.QCandidate
 {
@@ -50,9 +55,24 @@ namespace Quintessence.QCandidate
                 .AddRazorViewEngine()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix/*, opts => { opts.ResourcesPath = "Resources"; }*/);
 
+            
             services.AddMediatR(typeof(GetAssessmentByCandidateIdAndDateAndLanguageQueryHandler).Assembly);
+
+            services.AddTransient<IPrincipal>(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
+            services.AddTransient<IPrincipalProvider, PrincipalProvider>();
+
             services.AddScoped<IDbConnectionFactory>(_ =>
                 new SqlDbConnectionFactory(Configuration.GetConnectionString("QPlanet")));
+
+            services.AddTransient(_ =>
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<DbContext>();
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("QPlanet"));
+                return optionsBuilder.Options;
+            });
+
+            services.AddScoped<QCandidateUnitOfWork>();
+            services.AddScoped(typeof(IMemoProgramComponentRepository), typeof(MemoProgramComponentRepository));
 
             services.Configure<Settings>(Configuration);
             services.Configure<AzureAdB2CSettings>(Configuration.GetSection("AzureAdB2C"));

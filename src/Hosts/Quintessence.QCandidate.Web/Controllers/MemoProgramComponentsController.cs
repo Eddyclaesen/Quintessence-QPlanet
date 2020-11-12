@@ -21,5 +21,7 @@ namespace Quintessence.QCandidate.Controllers
 
             return View();
         }
+
+
     }
 }

@@ -28,7 +28,7 @@ namespace Quintessence.QCandidate.Controllers
             var candidateIdClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId");
             var candidateId = new Guid(candidateIdClaim.Value);
             var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateAndLanguageQuery(candidateId, DateTime.Now, CultureInfo.CurrentCulture.ToString()));
-
+            
             Assessment assessment = null;
             if (assessmentDto != null)
             {
