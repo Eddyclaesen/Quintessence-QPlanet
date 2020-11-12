@@ -24,7 +24,7 @@ namespace Quintessence.QCandidate.Logic.Commands
             {
                 if (calendarDay.Id == request.CalendarDayId)
                 {
-                    calendarDay.UpdateNote(request.Text);
+                    calendarDay.UpdateNote(request.Note);
                 }
             }
 

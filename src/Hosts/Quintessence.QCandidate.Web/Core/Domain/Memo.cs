@@ -1,11 +1,14 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
 using Kenze.Domain;
 
 namespace Quintessence.QCandidate.Core.Domain
 {
     public class Memo : ChangeableEntity<Guid>
     {
+        private Memo()
+        {
+        }
+
         public Memo(Guid memoProgramComponentId, int position, Guid originId)
         {
             MemoProgramComponentId = memoProgramComponentId;
@@ -13,13 +16,11 @@ namespace Quintessence.QCandidate.Core.Domain
             OriginId = originId;
         }
 
-        public Guid MemoProgramComponentId { get; set; }
+        public Guid MemoProgramComponentId { get; private set; }
         public int Position { get; private set; }
         public Guid OriginId { get; private set; }
-        [ForeignKey("MemoProgramComponentId")]
-        public MemoProgramComponent MemoProgramComponent { get; set; }
 
-        public void UpdatePosition(int position)
+        public void Update(int position)
         {
             Position = position;
         }

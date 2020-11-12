@@ -6,16 +6,16 @@ namespace Quintessence.QCandidate.Core.Commands
 {
     public class UpdateCalendarDayCommand : IRequest<MemoProgramComponent>
     {
-        public UpdateCalendarDayCommand(Guid memoProgramComponentId, Guid calendarDayId, string text)
+        public UpdateCalendarDayCommand(Guid memoProgramComponentId, Guid calendarDayId, string note)
         {
             MemoProgramComponentId = memoProgramComponentId;
             CalendarDayId = calendarDayId;
-            Text = text;
+            Note = note;
         }
 
         public Guid MemoProgramComponentId { get; }
         public Guid CalendarDayId { get; }
-        public string Text { get; }
+        public string Note { get; }
         
 
     }

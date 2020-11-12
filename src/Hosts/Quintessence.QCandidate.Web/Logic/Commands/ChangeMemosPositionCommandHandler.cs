@@ -23,7 +23,7 @@ namespace Quintessence.QCandidate.Logic.Commands
             {
                 if (request.MemoPositions.ContainsKey(resultMemo.Id))
                 {
-                    resultMemo.UpdatePosition(request.MemoPositions[resultMemo.Id]);
+                    resultMemo.Update(request.MemoPositions[resultMemo.Id]);
                 }
                     
             }
