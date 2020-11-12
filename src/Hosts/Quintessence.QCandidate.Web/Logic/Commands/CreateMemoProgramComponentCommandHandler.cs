@@ -18,7 +18,7 @@ namespace Quintessence.QCandidate.Logic.Commands
 
         public async Task<MemoProgramComponent> Handle(CreateMemoProgramComponentCommand request, CancellationToken cancellationToken)
         {
-            var memoProgramComponent = new MemoProgramComponent(request.SimulationCombinationId, request.UserId, request.Memos, request.CalendarDays);
+            var memoProgramComponent = new MemoProgramComponent(request.SimulationCombinationId, request.UserId, request.Memos);
             
             _repository.Add(memoProgramComponent);
 

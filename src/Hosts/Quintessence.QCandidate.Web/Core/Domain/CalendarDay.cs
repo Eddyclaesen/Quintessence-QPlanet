@@ -20,7 +20,7 @@ namespace Quintessence.QCandidate.Core.Domain
         public DateTime Day { get; private set; }
         public string Note { get; private set; }
 
-        public void UpdateNote(string note)
+        public void Update(string note)
         {
             Note = note;
         }

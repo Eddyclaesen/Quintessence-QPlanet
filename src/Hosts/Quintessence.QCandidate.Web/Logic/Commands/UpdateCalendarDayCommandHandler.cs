@@ -22,7 +22,7 @@ namespace Quintessence.QCandidate.Logic.Commands
 
             foreach (var calendarDay in memoProgram.CalendarDays)
             {
-                calendarDay.UpdateNote(request.Text);
+                calendarDay.Update(request.Note);
             }
 
             await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
