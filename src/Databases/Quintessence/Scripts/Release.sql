@@ -437,7 +437,7 @@ CREATE TABLE [QCandidate].[CalendarDays]
 	[Id] UNIQUEIDENTIFIER NOT NULL, 
     [MemoProgramComponentId] UNIQUEIDENTIFIER NOT NULL, 
     [Day] DATETIME NOT NULL, 
-    [Note] NVARCHAR(MAX) NOT NULL,
+    [Note] NVARCHAR(MAX) NULL,
     [CreatedBy]        NVARCHAR (MAX)    NOT NULL,
     [CreatedOn]        DATETIME          NOT NULL,
     [ModifiedBy]       NVARCHAR (MAX)   NULL,
