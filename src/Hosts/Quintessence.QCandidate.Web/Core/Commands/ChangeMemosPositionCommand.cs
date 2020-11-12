@@ -5,9 +5,9 @@ using Quintessence.QCandidate.Core.Domain;
 
 namespace Quintessence.QCandidate.Core.Commands
 {
-    public class ChangeMemosOrderCommand : IRequest<MemoProgramComponent>
+    public class ChangeMemosPositionCommand : IRequest<MemoProgramComponent>
     {
-        public ChangeMemosOrderCommand(Guid memoProgramComponentId, Dictionary<Guid, int> memoPositions)
+        public ChangeMemosPositionCommand(Guid memoProgramComponentId, Dictionary<Guid, int> memoPositions)
         {
             MemoProgramComponentId = memoProgramComponentId;
             MemoPositions = memoPositions;
