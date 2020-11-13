@@ -6,8 +6,11 @@ using Quintessence.QCandidate.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Quintessence.QCandidate.Contracts.Responses;
+using Quintessence.QCandidate.Core.Queries;
 using MemoProgramComponent = Quintessence.QCandidate.Models.MemoProgramComponents.MemoProgramComponent;
 using System.Linq;
 using Quintessence.QCandidate.Models.MemoProgramComponents;
@@ -49,17 +52,28 @@ namespace Quintessence.QCandidate.Controllers
             var contextId = Guid.Parse("5fa70b90-32d6-48fb-993c-0191d79da1c9");
 
             var intro = System.IO.File.ReadAllText(Path.Combine(basePath, IntrosFolder, $"{language.ToUpperInvariant()}.html"));
-
-            var memos = GetTestMemoDto(id);
             
+            var memoProgramComponentDto = await _mediator.Send(new GetMemoProgramComponentBySimulationCombinationIdAndLanguageQuery(simulationCombinationId, language));
+            var memos = InjectContent(memoProgramComponentDto.Memos.ToList(), simulationCombinationId, language);
+
+            var calendarDays = memoProgramComponentDto.CalendarDays.ToList();
 
             var model = new MemoProgramComponent(id,intro, functionDescription, contextId, memos.Select(m => new Memo(m.Id, m.Position, m.Title, m.Content)), GetCalendarDays());
+            var model = new MemoProgramComponent(id,intro, functionDescription, contextId, memos, calendarDays);
 
             return View(model);
         }
+        
+        private List<MemoDto> InjectContent(List<MemoDto> memos, Guid simulationCombinationId, string language)
+        {
+            foreach (var memo in memos)
+            {
+                var path = Path.Combine(_htmlStorageLocation, simulationCombinationId.ToString(), MemosFolder, $"{memo.OriginPosition}_{language.ToUpperInvariant()}.html");
+                memo.Content = System.IO.File.ReadAllText(path);
+            }
 
-
-
+            return memos;
+        }
 
 
         //FOR TESTING ONLY
