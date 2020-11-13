@@ -25,13 +25,11 @@ namespace Quintessence.QCandidate.Controllers
 
         private readonly IMediator _mediator;
         private readonly string _htmlStorageLocation;
-        private readonly string _pdfStorageLocation;
 
         public MemoProgramComponentsController(IMediator mediator, IOptionsMonitor<Settings> optionsMonitor)
         {
             _mediator = mediator;
             _htmlStorageLocation = optionsMonitor.CurrentValue.HtmlStorageLocation;
-            _pdfStorageLocation = optionsMonitor.CurrentValue.PdfStorageLocation;
         }
 
         [Route("{action}/{id}")]
