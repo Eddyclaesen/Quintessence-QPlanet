@@ -1,7 +1,4 @@
-﻿var div = document.getElementById("memoTest");
-div.innerHTML = "Test geslaagd";
-
-
+﻿
 var el = document.getElementsByClassName("tabs")[0];
 var instance = M.Tabs.init(el);
 
