@@ -598,6 +598,6 @@
   <ItemGroup>
     <None Include="Scripts\Release.sql" />
     <None Include="Scripts\SeedMemoProgramComponent.sql" />
-    <None Include="QCandidate\Stored Procedures\MemoProgramComponent_GetBySimulationCombinationIdAndLanguage.sql" />
+    <None Include="QCandidate\Stored Procedures\MemoProgramComponent_GetByIdAndLanguage.sql" />
   </ItemGroup>
 </Project>

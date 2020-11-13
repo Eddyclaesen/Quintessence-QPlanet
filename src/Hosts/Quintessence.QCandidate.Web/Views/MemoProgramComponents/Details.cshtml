@@ -100,11 +100,16 @@
         <div id="agenda" class="col s12">
             <h2>Agenda</h2>
             <div class="calendar">
-                @foreach (var item in Model.CalendarDays.OrderBy(x => x.Day))
+                @foreach (var calendarDay in Model.CalendarDays.OrderBy(x => x.Day))
                 {
                     var culture = new CultureInfo("nl");
                     <div class="calendar-block">
-                        <div class="calendar-date">@item.Day.ToString("D", culture)</div><textarea class="calendar-text">@item.Note</textarea>
+                        <div class="calendar-date">
+                            @calendarDay.Day.ToString("D", culture)
+                        </div>
+                        <textarea class="calendar-text">
+                            @calendarDay.Note
+                        </textarea>
                     </div>
                 }
 

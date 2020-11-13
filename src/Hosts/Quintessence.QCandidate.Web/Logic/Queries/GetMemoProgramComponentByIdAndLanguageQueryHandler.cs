@@ -11,23 +11,22 @@ using System.Threading.Tasks;
 
 namespace Quintessence.QCandidate.Logic.Queries
 {
-    public class GetMemoProgramComponentBySimulationCombinationIdAndLanguageQueryHandler : DapperQueryHandler<GetMemoProgramComponentBySimulationCombinationIdAndLanguageQuery, MemoProgramComponentDto>
+    public class GetMemoProgramComponentByIdAndLanguageQueryHandler : DapperQueryHandler<GetMemoProgramComponentByIdAndLanguageQuery, MemoProgramComponentDto>
     {
-        public GetMemoProgramComponentBySimulationCombinationIdAndLanguageQueryHandler(IDbConnectionFactory dbConnectionFactory) : base(dbConnectionFactory)
+        public GetMemoProgramComponentByIdAndLanguageQueryHandler(IDbConnectionFactory dbConnectionFactory) : base(dbConnectionFactory)
         {
         }
 
-        public override async Task<MemoProgramComponentDto> Handle(GetMemoProgramComponentBySimulationCombinationIdAndLanguageQuery andLanguageQuery, CancellationToken cancellationToken)
+        public override async Task<MemoProgramComponentDto> Handle(GetMemoProgramComponentByIdAndLanguageQuery query, CancellationToken cancellationToken)
         {
-            var idParameter = new SqlParameter("id", SqlDbType.UniqueIdentifier) { Value = andLanguageQuery.Id };
-            var languageParameter = new SqlParameter("language", SqlDbType.Char) { Value = andLanguageQuery.Language };
+            var idParameter = new SqlParameter("id", SqlDbType.UniqueIdentifier) { Value = query.Id };
+            var languageParameter = new SqlParameter("languageId", SqlDbType.Int) { Value = query.Language.Id };
 
             var parameters = new SqlParameter[] { idParameter, languageParameter };
 
-            var command = new StoredProcedureCommandDefinition("[QCandidate].[MemoProgramComponent_GetBySimulationCombinationIdAndLanguage]", parameters).ToCommandDefinition();
+            var command = new StoredProcedureCommandDefinition("[QCandidate].[MemoProgramComponent_GetByIdAndLanguage]", parameters).ToCommandDefinition();
 
-            var result = new MemoProgramComponentDto();
-            result.SimulationCombinationId = andLanguageQuery.Id;
+            MemoProgramComponentDto result = null;
 
             using (var dbConnection = DbConnectionFactory.Create())
             {
@@ -35,6 +34,11 @@ namespace Quintessence.QCandidate.Logic.Queries
                     await dbConnection.QueryAsync<MemoProgramComponentDto, MemoDto, CalendarDayDto, MemoProgramComponentDto>(command,
                         (memoProgramComponentDto, memoDto, calendarDayDto) =>
                         {
+                            if (result == null)
+                            {
+                                result = memoProgramComponentDto;
+                            }
+
                             if (!result.Memos.Any(x => x.Id == memoDto.Id))
                             {
                                 result.Memos.Add(memoDto);

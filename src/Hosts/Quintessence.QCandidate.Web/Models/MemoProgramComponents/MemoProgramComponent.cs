@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Quintessence.QCandidate.Contracts.Responses;
 
 namespace Quintessence.QCandidate.Models.MemoProgramComponents
 {
     public class MemoProgramComponent
     {
-        public MemoProgramComponent(Guid id, string intro, string functionDescription, Guid contextId, IEnumerable<Memo> memos, IEnumerable<CalendarDayDto> calendarDays)
+        public MemoProgramComponent(Guid id, string intro, string functionDescription, Guid contextId, IEnumerable<Memo> memos, IEnumerable<CalendarDay> calendarDays)
         {
             Id = id;
             Intro = intro;
@@ -21,6 +20,6 @@ namespace Quintessence.QCandidate.Models.MemoProgramComponents
         public string FunctionDescription { get; }
         public Guid ContextId { get; }
         public IEnumerable<Memo> Memos { get; }
-        public IEnumerable<CalendarDayDto> CalendarDays { get; }
+        public IEnumerable<CalendarDay> CalendarDays { get; }
     }
 }
