@@ -1,5 +1,6 @@
 ﻿using System;
 using MediatR;
+using Microsoft.AspNetCore.Localization;
 using Quintessence.QCandidate.Contracts.Responses;
 
 namespace Quintessence.QCandidate.Core.Queries
@@ -12,5 +13,6 @@ namespace Quintessence.QCandidate.Core.Queries
         }
 
         public Guid Id { get; }
+        
     }
 }

@@ -49,7 +49,7 @@
         </div>
         <div id="context" class="col s12">
             <iframe id="pdfFrame" src="@string.Concat(Model.Context, "#toolbar=0&navpanes=0")" width="100%" height="600px"></iframe>
-            @*<iframe id="pdfFrame" src="pdf/info.pdf#toolbar=0&navpanes=0" width="100%" height="600px"></iframe>*@
+
         </div>
         <div id="memos" class="col s12">
             <div class="row">
@@ -79,12 +79,7 @@
                                     </i>
                                 </div>
                             }
-                            @*<div class="list-group-item active" onclick="openMemo(event, 'memo1')"> <span class="drag-icon"><i class="material-icons">drag_handle</i></span> <span class="truncate">Maandelijkse vergadering</span> <i class="material-icons">chevron_right</i></div>
-        <div class="list-group-item" onclick="openMemo(event, 'memo2')"> <span class="drag-icon"><i class="material-icons">drag_handle</i></span> <span class="truncate">Ons team</span> <i class="material-icons">chevron_right</i></div>
-        <div class="list-group-item" onclick="openMemo(event, 'memo3')"> <span class="drag-icon"><i class="material-icons">drag_handle</i></span> <span class="truncate">Personeelsadministratie</span> <i class="material-icons">chevron_right</i></div>
-        <div class="list-group-item" onclick="openMemo(event, 'memo4')"> <span class="drag-icon"><i class="material-icons">drag_handle</i></span> <span class="truncate">Kwaliteitsaudit</span> <i class="material-icons">chevron_right</i></div>
-        <div class="list-group-item-new" onclick="openMemo(event, 'memo5')"> <span class="drag-icon"><i class="material-icons">drag_handle</i></span> <span class="truncate">Opleiding Offidi Installateur</span> <i class="material-icons">chevron_right</i></div>
-        <div class="list-group-item-new" onclick="openMemo(event, 'memo6')"> <span class="drag-icon"><i class="material-icons">drag_handle</i></span> <span class="truncate">Netheid &amp; veiligheid</span> <i class="material-icons">chevron_right</i></div>*@
+
                         </div>
                     </div>
                 </div>
@@ -99,12 +94,7 @@
                         }
                         <div id="@memo.OriginId" class="@string.Join(' ', classNames.ToArray())"> @Html.Raw(memo.Content) </div>
                     }
-                    @*<div id="memo1" class="memo active"><img src="img/1_nl.png" /></div>
-        <div id="memo2" class="memo"><img src="img/2_nl.png" /></div>
-        <div id="memo3" class="memo"><img src="img/3_nl.png" /></div>
-        <div id="memo4" class="memo"><img src="img/4_nl.png" /></div>
-        <div id="memo5" class="memo"><img src="img/5_nl.png" /></div>
-        <div id="memo6" class="memo"><img src="img/6_nl.png" /></div>*@
+
                 </div>
             </div>
         </div>
@@ -115,78 +105,10 @@
                 {
                     var culture = new CultureInfo("nl");
                     <div class="calendar-block">
-                        <div class="calendar-date">@item.Day.ToString("D", culture)</div><textarea class="calendar-text"></textarea>
+                        <div class="calendar-date">@item.Day.ToString("D", culture)</div><textarea class="calendar-text">@item.Note</textarea>
                     </div>
                 }
 
-                @*<div class="calendar-block">
-                    <div class="calendar-date">Dinsdag 3 april</div><textarea class="calendar-text"></textarea>
-                </div>
-                <div class="calendar-block">
-                    <div class="calendar-date">Woensdag 4 april</div><textarea class="calendar-text"></textarea>
-                </div>
-                <div class="calendar-block">
-                    <div class="calendar-date">Donderdag 5 april</div><textarea class="calendar-text"></textarea>
-                </div>
-                <div class="calendar-block">
-                    <div class="calendar-date">Vrijdag 6 april</div><textarea class="calendar-text"></textarea>
-                </div>
-
-
-                <div class="calendar-block">
-                    <div class="calendar-date">Maandag 9 april</div><textarea class="calendar-text"></textarea>
-                </div>
-                <div class="calendar-block">
-                    <div class="calendar-date">Dinsdag 10 april</div><textarea class="calendar-text"></textarea>
-                </div>
-                <div class="calendar-block">
-                    <div class="calendar-date">Woensdag 11 april</div><textarea class="calendar-text"></textarea>
-                </div>
-                <div class="calendar-block">
-                    <div class="calendar-date">Donderdag 12 april</div><textarea class="calendar-text"></textarea>
-                </div>
-                <div class="calendar-block">
-                    <div class="calendar-date">Vrijdag 13 april</div><textarea class="calendar-text"></textarea>
-                </div>
-
-
-                <div class="calendar-block">
-                    <div class="calendar-date">Maandag 16 april</div><textarea class="calendar-text"></textarea>
-                </div>
-                <div class="calendar-block">
-                    <div class="calendar-date">Dinsdag 17 april</div><textarea class="calendar-text"></textarea>
-                </div>
-                <div class="calendar-block">
-                    <div class="calendar-date">Woensdag 18 april</div><textarea class="calendar-text"></textarea>
-                </div>
-                <div class="calendar-block">
-                    <div class="calendar-date">Donderdag 19 april</div><textarea class="calendar-text"></textarea>
-                </div>
-                <div class="calendar-block">
-                    <div class="calendar-date">Vrijdag 20 april</div><textarea class="calendar-text"></textarea>
-                </div>
-
-
-                <div class="calendar-block">
-                    <div class="calendar-date">Maandag 23 april</div><textarea class="calendar-text"></textarea>
-                </div>
-                <div class="calendar-block">
-                    <div class="calendar-date">Dinsdag 24 april</div><textarea class="calendar-text"></textarea>
-                </div>
-                <div class="calendar-block">
-                    <div class="calendar-date">Woensdag 25 april</div><textarea class="calendar-text"></textarea>
-                </div>
-                <div class="calendar-block">
-                    <div class="calendar-date">Donderdag 26 april</div><textarea class="calendar-text"></textarea>
-                </div>
-                <div class="calendar-block">
-                    <div class="calendar-date">Vrijdag 27 april</div><textarea class="calendar-text"></textarea>
-                </div>
-
-
-                <div class="calendar-block">
-                    <div class="calendar-date">Maandag 30 april</div><textarea class="calendar-text"></textarea>
-                </div>*@
             </div>
         </div>
     </div>

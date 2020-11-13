@@ -6,6 +6,7 @@ using Quintessence.QCandidate.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Quintessence.QCandidate.Contracts.Responses;
@@ -26,11 +27,13 @@ namespace Quintessence.QCandidate.Controllers
 
         private readonly IMediator _mediator;
         private readonly string _htmlStorageLocation;
+        private readonly string _pdfStorageLocation;
 
         public MemoProgramComponentsController(IMediator mediator, IOptionsMonitor<Settings> optionsMonitor)
         {
             _mediator = mediator;
             _htmlStorageLocation = optionsMonitor.CurrentValue.HtmlStorageLocation;
+            _pdfStorageLocation = optionsMonitor.CurrentValue.PdfStorageLocation;
         }
 
         [Route("{action}/{id}")]
@@ -48,21 +51,31 @@ namespace Quintessence.QCandidate.Controllers
             var basePath = Path.Combine(_htmlStorageLocation, simulationCombinationId.ToString());
             var language = HttpContext.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name;
             var functionDescription = System.IO.File.ReadAllText(Path.Combine(basePath, FunctionDescriptionsFolder, $"{language.ToUpperInvariant()}.html"));
-
-            var context = Path.Combine(basePath, ContextFolder, language.ToUpperInvariant(), $"{simulationCombinationId}.pdf");
+            
+            var context = Path.Combine(_pdfStorageLocation, language.ToUpperInvariant(), $"{simulationCombinationId}.pdf");
 
             var intro = System.IO.File.ReadAllText(Path.Combine(basePath, IntrosFolder, $"{language.ToUpperInvariant()}.html"));
-
-            var memos = GetTestMemoDto(id);
             
+            var memoProgramComponentDto = await _mediator.Send(new GetMemoProgramComponentBySimulationCombinationIdAndLanguageQuery(simulationCombinationId, language));
+            var memos = InjectContent(memoProgramComponentDto.Memos.ToList(), simulationCombinationId, language);
 
-            var model = new MemoProgramComponent(id,intro, functionDescription, context, memos, GetCalendarDays());
+            var calendarDays = memoProgramComponentDto.CalendarDays.ToList();
+
+            var model = new MemoProgramComponent(id,intro, functionDescription, context, memos, calendarDays);
 
             return View(model);
         }
+        
+        private List<MemoDto> InjectContent(List<MemoDto> memos, Guid simulationCombinationId, string language)
+        {
+            foreach (var memo in memos)
+            {
+                var path = Path.Combine(_htmlStorageLocation, simulationCombinationId.ToString(), MemosFolder, $"{memo.OriginPosition}_{language.ToUpperInvariant()}.html");
+                memo.Content = System.IO.File.ReadAllText(path);
+            }
 
-
-
+            return memos;
+        }
 
 
         //FOR TESTING ONLY
