@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 
 namespace Quintessence.QCandidate.Logic.Queries
 {
-    public class GetSimulationCombinationPdfByIdAndLanguageQueryHandler : IRequestHandler<GetSimulationCombinationPdfByIdAndLanguageQuery, FileStream>
+    public class GetContextPdfByIdAndLanguageQueryHandler : IRequestHandler<GetContextPdfByIdAndLanguageQuery, FileStream>
     {
         private readonly Settings _settings;
 
-        public GetSimulationCombinationPdfByIdAndLanguageQueryHandler(IOptionsMonitor<Settings> settings)
+        public GetContextPdfByIdAndLanguageQueryHandler(IOptionsMonitor<Settings> settings)
         {
             _settings = settings.CurrentValue;
         }
 
-        public Task<FileStream> Handle(GetSimulationCombinationPdfByIdAndLanguageQuery request, CancellationToken cancellationToken)
+        public Task<FileStream> Handle(GetContextPdfByIdAndLanguageQuery request, CancellationToken cancellationToken)
         {
             var filename = FileLocationHelper.GetPdfFileLocation(_settings.PdfStorageLocation, request.Id, request.Language);
 
-            if(File.Exists(filename))
+            if (File.Exists(filename))
             {
                 return Task.FromResult(new FileStream(filename, FileMode.Open));
             }

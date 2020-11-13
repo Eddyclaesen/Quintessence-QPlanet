@@ -10,8 +10,6 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Quintessence.QCandidate.Contracts.Responses;
-using Quintessence.QCandidate.Core.Domain;
-using Quintessence.QCandidate.Core.Queries;
 using MemoProgramComponent = Quintessence.QCandidate.Models.MemoProgramComponents.MemoProgramComponent;
 
 
@@ -21,7 +19,6 @@ namespace Quintessence.QCandidate.Controllers
     public class MemoProgramComponentsController : Controller
     {
         private const string FunctionDescriptionsFolder = "FunctionDescriptions";
-        private const string ContextFolder = "Context";
         private const string IntrosFolder = "Intros";
         private const string MemosFolder = "Memos";
 
@@ -51,8 +48,8 @@ namespace Quintessence.QCandidate.Controllers
             var basePath = Path.Combine(_htmlStorageLocation, simulationCombinationId.ToString());
             var language = HttpContext.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name;
             var functionDescription = System.IO.File.ReadAllText(Path.Combine(basePath, FunctionDescriptionsFolder, $"{language.ToUpperInvariant()}.html"));
-            
-            var context = Path.Combine(_pdfStorageLocation, language.ToUpperInvariant(), $"{simulationCombinationId}.pdf");
+
+            var contextId = Guid.Parse("5fa70b90-32d6-48fb-993c-0191d79da1c9");
 
             var intro = System.IO.File.ReadAllText(Path.Combine(basePath, IntrosFolder, $"{language.ToUpperInvariant()}.html"));
             
@@ -61,7 +58,7 @@ namespace Quintessence.QCandidate.Controllers
 
             var calendarDays = memoProgramComponentDto.CalendarDays.ToList();
 
-            var model = new MemoProgramComponent(id,intro, functionDescription, context, memos, calendarDays);
+            var model = new MemoProgramComponent(id,intro, functionDescription, contextId, memos, calendarDays);
 
             return View(model);
         }
