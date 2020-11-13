@@ -63,15 +63,25 @@
                         <div id="memo-list" class="list-group col">
                             @foreach (var item in Model.Memos.OrderBy(x => x.Position))
                             {
+                                var divClassNames = new List<string> { "list-group-item" };
                                 if (item.Position == 1)
                                 {
-                                    <div class="list-group-item active" onclick="openMemo(event, @item.OriginId)"> <span class="drag-icon"><i class="material-icons">drag_handle</i></span> <span class="truncate">@item.Title</span> <i class="material-icons">chevron_right</i></div>
+                                    divClassNames.Add("active");
                                 }
-                                else
-                                {
-                                    <div class="list-group-item" onclick="openMemo(event, @item.OriginId)"> <span class="drag-icon"><i class="material-icons">drag_handle</i></span> <span class="truncate">@item.Title</span> <i class="material-icons">chevron_right</i></div>
-                                }
-
+                                
+                                <div class="@string.Join(' ', divClassNames.ToArray())" onclick="openMemo(event, '@item.OriginId')"> 
+                                    <span class="drag-icon">
+                                        <i class="material-icons">
+                                            drag_handle
+                                        </i>
+                                    </span> 
+                                    <span class="truncate">
+                                        @item.Title
+                                    </span>
+                                    <i class="material-icons">
+                                        chevron_right
+                                    </i>
+                                </div>
                             }
                             @*<div class="list-group-item active" onclick="openMemo(event, 'memo1')"> <span class="drag-icon"><i class="material-icons">drag_handle</i></span> <span class="truncate">Maandelijkse vergadering</span> <i class="material-icons">chevron_right</i></div>
         <div class="list-group-item" onclick="openMemo(event, 'memo2')"> <span class="drag-icon"><i class="material-icons">drag_handle</i></span> <span class="truncate">Ons team</span> <i class="material-icons">chevron_right</i></div>
@@ -84,17 +94,14 @@
                 </div>
                 <div id="memos" class="col s9 memo-wrapper">
 
-                    @foreach (var item in Model.Memos.OrderBy(x => x.Position))
+                    @foreach (var memo in Model.Memos.OrderBy(x => x.Position))
                     {
-                        if (item.Position == 1)
+                        var classNames = new List<string> { "memo" };
+                        if (memo.Position == 1)
                         {
-                            <div id="@item.OriginId" class="memo active"> @Html.Raw(item.FilePath) </div>
+                            classNames.Add("active");
                         }
-                        else
-                        {
-                            <div id="@item.OriginId" class="memo"> @Html.Raw(item.FilePath) </div>
-                        }
-
+                        <div id="@memo.OriginId" class="@string.Join(' ', classNames.ToArray())"> @Html.Raw(memo.Content) </div>
                     }
                     @*<div id="memo1" class="memo active"><img src="img/1_nl.png" /></div>
         <div id="memo2" class="memo"><img src="img/2_nl.png" /></div>
