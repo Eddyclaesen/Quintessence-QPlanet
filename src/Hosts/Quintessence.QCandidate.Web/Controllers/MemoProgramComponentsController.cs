@@ -9,7 +9,8 @@ using System.IO;
 using System.Threading.Tasks;
 using Quintessence.QCandidate.Contracts.Responses;
 using MemoProgramComponent = Quintessence.QCandidate.Models.MemoProgramComponents.MemoProgramComponent;
-
+using System.Linq;
+using Quintessence.QCandidate.Models.MemoProgramComponents;
 
 namespace Quintessence.QCandidate.Controllers
 {
@@ -52,7 +53,7 @@ namespace Quintessence.QCandidate.Controllers
             var memos = GetTestMemoDto(id);
             
 
-            var model = new MemoProgramComponent(id,intro, functionDescription, contextId, memos, GetCalendarDays());
+            var model = new MemoProgramComponent(id,intro, functionDescription, contextId, memos.Select(m => new Memo(m.Id, m.Position, m.Title, m.Content)), GetCalendarDays());
 
             return View(model);
         }

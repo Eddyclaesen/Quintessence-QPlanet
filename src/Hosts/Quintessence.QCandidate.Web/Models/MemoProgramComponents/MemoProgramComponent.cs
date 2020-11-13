@@ -6,7 +6,7 @@ namespace Quintessence.QCandidate.Models.MemoProgramComponents
 {
     public class MemoProgramComponent
     {
-        public MemoProgramComponent(Guid id, string intro, string functionDescription, Guid contextId, IEnumerable<MemoDto> memos, IEnumerable<CalendarDayDto> calendarDays)
+        public MemoProgramComponent(Guid id, string intro, string functionDescription, Guid contextId, IEnumerable<Memo> memos, IEnumerable<CalendarDayDto> calendarDays)
         {
             Id = id;
             Intro = intro;
@@ -20,7 +20,7 @@ namespace Quintessence.QCandidate.Models.MemoProgramComponents
         public string Intro { get; }
         public string FunctionDescription { get; }
         public Guid ContextId { get; }
-        public IEnumerable<MemoDto> Memos { get; }
+        public IEnumerable<Memo> Memos { get; }
         public IEnumerable<CalendarDayDto> CalendarDays { get; }
     }
 }

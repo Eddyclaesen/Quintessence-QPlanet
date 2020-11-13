@@ -59,22 +59,22 @@
                     <h2>Memos</h2>
                     <div id="simple-list" class="row">
                         <div id="memo-list" class="list-group col">
-                            @foreach (var item in Model.Memos.OrderBy(x => x.Position))
+                            @foreach (var memo in Model.Memos.OrderBy(x => x.Position))
                             {
                                 var divClassNames = new List<string> { "list-group-item" };
-                                if (item.Position == 1)
+                                if (memo.Position == 1)
                                 {
                                     divClassNames.Add("active");
                                 }
                                 
-                                <div class="@string.Join(' ', divClassNames.ToArray())" onclick="openMemo(event, '@item.OriginId')"> 
+                                <div class="@string.Join(' ', divClassNames.ToArray())" onclick="openMemo(event, '@memo.Id')"> 
                                     <span class="drag-icon">
                                         <i class="material-icons">
                                             drag_handle
                                         </i>
                                     </span> 
                                     <span class="truncate">
-                                        @item.Title
+                                        @memo.Title
                                     </span>
                                     <i class="material-icons">
                                         chevron_right
@@ -99,7 +99,7 @@
                         {
                             classNames.Add("active");
                         }
-                        <div id="@memo.OriginId" class="@string.Join(' ', classNames.ToArray())"> @Html.Raw(memo.Content) </div>
+                        <div id="@memo.Id" class="@string.Join(' ', classNames.ToArray())"> @Html.Raw(memo.Content) </div>
                     }
                     @*<div id="memo1" class="memo active"><img src="img/1_nl.png" /></div>
         <div id="memo2" class="memo"><img src="img/2_nl.png" /></div>
