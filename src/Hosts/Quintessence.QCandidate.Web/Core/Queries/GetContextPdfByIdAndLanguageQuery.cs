@@ -4,9 +4,9 @@ using MediatR;
 
 namespace Quintessence.QCandidate.Core.Queries
 {
-    public class GetSimulationCombinationPdfByIdAndLanguageQuery : IRequest<FileStream>
+    public class GetContextPdfByIdAndLanguageQuery : IRequest<FileStream>
     {
-        public GetSimulationCombinationPdfByIdAndLanguageQuery(Guid id, string language)
+        public GetContextPdfByIdAndLanguageQuery(Guid id, string language)
         {
             Id = id;
             Language = language;

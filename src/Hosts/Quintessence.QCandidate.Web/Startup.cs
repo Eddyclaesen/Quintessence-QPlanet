@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -22,6 +23,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Quintessence.QCandidate.Infrastructure.EntityFrameworkCore.Commands;
 using Quintessence.QCandidate.Logic.Commands;
+using System.Security.Principal;
 
 namespace Quintessence.QCandidate
 {
