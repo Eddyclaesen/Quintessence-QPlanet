@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Quintessence.QCandidate.Contracts.Responses;
+using Quintessence.QCandidate.Core.Queries;
 using MemoProgramComponent = Quintessence.QCandidate.Models.MemoProgramComponents.MemoProgramComponent;
 
 
