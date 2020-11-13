@@ -1,6 +1,5 @@
 ﻿@using System.Globalization
 @using Microsoft.AspNetCore.Mvc.Localization
-@using System.IO
 
 @model Quintessence.QCandidate.Models.MemoProgramComponents.MemoProgramComponent
 
@@ -50,9 +49,8 @@
         <div id="functieomschrijving" class="col s12">
             @Html.Raw(Model.FunctionDescription)
         </div>
-        <div id="context" class="col s12">
-            
-            <iframe id="pdfFrame" src="@string.Concat(Model.Context, "#toolbar=0&navpanes=0")" width="100%" height="600px"></iframe>
+        <div id="context" class="col s12">           
+            <iframe id="pdfFrame" src="@string.Concat(Url.Action("GetPdf", "Contexts", new { contextId = Model.ContextId }), "#toolbar=0&navpanes=0")" width="100%" height="1075px"></iframe>
             @*<iframe id="pdfFrame" src="pdf/info.pdf#toolbar=0&navpanes=0" width="100%" height="600px"></iframe>*@
         </div>
         <div id="memos" class="col s12">
