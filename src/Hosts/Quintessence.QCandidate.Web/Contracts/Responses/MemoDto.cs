@@ -10,6 +10,6 @@ namespace Quintessence.QCandidate.Contracts.Responses
         public Guid OriginId { get; set; }
         public int OriginPosition { get; set; }
         public string Title { get; set; }
-        public string FilePath { get; set; }
+        public string Content { get; set; }
     }
 }

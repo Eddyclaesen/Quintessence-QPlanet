@@ -68,7 +68,7 @@ namespace Quintessence.QCandidate.Controllers
         //FOR TESTING ONLY
         private List<MemoDto> GetTestMemoDto(Guid id)
         {
-            var basePath = "C:\\temp\\HTML\\01FBB298-AE9A-4BFF-BD9A-A2750FF5A0B5\\Memos";
+            var basePath = Path.Combine(_htmlStorageLocation, "01FBB298-AE9A-4BFF-BD9A-A2750FF5A0B5", MemosFolder);
             DirectoryInfo d = new DirectoryInfo(basePath);
             var language = "nl";
 
@@ -78,7 +78,7 @@ namespace Quintessence.QCandidate.Controllers
             foreach (FileInfo file in Files)
             {
                 var memoDto = new MemoDto();
-                memoDto.FilePath = System.IO.File.ReadAllText(file.FullName);
+                memoDto.Content = System.IO.File.ReadAllText(file.FullName);
                 memoDto.Id = Guid.NewGuid();
                 memoDto.MemoProgramId = id;
                 memoDto.OriginId = Guid.NewGuid();
