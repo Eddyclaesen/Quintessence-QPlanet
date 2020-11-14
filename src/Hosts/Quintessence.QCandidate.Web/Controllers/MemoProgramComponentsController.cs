@@ -21,7 +21,6 @@ namespace Quintessence.QCandidate.Controllers
         [Route("{action}/{id}")]
         public async Task<IActionResult> Details(Guid id)
         {
-            id = Guid.Parse("DED8D11A-B0F4-42F7-947E-B9EEE2013EDB");
             var language = HttpContext.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name;
 
             var model = await _mediator.Send(new GetMemoProgramComponentByIdAndLanguageQuery(id, Language.FromCode(language)));

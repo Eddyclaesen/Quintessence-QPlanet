@@ -485,6 +485,7 @@ SELECT
        MPC.[Id],
        MPC.[SimulationCombinationId],
        ST.[Name],
+       PC.[Start],
        --Memo
        M.[Id], 
        M.[Position], 
@@ -500,6 +501,8 @@ FROM [QCandidate].[MemoProgramComponents] MPC WITH (NOLOCK)
     INNER JOIN dbo.[SimulationTranslation] ST WITH (NOLOCK)
 			ON ST.[SimulationId] = SC.[SimulationId]
                 AND ST.[LanguageId] = @languageId
+    INNER JOIN dbo.[ProgramComponent] PC WITH (NOLOCK)
+        ON PC.[Id] = MPC.[Id]
     INNER JOIN QCandidate.Memos M WITH (NOLOCK)
         ON M.[MemoProgramComponentId] = MPC.[Id]
 	INNER JOIN [dbo].[SimulationCombinationMemos] SCM WITH (NOLOCK)

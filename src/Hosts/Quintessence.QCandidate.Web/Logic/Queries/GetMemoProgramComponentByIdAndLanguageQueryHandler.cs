@@ -49,6 +49,7 @@ namespace Quintessence.QCandidate.Logic.Queries
             return new MemoProgramComponent(
                 query.Id,
                 memoProgramComponentDto.Name,
+                memoProgramComponentDto.Start,
                 intro,
                 functionDescription,
                 contextId,
@@ -113,6 +114,7 @@ namespace Quintessence.QCandidate.Logic.Queries
 
             public Guid SimulationCombinationId { get; set; }
             public string Name { get; set; }
+            public DateTime Start { get; set; }
             public List<MemoDto> Memos { get; set; }
             public List<CalendarDayDto> CalendarDays { get; set; }
         }

@@ -11,112 +11,121 @@
 
 <div class="container">
     <div class="context">
-        <a href="index.html" class="btn">Onderdeel afsluiten</a>
+        <a href="index.html" class="btn">@Localizer["Quit"]</a>
         <h1>@Html.DisplayFor(m => Model.Name)</h1>
     </div>
 </div>
 
-<div class="row assessment-tabs">
-    <div class="tab-wrapper">
-        <div class="container">
-            <ul class="tabs">
-                <li class="tab col s2"><a class="active" href="#inleiding">Inleiding</a></li>
-                <li class="tab col s3"><a href="#functieomschrijving">Functieomschrijving</a></li>
-                <li class="tab col s2"><a href="#context">Context</a></li>
-                <li class="tab col s2"><a href="#memos">Memos</a></li>
-                <li class="tab col s2"><a href="#agenda">Agenda</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="container assessment-content">
-
-
-        <!-- Inleiding -->
-        <div id="inleiding" class="col s12">
-
-            <!-- Nieuwe inleiding -->
-            @*<div class="block-new"></div>*@
-            <div >
-                @Html.Raw(Model.Intro)
+@if (Model.CanShowContent)
+{
+    <div class="row assessment-tabs">
+        <div class="tab-wrapper">
+            <div class="container">
+                <ul class="tabs">
+                    <li class="tab col s2"><a class="active" href="#intros">@Localizer["Introduction"]</a></li>
+                    <li class="tab col s3"><a href="#functiondescription">@Localizer["FunctionDescription"]</a></li>
+                    <li class="tab col s2"><a href="#context">@Localizer["Context"]</a></li>
+                    <li class="tab col s2"><a href="#memos">@Localizer["Memos"]</a></li>
+                    <li class="tab col s2"><a href="#agenda">@Localizer["Agenda"]</a></li>
+                </ul>
             </div>
-           
         </div>
+        <div class="container assessment-content">
 
-        <!-- Functieomschrijving -->
-        <div id="functieomschrijving" class="col s12">
-            @Html.Raw(Model.FunctionDescription)
-        </div>
-        <div id="context" class="col s12">           
-            <iframe id="pdfFrame" src="@string.Concat(Url.Action("GetPdf", "Contexts", new { contextId = Model.ContextId }), "#toolbar=0&navpanes=0")" width="100%" height="1075px"></iframe>
-            @*<iframe id="pdfFrame" src="pdf/info.pdf#toolbar=0&navpanes=0" width="100%" height="600px"></iframe>*@
-        </div>
-        <div id="memos" class="col s12">
-            <div class="row">
-                <div class="col s3">
-                    <h2>Memos</h2>
-                    <div id="simple-list" class="row">
-                        <div id="memo-list" class="list-group col">
-                            @foreach (var memo in Model.Memos.OrderBy(x => x.Position))
-                            {
-                                var divClassNames = new List<string> { "list-group-item" };
-                                if (memo.Position == 1)
+            <div id="intros" class="col s12">
+
+                <!-- Nieuwe inleiding -->
+                @*<div class="block-new"></div>*@
+                <div>
+                    @Html.Raw(Model.Intro)
+                </div>
+
+            </div>
+
+            <!-- Functieomschrijving -->
+            <div id="functiondescription" class="col s12">
+                @Html.Raw(Model.FunctionDescription)
+            </div>
+            <div id="context" class="col s12">
+                <iframe id="pdfFrame" src="@string.Concat(Url.Action("GetPdf", "Contexts", new { contextId = Model.ContextId }), "#toolbar=0&navpanes=0")" width="100%" height="1075px"></iframe>
+                @*<iframe id="pdfFrame" src="pdf/info.pdf#toolbar=0&navpanes=0" width="100%" height="600px"></iframe>*@
+            </div>
+            <div id="memos" class="col s12">
+                <div class="row">
+                    <div class="col s3">
+                        <h2>Memos</h2>
+                        <div id="simple-list" class="row">
+                            <div id="memo-list" class="list-group col">
+                                @foreach (var memo in Model.Memos.OrderBy(x => x.Position))
                                 {
-                                    divClassNames.Add("active");
-                                }
-                                
-                                <div class="@string.Join(' ', divClassNames.ToArray())" onclick="openMemo(event, '@memo.Id')"> 
-                                    <span class="drag-icon">
-                                        <i class="material-icons">
-                                            drag_handle
-                                        </i>
-                                    </span> 
-                                    <span class="truncate">
-                                        @memo.Title
-                                    </span>
-                                    <i class="material-icons">
-                                        chevron_right
-                                    </i>
-                                </div>
-                            }
+                                    var divClassNames = new List<string> { "list-group-item" };
+                                    if (memo.Position == 1)
+                                    {
+                                        divClassNames.Add("active");
+                                    }
 
+                                    <div class="@string.Join(' ', divClassNames.ToArray())" onclick="openMemo(event, '@memo.Id')">
+                                        <span class="drag-icon">
+                                            <i class="material-icons">
+                                                drag_handle
+                                            </i>
+                                        </span>
+                                        <span class="truncate">
+                                            @memo.Title
+                                        </span>
+                                        <i class="material-icons">
+                                            chevron_right
+                                        </i>
+                                    </div>
+                                }
+
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div id="memos" class="col s9 memo-wrapper">
+                    <div id="memos" class="col s9 memo-wrapper">
 
-                    @foreach (var memo in Model.Memos.OrderBy(x => x.Position))
-                    {
-                        var classNames = new List<string> { "memo" };
-                        if (memo.Position == 1)
+                        @foreach (var memo in Model.Memos.OrderBy(x => x.Position))
                         {
-                            classNames.Add("active");
+                            var classNames = new List<string> { "memo" };
+                            if (memo.Position == 1)
+                            {
+                                classNames.Add("active");
+                            }
+                            <div id="@memo.Id" class="@string.Join(' ', classNames.ToArray())"> @Html.Raw(memo.Content) </div>
                         }
-                        <div id="@memo.Id" class="@string.Join(' ', classNames.ToArray())"> @Html.Raw(memo.Content) </div>
+
+                    </div>
+                </div>
+            </div>
+            <div id="agenda" class="col s12">
+                <h2>Agenda</h2>
+                <div class="calendar">
+                    @foreach (var calendarDay in Model.CalendarDays.OrderBy(x => x.Day))
+                    {
+                        var culture = new CultureInfo("nl");
+                        <div class="calendar-block">
+                            <div class="calendar-date">
+                                @calendarDay.Day.ToString("D", culture)
+                            </div>
+                            <textarea class="calendar-text">
+                            @calendarDay.Note
+                        </textarea>
+                        </div>
                     }
 
                 </div>
             </div>
         </div>
-        <div id="agenda" class="col s12">
-            <h2>Agenda</h2>
-            <div class="calendar">
-                @foreach (var calendarDay in Model.CalendarDays.OrderBy(x => x.Day))
-                {
-                    var culture = new CultureInfo("nl");
-                    <div class="calendar-block">
-                        <div class="calendar-date">
-                            @calendarDay.Day.ToString("D", culture)
-                        </div>
-                        <textarea class="calendar-text">
-                            @calendarDay.Note
-                        </textarea>
-                    </div>
-                }
-
-            </div>
+    </div>
+}
+else
+{
+    <div class="container noaccess">
+        <div class="content">
+            @Localizer["NoAccessYet"]
         </div>
     </div>
-</div>
+}
 
 
 @section Scripts {
