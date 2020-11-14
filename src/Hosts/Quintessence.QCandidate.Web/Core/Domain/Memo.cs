@@ -9,9 +9,8 @@ namespace Quintessence.QCandidate.Core.Domain
         {
         }
 
-        public Memo(Guid memoProgramComponentId, int position, Guid originId)
+        public Memo(int position, Guid originId)
         {
-            MemoProgramComponentId = memoProgramComponentId;
             Position = position;
             OriginId = originId;
         }

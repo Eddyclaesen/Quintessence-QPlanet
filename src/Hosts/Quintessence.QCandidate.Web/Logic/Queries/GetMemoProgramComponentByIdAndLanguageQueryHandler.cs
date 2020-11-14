@@ -13,7 +13,8 @@ namespace Quintessence.QCandidate.Logic.Queries
 {
     public class GetMemoProgramComponentByIdAndLanguageQueryHandler : DapperQueryHandler<GetMemoProgramComponentByIdAndLanguageQuery, MemoProgramComponentDto>
     {
-        public GetMemoProgramComponentByIdAndLanguageQueryHandler(IDbConnectionFactory dbConnectionFactory) : base(dbConnectionFactory)
+        public GetMemoProgramComponentByIdAndLanguageQueryHandler(IDbConnectionFactory dbConnectionFactory) 
+            : base(dbConnectionFactory)
         {
         }
 
