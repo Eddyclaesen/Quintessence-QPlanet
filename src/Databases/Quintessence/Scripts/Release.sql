@@ -411,11 +411,11 @@ WHERE
 ORDER BY
 	prc.Start,
 	prc.[End]
+GO
 
 
 
-
-
+GO
 CREATE TABLE [QCandidate].[MemoProgramComponents]
 (
 	[Id] UNIQUEIDENTIFIER NOT NULL,  
@@ -429,9 +429,9 @@ CREATE TABLE [QCandidate].[MemoProgramComponents]
     CONSTRAINT [PK_MemoProgramComponents] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_MemoProgramComponents_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id])
 )
+GO
 
-
-
+GO
 CREATE TABLE [QCandidate].[CalendarDays]
 (
 	[Id] UNIQUEIDENTIFIER NOT NULL, 
@@ -452,7 +452,7 @@ CREATE CLUSTERED INDEX IX_CalendarDays_MemoProgramComponentId ON [QCandidate].[C
 
 GO
 
-
+GO
 CREATE TABLE [QCandidate].[Memos]
 (
 	[Id] UNIQUEIDENTIFIER NOT NULL, 
@@ -468,10 +468,46 @@ CREATE TABLE [QCandidate].[Memos]
     CONSTRAINT [FK_Memos_MemoProgramComponents] FOREIGN KEY ([MemoProgramComponentId]) REFERENCES [QCandidate].[MemoProgramComponents] ([Id]),
     CONSTRAINT [FK_Memos_SimulationCombinationMemos] FOREIGN KEY ([OriginId]) REFERENCES [dbo].[SimulationCombinationMemos] ([Id])
 )
-
 GO
 
 CREATE CLUSTERED INDEX IX_Memos_MemoProgramComponentId ON [QCandidate].[Memos] ([MemoProgramComponentId]);
-
 GO
 
+GO
+CREATE PROCEDURE [QCandidate].[MemoProgramComponent_GetByIdAndLanguage]
+	@id UNIQUEIDENTIFIER,
+    @languageId INT
+AS
+
+SET NOCOUNT ON;
+
+SELECT
+       MPC.[Id],
+       MPC.[SimulationCombinationId],
+       ST.[Name],
+       --Memo
+       M.[Id], 
+       M.[Position], 
+       SCM.Position AS [OriginPosition], 
+       SCMT.Title AS [Title],
+       --CalendarDay
+       CD.[Id], 
+       CD.[Day], 
+       CD.[Note]
+FROM [QCandidate].[MemoProgramComponents] MPC WITH (NOLOCK)
+    INNER JOIN dbo.[SimulationCombination] SC WITH (NOLOCK)
+        ON SC.[Id] = MPC.[SimulationCombinationId]
+    INNER JOIN dbo.[SimulationTranslation] ST WITH (NOLOCK)
+			ON ST.[SimulationId] = SC.[SimulationId]
+                AND ST.[LanguageId] = @languageId
+    INNER JOIN QCandidate.Memos M WITH (NOLOCK)
+        ON M.[MemoProgramComponentId] = MPC.[Id]
+	INNER JOIN [dbo].[SimulationCombinationMemos] SCM WITH (NOLOCK)
+		ON SCM.[Id] = M.[OriginId]
+    INNER JOIN [dbo].[SimulationCombinationMemoTranslations] SCMT WITH (NOLOCK)
+        ON SCMT.[SimulationCombinationMemoId] = M.[OriginId]
+            AND SCMT.[LanguageId] = @languageId
+    INNER JOIN [QCandidate].[CalendarDays] CD WITH (NOLOCK)
+        ON CD.[MemoProgramComponentId] =  MPC.[Id]
+WHERE MPC.Id = @id
+GO

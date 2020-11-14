@@ -8,6 +8,7 @@ SET NOCOUNT ON;
 SELECT
        MPC.[Id],
        MPC.[SimulationCombinationId],
+       ST.[Name],
        --Memo
        M.[Id], 
        M.[Position], 
@@ -17,14 +18,19 @@ SELECT
        CD.[Id], 
        CD.[Day], 
        CD.[Note]
-FROM [QCandidate].[MemoProgramComponents] MPC
-    INNER JOIN QCandidate.Memos M
+FROM [QCandidate].[MemoProgramComponents] MPC WITH (NOLOCK)
+    INNER JOIN dbo.[SimulationCombination] SC WITH (NOLOCK)
+        ON SC.[Id] = MPC.[SimulationCombinationId]
+    INNER JOIN dbo.[SimulationTranslation] ST WITH (NOLOCK)
+			ON ST.[SimulationId] = SC.[SimulationId]
+                AND ST.[LanguageId] = @languageId
+    INNER JOIN QCandidate.Memos M WITH (NOLOCK)
         ON M.[MemoProgramComponentId] = MPC.[Id]
-	INNER JOIN [dbo].[SimulationCombinationMemos] SCM
+	INNER JOIN [dbo].[SimulationCombinationMemos] SCM WITH (NOLOCK)
 		ON SCM.[Id] = M.[OriginId]
-    INNER JOIN [dbo].[SimulationCombinationMemoTranslations] SCMT
+    INNER JOIN [dbo].[SimulationCombinationMemoTranslations] SCMT WITH (NOLOCK)
         ON SCMT.[SimulationCombinationMemoId] = M.[OriginId]
             AND SCMT.[LanguageId] = @languageId
-    INNER JOIN [QCandidate].[CalendarDays] CD
+    INNER JOIN [QCandidate].[CalendarDays] CD WITH (NOLOCK)
         ON CD.[MemoProgramComponentId] =  MPC.[Id]
 WHERE MPC.Id = @id
