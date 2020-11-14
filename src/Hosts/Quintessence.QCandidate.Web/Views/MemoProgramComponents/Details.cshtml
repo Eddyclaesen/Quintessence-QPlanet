@@ -12,7 +12,7 @@
 
 <div class="container">
     <div class="context">
-        @Html.ActionLink(Localizer["Quit"], nameof(AssessmentsController.Get), "Assessments", null, new { @class = "btn" })
+        @Html.ActionLink(Localizer["Quit"].Value, nameof(AssessmentsController.Get), "Assessments", null, new { @class = "btn" })
         <h1>@Html.DisplayFor(m => Model.Name)</h1>
     </div>
 </div>
