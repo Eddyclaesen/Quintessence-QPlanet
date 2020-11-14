@@ -514,3 +514,18 @@ FROM [QCandidate].[MemoProgramComponents] MPC WITH (NOLOCK)
         ON CD.[MemoProgramComponentId] =  MPC.[Id]
 WHERE MPC.Id = @id
 GO
+
+GO
+CREATE PROCEDURE [dbo].[SimulationCombinationMemo_GetAllBySimulationCombinationId]
+	@simulationCombinationId UNIQUEIDENTIFIER
+AS
+
+SET NOCOUNT ON
+
+SELECT
+	[Id],
+	[SimulationCombinationId],
+	[Position]
+FROM [dbo].[SimulationCombinationMemos]
+WHERE [SimulationCombinationId] = @simulationCombinationId
+GO

@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Quintessence.QCandidate.Contracts.Responses;
+using Quintessence.QCandidate.Core.Commands;
 using Quintessence.QCandidate.Core.Domain;
 using Quintessence.QCandidate.Core.Queries;
 using Quintessence.QCandidate.Models.Assessments;
@@ -29,7 +30,6 @@ namespace Quintessence.QCandidate.Controllers
             var candidateId = new Guid(candidateIdClaim.Value);
             var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateAndLanguageQuery(candidateId, DateTime.Now, CultureInfo.CurrentCulture.ToString()));
             
-
             Assessment assessment = null;
             if (assessmentDto != null)
             {
@@ -59,17 +59,24 @@ namespace Quintessence.QCandidate.Controllers
                     var assessors = GetAssessorsString(programComponent.LeadAssessor, programComponent.CoAssessor);
                     QCandidateLayout qCandidateLayout = Enumeration.FromId<QCandidateLayout>(programComponent.QCandidateLayoutId);
 
-                    var showDetailsLink = qCandidateLayout != QCandidateLayout.None && programComponent.Start.Date == DateTime.Now;
+                    var showDetailsLink = qCandidateLayout != QCandidateLayout.None; //&& programComponent.Start.Date == DateTime.Now;
 
                     if (qCandidateLayout == QCandidateLayout.Pdf)
                     {
                         showDetailsLink = await _mediator.Send(new HasSimulationCombinationPdfByIdAndLanguageQuery(programComponent.SimulationCombinationId.Value, language));
                     }
 
+                    if (qCandidateLayout == QCandidateLayout.Memo)
+                    {
+                        await _mediator.Send(new CreateMemoProgramComponentIfNotExistsCommand(
+                                                        programComponent.Id,
+                                                        new Guid(User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId").Value),
+                                                        //programComponent.SimulationCombinationId.Value));
+                                                        Guid.Parse("01FBB298-AE9A-4BFF-BD9A-A2750FF5A0B5")));
+                    }
+
                     var programComponentModel = new ProgramComponent(programComponent.Id, title, location, showDetailsLink, assessors, programComponent.Start, programComponent.End, qCandidateLayout);
                     result.Add(programComponentModel);
-
-
                 }
             }
 

@@ -18,6 +18,7 @@ namespace Quintessence.QCandidate.Controllers
             _mediator = mediator;
         }
 
+        [HttpGet]
         [Route("{action}/{id}")]
         public async Task<IActionResult> Details(Guid id)
         {
