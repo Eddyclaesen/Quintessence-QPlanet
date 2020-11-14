@@ -1,11 +1,11 @@
 ﻿using System;
 using MediatR;
-using Quintessence.QCandidate.Contracts.Responses;
 using Quintessence.QCandidate.Core.Domain;
+using MemoProgramComponent = Quintessence.QCandidate.Models.MemoProgramComponents.MemoProgramComponent;
 
 namespace Quintessence.QCandidate.Core.Queries
 {
-    public class GetMemoProgramComponentByIdAndLanguageQuery : IRequest<MemoProgramComponentDto>
+    public class GetMemoProgramComponentByIdAndLanguageQuery : IRequest<MemoProgramComponent>
     {
         public GetMemoProgramComponentByIdAndLanguageQuery(Guid id, Language language)
         {
