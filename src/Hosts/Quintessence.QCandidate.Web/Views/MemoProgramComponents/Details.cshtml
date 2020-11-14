@@ -1,5 +1,6 @@
 ﻿@using System.Globalization
 @using Microsoft.AspNetCore.Mvc.Localization
+@using Quintessence.QCandidate.Controllers 
 
 @model Quintessence.QCandidate.Models.MemoProgramComponents.MemoProgramComponent
 
@@ -11,7 +12,7 @@
 
 <div class="container">
     <div class="context">
-        <a href="index.html" class="btn">Onderdeel afsluiten</a>
+        @Html.ActionLink("Onderdeel afsluiten", nameof(AssessmentsController.Get), "Assessments", null, new { @class = "btn" })
         <h1>Assessment</h1>
     </div>
 </div>
