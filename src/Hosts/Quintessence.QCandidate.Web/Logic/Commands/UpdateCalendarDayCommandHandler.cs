@@ -20,9 +20,15 @@ namespace Quintessence.QCandidate.Logic.Commands
         {
             var memoProgram = await _repository.FindAsync(request.MemoProgramComponentId);
 
+            
+
             foreach (var calendarDay in memoProgram.CalendarDays)
             {
-                calendarDay.Update(request.Note);
+                if (calendarDay.Id == request.CalendarDayId)
+                {
+                    calendarDay.Update(request.Note);
+                }
+                
             }
 
             await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);

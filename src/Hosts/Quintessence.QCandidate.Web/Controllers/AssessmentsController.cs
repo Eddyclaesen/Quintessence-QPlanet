@@ -25,11 +25,14 @@ namespace Quintessence.QCandidate.Controllers
 
         public async Task<IActionResult> Get()
         {
-            var candidateIdClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId");
-            var candidateId = new Guid(candidateIdClaim.Value);
-            var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateAndLanguageQuery(candidateId, DateTime.Now, CultureInfo.CurrentCulture.ToString()));
-            
+            //var candidateIdClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId");
+            //var candidateId = new Guid(candidateIdClaim.Value);
+            //var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateAndLanguageQuery(candidateId, DateTime.Now, CultureInfo.CurrentCulture.ToString()));
 
+            var candidateId = new Guid("7E6A3147-E23F-487D-AD4E-8608C199EF07");
+            var manipulatedDate = new DateTime(2020, 9, 29);
+            var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateAndLanguageQuery(candidateId, manipulatedDate, CultureInfo.CurrentCulture.ToString()));
+            
             Assessment assessment = null;
             if (assessmentDto != null)
             {
@@ -59,7 +62,7 @@ namespace Quintessence.QCandidate.Controllers
                     var assessors = GetAssessorsString(programComponent.LeadAssessor, programComponent.CoAssessor);
                     QCandidateLayout qCandidateLayout = Enumeration.FromId<QCandidateLayout>(programComponent.QCandidateLayoutId);
 
-                    var showDetailsLink = qCandidateLayout != QCandidateLayout.None && programComponent.Start.Date == DateTime.Now;
+                    var showDetailsLink = qCandidateLayout != QCandidateLayout.None;// && programComponent.Start.Date == DateTime.Now;
 
                     if (qCandidateLayout == QCandidateLayout.Pdf)
                     {

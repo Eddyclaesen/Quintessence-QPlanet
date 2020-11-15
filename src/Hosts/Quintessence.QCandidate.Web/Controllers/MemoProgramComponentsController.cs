@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Quintessence.QCandidate.Configuration;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Quintessence.QCandidate.Contracts.Responses;
+using Quintessence.QCandidate.Core.Commands;
 using Quintessence.QCandidate.Core.Queries;
 using MemoProgramComponent = Quintessence.QCandidate.Models.MemoProgramComponents.MemoProgramComponent;
 using Quintessence.QCandidate.Core.Domain;
@@ -30,6 +32,7 @@ namespace Quintessence.QCandidate.Controllers
         {
             _mediator = mediator;
             _htmlStorageLocation = optionsMonitor.CurrentValue.HtmlStorageLocation;
+
         }
 
         [Route("{action}/{id}")]
@@ -37,7 +40,7 @@ namespace Quintessence.QCandidate.Controllers
         {
             id = Guid.Parse("DED8D11A-B0F4-42F7-947E-B9EEE2013EDB");
             var language = HttpContext.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name;
-
+            
             var memoProgramComponentDto = await _mediator.Send(new GetMemoProgramComponentByIdAndLanguageQuery(id, Language.FromCode(language)));
 
             var basePath = Path.Combine(_htmlStorageLocation, memoProgramComponentDto.SimulationCombinationId.ToString());
@@ -59,6 +62,31 @@ namespace Quintessence.QCandidate.Controllers
 
             return View(model);
         }
+
+        [Route("{id}/memos")]
+        [HttpPost]
+        public async Task<IActionResult> ChangeMemoPosition(Guid id, List<Memo> memos)
+        {
+            var dict = new Dictionary<Guid, int>();
+            foreach (var memo in memos)
+            {
+                dict.Add(memo.Id, memo.Position);
+            }
+            var memosToUpdate = new ChangeMemosPositionCommand(id, dict);
+            await _mediator.Send(memosToUpdate);
+            return Ok();
+        }
+
+        [Route("{id}/calendarDays/{calendarDayId}")]
+        [HttpPost]
+        public async Task<IActionResult> UpdateCalendarDay(Guid id, Guid calendarDayId, string note)
+        {
+            var memo = new UpdateCalendarDayCommand(id, calendarDayId, note);
+            await _mediator.Send(memo);
+            return Ok();
+        }
+
+
         private string GetMemoContent(Guid simulationCombinationId, MemoDto memo, string language)
         {
             var file = Path.Combine(_htmlStorageLocation, simulationCombinationId.ToString(), MemosFolder, $"{memo.OriginPosition}_{language.ToUpperInvariant()}.html");

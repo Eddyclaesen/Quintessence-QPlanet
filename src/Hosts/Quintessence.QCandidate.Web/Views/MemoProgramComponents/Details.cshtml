@@ -9,6 +9,8 @@
     <link href="/css/memoprogramcomponentdetails.css" rel="stylesheet" />
 }
 
+<input type="hidden" id="memoProgramComponentId" value="@Model.Id" />
+
 <div class="container">
     <div class="context">
         <a href="index.html" class="btn">Onderdeel afsluiten</a>
@@ -102,12 +104,11 @@
             <div class="calendar">
                 @foreach (var calendarDay in Model.CalendarDays.OrderBy(x => x.Day))
                 {
-                    var culture = new CultureInfo("nl");
                     <div class="calendar-block">
                         <div class="calendar-date">
-                            @calendarDay.Day.ToString("D", culture)
+                            @calendarDay.Day.ToString("D", CultureInfo.CurrentUICulture)
                         </div>
-                        <textarea class="calendar-text">
+                        <textarea class="calendar-text" onblur="saveCalendarDay(event, '@calendarDay.Id')" id="@calendarDay.Id">
                             @calendarDay.Note
                         </textarea>
                     </div>
@@ -122,18 +123,21 @@
 @section Scripts {
 
     <script src="~/js/Sortable.js"></script>
+    <script src="~/js/memoProgramComponent.js" type="text/javascript" ></script>
 
     <script>
         var el = document.getElementsByClassName("tabs")[0];
         var instance = M.Tabs.init(el);
+        
 
         var memos = document.getElementById('memo-list');
 
         // Example 1 - Simple list
-        new Sortable(memos, {
-            animation: 150,
-            ghostClass: 'ghost-background-class'
-        });
+        new Sortable(memos,
+            {
+                animation: 150,
+                ghostClass: 'ghost-background-class'
+            });
 
         function openMemo(evt, memoName) {
             var i, tabcontent, tablinks;
@@ -153,6 +157,9 @@
 
             document.getElementById(memoName).style.display = "block";
             evt.currentTarget.className += " active";
-        }
+        };
+
+        
+
     </script>
 }
