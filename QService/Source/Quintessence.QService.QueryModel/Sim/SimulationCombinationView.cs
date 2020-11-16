@@ -30,5 +30,8 @@ namespace Quintessence.QService.QueryModel.Sim
 
         [DataMember] 
         public int QCandidateLayoutId { get; set; }
+
+        [DataMember] 
+        public Guid? PredecessorId { get; set; }
     }
 }

@@ -47,6 +47,9 @@ namespace Quintessence.QPlanet.ViewModel.Sim
         [Display(Name = "QCandidateLayout")] 
         public int QCandidateLayoutId { get; set; }
 
+        [Display(Name = "Predecessor")] 
+        public Guid? PredecessorId { get; set; }
+
         public IList<SimulationLanguageModel> SimulationLanguages { get; set; }
 
         public string SimulationSetName { get; set; }
@@ -67,6 +70,8 @@ namespace Quintessence.QPlanet.ViewModel.Sim
                 Text = ss.Name
             });  }
         }
+
+        //public IEnumerable<SelectListItem> Predecessors { get; set; }
 
         public IEnumerable<SimulationDepartmentView> SimulationDepartments { get; set; }
 
@@ -105,5 +110,7 @@ namespace Quintessence.QPlanet.ViewModel.Sim
         {
             get { return Simulations.Select(s => new SimulationSelectListItemModel(s)); }
         }
+
+        
     }
 }

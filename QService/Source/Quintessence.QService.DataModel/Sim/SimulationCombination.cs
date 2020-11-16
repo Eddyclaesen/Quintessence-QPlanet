@@ -20,7 +20,7 @@ namespace Quintessence.QService.DataModel.Sim
 
         public int QCandidateLayoutId { get; set; }
 
-        public Guid PredecessorId { get; set; }
+        public Guid? PredecessorId { get; set; }
 
 
 
