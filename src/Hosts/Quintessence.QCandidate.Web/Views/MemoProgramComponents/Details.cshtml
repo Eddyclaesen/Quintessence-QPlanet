@@ -1,6 +1,6 @@
 ﻿@using System.Globalization
 @using Microsoft.AspNetCore.Mvc.Localization
-@using Quintessence.QCandidate.Controllers 
+@using Quintessence.QCandidate.Controllers
 
 @model Quintessence.QCandidate.Models.MemoProgramComponents.MemoProgramComponent
 
@@ -67,7 +67,7 @@
                                         divClassNames.Add("active");
                                     }
 
-                                    <div class="@string.Join(' ', divClassNames.ToArray())" onclick="openMemo(event, '@memo.Id')">
+                                    <div class="@string.Join(' ', divClassNames.ToArray())" onclick="openMemo(event, '@memo.Id')" id="@memo.Id">
                                         <span class="drag-icon">
                                             <i class="material-icons">
                                                 drag_handle
@@ -97,25 +97,26 @@
                             <div id="@memo.Id" class="@string.Join(' ', classNames.ToArray())"> @Html.Raw(memo.Content) </div>
                         }
 
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="agenda" class="col s12">
-            <h2>Agenda</h2>
-            <div class="calendar">
-                @foreach (var calendarDay in Model.CalendarDays.OrderBy(x => x.Day))
-                {
-                    <div class="calendar-block">
-                        <div class="calendar-date">
-                            @calendarDay.Day.ToString("D", CultureInfo.CurrentUICulture)
-                        </div>
-                        <textarea class="calendar-text" onblur="saveCalendarDay(event, '@calendarDay.Id')" id="@calendarDay.Id">
+            <div id="agenda" class="col s12">
+                <h2>Agenda</h2>
+                <div class="calendar">
+                    @foreach (var calendarDay in Model.CalendarDays.OrderBy(x => x.Day))
+                    {
+                        <div class="calendar-block">
+                            <div class="calendar-date">
+                                @calendarDay.Day.ToString("D", CultureInfo.CurrentUICulture)
+                            </div>
+                            <textarea class="calendar-text" onblur="saveCalendarDay(event, '@calendarDay.Id')" id="@calendarDay.Id">
                             @calendarDay.Note
                         </textarea>
                         </div>
                     }
 
                 </div>
+                
             </div>
         </div>
     </div>
@@ -133,12 +134,12 @@ else
 @section Scripts {
 
     <script src="~/js/Sortable.js"></script>
-    <script src="~/js/memoProgramComponent.js" type="text/javascript" ></script>
+    <script src="~/js/memoProgramComponent.js" type="text/javascript"></script>
 
     <script>
         var el = document.getElementsByClassName("tabs")[0];
         var instance = M.Tabs.init(el);
-        
+
 
         var memos = document.getElementById('memo-list');
 
@@ -146,7 +147,10 @@ else
         new Sortable(memos,
             {
                 animation: 150,
-                ghostClass: 'ghost-background-class'
+                ghostClass: 'ghost-background-class',
+                onSort: function (/**Event*/ evt) {
+                    saveMemos();
+                },                    
             });
 
         function openMemo(evt, memoName) {
@@ -169,7 +173,8 @@ else
             evt.currentTarget.className += " active";
         };
 
-        
+
+
 
     </script>
 }

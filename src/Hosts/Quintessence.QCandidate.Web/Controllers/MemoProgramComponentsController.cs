@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
+using Quintessence.QCandidate.Core.Commands;
 using Quintessence.QCandidate.Core.Queries;
 using Quintessence.QCandidate.Core.Domain;
 
@@ -31,7 +34,7 @@ namespace Quintessence.QCandidate.Controllers
 
         [Route("{id}/memos")]
         [HttpPost]
-        public async Task<IActionResult> ChangeMemoPosition(Guid id, List<Memo> memos)
+        public async Task<IActionResult> ChangeMemoPosition(Guid id, [FromBody]List<Models.MemoProgramComponents.Memo> memos)
         {
             var dict = new Dictionary<Guid, int>();
             foreach (var memo in memos)
@@ -50,14 +53,6 @@ namespace Quintessence.QCandidate.Controllers
             var memo = new UpdateCalendarDayCommand(id, calendarDayId, note);
             await _mediator.Send(memo);
             return Ok();
-        }
-
-
-        private string GetMemoContent(Guid simulationCombinationId, MemoDto memo, string language)
-        {
-            var file = Path.Combine(_htmlStorageLocation, simulationCombinationId.ToString(), MemosFolder, $"{memo.OriginPosition}_{language.ToUpperInvariant()}.html");
-            
-            return System.IO.File.ReadAllText(file);
         }
 
     }
