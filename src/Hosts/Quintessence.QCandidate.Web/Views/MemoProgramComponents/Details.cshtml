@@ -1,6 +1,6 @@
 ﻿@using System.Globalization
 @using Microsoft.AspNetCore.Mvc.Localization
-@using Quintessence.QCandidate.Controllers 
+@using Quintessence.QCandidate.Controllers
 
 @model Quintessence.QCandidate.Models.MemoProgramComponents.MemoProgramComponent
 
@@ -9,6 +9,8 @@
 @section Styles {
     <link href="/css/memoprogramcomponentdetails.css" rel="stylesheet" />
 }
+
+<input type="hidden" id="memoProgramComponentId" value="@Model.Id" />
 
 <div class="container">
     <div class="context">
@@ -65,7 +67,7 @@
                                         divClassNames.Add("active");
                                     }
 
-                                    <div class="@string.Join(' ', divClassNames.ToArray())" onclick="openMemo(event, '@memo.Id')">
+                                    <div id="@memo.Id" class="@string.Join(' ', divClassNames.ToArray())" onclick="openMemo(event, '@memo.Id')" >
                                         <span class="drag-icon">
                                             <i class="material-icons">
                                                 drag_handle
@@ -103,18 +105,18 @@
                 <div class="calendar">
                     @foreach (var calendarDay in Model.CalendarDays.OrderBy(x => x.Day))
                     {
-                        var culture = new CultureInfo("nl");
                         <div class="calendar-block">
                             <div class="calendar-date">
-                                @calendarDay.Day.ToString("D", culture)
+                                @calendarDay.Day.ToString("D", CultureInfo.CurrentUICulture)
                             </div>
-                            <textarea class="calendar-text">
+                            <textarea class="calendar-text" onblur="saveCalendarDay(event, '@calendarDay.Id')" id="@calendarDay.Id">
                             @calendarDay.Note
                         </textarea>
                         </div>
                     }
 
                 </div>
+                
             </div>
         </div>
     </div>
@@ -132,37 +134,6 @@ else
 @section Scripts {
 
     <script src="~/js/Sortable.js"></script>
+    <script src="~/js/memoProgramComponent.js" type="text/javascript"></script>
 
-    <script>
-        var el = document.getElementsByClassName("tabs")[0];
-        var instance = M.Tabs.init(el);
-
-        var memos = document.getElementById('memo-list');
-
-        // Example 1 - Simple list
-        new Sortable(memos, {
-            animation: 150,
-            ghostClass: 'ghost-background-class'
-        });
-
-        function openMemo(evt, memoName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("memo");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("list-group-item");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-
-            tablinks = document.getElementsByClassName("list-group-item-new");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-
-            document.getElementById(memoName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
-    </script>
 }
