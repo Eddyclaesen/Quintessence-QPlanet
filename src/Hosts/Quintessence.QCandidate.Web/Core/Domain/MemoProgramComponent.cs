@@ -12,11 +12,12 @@ namespace Quintessence.QCandidate.Core.Domain
         {
         }
 
-        public MemoProgramComponent(Guid id, Guid simulationCombinationId, Guid userId, IEnumerable<Memo> memos)
+        public MemoProgramComponent(Guid id, Guid simulationCombinationId, Guid userId, Guid? predecessorId, IEnumerable<Memo> memos)
         {
             Id = id;
             SimulationCombinationId = simulationCombinationId;
             UserId = userId;
+            PredecessorId = predecessorId;
             Memos = memos.ToList();
             CalendarDays = GetCalendarDays();
         }
@@ -46,8 +47,18 @@ namespace Quintessence.QCandidate.Core.Domain
             calendarDay.Update(note);
         }
 
+        public void AddPredecessorMemos(IEnumerable<Memo> predecessorMemos)
+        {
+            foreach (var predecessorMemo in predecessorMemos)
+            {
+                Memos.Add(predecessorMemo);
+            }
+            
+        }
+
         public Guid SimulationCombinationId { get; private set; }
         public Guid UserId { get; private set; }
+        public Guid?  PredecessorId { get; set; }
         public ICollection<Memo> Memos { get; private set; }
         public ICollection<CalendarDay> CalendarDays { get; private set; }
         
