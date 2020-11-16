@@ -40,6 +40,12 @@ namespace Quintessence.QCandidate.Core.Domain
             return calendarDays;
         }
 
+        public void UpdateCalendarDay (Guid id, string note)
+        {
+            var calendarDay = CalendarDays.FirstOrDefault(x => x.Id == id);
+            if (calendarDay != null) calendarDay.Update(note);
+        }
+
         public Guid SimulationCombinationId { get; private set; }
         public Guid UserId { get; private set; }
         public ICollection<Memo> Memos { get; private set; }

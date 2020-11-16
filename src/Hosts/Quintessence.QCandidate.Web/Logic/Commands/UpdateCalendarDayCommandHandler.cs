@@ -20,17 +20,8 @@ namespace Quintessence.QCandidate.Logic.Commands
         {
             var memoProgram = await _repository.FindAsync(request.MemoProgramComponentId);
 
+            memoProgram.UpdateCalendarDay(request.CalendarDayId, request.Note);
             
-
-            foreach (var calendarDay in memoProgram.CalendarDays)
-            {
-                if (calendarDay.Id == request.CalendarDayId)
-                {
-                    calendarDay.Update(request.Note);
-                }
-                
-            }
-
             await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
             return memoProgram;
         }
