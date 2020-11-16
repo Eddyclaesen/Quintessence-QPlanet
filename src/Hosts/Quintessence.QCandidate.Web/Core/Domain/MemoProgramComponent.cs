@@ -2,6 +2,7 @@
 using Kenze.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Quintessence.QCandidate.Core.Domain
 {
@@ -11,11 +12,12 @@ namespace Quintessence.QCandidate.Core.Domain
         {
         }
 
-        public MemoProgramComponent(Guid simulationCombinationId, Guid userId, List<Memo> memos)
+        public MemoProgramComponent(Guid id, Guid simulationCombinationId, Guid userId, IEnumerable<Memo> memos)
         {
+            Id = id;
             SimulationCombinationId = simulationCombinationId;
             UserId = userId;
-            Memos = memos;
+            Memos = memos.ToList();
             CalendarDays = GetCalendarDays();
         }
 
