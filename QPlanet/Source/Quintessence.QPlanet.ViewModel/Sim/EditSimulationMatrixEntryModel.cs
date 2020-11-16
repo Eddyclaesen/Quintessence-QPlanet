@@ -71,8 +71,6 @@ namespace Quintessence.QPlanet.ViewModel.Sim
             });  }
         }
 
-        //public IEnumerable<SelectListItem> Predecessors { get; set; }
-
         public IEnumerable<SimulationDepartmentView> SimulationDepartments { get; set; }
 
         public IEnumerable<SimulationLevelView> SimulationLevels { get; set; }
