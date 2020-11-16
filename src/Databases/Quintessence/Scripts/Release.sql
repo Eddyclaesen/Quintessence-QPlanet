@@ -529,3 +529,425 @@ SELECT
 FROM [dbo].[SimulationCombinationMemos]
 WHERE [SimulationCombinationId] = @simulationCombinationId
 GO
+
+
+
+GO
+PRINT N'Dropping unnamed constraint on [dbo].[SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] DROP CONSTRAINT [DF__tmp_ms_xx__Audit__4C9641C1];
+
+
+GO
+PRINT N'Dropping unnamed constraint on [dbo].[SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] DROP CONSTRAINT [DF__tmp_ms_xx__Audit__4D8A65FA];
+
+
+GO
+PRINT N'Dropping unnamed constraint on [dbo].[SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] DROP CONSTRAINT [DF__tmp_ms_xx__Audit__4BA21D88];
+
+
+GO
+PRINT N'Dropping unnamed constraint on [dbo].[SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] DROP CONSTRAINT [DF__tmp_ms_xx__Audit__4E7E8A33];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_SimulationCombination2Language_Simulation]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination2Language] DROP CONSTRAINT [FK_SimulationCombination2Language_Simulation];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_ProjectCandidateCompetenceSimulationScore_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectCandidateCompetenceSimulationScore] DROP CONSTRAINT [FK_ProjectCandidateCompetenceSimulationScore_SimulationCombination];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_ProjectCandidateIndicatorSimulationScore_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectCandidateIndicatorSimulationScore] DROP CONSTRAINT [FK_ProjectCandidateIndicatorSimulationScore_SimulationCombination];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_ProjectCategoryDetail2C2C_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectCategoryDetail2Competence2Combination] DROP CONSTRAINT [FK_ProjectCategoryDetail2C2C_SimulationCombination];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_ProjectCategoryDetail2SimulationCombination_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectCategoryDetail2SimulationCombination] DROP CONSTRAINT [FK_ProjectCategoryDetail2SimulationCombination_SimulationCombination];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_SimulationCombination_SimulationDepartment]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] DROP CONSTRAINT [FK_SimulationCombination_SimulationDepartment];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_SimulationCombination_Simulation]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] DROP CONSTRAINT [FK_SimulationCombination_Simulation];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_SimulationCombination_SimulationLevel]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] DROP CONSTRAINT [FK_SimulationCombination_SimulationLevel];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_SimulationCombination_SimulationSet]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] DROP CONSTRAINT [FK_SimulationCombination_SimulationSet];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_SimulationCombinationMemos_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombinationMemos] DROP CONSTRAINT [FK_SimulationCombinationMemos_SimulationCombination];
+
+
+GO
+PRINT N'Dropping [QCandidate].[FK_MemoProgramComponents_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [QCandidate].[MemoProgramComponents] DROP CONSTRAINT [FK_MemoProgramComponents_SimulationCombination];
+
+
+GO
+PRINT N'Starting rebuilding table [dbo].[SimulationCombination]...';
+
+
+GO
+BEGIN TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+SET XACT_ABORT ON;
+
+CREATE TABLE [dbo].[tmp_ms_xx_SimulationCombination] (
+    [Id]                     UNIQUEIDENTIFIER NOT NULL,
+    [SimulationSetId]        UNIQUEIDENTIFIER NOT NULL,
+    [SimulationDepartmentId] UNIQUEIDENTIFIER NULL,
+    [SimulationLevelId]      UNIQUEIDENTIFIER NULL,
+    [SimulationId]           UNIQUEIDENTIFIER NOT NULL,
+    [Preparation]            INT              NOT NULL,
+    [Execution]              INT              NOT NULL,
+    [QCandidateLayoutId]     INT              NOT NULL,
+    [PredecessorId]          UNIQUEIDENTIFIER NULL,
+    [Audit_CreatedBy]        NVARCHAR (MAX)   DEFAULT (suser_sname()) NOT NULL,
+    [Audit_CreatedOn]        DATETIME         DEFAULT (getdate()) NOT NULL,
+    [Audit_ModifiedBy]       NVARCHAR (MAX)   NULL,
+    [Audit_ModifiedOn]       DATETIME         NULL,
+    [Audit_DeletedBy]        NVARCHAR (MAX)   NULL,
+    [Audit_DeletedOn]        DATETIME         NULL,
+    [Audit_IsDeleted]        BIT              DEFAULT ((0)) NOT NULL,
+    [Audit_VersionId]        UNIQUEIDENTIFIER DEFAULT (newid()) NOT NULL,
+    CONSTRAINT [tmp_ms_xx_constraint_PK_SimulationCombination1] PRIMARY KEY NONCLUSTERED ([Id] ASC)
+);
+
+IF EXISTS (SELECT TOP 1 1 
+           FROM   [dbo].[SimulationCombination])
+    BEGIN
+        INSERT INTO [dbo].[tmp_ms_xx_SimulationCombination] ([Id], [SimulationSetId], [SimulationDepartmentId], [SimulationLevelId], [SimulationId], [Preparation], [Execution], [QCandidateLayoutId], [Audit_CreatedBy], [Audit_CreatedOn], [Audit_ModifiedBy], [Audit_ModifiedOn], [Audit_DeletedBy], [Audit_DeletedOn], [Audit_IsDeleted], [Audit_VersionId])
+        SELECT [Id],
+               [SimulationSetId],
+               [SimulationDepartmentId],
+               [SimulationLevelId],
+               [SimulationId],
+               [Preparation],
+               [Execution],
+               [QCandidateLayoutId],
+               [Audit_CreatedBy],
+               [Audit_CreatedOn],
+               [Audit_ModifiedBy],
+               [Audit_ModifiedOn],
+               [Audit_DeletedBy],
+               [Audit_DeletedOn],
+               [Audit_IsDeleted],
+               [Audit_VersionId]
+        FROM   [dbo].[SimulationCombination];
+    END
+
+DROP TABLE [dbo].[SimulationCombination];
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_SimulationCombination]', N'SimulationCombination';
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_constraint_PK_SimulationCombination1]', N'PK_SimulationCombination', N'OBJECT';
+
+COMMIT TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombination2Language_Simulation]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination2Language] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombination2Language_Simulation] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_ProjectCandidateCompetenceSimulationScore_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectCandidateCompetenceSimulationScore] WITH NOCHECK
+    ADD CONSTRAINT [FK_ProjectCandidateCompetenceSimulationScore_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_ProjectCandidateIndicatorSimulationScore_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectCandidateIndicatorSimulationScore] WITH NOCHECK
+    ADD CONSTRAINT [FK_ProjectCandidateIndicatorSimulationScore_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_ProjectCategoryDetail2C2C_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectCategoryDetail2Competence2Combination] WITH NOCHECK
+    ADD CONSTRAINT [FK_ProjectCategoryDetail2C2C_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_ProjectCategoryDetail2SimulationCombination_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectCategoryDetail2SimulationCombination] WITH NOCHECK
+    ADD CONSTRAINT [FK_ProjectCategoryDetail2SimulationCombination_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombination_SimulationDepartment]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombination_SimulationDepartment] FOREIGN KEY ([SimulationDepartmentId]) REFERENCES [dbo].[SimulationDepartment] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombination_Simulation]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombination_Simulation] FOREIGN KEY ([SimulationId]) REFERENCES [dbo].[Simulation] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombination_SimulationLevel]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombination_SimulationLevel] FOREIGN KEY ([SimulationLevelId]) REFERENCES [dbo].[SimulationLevel] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombination_SimulationSet]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombination_SimulationSet] FOREIGN KEY ([SimulationSetId]) REFERENCES [dbo].[SimulationSet] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombinationMemos_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombinationMemos] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombinationMemos_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
+
+
+GO
+PRINT N'Creating [QCandidate].[FK_MemoProgramComponents_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [QCandidate].[MemoProgramComponents] WITH NOCHECK
+    ADD CONSTRAINT [FK_MemoProgramComponents_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
+
+
+GO
+PRINT N'Refreshing [dbo].[SimulationCombinationView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[SimulationCombinationView]';
+
+
+GO
+PRINT N'Refreshing [dbo].[ProgramComponentView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[ProgramComponentView]';
+
+
+GO
+PRINT N'Refreshing [dbo].[ProjectCandidateCompetenceSimulationScoreView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[ProjectCandidateCompetenceSimulationScoreView]';
+
+
+GO
+PRINT N'Refreshing [dbo].[ProjectCandidateIndicatorSimulationFocusedScoreView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[ProjectCandidateIndicatorSimulationFocusedScoreView]';
+
+
+GO
+PRINT N'Refreshing [dbo].[ProjectCandidateIndicatorSimulationScoreView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[ProjectCandidateIndicatorSimulationScoreView]';
+
+
+GO
+PRINT N'Refreshing [dbo].[SimulationMatrixEntryView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[SimulationMatrixEntryView]';
+
+
+GO
+PRINT N'Refreshing [dbo].[ProjectCategoryDetailSimulationCombinationView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[ProjectCategoryDetailSimulationCombinationView]';
+
+
+GO
+PRINT N'Refreshing [dbo].[ProjectCategoryDetailCompetenceSimulationView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[ProjectCategoryDetailCompetenceSimulationView]';
+
+
+GO
+PRINT N'Refreshing [dbo].[Simulation_CreateCombination]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[Simulation_CreateCombination]';
+
+
+GO
+PRINT N'Refreshing [QCandidate].[ProgramComponent_GetById]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[QCandidate].[ProgramComponent_GetById]';
+
+
+GO
+PRINT N'Refreshing [dbo].[Reporting_ProjectCandidateListCompetenceScoresByProjectCandidateId]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[Reporting_ProjectCandidateListCompetenceScoresByProjectCandidateId]';
+
+
+GO
+PRINT N'Refreshing [dbo].[Reporting_ProjectDetailCompetenceMatrix]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[Reporting_ProjectDetailCompetenceMatrix]';
+
+
+GO
+PRINT N'Refreshing [dbo].[Reporting_ProjectDetailSimulations]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[Reporting_ProjectDetailSimulations]';
+
+
+GO
+PRINT N'Checking existing data against newly created constraints';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination2Language] WITH CHECK CHECK CONSTRAINT [FK_SimulationCombination2Language_Simulation];
+
+ALTER TABLE [dbo].[ProjectCandidateCompetenceSimulationScore] WITH CHECK CHECK CONSTRAINT [FK_ProjectCandidateCompetenceSimulationScore_SimulationCombination];
+
+ALTER TABLE [dbo].[ProjectCandidateIndicatorSimulationScore] WITH CHECK CHECK CONSTRAINT [FK_ProjectCandidateIndicatorSimulationScore_SimulationCombination];
+
+ALTER TABLE [dbo].[ProjectCategoryDetail2Competence2Combination] WITH CHECK CHECK CONSTRAINT [FK_ProjectCategoryDetail2C2C_SimulationCombination];
+
+ALTER TABLE [dbo].[ProjectCategoryDetail2SimulationCombination] WITH CHECK CHECK CONSTRAINT [FK_ProjectCategoryDetail2SimulationCombination_SimulationCombination];
+
+ALTER TABLE [dbo].[SimulationCombination] WITH CHECK CHECK CONSTRAINT [FK_SimulationCombination_SimulationDepartment];
+
+ALTER TABLE [dbo].[SimulationCombination] WITH CHECK CHECK CONSTRAINT [FK_SimulationCombination_Simulation];
+
+ALTER TABLE [dbo].[SimulationCombination] WITH CHECK CHECK CONSTRAINT [FK_SimulationCombination_SimulationLevel];
+
+ALTER TABLE [dbo].[SimulationCombination] WITH CHECK CHECK CONSTRAINT [FK_SimulationCombination_SimulationSet];
+
+ALTER TABLE [dbo].[SimulationCombinationMemos] WITH CHECK CHECK CONSTRAINT [FK_SimulationCombinationMemos_SimulationCombination];
+
+ALTER TABLE [QCandidate].[MemoProgramComponents] WITH CHECK CHECK CONSTRAINT [FK_MemoProgramComponents_SimulationCombination];
+
+
+GO
+PRINT N'Update complete.';
