@@ -42,8 +42,8 @@ namespace Quintessence.QCandidate.Core.Domain
 
         public void UpdateCalendarDay (Guid id, string note)
         {
-            var calendarDay = CalendarDays.FirstOrDefault(x => x.Id == id);
-            if (calendarDay != null) calendarDay.Update(note);
+            var calendarDay = CalendarDays.Single(x => x.Id == id);
+            calendarDay.Update(note);
         }
 
         public Guid SimulationCombinationId { get; private set; }
