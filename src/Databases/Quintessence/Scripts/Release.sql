@@ -124,6 +124,7 @@ CREATE TABLE [dbo].[tmp_ms_xx_SimulationCombination] (
     [Preparation]            INT              NOT NULL,
     [Execution]              INT              NOT NULL,
     [QCandidateLayoutId]     INT              NOT NULL,
+    [PredecessorId]          UNIQUEIDENTIFIER NULL,
     [Audit_CreatedBy]        NVARCHAR (MAX)   DEFAULT (suser_sname()) NOT NULL,
     [Audit_CreatedOn]        DATETIME         DEFAULT (getdate()) NOT NULL,
     [Audit_ModifiedBy]       NVARCHAR (MAX)   NULL,
@@ -168,6 +169,13 @@ COMMIT TRANSACTION;
 
 SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
 
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombination_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombination_SimulationCombination] FOREIGN KEY ([PredecessorId]) REFERENCES [dbo].[SimulationCombination] (Id);
 
 GO
 PRINT N'Creating [dbo].[FK_SimulationCombination2Language_Simulation]...';
@@ -529,3 +537,6 @@ SELECT
 FROM [dbo].[SimulationCombinationMemos]
 WHERE [SimulationCombinationId] = @simulationCombinationId
 GO
+
+
+
