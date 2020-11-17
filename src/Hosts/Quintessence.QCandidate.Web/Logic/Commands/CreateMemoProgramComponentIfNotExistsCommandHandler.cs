@@ -29,18 +29,20 @@ namespace Quintessence.QCandidate.Logic.Commands
             {
                 var simulationCombinationMemos = await _mediator.Send(new GetSimulationCombinationMemosBySimulationCombinationIdQuery(request.SimulationCombinationId));
 
-                memoProgramComponent = _repository.Add(new MemoProgramComponent(
-                                                                request.Id,
-                                                                request.SimulationCombinationId,
-                                                                request.UserId,
-                                                                request.PredecessorId,
-                                                                simulationCombinationMemos.Select(scm => new Memo(scm.Position, scm.Id))
-                                                                ));
+                var predecesorCalendarDays = await _mediator.Send(new GetPredecessorCalendarDaysBySimulationIdAndUserIdQuery(request.Id, request.UserId));
 
-                if (request.PredecessorId != null && request.PredecessorId != Guid.Empty)
+                memoProgramComponent = _repository.Add(new MemoProgramComponent(
+                    request.Id,
+                    request.SimulationCombinationId,
+                    request.UserId,
+                    simulationCombinationMemos.Select(scm => new Memo(scm.Position, scm.Id)),
+                    predecesorCalendarDays
+                ));
+
+                var predecessorSimulationCombinationMemos = await _mediator.Send(new GetPredecessorMemosBySimulationCombinationIdAndUserIdQuery(request.SimulationCombinationId, request.UserId));
+                if (predecessorSimulationCombinationMemos.Any())
                 {
-                    //var predecessorSimulationCombinationMemos = await _mediator.Send(new GetMemoProgramComponentByIdAndLanguageQuery(request.Id));
-                    //memoProgramComponent.AddPredecessorMemos(predecessorSimulationCombinationMemos.Where(usr => usr.).Select(scm => new Memo(scm.Position, scm.Id)));
+                    memoProgramComponent.AddPredecessorMemos(predecessorSimulationCombinationMemos);
                 }
 
                 await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);

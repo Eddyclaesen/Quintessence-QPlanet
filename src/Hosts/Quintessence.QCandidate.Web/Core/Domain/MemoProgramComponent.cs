@@ -12,33 +12,42 @@ namespace Quintessence.QCandidate.Core.Domain
         {
         }
 
-        public MemoProgramComponent(Guid id, Guid simulationCombinationId, Guid userId, Guid? predecessorId, IEnumerable<Memo> memos)
+        public MemoProgramComponent(Guid id, Guid simulationCombinationId, Guid userId, IEnumerable<Memo> memos, IEnumerable<CalendarDay> calendarDays)
         {
             Id = id;
             SimulationCombinationId = simulationCombinationId;
             UserId = userId;
-            PredecessorId = predecessorId;
             Memos = memos.ToList();
-            CalendarDays = GetCalendarDays();
+            CalendarDays = GetCalendarDays(calendarDays);
         }
 
-        private ICollection<CalendarDay> GetCalendarDays()
+        
+        private ICollection<CalendarDay> GetCalendarDays(IEnumerable<CalendarDay> calendarDays)
         {
-            var calendarDays = new List<CalendarDay>();
-            var startDate = new DateTime(2018,4,2);
-            var weekDays = new List<DayOfWeek> {DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday };
+            var newCalendarDays = new List<CalendarDay>();
 
-            while ((startDate.Month == 4) && (startDate.Year == 2018))
+            if (calendarDays.Any())
             {
-                if (weekDays.Contains(startDate.DayOfWeek))
-                {
-                    calendarDays.Add(new CalendarDay(startDate));
-                }
+                newCalendarDays.AddRange(calendarDays);
+            }
+            else
+            {
+                var startDate = new DateTime(2018, 4, 2);
+                var weekDays = new List<DayOfWeek> { DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday };
 
-                startDate = startDate.AddDays(1);
+                while ((startDate.Month == 4) && (startDate.Year == 2018))
+                {
+                    if (weekDays.Contains(startDate.DayOfWeek))
+                    {
+                        newCalendarDays.Add(new CalendarDay(startDate));
+                    }
+
+                    startDate = startDate.AddDays(1);
+                }
             }
 
-            return calendarDays;
+
+            return newCalendarDays;
         }
 
         public void UpdateCalendarDay (Guid id, string note)
@@ -49,16 +58,26 @@ namespace Quintessence.QCandidate.Core.Domain
 
         public void AddPredecessorMemos(IEnumerable<Memo> predecessorMemos)
         {
+            var highestPosition = Memos.OrderByDescending(x => x.Position).First().Position;
+
             foreach (var predecessorMemo in predecessorMemos)
             {
+                var newPosition = highestPosition + predecessorMemo.Position;
+                predecessorMemo.Update(newPosition);
                 Memos.Add(predecessorMemo);
             }
-            
+        }
+
+        public void AddPredecessorCalendarDays(IEnumerable<CalendarDay> predecessorCalendarDays)
+        {
+            foreach (var calendarDay in predecessorCalendarDays)
+            {
+                CalendarDays.Add(calendarDay);
+            }
         }
 
         public Guid SimulationCombinationId { get; private set; }
         public Guid UserId { get; private set; }
-        public Guid?  PredecessorId { get; set; }
         public ICollection<Memo> Memos { get; private set; }
         public ICollection<CalendarDay> CalendarDays { get; private set; }
         
