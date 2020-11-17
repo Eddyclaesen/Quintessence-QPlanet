@@ -20,12 +20,22 @@ namespace Quintessence.QCandidate.Core.Domain
             Memos = memos.ToList();
             CalendarDays = GetCalendarDays();
         }
+        public MemoProgramComponent(Guid id, Guid simulationCombinationId, Guid userId, IEnumerable<Memo> memos, IEnumerable<CalendarDay> calendarDays)
+        {
+            Id = id;
+            SimulationCombinationId = simulationCombinationId;
+            UserId = userId;
+            Memos = memos.ToList();
+            CalendarDays = calendarDays.ToList();
+        }
+
+
 
         private ICollection<CalendarDay> GetCalendarDays()
         {
             var calendarDays = new List<CalendarDay>();
-            var startDate = new DateTime(2018,4,2);
-            var weekDays = new List<DayOfWeek> {DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday };
+            var startDate = new DateTime(2018, 4, 2);
+            var weekDays = new List<DayOfWeek> { DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday };
 
             while ((startDate.Month == 4) && (startDate.Year == 2018))
             {
@@ -37,6 +47,7 @@ namespace Quintessence.QCandidate.Core.Domain
                 startDate = startDate.AddDays(1);
             }
 
+
             return calendarDays;
         }
 
@@ -44,6 +55,26 @@ namespace Quintessence.QCandidate.Core.Domain
         {
             var calendarDay = CalendarDays.Single(x => x.Id == id);
             calendarDay.Update(note);
+        }
+
+        public void AddPredecessorMemos(IEnumerable<Memo> predecessorMemos)
+        {
+            var highestPosition = Memos.OrderByDescending(x => x.Position).First().Position;
+
+            foreach (var predecessorMemo in predecessorMemos)
+            {
+                var newPosition = highestPosition + predecessorMemo.Position;
+                predecessorMemo.Update(newPosition);
+                Memos.Add(predecessorMemo);
+            }
+        }
+
+        public void AddPredecessorCalendarDays(IEnumerable<CalendarDay> predecessorCalendarDays)
+        {
+            foreach (var calendarDay in predecessorCalendarDays)
+            {
+                CalendarDays.Add(calendarDay);
+            }
         }
 
         public Guid SimulationCombinationId { get; private set; }

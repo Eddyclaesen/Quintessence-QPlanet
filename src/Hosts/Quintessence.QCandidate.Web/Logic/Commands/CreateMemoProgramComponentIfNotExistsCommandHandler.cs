@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using System;
+using MediatR;
 using Quintessence.QCandidate.Core.Commands;
 using Quintessence.QCandidate.Core.Domain;
 using Quintessence.QCandidate.Core.Queries;
@@ -28,15 +29,25 @@ namespace Quintessence.QCandidate.Logic.Commands
             {
                 var simulationCombinationMemos = await _mediator.Send(new GetSimulationCombinationMemosBySimulationCombinationIdQuery(request.SimulationCombinationId));
 
+                var predecesorCalendarDays = await _mediator.Send(new GetPredecessorCalendarDaysBySimulationIdAndUserIdQuery(request.Id, request.UserId));
+
                 memoProgramComponent = _repository.Add(new MemoProgramComponent(
-                                                                request.Id,
-                                                                request.SimulationCombinationId,
-                                                                request.UserId,
-                                                                simulationCombinationMemos.Select(scm => new Memo(scm.Position, scm.Id))
-                                                                ));
+                    request.Id,
+                    request.SimulationCombinationId,
+                    request.UserId,
+                    simulationCombinationMemos.Select(scm => new Memo(scm.Position, scm.Id)),
+                    predecesorCalendarDays
+                ));
+
+                var predecessorSimulationCombinationMemos = await _mediator.Send(new GetPredecessorMemosBySimulationCombinationIdAndUserIdQuery(request.SimulationCombinationId, request.UserId));
+                if (predecessorSimulationCombinationMemos.Any())
+                {
+                    memoProgramComponent.AddPredecessorMemos(predecessorSimulationCombinationMemos);
+                }
+
                 await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
             }
-                        
+
             return memoProgramComponent;
         }
     }
