@@ -541,7 +541,7 @@ AS
 SET NOCOUNT ON
 
 SELECT 
-	[QCandidate].[Memos].* 
+	[QCandidate].[Memos].[Id] , [QCandidate].[Memos].[MemoProgramComponentId], [QCandidate].[Memos].[OriginId], [QCandidate].[Memos].[Position]
 FROM [QCandidate].[Memos]
 	INNER JOIN [QCandidate].[MemoProgramComponents] 
 		ON [QCandidate].[Memos].[MemoProgramComponentId] = [QCandidate].[MemoProgramComponents].[Id]
@@ -562,9 +562,9 @@ AS
 
 SET NOCOUNT ON
 
-SELECT [QCandidate].[CalendarDays].* 
+SELECT [QCandidate].[CalendarDays].[Id],  [QCandidate].[CalendarDays].[Note]
 FROM  [QCandidate].[CalendarDays]
-INNER JOIN [QCandidate].[MemoProgramComponents] 
+    INNER JOIN [QCandidate].[MemoProgramComponents] 
 		ON [QCandidate].[CalendarDays].[MemoProgramComponentId] = [QCandidate].[MemoProgramComponents].[Id]
 	INNER JOIN [dbo].[SimulationCombination] 
 		ON [QCandidate].[MemoProgramComponents].[SimulationCombinationId] = [dbo].[SimulationCombination].[PredecessorId]

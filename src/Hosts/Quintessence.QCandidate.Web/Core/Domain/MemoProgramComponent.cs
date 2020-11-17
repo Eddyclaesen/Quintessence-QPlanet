@@ -12,42 +12,43 @@ namespace Quintessence.QCandidate.Core.Domain
         {
         }
 
+        public MemoProgramComponent(Guid id, Guid simulationCombinationId, Guid userId, IEnumerable<Memo> memos)
+        {
+            Id = id;
+            SimulationCombinationId = simulationCombinationId;
+            UserId = userId;
+            Memos = memos.ToList();
+            CalendarDays = GetCalendarDays();
+        }
         public MemoProgramComponent(Guid id, Guid simulationCombinationId, Guid userId, IEnumerable<Memo> memos, IEnumerable<CalendarDay> calendarDays)
         {
             Id = id;
             SimulationCombinationId = simulationCombinationId;
             UserId = userId;
             Memos = memos.ToList();
-            CalendarDays = GetCalendarDays(calendarDays);
+            CalendarDays = calendarDays.ToList();
         }
 
-        
-        private ICollection<CalendarDay> GetCalendarDays(IEnumerable<CalendarDay> calendarDays)
+
+
+        private ICollection<CalendarDay> GetCalendarDays()
         {
-            var newCalendarDays = new List<CalendarDay>();
+            var calendarDays = new List<CalendarDay>();
+            var startDate = new DateTime(2018, 4, 2);
+            var weekDays = new List<DayOfWeek> { DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday };
 
-            if (calendarDays.Any())
+            while ((startDate.Month == 4) && (startDate.Year == 2018))
             {
-                newCalendarDays.AddRange(calendarDays);
-            }
-            else
-            {
-                var startDate = new DateTime(2018, 4, 2);
-                var weekDays = new List<DayOfWeek> { DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday };
-
-                while ((startDate.Month == 4) && (startDate.Year == 2018))
+                if (weekDays.Contains(startDate.DayOfWeek))
                 {
-                    if (weekDays.Contains(startDate.DayOfWeek))
-                    {
-                        newCalendarDays.Add(new CalendarDay(startDate));
-                    }
-
-                    startDate = startDate.AddDays(1);
+                    calendarDays.Add(new CalendarDay(startDate));
                 }
+
+                startDate = startDate.AddDays(1);
             }
 
 
-            return newCalendarDays;
+            return calendarDays;
         }
 
         public void UpdateCalendarDay (Guid id, string note)

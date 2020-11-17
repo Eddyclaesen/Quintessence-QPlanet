@@ -16,6 +16,5 @@ namespace Quintessence.QCandidate.Models.MemoProgramComponents
         public int Position { get; }
         public string Title { get; }
         public string Content { get; }
-        public bool IsPredecessor { get; }
     }
 }
