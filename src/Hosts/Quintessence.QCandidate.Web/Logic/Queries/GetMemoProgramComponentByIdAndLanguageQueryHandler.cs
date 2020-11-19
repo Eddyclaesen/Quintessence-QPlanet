@@ -47,7 +47,7 @@ namespace Quintessence.QCandidate.Logic.Queries
             }
             var functionDescription = System.IO.File.ReadAllText(Path.Combine(basePath, FunctionDescriptionsFolder, $"{query.Language.Code.ToUpperInvariant()}.html"));
 
-            var contextId = Guid.Parse("5fa70b90-32d6-48fb-993c-0191d79da1c9");
+            var contextId = await GetContextId(query.Id); //Guid.Parse("5fa70b90-32d6-48fb-993c-0191d79da1c9");
 
             return new MemoProgramComponent(
                 query.Id,
@@ -101,6 +101,21 @@ namespace Quintessence.QCandidate.Logic.Queries
                 return result;
             }
         }
+
+        private async Task<Guid> GetContextId(Guid programComponentId)
+        {
+            var idParameter = new SqlParameter("programComponentId", SqlDbType.UniqueIdentifier) { Value = programComponentId };
+
+            var parameters = new SqlParameter[] { idParameter };
+
+            var command = new StoredProcedureCommandDefinition("[dbo].[Context_GetIdByProgramComponentId]", parameters).ToCommandDefinition();
+
+            using (var dbConnection = DbConnectionFactory.Create())
+            {
+                return await dbConnection.QuerySingleAsync<Guid>(command);
+            }
+        }
+
         private string GetMemoContent(Guid simulationCombinationId, MemoDto memo, Language language)
         {
             var file = Path.Combine(_htmlStorageLocation, simulationCombinationId.ToString(), MemosFolder, $"{memo.OriginPosition}_{language.Code.ToUpperInvariant()}.html");
