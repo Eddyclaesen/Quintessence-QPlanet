@@ -36,16 +36,18 @@
         <div class="container assessment-content">
 
             <div id="intros" class="col s12">
-
-                <!-- Nieuwe inleiding -->
-                @*<div class="block-new"></div>*@
-                <div>
+                @{ 
+                    var introClassName = Model.HasPredecessor ? "block-new" : string.Empty;
+                }
+                <div class="@introClassName">
                     @Html.Raw(Model.Intro)
                 </div>
 
+                <div>
+                    @Html.Raw(Model.PredecessorIntro)
+                </div>
             </div>
 
-            <!-- Functieomschrijving -->
             <div id="functiondescription" class="col s12">
                 @Html.Raw(Model.FunctionDescription)
             </div>
@@ -61,7 +63,7 @@
                             <div id="memo-list" class="list-group col">
                                 @foreach (var memo in Model.Memos.OrderBy(x => x.Position))
                                 {
-                                    var divClassNames = new List<string> { "list-group-item" };
+                                    var divClassNames = new List<string> { memo.HasPredecessorOrigin ? "list-group-item-new" : "list-group-item" };
                                     if (memo.Position == 1)
                                     {
                                         divClassNames.Add("active");
@@ -74,7 +76,7 @@
                                             </i>
                                         </span>
                                         <span class="truncate">
-                                            @memo.Title
+                                            @Html.DisplayFor(m => memo.Title)
                                         </span>
                                         <i class="material-icons">
                                             chevron_right
@@ -114,7 +116,6 @@
                         </textarea>
                         </div>
                     }
-
                 </div>
                 
             </div>
