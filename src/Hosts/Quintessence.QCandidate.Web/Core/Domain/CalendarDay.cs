@@ -14,9 +14,8 @@ namespace Quintessence.QCandidate.Core.Domain
             Day = day;
         }
 
-        public CalendarDay(Guid memoProgramComponentId, DateTime day, string note)
+        public CalendarDay(DateTime day, string note)
         {
-            MemoProgramComponentId = memoProgramComponentId;
             Day = day;
             Note = note;
         }

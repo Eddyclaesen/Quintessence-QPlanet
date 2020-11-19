@@ -599,7 +599,7 @@
     <None Include="Scripts\Release.sql" />
     <None Include="Scripts\SeedMemoProgramComponent.sql" />
     <None Include="QCandidate\Stored Procedures\MemoProgramComponent_GetByIdAndLanguage.sql" />
-    <None Include="QCandidate\Stored Procedures\GetPPredecessorCalendarDays_GetBySimulationCombinationAndUserId.sql" />
-    <None Include="QCandidate\Stored Procedures\GetPredecessorMemos_GetBySimulationCombinationIdAndUserId.sql" />
+    <None Include="QCandidate\Stored Procedures\CalendarDay_GetAllFromPredecessorBySimulationCombinationIdAndUserId.sql" />
+    <None Include="QCandidate\Stored Procedures\Memos_GetAllFromPredecessorBySimulationCombinationIdAndUserId.sql" />
   </ItemGroup>
 </Project>

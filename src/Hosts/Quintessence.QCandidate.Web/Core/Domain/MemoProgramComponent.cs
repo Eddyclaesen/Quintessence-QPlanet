@@ -13,13 +13,10 @@ namespace Quintessence.QCandidate.Core.Domain
         }
 
         public MemoProgramComponent(Guid id, Guid simulationCombinationId, Guid userId, IEnumerable<Memo> memos)
+            : this(id, simulationCombinationId, userId, memos, InitCalendarDays())
         {
-            Id = id;
-            SimulationCombinationId = simulationCombinationId;
-            UserId = userId;
-            Memos = memos.ToList();
-            CalendarDays = GetCalendarDays();
         }
+
         public MemoProgramComponent(Guid id, Guid simulationCombinationId, Guid userId, IEnumerable<Memo> memos, IEnumerable<CalendarDay> calendarDays)
         {
             Id = id;
@@ -29,9 +26,12 @@ namespace Quintessence.QCandidate.Core.Domain
             CalendarDays = calendarDays.ToList();
         }
 
+        public Guid SimulationCombinationId { get; private set; }
+        public Guid UserId { get; private set; }
+        public ICollection<Memo> Memos { get; private set; }
+        public ICollection<CalendarDay> CalendarDays { get; private set; }
 
-
-        private ICollection<CalendarDay> GetCalendarDays()
+        private static IEnumerable<CalendarDay> InitCalendarDays()
         {
             var calendarDays = new List<CalendarDay>();
             var startDate = new DateTime(2018, 4, 2);
@@ -47,40 +47,21 @@ namespace Quintessence.QCandidate.Core.Domain
                 startDate = startDate.AddDays(1);
             }
 
-
             return calendarDays;
         }
 
+        public void UpdateMemo(Guid memoId, int position)
+        {
+            var memo = Memos.Single(m => m.Id == memoId);
+
+            memo.Update(position);
+        }
+        
         public void UpdateCalendarDay (Guid id, string note)
         {
             var calendarDay = CalendarDays.Single(x => x.Id == id);
+
             calendarDay.Update(note);
         }
-
-        public void AddPredecessorMemos(IEnumerable<Memo> predecessorMemos)
-        {
-            var highestPosition = Memos.OrderByDescending(x => x.Position).First().Position;
-
-            foreach (var predecessorMemo in predecessorMemos)
-            {
-                var newPosition = highestPosition + predecessorMemo.Position;
-                predecessorMemo.Update(newPosition);
-                Memos.Add(predecessorMemo);
-            }
-        }
-
-        public void AddPredecessorCalendarDays(IEnumerable<CalendarDay> predecessorCalendarDays)
-        {
-            foreach (var calendarDay in predecessorCalendarDays)
-            {
-                CalendarDays.Add(calendarDay);
-            }
-        }
-
-        public Guid SimulationCombinationId { get; private set; }
-        public Guid UserId { get; private set; }
-        public ICollection<Memo> Memos { get; private set; }
-        public ICollection<CalendarDay> CalendarDays { get; private set; }
-        
     }
 }

@@ -14,7 +14,7 @@ new Sortable(memos,
         },
     });
 
-function openMemo(evt, memoName) {
+function openMemo(evt, memoId) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("memo");
     for (i = 0; i < tabcontent.length; i++) {
@@ -30,7 +30,10 @@ function openMemo(evt, memoName) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
 
-    document.getElementById(memoName).style.display = "block";
+    document.getElementById(memoId).style.display = "block";
+    $("[data-memoid=" + memoId + "]").each(function () {
+        $(this).css("display", "block");
+        });
     evt.currentTarget.className += " active";
 };
 

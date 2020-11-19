@@ -24,7 +24,7 @@ namespace Quintessence.QCandidate.Logic.Queries
 
             var parameters = new SqlParameter[] { simulationCombinationId, userId };
 
-            var command = new StoredProcedureCommandDefinition("[QCandidate].[GetPredecessorCalendarDays_GetBySimulationCombinationIdAndUserId]", parameters).ToCommandDefinition();
+            var command = new StoredProcedureCommandDefinition("[QCandidate].[CalendarDay_GetAllFromPredecessorBySimulationCombinationIdAndUserId]", parameters).ToCommandDefinition();
             using (var dbConnection = DbConnectionFactory.Create())
             {
                 return await dbConnection.QueryAsync<CalendarDay>(command);

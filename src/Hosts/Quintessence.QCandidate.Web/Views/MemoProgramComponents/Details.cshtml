@@ -94,7 +94,7 @@
                             {
                                 classNames.Add("active");
                             }
-                            <div id="@memo.Id" class="@string.Join(' ', classNames.ToArray())"> @Html.Raw(memo.Content) </div>
+                            <div id="@memo.Id" data-memoId="@memo.Id" class="@string.Join(' ', classNames.ToArray())"> @Html.Raw(memo.Content) </div>
                         }
 
                     </div>

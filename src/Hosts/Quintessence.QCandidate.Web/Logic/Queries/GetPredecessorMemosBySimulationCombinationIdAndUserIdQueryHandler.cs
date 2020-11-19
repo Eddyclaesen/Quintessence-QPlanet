@@ -24,7 +24,7 @@ namespace Quintessence.QCandidate.Logic.Queries
 
             var parameters = new SqlParameter[] { simulationCombinationId, userId };
 
-            var command = new StoredProcedureCommandDefinition("[QCandidate].[GetMemosPredecessor_GetBySimulationCombinationIdAndUserId]", parameters).ToCommandDefinition();
+            var command = new StoredProcedureCommandDefinition("[QCandidate].[Memos_GetAllFromPredecessorBySimulationCombinationIdAndUserId]", parameters).ToCommandDefinition();
             using (var dbConnection = DbConnectionFactory.Create())
             {
                 return await dbConnection.QueryAsync<Memo>(command);

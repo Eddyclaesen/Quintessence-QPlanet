@@ -1,5 +1,4 @@
-﻿using System;
-using MediatR;
+﻿using MediatR;
 using Quintessence.QCandidate.Core.Commands;
 using Quintessence.QCandidate.Core.Domain;
 using Quintessence.QCandidate.Core.Queries;
@@ -28,22 +27,37 @@ namespace Quintessence.QCandidate.Logic.Commands
             if (memoProgramComponent == null)
             {
                 var simulationCombinationMemos = await _mediator.Send(new GetSimulationCombinationMemosBySimulationCombinationIdQuery(request.SimulationCombinationId));
+                                
+                var memos = simulationCombinationMemos.Select(scm => new Memo(scm.Position, scm.Id)).ToList();
+                                
+                var predecesorCalendarDays = await _mediator.Send(new GetPredecessorCalendarDaysBySimulationIdAndUserIdQuery(request.SimulationCombinationId, request.UserId));
 
-                var predecesorCalendarDays = await _mediator.Send(new GetPredecessorCalendarDaysBySimulationIdAndUserIdQuery(request.Id, request.UserId));
-
-                memoProgramComponent = _repository.Add(new MemoProgramComponent(
-                    request.Id,
-                    request.SimulationCombinationId,
-                    request.UserId,
-                    simulationCombinationMemos.Select(scm => new Memo(scm.Position, scm.Id)),
-                    predecesorCalendarDays
-                ));
-
-                var predecessorSimulationCombinationMemos = await _mediator.Send(new GetPredecessorMemosBySimulationCombinationIdAndUserIdQuery(request.SimulationCombinationId, request.UserId));
-                if (predecessorSimulationCombinationMemos.Any())
+                // No predecessor exists
+                if (!predecesorCalendarDays.Any())
                 {
-                    memoProgramComponent.AddPredecessorMemos(predecessorSimulationCombinationMemos);
+                    memoProgramComponent = _repository.Add(new MemoProgramComponent(
+                        request.Id,
+                        request.SimulationCombinationId,
+                        request.UserId,
+                        memos
+                    ));
                 }
+                else
+                {
+                    var highestMemoPosition = simulationCombinationMemos.Max(scm => scm.Position);
+                    var predecessorMemos = (await _mediator.Send(new GetPredecessorMemosBySimulationCombinationIdAndUserIdQuery(request.SimulationCombinationId, request.UserId)));
+
+                    memos.AddRange(predecessorMemos.Select(m => new Memo(m.Position + highestMemoPosition, m.OriginId)));
+
+                    memoProgramComponent = _repository.Add(new MemoProgramComponent(
+                        request.Id,
+                        request.SimulationCombinationId,
+                        request.UserId,
+                        memos,
+                        predecesorCalendarDays.Select(cd => new CalendarDay(cd.Day, cd.Note))
+                    ));
+                }
+             
 
                 await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
             }

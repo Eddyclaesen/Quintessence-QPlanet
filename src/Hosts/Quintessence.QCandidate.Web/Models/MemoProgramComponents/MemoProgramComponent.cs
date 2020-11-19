@@ -27,6 +27,6 @@ namespace Quintessence.QCandidate.Models.MemoProgramComponents
         public IEnumerable<Memo> Memos { get; }
         public IEnumerable<CalendarDay> CalendarDays { get; }
 
-        public bool CanShowContent => DateTime.Now.Date == _start.Date.Date && DateTime.Now > _start;
+        public bool CanShowContent => true; //DateTime.Now.Date == _start.Date.Date && DateTime.Now > _start;
     }
 }
