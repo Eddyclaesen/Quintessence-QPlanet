@@ -27,9 +27,12 @@ namespace Quintessence.QCandidate.Controllers
         public async Task<IActionResult> Get()
         {
             var candidateIdClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId");
-            var candidateId = new Guid(candidateIdClaim.Value);
-            var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateAndLanguageQuery(candidateId, DateTime.Now, CultureInfo.CurrentCulture.ToString()));
-            
+            //var candidateId = new Guid(candidateIdClaim.Value);
+            var candidateId = Guid.Parse("8F31470D-2E67-45D7-B263-395244F7BFE5");
+
+            //var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateAndLanguageQuery(candidateId, DateTime.Now, CultureInfo.CurrentCulture.ToString()));
+            var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateAndLanguageQuery(candidateId, new DateTime(2020, 10, 22), CultureInfo.CurrentCulture.ToString()));
+
             Assessment assessment = null;
             if (assessmentDto != null)
             {
@@ -50,7 +53,7 @@ namespace Quintessence.QCandidate.Controllers
             //DayProgram is null when no day program was found for that day
             if (assessment.DayProgram?.ProgramComponents != null)
             {
-                foreach (var programComponent in assessment.DayProgram.ProgramComponents)
+                foreach (var programComponent in assessment.DayProgram.ProgramComponents.OrderBy(pc => pc.Start))
                 {
 
                     var title = programComponent.Description ?? programComponent.Name;
@@ -71,8 +74,7 @@ namespace Quintessence.QCandidate.Controllers
                         await _mediator.Send(new CreateMemoProgramComponentIfNotExistsCommand(
                                                         programComponent.Id,
                                                         new Guid(User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId").Value),
-                                                        //programComponent.SimulationCombinationId.Value));
-                                                        Guid.Parse("01FBB298-AE9A-4BFF-BD9A-A2750FF5A0B5")));
+                                                        programComponent.SimulationCombinationId.Value));
                     }
 
                     var programComponentModel = new ProgramComponent(programComponent.Id, title, location, showDetailsLink, assessors, programComponent.Start, programComponent.End, qCandidateLayout);

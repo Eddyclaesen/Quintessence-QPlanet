@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
+using Quintessence.QCandidate.Core.Commands;
 using Quintessence.QCandidate.Core.Queries;
 using Quintessence.QCandidate.Core.Domain;
 
@@ -28,5 +31,29 @@ namespace Quintessence.QCandidate.Controllers
 
             return View(model);
         }
+
+        [Route("{id}/memos")]
+        [HttpPost]
+        public async Task<IActionResult> ChangeMemoPosition(Guid id, [FromBody]List<Models.MemoProgramComponents.Memo> memos)
+        {
+            var dict = new Dictionary<Guid, int>();
+            foreach (var memo in memos)
+            {
+                dict.Add(memo.Id, memo.Position);
+            }
+            var memosToUpdate = new ChangeMemosPositionCommand(id, dict);
+            await _mediator.Send(memosToUpdate);
+            return Ok();
+        }
+
+        [Route("{id}/calendarDays/{calendarDayId}")]
+        [HttpPost]
+        public async Task<IActionResult> UpdateCalendarDay(Guid id, Guid calendarDayId, string note)
+        {
+            var memo = new UpdateCalendarDayCommand(id, calendarDayId, note);
+            await _mediator.Send(memo);
+            return Ok();
+        }
+
     }
 }

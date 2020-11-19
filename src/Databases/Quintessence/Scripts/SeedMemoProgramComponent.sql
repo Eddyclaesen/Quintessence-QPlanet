@@ -98,5 +98,9 @@ WHILE (@date <= '2018-04-30')
 
 
 
+update [dbo].[SimulationCombination] set QCandidateLayoutId = 3 where id = '01FBB298-AE9A-4BFF-BD9A-A2750FF5A0B5';
+
+
+update [dbo].[SimulationCombination] set QCandidateLayoutId = 3 where id = '01FBB298-AE9A-4BFF-BD9A-A2750FF5A0B5';
 
 

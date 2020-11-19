@@ -55,7 +55,8 @@ namespace Quintessence.QCandidate
                     options.Filters.Add(new AuthorizeFilter(policy));
                 })
                 .AddRazorViewEngine()
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix/*, opts => { opts.ResourcesPath = "Resources"; }*/);
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix/*, opts => { opts.ResourcesPath = "Resources"; }*/)
+                .AddNewtonsoftJson();
 
             
             services.AddMediatR(typeof(GetAssessmentByCandidateIdAndDateAndLanguageQueryHandler).Assembly);
@@ -81,6 +82,7 @@ namespace Quintessence.QCandidate
 
             services.AddAuthentication(AzureADB2CDefaults.AuthenticationScheme)
                 .AddAzureADB2C(options => Configuration.Bind("AzureAdB2C", options));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -124,6 +124,7 @@ CREATE TABLE [dbo].[tmp_ms_xx_SimulationCombination] (
     [Preparation]            INT              NOT NULL,
     [Execution]              INT              NOT NULL,
     [QCandidateLayoutId]     INT              NOT NULL,
+    [PredecessorId]          UNIQUEIDENTIFIER NULL,
     [Audit_CreatedBy]        NVARCHAR (MAX)   DEFAULT (suser_sname()) NOT NULL,
     [Audit_CreatedOn]        DATETIME         DEFAULT (getdate()) NOT NULL,
     [Audit_ModifiedBy]       NVARCHAR (MAX)   NULL,
@@ -168,6 +169,13 @@ COMMIT TRANSACTION;
 
 SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
 
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombination_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombination_SimulationCombination] FOREIGN KEY ([PredecessorId]) REFERENCES [dbo].[SimulationCombination] (Id);
 
 GO
 PRINT N'Creating [dbo].[FK_SimulationCombination2Language_Simulation]...';
@@ -529,6 +537,52 @@ SELECT
 FROM [dbo].[SimulationCombinationMemos]
 WHERE [SimulationCombinationId] = @simulationCombinationId
 GO
+
+
+
+GO
+CREATE PROCEDURE [QCandidate].[GetPredecessorMemos_GetBySimulationCombinationIdAndUserId]
+	@simulationCombinationId UNIQUEIDENTIFIER,
+	@userId UNIQUEIDENTIFIER
+AS
+
+SET NOCOUNT ON
+
+SELECT 
+	[QCandidate].[Memos].[Id] , [QCandidate].[Memos].[MemoProgramComponentId], [QCandidate].[Memos].[OriginId], [QCandidate].[Memos].[Position]
+FROM [QCandidate].[Memos]
+	INNER JOIN [QCandidate].[MemoProgramComponents] 
+		ON [QCandidate].[Memos].[MemoProgramComponentId] = [QCandidate].[MemoProgramComponents].[Id]
+	INNER JOIN [dbo].[SimulationCombination] 
+		ON [QCandidate].[MemoProgramComponents].[SimulationCombinationId] = [dbo].[SimulationCombination].[PredecessorId]
+WHERE [dbo].[SimulationCombination].[Id] = @simulationCombinationId 
+    AND [QCandidate].[MemoProgramComponents].[UserId] = @userId
+    AND CONVERT(DATE, [QCandidate].[Memos].[CreatedOn]) = CONVERT(DATE, [QCandidate].[MemoProgramComponents].[CreatedOn])
+
+GO
+
+
+GO
+CREATE PROCEDURE [QCandidate].[GetPredecessorCalendarDays_GetBySimulationCombinationIdAndUserId]
+	@simulationCombinationId UNIQUEIDENTIFIER,
+	@userId UNIQUEIDENTIFIER
+AS
+
+SET NOCOUNT ON
+
+SELECT [QCandidate].[CalendarDays].[Id],  [QCandidate].[CalendarDays].[Note]
+FROM  [QCandidate].[CalendarDays]
+    INNER JOIN [QCandidate].[MemoProgramComponents] 
+		ON [QCandidate].[CalendarDays].[MemoProgramComponentId] = [QCandidate].[MemoProgramComponents].[Id]
+	INNER JOIN [dbo].[SimulationCombination] 
+		ON [QCandidate].[MemoProgramComponents].[SimulationCombinationId] = [dbo].[SimulationCombination].[PredecessorId]
+WHERE [dbo].[SimulationCombination].[Id] = @simulationCombinationId
+	AND [QCandidate].[MemoProgramComponents].[UserId] = @userId
+
+GO
+
+
+
 
 GO
 CREATE PROCEDURE [dbo].[Context_GetIdByProgramComponentId]

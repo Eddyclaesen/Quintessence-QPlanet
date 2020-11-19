@@ -7,6 +7,7 @@
     [Preparation]            INT              NOT NULL,
     [Execution]              INT              NOT NULL,
     [QCandidateLayoutId]     INT              NOT NULL,
+    [PredecessorId]          UNIQUEIDENTIFIER NULL,
     [Audit_CreatedBy]        NVARCHAR (MAX)   DEFAULT (suser_sname()) NOT NULL,
     [Audit_CreatedOn]        DATETIME         DEFAULT (getdate()) NOT NULL,
     [Audit_ModifiedBy]       NVARCHAR (MAX)   NULL,
@@ -19,6 +20,7 @@
     CONSTRAINT [FK_SimulationCombination_Simulation] FOREIGN KEY ([SimulationId]) REFERENCES [dbo].[Simulation] ([Id]),
     CONSTRAINT [FK_SimulationCombination_SimulationDepartment] FOREIGN KEY ([SimulationDepartmentId]) REFERENCES [dbo].[SimulationDepartment] ([Id]),
     CONSTRAINT [FK_SimulationCombination_SimulationLevel] FOREIGN KEY ([SimulationLevelId]) REFERENCES [dbo].[SimulationLevel] ([Id]),
-    CONSTRAINT [FK_SimulationCombination_SimulationSet] FOREIGN KEY ([SimulationSetId]) REFERENCES [dbo].[SimulationSet] ([Id])
+    CONSTRAINT [FK_SimulationCombination_SimulationSet] FOREIGN KEY ([SimulationSetId]) REFERENCES [dbo].[SimulationSet] ([Id]),
+    CONSTRAINT [FK_SimulationCombination_SimulationCombination] FOREIGN KEY ([PredecessorId]) REFERENCES [dbo].[SimulationCombination] (Id)
 );
 

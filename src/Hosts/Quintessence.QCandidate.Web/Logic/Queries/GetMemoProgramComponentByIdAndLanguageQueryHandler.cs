@@ -3,10 +3,8 @@ using Kenze.Infrastructure.Dapper;
 using Kenze.Infrastructure.Interfaces;
 using Microsoft.Extensions.Options;
 using Quintessence.QCandidate.Configuration;
-using Quintessence.QCandidate.Contracts.Responses;
 using Quintessence.QCandidate.Core.Domain;
 using Quintessence.QCandidate.Core.Queries;
-using Quintessence.QCandidate.Models.MemoProgramComponents;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -41,7 +39,12 @@ namespace Quintessence.QCandidate.Logic.Queries
 
             var basePath = Path.Combine(_htmlStorageLocation, memoProgramComponentDto.SimulationCombinationId.ToString());
 
-            var intro = System.IO.File.ReadAllText(Path.Combine(basePath, IntrosFolder, $"{query.Language.Code.ToUpperInvariant()}.html"));
+            var intro = File.ReadAllText(Path.Combine(basePath, IntrosFolder, $"{query.Language.Code.ToUpperInvariant()}.html"));
+            string predecessorIntro = null;
+            if (memoProgramComponentDto.PredecessorSimulationCombinationId.HasValue)
+            {
+                predecessorIntro = File.ReadAllText(Path.Combine(_htmlStorageLocation, memoProgramComponentDto.PredecessorSimulationCombinationId.Value.ToString(), IntrosFolder, $"{query.Language.Code.ToUpperInvariant()}.html"));
+            }
             var functionDescription = System.IO.File.ReadAllText(Path.Combine(basePath, FunctionDescriptionsFolder, $"{query.Language.Code.ToUpperInvariant()}.html"));
 
             var contextId = await GetContextId(query.Id); //Guid.Parse("5fa70b90-32d6-48fb-993c-0191d79da1c9");
@@ -51,9 +54,10 @@ namespace Quintessence.QCandidate.Logic.Queries
                 memoProgramComponentDto.Name,
                 memoProgramComponentDto.Start,
                 intro,
+                predecessorIntro,
                 functionDescription,
                 contextId,
-                memoProgramComponentDto.Memos.Select(m => new Memo(m.Id, m.Position, m.Title, GetMemoContent(memoProgramComponentDto.SimulationCombinationId, m, query.Language))),
+                memoProgramComponentDto.Memos.Select(m => new Memo(m.Id, m.Position, m.Title, GetMemoContent(memoProgramComponentDto.SimulationCombinationId, m, query.Language), m.HasPredecessorOrigin)),
                 memoProgramComponentDto.CalendarDays.Select(cd => new CalendarDay(cd.Id, cd.Day, cd.Note))
                 );
         }
@@ -128,6 +132,7 @@ namespace Quintessence.QCandidate.Logic.Queries
             }
 
             public Guid SimulationCombinationId { get; set; }
+            public Guid? PredecessorSimulationCombinationId { get; set; }
             public string Name { get; set; }
             public DateTime Start { get; set; }
             public List<MemoDto> Memos { get; set; }
@@ -147,6 +152,7 @@ namespace Quintessence.QCandidate.Logic.Queries
             public int Position { get; set; }
             public int OriginPosition { get; set; }
             public string Title { get; set; }
+            public bool HasPredecessorOrigin { get; set; }
         }
     }
 }

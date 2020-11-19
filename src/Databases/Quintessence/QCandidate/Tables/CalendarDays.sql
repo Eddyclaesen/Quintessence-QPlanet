@@ -1,14 +1,14 @@
 ﻿CREATE TABLE [QCandidate].[CalendarDays]
 (
-	[Id] UNIQUEIDENTIFIER NOT NULL, 
-    [MemoProgramComponentId] UNIQUEIDENTIFIER NOT NULL, 
-    [Day] DATETIME NOT NULL, 
-    [Note] NVARCHAR(MAX) NULL,
-    [CreatedBy]        NVARCHAR (MAX)    NOT NULL,
-    [CreatedOn]        DATETIME          NOT NULL,
-    [ModifiedBy]       NVARCHAR (MAX)   NULL,
-    [ModifiedOn]       DATETIME         NULL,
-    [ConcurrencyLock]        TIMESTAMP  NOT NULL,
+	[Id]                        UNIQUEIDENTIFIER    NOT NULL, 
+    [MemoProgramComponentId]    UNIQUEIDENTIFIER    NOT NULL, 
+    [Day]                       DATETIME2           NOT NULL, 
+    [Note]                      NVARCHAR(MAX)       NULL,
+    [CreatedBy]                 NVARCHAR (250)      NOT NULL,
+    [CreatedOn]                 DATETIME2           NOT NULL,
+    [ModifiedBy]                NVARCHAR (250)      NULL,
+    [ModifiedOn]                DATETIME2           NULL,
+    [ConcurrencyLock]           TIMESTAMP           NOT NULL,
     CONSTRAINT [PK_CalendarDays] PRIMARY KEY NONCLUSTERED ([Id] ASC),
     CONSTRAINT [FK_CalendarDays_MemoProgramComponents] FOREIGN KEY ([MemoProgramComponentId]) REFERENCES [QCandidate].[MemoProgramComponents] ([Id])
 )

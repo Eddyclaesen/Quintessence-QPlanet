@@ -18,18 +18,14 @@ namespace Quintessence.QCandidate.Logic.Commands
 
         public async Task<MemoProgramComponent> Handle(ChangeMemosPositionCommand request, CancellationToken cancellationToken)
         {
-            var memoProgram = _repository.FindAsync(request.MemoProgramComponentId).Result;
-            foreach (var resultMemo in memoProgram.Memos)
+            var memoProgramComponent = _repository.FindAsync(request.MemoProgramComponentId).Result;
+            foreach (var memoPosition in request.MemoPositions)
             {
-                if (request.MemoPositions.ContainsKey(resultMemo.Id))
-                {
-                    resultMemo.Update(request.MemoPositions[resultMemo.Id]);
-                }
-                    
+                memoProgramComponent.UpdateMemo(memoPosition.Key, memoPosition.Value);
             }
             await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
-            return memoProgram;
+            return memoProgramComponent;
 
         }
     }
