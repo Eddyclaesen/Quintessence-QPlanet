@@ -32,12 +32,12 @@ namespace Quintessence.QCandidate.Controllers
             if (model == null)
             {
                 var programComponent = await _mediator.Send(new GetProgramComponentByIdAndLanguageQuery(id, language));
-                /*if (programComponent.Start > DateTime.Now || programComponent.Start.Date != DateTime.Now.Date)
+                if (programComponent.Start > DateTime.Now || programComponent.Start.Date != DateTime.Now.Date)
                 {
                     ViewBag.Name = programComponent.Name;
                     return View("NoAccessYet");
                 }
-                */
+                
                 var candidateIdClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId");
                 var candidateId = new Guid(candidateIdClaim.Value);
                 await _mediator.Send(new CreateMemoProgramComponentCommand(id, candidateId, programComponent.SimulationCombinationId.Value));

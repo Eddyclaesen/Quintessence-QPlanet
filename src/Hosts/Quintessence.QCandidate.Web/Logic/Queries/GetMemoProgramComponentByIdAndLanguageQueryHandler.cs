@@ -52,7 +52,7 @@ namespace Quintessence.QCandidate.Logic.Queries
             }
             var functionDescription = System.IO.File.ReadAllText(Path.Combine(basePath, FunctionDescriptionsFolder, $"{query.Language.Code.ToUpperInvariant()}.html"));
 
-            var contextId = await GetContextId(query.Id); //Guid.Parse("5fa70b90-32d6-48fb-993c-0191d79da1c9");
+            var contextId = await GetContextId(query.Id);
 
             return new MemoProgramComponent(
                 query.Id,

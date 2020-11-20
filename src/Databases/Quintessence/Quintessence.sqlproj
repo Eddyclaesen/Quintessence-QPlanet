@@ -585,12 +585,14 @@
     <Build Include="dbo\Stored Procedures\TheoremListRequest_Reporting_GetQuestionnaireOverview.sql" />
     <Build Include="dbo\Stored Procedures\ProjectCandidate_ListSimulationContextLogins.sql" />
     <Build Include="Security\QCandidate.sql" />
-    <Build Include="QCandidate\Stored Procedures\ProgramComponent_GetById.sql" />
     <Build Include="dbo\Tables\SimulationCombinationMemos.sql" />
     <Build Include="dbo\Tables\SimulationCombinationMemoTranslations.sql" />
     <Build Include="QCandidate\Tables\CalendarDays.sql" />
     <Build Include="QCandidate\Tables\Memos.sql" />
     <Build Include="QCandidate\Tables\MemoProgramComponents.sql" />
+    <Build Include="dbo\Stored Procedures\ProgramComponent_GetByIdAndLanguageId.sql" />
+    <Build Include="dbo\Stored Procedures\SimulationCombinationMemo_GetAllBySimulationCombinationId.sql" />
+    <Build Include="dbo\Stored Procedures\Context_GetIdByProgramComponentId.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="QCandidate\Stored Procedures\Assessment_GetByCandidateIdAndDateAndLanguage.sql" />

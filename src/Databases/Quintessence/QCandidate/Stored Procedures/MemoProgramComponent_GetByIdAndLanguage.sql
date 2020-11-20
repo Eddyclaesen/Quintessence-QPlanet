@@ -19,7 +19,7 @@ SELECT
     CAST(CASE SCM.[SimulationCombinationId]
         WHEN SC.[PredecessorId] THEN 1
         ELSE 0
-        END AS BIT) AS [HasPredecessorOrigin)
+        END AS BIT) AS [HasPredecessorOrigin],
     --CalendarDay
     CD.[Id], 
     CD.[Day], 

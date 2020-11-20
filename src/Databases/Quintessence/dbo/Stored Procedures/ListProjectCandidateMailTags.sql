@@ -135,7 +135,7 @@ BEGIN
 	FROM #TempTable
 
 	INSERT INTO @Table
-	SELECT 'ONLINE', CASE @IsOnline WHEN 0 THEN '' WHEN 1 THEN 'online ' END
+	SELECT 'ONLINE', CASE @IsOnline WHEN 0 THEN '' WHEN 1 THEN '' END
 	FROM #TempTable
 
 	IF (@ContactName = 'Fod Financiën')
@@ -145,8 +145,8 @@ BEGIN
 				CASE @LanguageId
 				WHEN 1 THEN CASE WHEN @ProjectType like '%Custom%' THEN 'Er is geen wijziging van datum mogelijk. Indien u niet aanwezig kan zijn voor deze proef, gelieve ons hiervan zo snel mogelijk te verwittigen via mail. '
 					ELSE 'Er is geen wijziging van datum mogelijk. Indien u niet aanwezig kan zijn voor deze proef, gelieve ons hiervan zo snel mogelijk te verwittigen. ' END
-				WHEN 2 THEN CASE WHEN @ProjectType like '%Custom%' THEN 'Aucun changement de date n''est possible. Si vous ne pouvez-vous présenter à cette épreuve, veuillez nous en avertir au plus vite via mail. '
-					ELSE 'Aucun changement de date n''est possible. Si vous ne pouvez-vous présenter à cette épreuve, veuillez nous en avertir au plus vite. ' END
+				WHEN 2 THEN CASE WHEN @ProjectType like '%Custom%' THEN 'Aucun changement de date n''est possible. Si vous ne pouvez-vous présenter à cette épreuve, veuillez-nous en avertir au plus vite via mail. '
+					ELSE 'Aucun changement de date n''est possible. Si vous ne pouvez-vous présenter à cette épreuve, veuillez-nous en avertir au plus vite. ' END
 				WHEN 4 THEN CASE WHEN @ProjectType like '%Custom%' THEN 'Eine Terminänderung ist nicht möglich. Falls Sie zu diesem Gespräch nicht anwesend sein können, setzen Sie uns bitte schnellstmöglich darüber in Kenntnis. '
 					ELSE 'Eine Terminänderung ist nicht möglich. Falls Sie zu diesem Test nicht anwesend sein können, unterrichten Sie uns bitte schnellstmöglich darüber. ' END
 				ELSE ''
@@ -189,31 +189,62 @@ BEGIN
 						END 		 
 					WHEN 1 THEN '' 
 					END
-				ELSE CASE @LanguageId
-					WHEN 1 THEN 
-						CASE WHEN @AppointmentDate >= '2018-09-24' THEN '<p>U bent welkom in de gebouwen van FOD Financiën:</p><p>North Galaxy - Toren B - 17de verdieping - Koning Albert II-laan 33, 1030 BRUSSEL</p> '
-						ELSE 'U bent welkom in ons kantoor:&nbsp;</span></p><p style="padding-left: 30px;"><strong><span style="color: #002649; font-family: calibri; font-size: 11pt;">&lt;!--OFFICE--&gt;<br />&lt;!--OFFICEADDRESS--&gt;<br />T: 32 3 281 44 88</span></strong></p>' END
-					WHEN 2 THEN 
-						CASE WHEN @AppointmentDate >= '2018-09-24' THEN '<p>Vous serez reçu dans les bureaux du SPF Finance :</p><p>North Galaxy – Tour B - 17ème étage - Boulevard du Roi Albert II 33, 1030 BRUXELLES</p> '
-						ELSE 'Vous serez re&ccedil;u dans nos bureaux :&nbsp;</span></p><p style="padding-left: 30px;"><strong><span style="color: #002649; font-family: calibri; font-size: 11pt;">&lt;!--OFFICE--&gt;<br />&lt;!--OFFICEADDRESS--&gt;<br />T: 32 3 281 44 88</span></strong></p>' END
-					WHEN 4 THEN 
-						CASE WHEN @AppointmentDate >= '2018-09-24' THEN '<p>Sie sind willkommen in den Gebäuden von FOD Finanzen :</p><p>Boulevard du Roi Albert II 33, 1030 Brüssel<br />In der Abteilung Promotion (Shared Service Center) der P&O-Personalabteilung auf der Etage B17.</p> '
-						ELSE 'Wir begrüßen Sie in unserem Büro: </span></p><p style="padding-left: 30px;"><strong><span style="color: #002649; font-family: calibri; font-size: 11pt;">&lt;!--OFFICE--&gt;<br />&lt;!--OFFICEADDRESS--&gt;<br />T: 32 3 281 44 88</span></strong></p>' END					
-					ELSE '' END
+				ELSE 
+				CASE @IsOnline
+					WHEN 0 THEN 
+						CASE @LanguageId
+							WHEN 1 THEN 
+								CASE WHEN @AppointmentDate >= '2018-09-24' THEN '<p>U bent welkom in de gebouwen van FOD Financiën:</p><p>North Galaxy - Toren B - 17de verdieping - Koning Albert II-laan 33, 1030 BRUSSEL</p> '
+								ELSE 'U bent welkom in ons kantoor:&nbsp;</span></p><p style="padding-left: 30px;"><strong><span style="color: #002649; font-family: calibri; font-size: 11pt;">&lt;!--OFFICE--&gt;<br />&lt;!--OFFICEADDRESS--&gt;<br />T: 32 3 281 44 88</span></strong></p>' END
+							WHEN 2 THEN 
+								CASE WHEN @AppointmentDate >= '2018-09-24' THEN '<p>Vous serez reçu dans les bureaux du SPF Finance :</p><p>North Galaxy – Tour B - 17ème étage - Boulevard du Roi Albert II 33, 1030 BRUXELLES</p> '
+								ELSE 'Vous serez re&ccedil;u dans nos bureaux :&nbsp;</span></p><p style="padding-left: 30px;"><strong><span style="color: #002649; font-family: calibri; font-size: 11pt;">&lt;!--OFFICE--&gt;<br />&lt;!--OFFICEADDRESS--&gt;<br />T: 32 3 281 44 88</span></strong></p>' END
+							WHEN 4 THEN 
+								CASE WHEN @AppointmentDate >= '2018-09-24' THEN '<p>Sie sind willkommen in den Gebäuden von FOD Finanzen :</p><p>Boulevard du Roi Albert II 33, 1030 Brüssel<br />In der Abteilung Promotion (Shared Service Center) der P&O-Personalabteilung auf der Etage B17.</p> '
+								ELSE 'Wir begrüßen Sie in unserem Büro: </span></p><p style="padding-left: 30px;"><strong><span style="color: #002649; font-family: calibri; font-size: 11pt;">&lt;!--OFFICE--&gt;<br />&lt;!--OFFICEADDRESS--&gt;<br />T: 32 3 281 44 88</span></strong></p>' END					
+							ELSE '' 
+						END
+					ELSE ''
 				END
+		END
 	FROM #TempTable 
 
 	INSERT INTO @Table
-	SELECT 'ONLINEDESC', CASE @IsOnline 
-				WHEN 0 THEN '' 
-				WHEN 1 THEN 
-					CASE @LanguageId
-						WHEN 1 THEN '<p><span style="color: #002649; font-family: calibri; font-size: 11pt;">Voor het online assessment maken we gebruik van <strong>Zoom</strong>. In een afzonderlijke mail vindt u de link naar een <strong>online vergaderruimte</strong> waar het online assessment zal plaatsvinden. Open deze link <strong>op voorhand</strong> om na te gaan of uw webcam en microfoon werkt. Indien u hierbij problemen ondervindt, die u zelf niet kan oplossen dan kan u ons altijd contacteren. Op deze manier kan het online assessment voor iedereen op een vlotte manier starten.</span></p>'
-						WHEN 2 THEN '<p><span style="color: #002649; font-family: calibri; font-size: 11pt;">Pour votre évaluation en ligne, nous allons utiliser <strong>Zoom</strong>. Vous recevrez dans un autre email le lien pour une <strong>salle de réunion virtuelle</strong> où se déroulera l’évaluation. Ouvrez le lien <strong>à l’avance</strong> afin de mettre à jour, si nécessaire, votre webcam et le micro. Si vous êtes confronté(e) à des problèmes que vous ne pouvez pas résoudre vous-même, vous pouvez nous contacter. Cela nous permettra d’effectuer l’évaluation en respectant les délais convenus.</span></p>'
-						WHEN 3 THEN '<p><span style="color: #002649; font-family: calibri; font-size: 11pt;">For the online assessment we use <strong>Zoom</strong>. In a separate mail you will find the link to an <strong>online meeting room</strong> where the assessment will take place. Please check if your webcam and microphone are working. If you encounter problems you can not solve yourself, you can always contact us. In this way the online assessment can start in an expeditious manner.</span></p>'
-						WHEN 4 THEN '<p><span style="color: #002649; font-family: calibri; font-size: 11pt;">For the online assessment we use <strong>Zoom</strong>. In a separate mail you will find the link to an <strong>online meeting room</strong> where the assessment will take place. Please check if your webcam and microphone are working. If you encounter problems you can not solve yourself, you can always contact us. In this way the online assessment can start in an expeditious manner.</span></p>'
-					END
+	SELECT 'ONLINEDESC', 
+	CASE WHEN @ContactName <> 'Fod Financiën' THEN
+		CASE @IsOnline 
+			WHEN 0 THEN '' 
+			WHEN 1 THEN 
+				CASE @LanguageId
+					WHEN 1 THEN '<p><span style="color: #002649; font-family: calibri; font-size: 11pt;">Voor het online assessment maken we gebruik van <strong>Zoom</strong>. Hieronder vindt u de link naar de <strong>online vergaderruimte:</strong></span></p>
+					<p><span style="color: #002649; font-family: calibri; font-size: 11pt;"><strong>Join Zoom Meeting</strong><br/>Meeting ID: <br/>Wachtwoord: </span></p>
+					<p><span style="color: #002649; font-family: calibri; font-size: 11pt;"><strong>U kan zoom op voorhand al even testen via de volgende link: <a href="https://zoom.us/test">https://zoom.us/test</a></strong></span></p>
+					<p><span style="color: #002649; font-family: calibri; font-size: 11pt;">Indien u hierbij problemen ondervindt, welke u zelf niet kan oplossen, dan kan u ons altijd contacteren. Op deze manier zorgen we er samen voor dat het online assessment voor iedereen op een vlotte manier kan starten.</span></p>'
+					WHEN 2 THEN '<p><span style="color: #002649; font-family: calibri; font-size: 11pt;">Pour votre assessment digital, nous utiliserons <strong>Zoom</strong>. Vous trouverez ci-dessous le lien vers <strong>la réunion en ligne :</strong></span></p>
+					<p><span style="color: #002649; font-family: calibri; font-size: 11pt;"><strong>Join Zoom Meeting</strong><br/>Meeting ID: <br/>Mot de passe: </span></p>
+					<p><span style="color: #002649; font-family: calibri; font-size: 11pt;"><strong>Vous pouvez tester le zoom à l''avance via le lien suivant : <a href="https://zoom.us/test">https://zoom.us/test</a></strong></span></p>
+					<p><span style="color: #002649; font-family: calibri; font-size: 11pt;">Si vous rencontrez des problèmes, que vous ne pouvez pas résoudre vous-même, n’hésitez pas à nous contacter. De cette façon l’assessment se lancera en douceur pour tout le monde.</span></p>'
+					WHEN 3 THEN '<p><span style="color: #002649; font-family: calibri; font-size: 11pt;">For the online assessment we make use of <strong>Zoom</strong>. Below you can find the link to the <strong>online meeting room:</strong></span></p>
+					<p><span style="color: #002649; font-family: calibri; font-size: 11pt;"><strong>Join Zoom Meeting</strong><br/>Meeting ID: <br/>Password: </span></p>
+					<p><span style="color: #002649; font-family: calibri; font-size: 11pt;"><strong>You can test Zoom in advance via the following link: <a href="https://zoom.us/test">https://zoom.us/test</a></strong></span></p>
+					<p><span style="color: #002649; font-family: calibri; font-size: 11pt;">If you encounter problems you are not able to solve do not hesitate to contact us. This way, we make sure that the online assessment can start in a smooth manner.</span></p>'
+					WHEN 4 THEN '<p><span style="color: #002649; font-family: calibri; font-size: 11pt;">For the online assessment we make use of <strong>Zoom</strong>. Below you can find the link to the <strong>online meeting room:</strong></span></p>
+					<p><span style="color: #002649; font-family: calibri; font-size: 11pt;"><strong>Join Zoom Meeting</strong><br/>Meeting ID: <br/>Password: </span></p>
+					<p><span style="color: #002649; font-family: calibri; font-size: 11pt;"><strong>You can test Zoom in advance via the following link: <a href="https://zoom.us/test">https://zoom.us/test</a></strong></span></p>
+					<p><span style="color: #002649; font-family: calibri; font-size: 11pt;">If you encounter problems you are not able to solve do not hesitate to contact us. This way, we make sure that the online assessment can start in a smooth manner.</span></p>'
 				END
+			END
+		ELSE 
+			CASE @IsOnline
+			  WHEN 0 THEN ''
+			  WHEN 1 THEN
+				CASE @LanguageId
+					WHEN 1 THEN '<p><span style="color: #002649; font-family: calibri; font-size: 11pt;">Voor het online assessment maken we gebruik van <strong>Microsoft Teams</strong>. De Microsoft Teams-uitnodiging voor deze evaluatie ontvangt u via een aparte mail.</p>'
+					WHEN 2 THEN '<p><span style="color: #002649; font-family: calibri; font-size: 11pt;">Pour l''évaluation en ligne, nous utilisons <strong>Microsoft Teams</strong>. Vous recevrez l''invitation par un courriel séparé.</p>'
+					ELSE '<p><span style="color: #002649; font-family: calibri; font-size: 11pt;">The online assessment will be held in <strong>Microsoft Teams</strong>. The invitation will be sent separately.</p>' 
+				END
+			END
+	END
 	FROM #TempTable
 
 	INSERT INTO @Table
@@ -327,7 +358,7 @@ BEGIN
 		BEGIN 
 		SET LANGUAGE English
 		INSERT INTO @Table
-		SELECT 'DATE', CAST(DAY([AppointmentDate]) AS NVARCHAR(MAX))+' '+CAST(CONVERT(nvarchar(max), DATENAME(mm, [AppointmentDate]),100) AS NVARCHAR(MAX))+' '+CAST(YEAR([AppointmentDate]) AS NVARCHAR(MAX))
+		SELECT 'DATE', CAST(CONVERT(nvarchar(max), DATENAME(mm, [AppointmentDate]),100) AS NVARCHAR(MAX))+' '+CAST(DAY([AppointmentDate]) AS NVARCHAR(MAX))+', '+CAST(YEAR([AppointmentDate]) AS NVARCHAR(MAX))
 		FROM #TempTable
 		END
 
@@ -384,6 +415,9 @@ BEGIN
 			INSERT INTO @Table
 			SELECT 'PROJECTTYPEFOD', CASE
 					WHEN @ContactName = 'Fod Financiën' THEN 
+						CASE WHEN @IsOnline = 1 THEN ' <strong>online</strong> '
+						ELSE ''
+						END +
 						CASE @LanguageId
 							WHEN 1 THEN CASE WHEN [ProjectTypeName] LIKE '%Custom%' THEN ' uit voor <span style="color: #003873;"><strong>een interview - in het kader van een promotieprocedure voor de functie '+@FunctionTitle+'</strong> '
 									ELSE 
@@ -411,19 +445,33 @@ BEGIN
 							WHEN 4 THEN 'for an assessment center'
 							END 
 						ELSE CASE @LanguageId
-							WHEN 1 THEN ' uit voor een '+LOWER([ProjectTypeName])
-							WHEN 2 THEN 'à un '+LOWER([ProjectTypeName])
+							WHEN 1 THEN ' uit voor een '
+								+CASE WHEN @IsOnline = 1 THEN '<strong>online</strong> ' ELSE '' END
+								+LOWER([ProjectTypeName])
+							WHEN 2 THEN 'à un '
+							+CASE WHEN @IsOnline = 1 THEN '<strong>online</strong> ' ELSE '' END
+							+LOWER([ProjectTypeName])
 							WHEN 3 THEN 'for '+CASE 
 										WHEN LOWER([ProjectTypeName]) LIKE 'assessment%' THEN 'an '
+										+CASE WHEN @IsOnline = 1 THEN '<strong>online</strong> ' ELSE '' END
 										WHEN LOWER([ProjectTypeName]) LIKE 'executive%' THEN 'an '
+										+CASE WHEN @IsOnline = 1 THEN '<strong>online</strong> ' ELSE '' END
 										WHEN LOWER([ProjectTypeName]) LIKE 'ori%' THEN 'an '
-										ELSE 'a ' END
+										+CASE WHEN @IsOnline = 1 THEN '<strong>online</strong> ' ELSE '' END
+										ELSE 'a '
+										+CASE WHEN @IsOnline = 1 THEN '<strong>online</strong> ' ELSE '' END 
+										END
 										+LOWER([ProjectTypeName])
 							WHEN 4 THEN 'for '+CASE 
 										WHEN LOWER([ProjectTypeName]) LIKE 'assessment%' THEN 'an '
+										+CASE WHEN @IsOnline = 1 THEN '<strong>online</strong> ' ELSE '' END
 										WHEN LOWER([ProjectTypeName]) LIKE 'executive%' THEN 'an '
+										+CASE WHEN @IsOnline = 1 THEN '<strong>online</strong> ' ELSE '' END
 										WHEN LOWER([ProjectTypeName]) LIKE 'ori%' THEN 'an '
-										ELSE 'a ' END
+										+CASE WHEN @IsOnline = 1 THEN '<strong>online</strong> ' ELSE '' END
+										ELSE 'a '
+										+CASE WHEN @IsOnline = 1 THEN '<strong>online</strong> ' ELSE '' END 
+										END
 										+LOWER([ProjectTypeName])
 							END
 						END
@@ -817,10 +865,10 @@ BEGIN
 	SELECT 'HELP', CASE WHEN @ContactName = 'Fod Financiën' THEN 
 			CASE WHEN @ProjectType NOT LIKE '%Custom%' THEN
 			CASE @LanguageId
-					WHEN 1 THEN '<p><span style="color: #002649; font-family: calibri; font-size: 14.6667px;">Deze persoonlijkheidsvragenlijst laat een beoordeling toe van de vijf hoofddimensies van persoonlijkheid. Wij vragen u om verschillende stellingen te beoordelen die gelinkt zijn aan u als persoon en die dus niet noodzakelijk gelinkt zijn aan uw werkcontext. Het is belangrijk om deze persoonlijkheidsvragenlijst in te vullen <u><strong>vóór</strong></u> uw evaluatie. Indien er iets fout loopt bij het inloggen op bovenstaande website, kunt u altijd contact met ons opnemen. Wij helpen u graag verder tussen 8u30 en 17u30.</span></p>'
-					WHEN 2 THEN '<p><span style="color: #002649; font-family: calibri; font-size: 14.6667px;">Ce questionnaire de personnalité permet l’évaluation des cinq domaines principaux de la personnalité. Nous vous demandons de juger de différentes affirmations liées à votre personne et donc non pas nécessairement liées à votre contexte de travail. Il est important de remplir ce questionnaire de personnalité <u><strong>avant</strong></u> votre participation à l''évaluation. Si vous rencontrez des difficult&eacute;s lors de la connexion au site mentionn&eacute; ci-dessus, n&rsquo;h&eacute;sitez pas &agrave; nous contacter. Nous vous aiderons avec plaisir, entre 8h30 et 17h30.</span></p>'
+					WHEN 1 THEN '<p><span style="color: #002649; font-family: calibri; font-size: 14.6667px;">Deze persoonlijkheidsvragenlijst laat een beoordeling toe van de vijf hoofddimensies van persoonlijkheid. Wij vragen u om verschillende stellingen te beoordelen die gelinkt zijn aan u als persoon en die dus niet noodzakelijk gelinkt zijn aan uw werkcontext. Het is belangrijk om deze persoonlijkheidsvragenlijst in te vullen <u><strong>vóór</strong></u> uw evaluatie. Indien er iets fout loopt bij het inloggen op bovenstaande website, kunt u altijd contact met ons opnemen. Wij helpen u graag verder tussen 8u30 en 17u.</span></p>'
+					WHEN 2 THEN '<p><span style="color: #002649; font-family: calibri; font-size: 14.6667px;">Ce questionnaire de personnalité permet l’évaluation des cinq domaines principaux de la personnalité. Nous vous demandons de juger de différentes affirmations liées à votre personne et donc non pas nécessairement liées à votre contexte de travail. Il est important de remplir ce questionnaire de personnalité <u><strong>avant</strong></u> votre participation à l''évaluation. Si vous rencontrez des difficult&eacute;s lors de la connexion au site mentionn&eacute; ci-dessus, n&rsquo;h&eacute;sitez pas &agrave; nous contacter. Nous vous aiderons avec plaisir, entre 8h30 et 17h.</span></p>'
 					WHEN 3 THEN ''
-					WHEN 4 THEN '<p><span style="color: #002649; font-family: calibri; font-size: 14.6667px;">Dieser Persönlichkeitsfragebogen ermöglicht eine Beurteilung der fünf wichtigsten Persönlichkeitsfaktoren. Wir bitten Sie, verschiedene Thesen zu beurteilen, die mit Ihnen als Person im Zusammenhang stehen und somit nicht zwangsläufig mit Ihrem Arbeitskontext. Es ist wichtig, diesen Persönlichkeitsfragebogen <u><strong>vor</strong></u> Ihrer Evaluierung auszufüllen. Wenn beim Einloggen auf der vorgenannten Website Probleme auftreten, können Sie uns jederzeit kontaktieren. Wir stehen zwischen 08.30 und 17.30 Uhr zu Ihrer Verfügung.</span></p>'
+					WHEN 4 THEN '<p><span style="color: #002649; font-family: calibri; font-size: 14.6667px;">Dieser Persönlichkeitsfragebogen ermöglicht eine Beurteilung der fünf wichtigsten Persönlichkeitsfaktoren. Wir bitten Sie, verschiedene Thesen zu beurteilen, die mit Ihnen als Person im Zusammenhang stehen und somit nicht zwangsläufig mit Ihrem Arbeitskontext. Es ist wichtig, diesen Persönlichkeitsfragebogen <u><strong>vor</strong></u> Ihrer Evaluierung auszufüllen. Wenn beim Einloggen auf der vorgenannten Website Probleme auftreten, können Sie uns jederzeit kontaktieren. Wir stehen zwischen 08.30 und 17.00 Uhr zu Ihrer Verfügung.</span></p>'
 				END
 			ELSE '' END
 			ELSE CASE @LanguageId
