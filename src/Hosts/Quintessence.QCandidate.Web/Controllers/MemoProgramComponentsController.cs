@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using Quintessence.QCandidate.Core.Commands;
 using Quintessence.QCandidate.Core.Queries;
 using Quintessence.QCandidate.Core.Domain;
+using System.Linq;
 
 namespace Quintessence.QCandidate.Controllers
 {
@@ -25,9 +25,25 @@ namespace Quintessence.QCandidate.Controllers
         [Route("{action}/{id}")]
         public async Task<IActionResult> Details(Guid id)
         {
-            var language = HttpContext.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name;
+            var language = Language.FromCode(HttpContext.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name);
 
-            var model = await _mediator.Send(new GetMemoProgramComponentByIdAndLanguageQuery(id, Language.FromCode(language)));
+            var model = await _mediator.Send(new GetMemoProgramComponentByIdAndLanguageQuery(id, language));
+
+            if (model == null)
+            {
+                var programComponent = await _mediator.Send(new GetProgramComponentByIdAndLanguageQuery(id, language));
+                /*if (programComponent.Start > DateTime.Now || programComponent.Start.Date != DateTime.Now.Date)
+                {
+                    ViewBag.Name = programComponent.Name;
+                    return View("NoAccessYet");
+                }
+                */
+                var candidateIdClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId");
+                var candidateId = new Guid(candidateIdClaim.Value);
+                await _mediator.Send(new CreateMemoProgramComponentCommand(id, candidateId, programComponent.SimulationCombinationId.Value));
+
+                model = await _mediator.Send(new GetMemoProgramComponentByIdAndLanguageQuery(id, language));
+            }
 
             return View(model);
         }

@@ -37,6 +37,11 @@ namespace Quintessence.QCandidate.Logic.Queries
         {
             var memoProgramComponentDto = await GetMemoProgramComponentDto(query);
 
+            if (memoProgramComponentDto == null)
+            {
+                return null;
+            }
+
             var basePath = Path.Combine(_htmlStorageLocation, memoProgramComponentDto.SimulationCombinationId.ToString());
 
             var intro = File.ReadAllText(Path.Combine(basePath, IntrosFolder, $"{query.Language.Code.ToUpperInvariant()}.html"));

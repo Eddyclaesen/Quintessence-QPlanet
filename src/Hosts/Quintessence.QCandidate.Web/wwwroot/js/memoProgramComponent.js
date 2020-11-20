@@ -48,7 +48,6 @@ function saveCalendarDay(evt, calendarDayId) {
             console.log(result.message);
         }
     });
-    
 };
 
 class Memo {
@@ -82,6 +81,5 @@ function saveMemos() {
             console.log(response);
         }
     }); 
-
 }
 

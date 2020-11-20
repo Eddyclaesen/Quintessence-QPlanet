@@ -132,10 +132,6 @@
   <data name="Memos" xml:space="preserve">
     <value>Memos</value>
   </data>
-  <data name="NoAccessYet" xml:space="preserve">
-    <value>U kan hier de relevante informatie terugvinden &lt;span style="text-decoration: underline;"&gt;op het moment dat de oefening van start gaat&lt;/span&gt;. &lt;br&gt;&lt;br&gt;&lt;br&gt;Bedankt voor uw geduld
-            &lt;/div&gt;</value>
-  </data>
   <data name="Quit" xml:space="preserve">
     <value>Onderdeel afsluiten</value>
   </data>

@@ -117,20 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Agenda" xml:space="preserve">
-    <value>Agenda</value>
-  </data>
-  <data name="Context" xml:space="preserve">
-    <value>Context</value>
-  </data>
-  <data name="FunctionDescription" xml:space="preserve">
-    <value>Functie omschrijving</value>
-  </data>
-  <data name="Introduction" xml:space="preserve">
-    <value>Inleiding</value>
-  </data>
-  <data name="Memos" xml:space="preserve">
-    <value>Memos</value>
+  <data name="NoAccessYet" xml:space="preserve">
+    <value>U kan hier de relevante informatie terugvinden &lt;span style="text-decoration: underline;"&gt;op het moment dat de oefening van start gaat&lt;/span&gt;. &lt;br&gt;&lt;br&gt;&lt;br&gt;Bedankt voor uw geduld
+            &lt;/div&gt;</value>
   </data>
   <data name="Quit" xml:space="preserve">
     <value>Onderdeel afsluiten</value>
