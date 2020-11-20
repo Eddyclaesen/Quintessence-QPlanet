@@ -11,6 +11,8 @@ namespace Quintessence.QCandidate.Logic.Queries
 {
     public class GetContextPdfByIdAndLanguageQueryHandler : IRequestHandler<GetContextPdfByIdAndLanguageQuery, FileStream>
     {
+        private const string ContextsFolder = "Contexts";
+        
         private readonly Settings _settings;
 
         public GetContextPdfByIdAndLanguageQueryHandler(IOptionsMonitor<Settings> settings)
@@ -20,7 +22,7 @@ namespace Quintessence.QCandidate.Logic.Queries
 
         public Task<FileStream> Handle(GetContextPdfByIdAndLanguageQuery request, CancellationToken cancellationToken)
         {
-            var filename = FileLocationHelper.GetPdfFileLocation(_settings.PdfStorageLocation, request.Id, request.Language);
+            var filename = FileLocationHelper.GetPdfFileLocation(Path.Combine(_settings.PdfStorageLocation, ContextsFolder), request.Id, request.Language);
 
             if (File.Exists(filename))
             {
