@@ -1,22 +1,934 @@
-﻿insert into dbo.office(shortname, fullname)values('ON', 'Online')
-declare @officeId INT = (select top(1) id from dbo.office where ShortName = 'ON')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 1', @officeId, getdate(), 'Script')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 2', @officeId, getdate(), 'Script')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 3', @officeId, getdate(), 'Script')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 4', @officeId, getdate(), 'Script')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 5', @officeId, getdate(), 'Script')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 6', @officeId, getdate(), 'Script')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 7', @officeId, getdate(), 'Script')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 8', @officeId, getdate(), 'Script')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 9', @officeId, getdate(), 'Script')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 10', @officeId, getdate(), 'Script')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 11', @officeId, getdate(), 'Script')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 12', @officeId, getdate(), 'Script')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 13', @officeId, getdate(), 'Script')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 14', @officeId, getdate(), 'Script')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 15', @officeId, getdate(), 'Script')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 16', @officeId, getdate(), 'Script')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 17', @officeId, getdate(), 'Script')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 18', @officeId, getdate(), 'Script')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 19', @officeId, getdate(), 'Script')
-insert into dbo.AssessmentRoom(Id, Name, OfficeId, Audit_CreatedOn, Audit_CreatedBy)values(newid(), 'Room 20', @officeId, getdate(), 'Script')
+﻿PRINT N'Dropping unnamed constraint on [dbo].[SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] DROP CONSTRAINT [DF__Simulatio__Audit__75C27486];
+
+
+GO
+PRINT N'Dropping unnamed constraint on [dbo].[SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] DROP CONSTRAINT [DF__Simulatio__Audit__73DA2C14];
+
+
+GO
+PRINT N'Dropping unnamed constraint on [dbo].[SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] DROP CONSTRAINT [DF__Simulatio__Audit__74CE504D];
+
+
+GO
+PRINT N'Dropping unnamed constraint on [dbo].[SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] DROP CONSTRAINT [DF__Simulatio__Audit__76B698BF];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_SimulationCombination2Language_Simulation]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination2Language] DROP CONSTRAINT [FK_SimulationCombination2Language_Simulation];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_ProjectCandidateCompetenceSimulationScore_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectCandidateCompetenceSimulationScore] DROP CONSTRAINT [FK_ProjectCandidateCompetenceSimulationScore_SimulationCombination];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_ProjectCandidateIndicatorSimulationScore_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectCandidateIndicatorSimulationScore] DROP CONSTRAINT [FK_ProjectCandidateIndicatorSimulationScore_SimulationCombination];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_ProjectCategoryDetail2C2C_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectCategoryDetail2Competence2Combination] DROP CONSTRAINT [FK_ProjectCategoryDetail2C2C_SimulationCombination];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_ProjectCategoryDetail2SimulationCombination_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectCategoryDetail2SimulationCombination] DROP CONSTRAINT [FK_ProjectCategoryDetail2SimulationCombination_SimulationCombination];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_SimulationCombination_SimulationDepartment]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] DROP CONSTRAINT [FK_SimulationCombination_SimulationDepartment];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_SimulationCombination_Simulation]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] DROP CONSTRAINT [FK_SimulationCombination_Simulation];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_SimulationCombination_SimulationLevel]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] DROP CONSTRAINT [FK_SimulationCombination_SimulationLevel];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_SimulationCombination_SimulationSet]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] DROP CONSTRAINT [FK_SimulationCombination_SimulationSet];
+
+
+GO
+PRINT N'Dropping [QCandidate].[Assessment_GetByCandidateIdAndDate]...';
+
+
+GO
+DROP PROCEDURE [QCandidate].[Assessment_GetByCandidateIdAndDate];
+
+
+GO
+PRINT N'Dropping [QCandidate].[ProgramComponent_GetById]...';
+
+
+GO
+DROP PROCEDURE [QCandidate].[ProgramComponent_GetById];
+
+
+GO
+
+PRINT N'Starting rebuilding table [dbo].[SimulationCombination]...';
+
+
+GO
+BEGIN TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+SET XACT_ABORT ON;
+
+CREATE TABLE [dbo].[tmp_ms_xx_SimulationCombination] (
+    [Id]                     UNIQUEIDENTIFIER NOT NULL,
+    [SimulationSetId]        UNIQUEIDENTIFIER NOT NULL,
+    [SimulationDepartmentId] UNIQUEIDENTIFIER NULL,
+    [SimulationLevelId]      UNIQUEIDENTIFIER NULL,
+    [SimulationId]           UNIQUEIDENTIFIER NOT NULL,
+    [Preparation]            INT              NOT NULL,
+    [Execution]              INT              NOT NULL,
+    [QCandidateLayoutId]     INT              NOT NULL,
+    [PredecessorId]          UNIQUEIDENTIFIER NULL,
+    [Audit_CreatedBy]        NVARCHAR (MAX)   DEFAULT (suser_sname()) NOT NULL,
+    [Audit_CreatedOn]        DATETIME         DEFAULT (getdate()) NOT NULL,
+    [Audit_ModifiedBy]       NVARCHAR (MAX)   NULL,
+    [Audit_ModifiedOn]       DATETIME         NULL,
+    [Audit_DeletedBy]        NVARCHAR (MAX)   NULL,
+    [Audit_DeletedOn]        DATETIME         NULL,
+    [Audit_IsDeleted]        BIT              DEFAULT ((0)) NOT NULL,
+    [Audit_VersionId]        UNIQUEIDENTIFIER DEFAULT (newid()) NOT NULL,
+    CONSTRAINT [tmp_ms_xx_constraint_PK_SimulationCombination1] PRIMARY KEY NONCLUSTERED ([Id] ASC)
+);
+
+IF EXISTS (SELECT TOP 1 1 
+           FROM   [dbo].[SimulationCombination])
+    BEGIN
+        INSERT INTO [dbo].[tmp_ms_xx_SimulationCombination] ([Id], [SimulationSetId], [SimulationDepartmentId], [SimulationLevelId], [SimulationId], [Preparation], [Execution], [QCandidateLayoutId], [Audit_CreatedBy], [Audit_CreatedOn], [Audit_ModifiedBy], [Audit_ModifiedOn], [Audit_DeletedBy], [Audit_DeletedOn], [Audit_IsDeleted], [Audit_VersionId])
+        SELECT [Id],
+               [SimulationSetId],
+               [SimulationDepartmentId],
+               [SimulationLevelId],
+               [SimulationId],
+               [Preparation],
+               [Execution],
+			   0,
+               [Audit_CreatedBy],
+               [Audit_CreatedOn],
+               [Audit_ModifiedBy],
+               [Audit_ModifiedOn],
+               [Audit_DeletedBy],
+               [Audit_DeletedOn],
+               [Audit_IsDeleted],
+               [Audit_VersionId]
+        FROM   [dbo].[SimulationCombination];
+    END
+
+DROP TABLE [dbo].[SimulationCombination];
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_SimulationCombination]', N'SimulationCombination';
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_constraint_PK_SimulationCombination1]', N'PK_SimulationCombination', N'OBJECT';
+
+COMMIT TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+
+GO
+PRINT N'Creating [dbo].[SimulationCombinationMemos]...';
+
+
+GO
+CREATE TABLE [dbo].[SimulationCombinationMemos] (
+    [Id]                      UNIQUEIDENTIFIER NOT NULL,
+    [SimulationCombinationId] UNIQUEIDENTIFIER NOT NULL,
+    [Position]                INT              NOT NULL,
+    CONSTRAINT [PK_SimulationCombinationMemos] PRIMARY KEY NONCLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[SimulationCombinationMemos].[IX_SimulationCombinationMemos_SimulationCombinationId_Position]...';
+
+
+GO
+CREATE UNIQUE CLUSTERED INDEX [IX_SimulationCombinationMemos_SimulationCombinationId_Position]
+    ON [dbo].[SimulationCombinationMemos]([SimulationCombinationId] ASC, [Position] ASC);
+
+
+GO
+PRINT N'Creating [dbo].[SimulationCombinationMemoTranslations]...';
+
+
+GO
+CREATE TABLE [dbo].[SimulationCombinationMemoTranslations] (
+    [Id]                          UNIQUEIDENTIFIER NOT NULL,
+    [SimulationCombinationMemoId] UNIQUEIDENTIFIER NOT NULL,
+    [LanguageId]                  INT              NOT NULL,
+    [Title]                       NVARCHAR (255)   NOT NULL,
+    CONSTRAINT [PK_SimulationCombinationMemoTranslations] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating [QCandidate].[CalendarDays]...';
+
+
+GO
+CREATE TABLE [QCandidate].[CalendarDays] (
+    [Id]                     UNIQUEIDENTIFIER NOT NULL,
+    [MemoProgramComponentId] UNIQUEIDENTIFIER NOT NULL,
+    [Day]                    DATETIME2 (7)    NOT NULL,
+    [Note]                   NVARCHAR (MAX)   NULL,
+    [CreatedBy]              NVARCHAR (250)   NOT NULL,
+    [CreatedOn]              DATETIME2 (7)    NOT NULL,
+    [ModifiedBy]             NVARCHAR (250)   NULL,
+    [ModifiedOn]             DATETIME2 (7)    NULL,
+    [ConcurrencyLock]        TIMESTAMP        NOT NULL,
+    CONSTRAINT [PK_CalendarDays] PRIMARY KEY NONCLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating [QCandidate].[CalendarDays].[IX_CalendarDays_MemoProgramComponentId]...';
+
+
+GO
+CREATE CLUSTERED INDEX [IX_CalendarDays_MemoProgramComponentId]
+    ON [QCandidate].[CalendarDays]([MemoProgramComponentId] ASC);
+
+
+GO
+PRINT N'Creating [QCandidate].[MemoProgramComponents]...';
+
+
+GO
+CREATE TABLE [QCandidate].[MemoProgramComponents] (
+    [Id]                      UNIQUEIDENTIFIER NOT NULL,
+    [SimulationCombinationId] UNIQUEIDENTIFIER NOT NULL,
+    [UserId]                  UNIQUEIDENTIFIER NOT NULL,
+    [CreatedBy]               NVARCHAR (250)   NOT NULL,
+    [CreatedOn]               DATETIME2 (7)    NOT NULL,
+    [ModifiedBy]              NVARCHAR (250)   NULL,
+    [ModifiedOn]              DATETIME2 (7)    NULL,
+    [ConcurrencyLock]         TIMESTAMP        NOT NULL,
+    CONSTRAINT [PK_MemoProgramComponents] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating [QCandidate].[Memos]...';
+
+
+GO
+CREATE TABLE [QCandidate].[Memos] (
+    [Id]                     UNIQUEIDENTIFIER NOT NULL,
+    [MemoProgramComponentId] UNIQUEIDENTIFIER NOT NULL,
+    [Position]               INT              NOT NULL,
+    [OriginId]               UNIQUEIDENTIFIER NOT NULL,
+    [CreatedBy]              NVARCHAR (250)   NOT NULL,
+    [CreatedOn]              DATETIME2 (7)    NOT NULL,
+    [ModifiedBy]             NVARCHAR (250)   NULL,
+    [ModifiedOn]             DATETIME2 (7)    NULL,
+    [ConcurrencyLock]        TIMESTAMP        NOT NULL,
+    CONSTRAINT [PK_Memos] PRIMARY KEY NONCLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating [QCandidate].[Memos].[IX_Memos_MemoProgramComponentId]...';
+
+
+GO
+CREATE CLUSTERED INDEX [IX_Memos_MemoProgramComponentId]
+    ON [QCandidate].[Memos]([MemoProgramComponentId] ASC);
+
+
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombination2Language_Simulation]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination2Language] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombination2Language_Simulation] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_ProjectCandidateCompetenceSimulationScore_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectCandidateCompetenceSimulationScore] WITH NOCHECK
+    ADD CONSTRAINT [FK_ProjectCandidateCompetenceSimulationScore_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_ProjectCandidateIndicatorSimulationScore_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectCandidateIndicatorSimulationScore] WITH NOCHECK
+    ADD CONSTRAINT [FK_ProjectCandidateIndicatorSimulationScore_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_ProjectCategoryDetail2C2C_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectCategoryDetail2Competence2Combination] WITH NOCHECK
+    ADD CONSTRAINT [FK_ProjectCategoryDetail2C2C_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_ProjectCategoryDetail2SimulationCombination_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectCategoryDetail2SimulationCombination] WITH NOCHECK
+    ADD CONSTRAINT [FK_ProjectCategoryDetail2SimulationCombination_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombination_SimulationDepartment]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombination_SimulationDepartment] FOREIGN KEY ([SimulationDepartmentId]) REFERENCES [dbo].[SimulationDepartment] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombination_Simulation]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombination_Simulation] FOREIGN KEY ([SimulationId]) REFERENCES [dbo].[Simulation] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombination_SimulationLevel]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombination_SimulationLevel] FOREIGN KEY ([SimulationLevelId]) REFERENCES [dbo].[SimulationLevel] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombination_SimulationSet]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombination_SimulationSet] FOREIGN KEY ([SimulationSetId]) REFERENCES [dbo].[SimulationSet] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombination_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombination] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombination_SimulationCombination] FOREIGN KEY ([PredecessorId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombinationMemos_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombinationMemos] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombinationMemos_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombinationMemoTranslations_SimulationCombinationMemos]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombinationMemoTranslations] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombinationMemoTranslations_SimulationCombinationMemos] FOREIGN KEY ([SimulationCombinationMemoId]) REFERENCES [dbo].[SimulationCombinationMemos] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_SimulationCombinationMemoTranslations_Language]...';
+
+
+GO
+ALTER TABLE [dbo].[SimulationCombinationMemoTranslations] WITH NOCHECK
+    ADD CONSTRAINT [FK_SimulationCombinationMemoTranslations_Language] FOREIGN KEY ([LanguageId]) REFERENCES [dbo].[Language] ([Id]);
+
+
+GO
+PRINT N'Creating [QCandidate].[FK_CalendarDays_MemoProgramComponents]...';
+
+
+GO
+ALTER TABLE [QCandidate].[CalendarDays] WITH NOCHECK
+    ADD CONSTRAINT [FK_CalendarDays_MemoProgramComponents] FOREIGN KEY ([MemoProgramComponentId]) REFERENCES [QCandidate].[MemoProgramComponents] ([Id]);
+
+
+GO
+PRINT N'Creating [QCandidate].[FK_MemoProgramComponents_SimulationCombination]...';
+
+
+GO
+ALTER TABLE [QCandidate].[MemoProgramComponents] WITH NOCHECK
+    ADD CONSTRAINT [FK_MemoProgramComponents_SimulationCombination] FOREIGN KEY ([SimulationCombinationId]) REFERENCES [dbo].[SimulationCombination] ([Id]);
+
+
+GO
+PRINT N'Creating [QCandidate].[FK_Memos_MemoProgramComponents]...';
+
+
+GO
+ALTER TABLE [QCandidate].[Memos] WITH NOCHECK
+    ADD CONSTRAINT [FK_Memos_MemoProgramComponents] FOREIGN KEY ([MemoProgramComponentId]) REFERENCES [QCandidate].[MemoProgramComponents] ([Id]);
+
+
+GO
+PRINT N'Creating [QCandidate].[FK_Memos_SimulationCombinationMemos]...';
+
+
+GO
+ALTER TABLE [QCandidate].[Memos] WITH NOCHECK
+    ADD CONSTRAINT [FK_Memos_SimulationCombinationMemos] FOREIGN KEY ([OriginId]) REFERENCES [dbo].[SimulationCombinationMemos] ([Id]);
+
+
+GO
+PRINT N'Refreshing [dbo].[SimulationCombinationView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[SimulationCombinationView]';
+
+
+GO
+PRINT N'Refreshing [dbo].[ProgramComponentView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[ProgramComponentView]';
+
+
+GO
+PRINT N'Refreshing [dbo].[ProjectCandidateCompetenceSimulationScoreView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[ProjectCandidateCompetenceSimulationScoreView]';
+
+
+GO
+PRINT N'Refreshing [dbo].[ProjectCandidateIndicatorSimulationFocusedScoreView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[ProjectCandidateIndicatorSimulationFocusedScoreView]';
+
+
+GO
+PRINT N'Refreshing [dbo].[ProjectCandidateIndicatorSimulationScoreView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[ProjectCandidateIndicatorSimulationScoreView]';
+
+
+GO
+PRINT N'Refreshing [dbo].[SimulationMatrixEntryView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[SimulationMatrixEntryView]';
+
+
+GO
+PRINT N'Refreshing [dbo].[ProjectCategoryDetailSimulationCombinationView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[ProjectCategoryDetailSimulationCombinationView]';
+
+
+GO
+PRINT N'Refreshing [dbo].[ProjectCategoryDetailCompetenceSimulationView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[ProjectCategoryDetailCompetenceSimulationView]';
+
+
+GO
+PRINT N'Creating [dbo].[Context_GetIdByProgramComponentId]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[Context_GetIdByProgramComponentId]
+	@programComponentId UNIQUEIDENTIFIER
+AS
+	
+SET NOCOUNT ON;
+
+WITH [Contexts] AS
+(
+	SELECT
+		[Id],
+		SimulationContextId, 'AC' AS [Type]
+	FROM [dbo].[ProjectCategoryAcDetailView] WITH (NOLOCK)
+	
+	UNION ALL
+
+    SELECT
+		[Id],
+		SimulationContextId, 'CA' AS [Type]
+	FROM [dbo].[ProjectCategoryCaDetailView] WITH (NOLOCK)
+    
+	UNION ALL
+
+    SELECT 
+		[Id],
+		SimulationContextId, 'DC' AS [Type]
+	FROM [dbo].[ProjectCategoryDcDetailView] WITH (NOLOCK)
+
+    UNION ALL
+
+    SELECT 
+		[Id],
+		SimulationContextId, 'EA' AS [Type]
+	FROM [dbo].[ProjectCategoryEaDetailView] WITH (NOLOCK)
+    
+	UNION ALL
+
+    SELECT
+		[Id],
+		SimulationContextId, 'FA' AS [Type]
+	FROM [dbo].[ProjectCategoryFaDetailView] WITH (NOLOCK)
+    
+	UNION ALL
+    
+	SELECT 
+		[Id],
+		SimulationContextId, 'FD' AS [Type]
+	FROM [dbo].[ProjectCategoryFdDetailView] WITH (NOLOCK)
+    
+	UNION ALL
+    
+	SELECT 
+		[Id],
+		SimulationContextId, 'PS' AS [Type]
+	FROM [dbo].[ProjectCategoryPsDetailView] WITH (NOLOCK)
+    
+	UNION ALL
+    
+	SELECT 
+		[Id],
+		SimulationContextId, 'PS' AS [Type]
+	FROM [dbo].[ProjectCategorySoDetailView] WITH (NOLOCK)
+)
+
+SELECT C.[SimulationContextId]
+FROM dbo.[ProgramComponent] PC1 WITH (NOLOCK)
+	INNER JOIN  dbo.[ProjectCandidate] PC2 WITH (NOLOCK)
+		ON PC2.[Id] = PC1.[ProjectCandidateId]
+	INNER JOIN [dbo].[ProjectCategoryDetailView] PCDV WITH (NOLOCK)
+		ON PCDV.[ProjectId] = PC2.[ProjectId] 
+	INNER JOIN [dbo].[ProjectTypeCategoryView] PTC  WITH (NOLOCK)
+		ON PCDV.ProjectTypeCategoryId = PTC.[Id]
+	INNER JOIN [Contexts] C      
+		ON PTC.[Code] = C.[Type]
+			AND C.[Id] = PCDV.[Id]
+WHERE PC1.[Id] = @programComponentId
+GO
+PRINT N'Creating [dbo].[ProgramComponent_GetByIdAndLanguageId]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[ProgramComponent_GetByIdAndLanguageId]
+	@id UNIQUEIDENTIFIER,
+	@languageId INT
+AS
+
+SET NOCOUNT ON;
+
+SELECT
+	--ProgramComponents
+	prc.Id,
+	prc.[Start],
+	prc.[End],
+	ST.[Name] AS [Name],
+	prc.Description,
+	prc.SimulationCombinationId,
+	--Room
+	ar.Id,
+	ar.[Name],
+	--LeadAssessor
+	uLeadAssess.Id,
+	uLeadAssess.FirstName,
+	uLeadAssess.LastName,
+	--CoAssessor
+	uCoAssess.Id,
+	uCoAssess.FirstName,
+	uCoAssess.LastName			
+FROM dbo.ProgramComponent prc
+	LEFT OUTER JOIN dbo.[User] uLeadAssess WITH (NOLOCK)
+		ON uLeadAssess.Id = prc.LeadAssessorUserId
+	LEFT OUTER JOIN dbo.[User] uCoAssess WITH (NOLOCK)
+		ON uCoAssess.Id = prc.CoAssessorUserId
+	INNER JOIN dbo.SimulationCombination SC
+		ON SC.Id = PRC.SimulationCombinationId
+	INNER JOIN dbo.SimulationTranslation ST WITH (NOLOCK)
+		ON ST.SimulationId = SC.SimulationId
+			AND ST.LanguageId = @languageId
+	INNER JOIN dbo.AssessmentRoom ar WITH (NOLOCK)
+		ON ar.Id = prc.AssessmentRoomId
+	INNER JOIN dbo.Office o WITH (NOLOCK)
+		ON o.Id = ar.OfficeId
+WHERE
+	prc.Id = @id
+GO
+PRINT N'Creating [dbo].[SimulationCombinationMemo_GetAllBySimulationCombinationId]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[SimulationCombinationMemo_GetAllBySimulationCombinationId]
+	@simulationCombinationId UNIQUEIDENTIFIER
+AS
+
+SET NOCOUNT ON
+
+SELECT
+	[Id],
+	[SimulationCombinationId],
+	[Position]
+FROM [dbo].[SimulationCombinationMemos]
+WHERE [SimulationCombinationId] = @simulationCombinationId
+GO
+PRINT N'Creating [QCandidate].[Assessment_GetByCandidateIdAndDateAndLanguage]...';
+
+
+GO
+CREATE PROCEDURE [QCandidate].[Assessment_GetByCandidateIdAndDateAndLanguage]
+	@candidateId UNIQUEIDENTIFIER,
+	@date DATE,
+	@language char(2)
+AS
+
+	SET NOCOUNT ON;
+	DECLARE @LanguageId int
+	SET @LanguageId = case @language
+		when 'nl' then 1
+		when 'fr' then 2
+		else 3
+	end
+
+SELECT
+	--Customer
+		cc.Id,
+		cc.Name,
+
+	--Position
+		p.Id,
+		p.Name,
+
+	--DayProgram
+		@date AS Date,
+		--Location
+			o.Id,
+			o.FullName AS Name,
+		--ProgramComponents
+			prc.Id,
+			prc.[Start],
+			prc.[End],
+			CASE 
+					WHEN (uLeadAssess.FirstName is null and sc.Preparation > 0) THEN s.[Name]+ CASE @LanguageId 
+																									WHEN 1 THEN ' (voorbereiding)'
+																									WHEN 2 THEN ' (préparation)'
+																									ELSE ' (preparation)'
+																									END
+					WHEN (uLeadAssess.FirstName is not null and sc.Execution > 0) THEN s.[Name]+ CASE @LanguageId
+																									WHEN 1 THEN ' (uitvoering)'
+																									WHEN 2 THEN ' (execution)'
+																									ELSE ' (execution)'
+																									END
+					ELSE s.[Name]
+					END AS [Name],
+			prc.Description,
+			prc.SimulationCombinationId,
+			ISNULL(sc.QCandidateLayoutId, 0) AS QCandidateLayoutId,
+			--Room
+				ar.Id,
+				ar.[Name],
+			--LeadAssessor
+				uLeadAssess.Id,
+				uLeadAssess.FirstName,
+				uLeadAssess.LastName,
+			--CoAssessor
+				uCoAssess.Id,
+				uCoAssess.FirstName,
+				uCoAssess.LastName
+				--sc.Preparation,
+				--sc.Execution		
+FROM
+	dbo.candidate c WITH (NOLOCK)
+	INNER JOIN dbo.ProjectCandidate pc WITH (NOLOCK)
+		ON pc.CandidateId = c.Id
+	INNER JOIN dbo.Project p WITH (NOLOCK)
+		ON p.Id = pc.ProjectId
+	INNER JOIN dbo.CrmContact cc WITH (NOLOCK)
+		ON cc.Id = p.ContactId
+	INNER JOIN dbo.ProgramComponent prc WITH (NOLOCK)
+		ON prc.ProjectCandidateId = pc.Id
+	LEFT OUTER JOIN dbo.[User] uLeadAssess WITH (NOLOCK)
+		ON uLeadAssess.Id = prc.LeadAssessorUserId
+	LEFT OUTER JOIN dbo.[User] uCoAssess WITH (NOLOCK)
+		ON uCoAssess.Id = prc.CoAssessorUserId
+	LEFT OUTER JOIN (dbo.SimulationCombination sc WITH (NOLOCK)
+		INNER JOIN dbo.SimulationTranslationView s WITH (NOLOCK)
+			ON s.SimulationId = sc.SimulationId)
+		ON sc.Id = prc.SimulationCombinationId	
+	INNER JOIN dbo.AssessmentRoom ar WITH (NOLOCK)
+		ON ar.Id = prc.AssessmentRoomId
+	INNER JOIN dbo.Office o WITH (NOLOCK)
+		ON o.Id = ar.OfficeId
+WHERE
+	c.Id = @candidateId
+	AND CONVERT(DATE, prc.Start) = @date
+	--AND prc.Description NOT LIKE '%Input scoring%'
+	--AND CONVERT(VARCHAR, prc.Description) NOT IN('Preparation consultant','Assessor debriefing','Proma','Assessor debriefing GGI')
+	AND ISNULL(prc.Description,'') NOT LIKE '%Input scoring%'
+	AND CONVERT(VARCHAR, ISNULL(prc.Description,'')) NOT IN ('Preparation consultant','Assessor debriefing','Proma','Assessor debriefing GGI')
+	AND ISNULL(s.LanguageId, @LanguageId) = @LanguageId
+	AND prc.Audit_IsDeleted = 0
+ORDER BY
+	prc.Start,
+	prc.[End]
+GO
+PRINT N'Creating [QCandidate].[CalendarDay_GetAllFromPredecessorBySimulationCombinationIdAndUserId]...';
+
+
+GO
+CREATE PROCEDURE [QCandidate].[CalendarDay_GetAllFromPredecessorBySimulationCombinationIdAndUserId]
+	@simulationCombinationId UNIQUEIDENTIFIER,
+	@userId UNIQUEIDENTIFIER
+AS
+
+SET NOCOUNT ON
+
+SELECT 
+	[CD].[Id],
+	[CD].[Day],
+	[CD].[Note]
+FROM [QCandidate].[CalendarDays] CD
+    INNER JOIN [QCandidate].[MemoProgramComponents] MPC
+		ON MPC.[Id] = CD.[MemoProgramComponentId]
+			AND MPC.[UserId] = @userId
+	INNER JOIN [dbo].[SimulationCombination] SC
+		ON SC.[PredecessorId] = MPC.[SimulationCombinationId]
+WHERE [SC].[Id] = @simulationCombinationId
+	AND CONVERT(DATE, MPC.[CreatedOn]) = CONVERT(DATE, GETUTCDATE())
+GO
+PRINT N'Creating [QCandidate].[MemoProgramComponent_GetByIdAndLanguage]...';
+
+
+GO
+CREATE PROCEDURE [QCandidate].[MemoProgramComponent_GetByIdAndLanguage]
+	@id UNIQUEIDENTIFIER,
+    @languageId INT
+AS
+
+SET NOCOUNT ON;
+
+SELECT
+    MPC.[Id],
+    MPC.[SimulationCombinationId],
+    SC.[PredecessorId] AS [PredecessorSimulationCombinationId],
+    ST.[Name],
+    PC.[Start],
+    --Memo
+    M.[Id], 
+    M.[Position], 
+    SCM.[Position] AS [OriginPosition], 
+    SCMT.[Title],
+    CAST(CASE SCM.[SimulationCombinationId]
+        WHEN SC.[PredecessorId] THEN 1
+        ELSE 0
+        END AS BIT) AS [HasPredecessorOrigin],
+    --CalendarDay
+    CD.[Id], 
+    CD.[Day], 
+    CD.[Note]
+FROM [QCandidate].[MemoProgramComponents] MPC WITH (NOLOCK)
+    INNER JOIN dbo.[SimulationCombination] SC WITH (NOLOCK)
+        ON SC.[Id] = MPC.[SimulationCombinationId]
+    INNER JOIN dbo.[SimulationTranslation] ST WITH (NOLOCK)
+		ON ST.[SimulationId] = SC.[SimulationId]
+            AND ST.[LanguageId] = @languageId
+    INNER JOIN dbo.[ProgramComponent] PC WITH (NOLOCK)
+        ON PC.[Id] = MPC.[Id]
+    INNER JOIN QCandidate.Memos M WITH (NOLOCK)
+        ON M.[MemoProgramComponentId] = MPC.[Id]
+	INNER JOIN [dbo].[SimulationCombinationMemos] SCM WITH (NOLOCK)
+		ON SCM.[Id] = M.[OriginId]
+    INNER JOIN [dbo].[SimulationCombinationMemoTranslations] SCMT WITH (NOLOCK)
+        ON SCMT.[SimulationCombinationMemoId] = M.[OriginId]
+            AND SCMT.[LanguageId] = @languageId
+    INNER JOIN [QCandidate].[CalendarDays] CD WITH (NOLOCK)
+        ON CD.[MemoProgramComponentId] =  MPC.[Id]
+WHERE MPC.Id = @id
+GO
+PRINT N'Creating [QCandidate].[Memos_GetAllFromPredecessorBySimulationCombinationIdAndUserId]...';
+
+
+GO
+CREATE PROCEDURE [QCandidate].[Memos_GetAllFromPredecessorBySimulationCombinationIdAndUserId]
+	@simulationCombinationId UNIQUEIDENTIFIER,
+	@userId UNIQUEIDENTIFIER
+AS
+
+SET NOCOUNT ON
+
+SELECT 
+	M.[Id], 
+	M.[MemoProgramComponentId],
+	M.[OriginId], 
+	M.[Position]
+FROM [QCandidate].[Memos] M
+	INNER JOIN [QCandidate].[MemoProgramComponents] MPC
+		ON MPC.[Id] = M.[MemoProgramComponentId]
+			AND MPC.[UserId] = @userId
+			AND CONVERT(DATE, MPC.[CreatedOn]) = CONVERT(DATE, GETUTCDATE())
+	INNER JOIN [dbo].[SimulationCombination] SC
+		ON SC.[PredecessorId] = MPC.[SimulationCombinationId]
+WHERE SC.[Id] = @simulationCombinationId 
+    AND MPC.[UserId] = @userId
+GO
+PRINT N'Refreshing [dbo].[Simulation_CreateCombination]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[Simulation_CreateCombination]';
+
+
+GO
+PRINT N'Refreshing [dbo].[Reporting_ProjectCandidateListCompetenceScoresByProjectCandidateId]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[Reporting_ProjectCandidateListCompetenceScoresByProjectCandidateId]';
+
+
+GO
+PRINT N'Refreshing [dbo].[Reporting_ProjectDetailCompetenceMatrix]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[Reporting_ProjectDetailCompetenceMatrix]';
+
+
+GO
+PRINT N'Refreshing [dbo].[Reporting_ProjectDetailSimulations]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[Reporting_ProjectDetailSimulations]';
+
+
+GO
+PRINT N'Checking existing data against newly created constraints';
+
+
+GO
+
+ALTER TABLE [dbo].[SimulationCombination2Language] WITH CHECK CHECK CONSTRAINT [FK_SimulationCombination2Language_Simulation];
+
+ALTER TABLE [dbo].[ProjectCandidateCompetenceSimulationScore] WITH CHECK CHECK CONSTRAINT [FK_ProjectCandidateCompetenceSimulationScore_SimulationCombination];
+
+ALTER TABLE [dbo].[ProjectCandidateIndicatorSimulationScore] WITH CHECK CHECK CONSTRAINT [FK_ProjectCandidateIndicatorSimulationScore_SimulationCombination];
+
+ALTER TABLE [dbo].[ProjectCategoryDetail2Competence2Combination] WITH CHECK CHECK CONSTRAINT [FK_ProjectCategoryDetail2C2C_SimulationCombination];
+
+ALTER TABLE [dbo].[ProjectCategoryDetail2SimulationCombination] WITH CHECK CHECK CONSTRAINT [FK_ProjectCategoryDetail2SimulationCombination_SimulationCombination];
+
+ALTER TABLE [dbo].[SimulationCombination] WITH CHECK CHECK CONSTRAINT [FK_SimulationCombination_SimulationDepartment];
+
+ALTER TABLE [dbo].[SimulationCombination] WITH CHECK CHECK CONSTRAINT [FK_SimulationCombination_Simulation];
+
+ALTER TABLE [dbo].[SimulationCombination] WITH CHECK CHECK CONSTRAINT [FK_SimulationCombination_SimulationLevel];
+
+ALTER TABLE [dbo].[SimulationCombination] WITH CHECK CHECK CONSTRAINT [FK_SimulationCombination_SimulationSet];
+
+ALTER TABLE [dbo].[SimulationCombination] WITH CHECK CHECK CONSTRAINT [FK_SimulationCombination_SimulationCombination];
+
+ALTER TABLE [dbo].[SimulationCombinationMemos] WITH CHECK CHECK CONSTRAINT [FK_SimulationCombinationMemos_SimulationCombination];
+
+ALTER TABLE [dbo].[SimulationCombinationMemoTranslations] WITH CHECK CHECK CONSTRAINT [FK_SimulationCombinationMemoTranslations_SimulationCombinationMemos];
+
+ALTER TABLE [dbo].[SimulationCombinationMemoTranslations] WITH CHECK CHECK CONSTRAINT [FK_SimulationCombinationMemoTranslations_Language];
+
+ALTER TABLE [QCandidate].[CalendarDays] WITH CHECK CHECK CONSTRAINT [FK_CalendarDays_MemoProgramComponents];
+
+ALTER TABLE [QCandidate].[MemoProgramComponents] WITH CHECK CHECK CONSTRAINT [FK_MemoProgramComponents_SimulationCombination];
+
+ALTER TABLE [QCandidate].[Memos] WITH CHECK CHECK CONSTRAINT [FK_Memos_MemoProgramComponents];
+
+ALTER TABLE [QCandidate].[Memos] WITH CHECK CHECK CONSTRAINT [FK_Memos_SimulationCombinationMemos];
+
+
+GO
+PRINT N'Update complete.';
+
+
+GO

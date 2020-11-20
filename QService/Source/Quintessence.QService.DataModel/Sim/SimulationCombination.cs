@@ -17,5 +17,12 @@ namespace Quintessence.QService.DataModel.Sim
         public int Preparation { get; set; }
 
         public int Execution { get; set; }
+
+        public int QCandidateLayoutId { get; set; }
+
+        public Guid? PredecessorId { get; set; }
+
+
+
     }
 }

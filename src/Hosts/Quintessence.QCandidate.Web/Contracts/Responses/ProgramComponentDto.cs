@@ -1,4 +1,5 @@
 ﻿using System;
+using Quintessence.QCandidate.Core.Domain;
 
 namespace Quintessence.QCandidate.Contracts.Responses
 {
@@ -13,5 +14,7 @@ namespace Quintessence.QCandidate.Contracts.Responses
         public UserDto LeadAssessor { get; set; }
         public UserDto CoAssessor { get; set; }
         public Guid? SimulationCombinationId { get; set; }
+        public int QCandidateLayoutId { get; set; }
+
     }
 }

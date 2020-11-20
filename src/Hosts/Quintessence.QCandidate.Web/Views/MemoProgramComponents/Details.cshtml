@@ -1,0 +1,138 @@
+﻿@using System.Globalization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Quintessence.QCandidate.Controllers
+
+@model Quintessence.QCandidate.Models.MemoProgramComponents.MemoProgramComponent
+
+@inject IViewLocalizer Localizer
+
+@section Styles {
+    <link href="/css/memoprogramcomponentdetails.css" rel="stylesheet" />
+}
+
+<input type="hidden" id="memoProgramComponentId" value="@Model.Id" />
+
+<div class="container">
+    <div class="context">
+        @Html.ActionLink(Localizer["Quit"].Value, nameof(AssessmentsController.Get), "Assessments", null, new { @class = "btn" })
+        <h1>@Html.DisplayFor(m => Model.Name)</h1>
+    </div>
+</div>
+
+@if (Model.CanShowContent)
+{
+    <div class="row assessment-tabs">
+        <div class="tab-wrapper">
+            <div class="container">
+                <ul class="tabs">
+                    <li class="tab col s2"><a class="active" href="#intros">@Localizer["Introduction"]</a></li>
+                    <li class="tab col s3"><a href="#functiondescription">@Localizer["FunctionDescription"]</a></li>
+                    <li class="tab col s2"><a href="#context">@Localizer["Context"]</a></li>
+                    <li class="tab col s2"><a href="#memos">@Localizer["Memos"]</a></li>
+                    <li class="tab col s2"><a href="#agenda">@Localizer["Agenda"]</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container assessment-content">
+
+            <div id="intros" class="col s12">
+                @{ 
+                    var introClassName = Model.HasPredecessor ? "block-new" : string.Empty;
+                }
+                <div class="@introClassName">
+                    @Html.Raw(Model.Intro)
+                </div>
+
+                <div>
+                    @Html.Raw(Model.PredecessorIntro)
+                </div>
+            </div>
+
+            <div id="functiondescription" class="col s12">
+                @Html.Raw(Model.FunctionDescription)
+            </div>
+            <div id="context" class="col s12">
+                <object data="@string.Concat(Url.Action("GetPdf", "Contexts", new { contextId = Model.ContextId }), "#toolbar=0&navpanes=0")" type="application/pdf" class="pdf-content" >
+                </object>
+            </div>
+            <div id="memos" class="col s12">
+                <div class="row">
+                    <div class="col s3">
+                        <h2>Memos</h2>
+                        <div id="simple-list" class="row">
+                            <div id="memo-list" class="list-group col">
+                                @foreach (var memo in Model.Memos.OrderBy(x => x.Position))
+                                {
+                                    var divClassNames = new List<string> { memo.HasPredecessorOrigin ? "list-group-item-new" : "list-group-item" };
+                                    if (memo.Position == 1)
+                                    {
+                                        divClassNames.Add("active");
+                                    }
+
+                                    <div id="@memo.Id" class="@string.Join(' ', divClassNames.ToArray())" onclick="openMemo(event, '@memo.Id')" >
+                                        <span class="drag-icon">
+                                            <i class="material-icons">
+                                                drag_handle
+                                            </i>
+                                        </span>
+                                        <span class="truncate">
+                                            @Html.DisplayFor(m => memo.Title)
+                                        </span>
+                                        <i class="material-icons">
+                                            chevron_right
+                                        </i>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="memos" class="col s9 memo-wrapper">
+
+                        @foreach (var memo in Model.Memos.OrderBy(x => x.Position))
+                        {
+                            var classNames = new List<string> { "memo" };
+                            if (memo.Position == 1)
+                            {
+                                classNames.Add("active");
+                            }
+                            <div id="@memo.Id" data-memoId="@memo.Id" class="@string.Join(' ', classNames.ToArray())"> @Html.Raw(memo.Content) </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div id="agenda" class="col s12">
+                <h2>@Localizer["Agenda"]</h2>
+                <div class="calendar">
+                    @foreach (var calendarDay in Model.CalendarDays.OrderBy(x => x.Day))
+                    {
+                        <div class="calendar-block">
+                            <div class="calendar-date">
+                                @calendarDay.Day.ToString("D", CultureInfo.CurrentUICulture)
+                            </div>
+                            <textarea class="calendar-text" onblur="saveCalendarDay(event, '@calendarDay.Id')" id="@calendarDay.Id">@calendarDay.Note</textarea>
+                        </div>
+                    }
+                </div>
+                
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container noaccess">
+        <div class="content">
+            @Localizer["NoAccessYet"]
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+
+    <script src="~/js/Sortable.js"></script>
+    <script src="~/js/memoProgramComponent.js" type="text/javascript"></script>
+
+}

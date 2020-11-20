@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Quintessence.QCandidate.Core.Queries;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Quintessence.QCandidate.Controllers

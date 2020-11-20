@@ -70,6 +70,7 @@
     <Folder Include="QCandidate" />
     <Folder Include="QCandidate\Stored Procedures" />
     <Folder Include="Scripts" />
+    <Folder Include="QCandidate\Tables" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\SimulationCombination2Language.sql" />
@@ -584,12 +585,23 @@
     <Build Include="dbo\Stored Procedures\TheoremListRequest_Reporting_GetQuestionnaireOverview.sql" />
     <Build Include="dbo\Stored Procedures\ProjectCandidate_ListSimulationContextLogins.sql" />
     <Build Include="Security\QCandidate.sql" />
-    <Build Include="QCandidate\Stored Procedures\ProgramComponent_GetById.sql" />
+    <Build Include="dbo\Tables\SimulationCombinationMemos.sql" />
+    <Build Include="dbo\Tables\SimulationCombinationMemoTranslations.sql" />
+    <Build Include="QCandidate\Tables\CalendarDays.sql" />
+    <Build Include="QCandidate\Tables\Memos.sql" />
+    <Build Include="QCandidate\Tables\MemoProgramComponents.sql" />
+    <Build Include="dbo\Stored Procedures\ProgramComponent_GetByIdAndLanguageId.sql" />
+    <Build Include="dbo\Stored Procedures\SimulationCombinationMemo_GetAllBySimulationCombinationId.sql" />
+    <Build Include="dbo\Stored Procedures\Context_GetIdByProgramComponentId.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="QCandidate\Stored Procedures\Assessment_GetByCandidateIdAndDateAndLanguage.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Release.sql" />
+    <None Include="Scripts\SeedMemoProgramComponent.sql" />
+    <None Include="QCandidate\Stored Procedures\MemoProgramComponent_GetByIdAndLanguage.sql" />
+    <None Include="QCandidate\Stored Procedures\CalendarDay_GetAllFromPredecessorBySimulationCombinationIdAndUserId.sql" />
+    <None Include="QCandidate\Stored Procedures\Memos_GetAllFromPredecessorBySimulationCombinationIdAndUserId.sql" />
   </ItemGroup>
 </Project>

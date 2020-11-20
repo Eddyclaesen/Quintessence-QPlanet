@@ -61,11 +61,13 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureADB2C.UI" Version="3.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.AzureAppServicesIntegration" Version="3.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Localization" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.10" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.1.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.10" />
     <PackageReference Include="Microsoft.VisualStudio.SlowCheetah" Version="3.2.26">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -85,9 +87,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Domain\" />
-    <Folder Include="Core\Commands\" />
-    <Folder Include="Infrastructure\EntityFrameworkCore\" />
+    <Folder Include="Pages\" />
   </ItemGroup>
 
   <ItemGroup>

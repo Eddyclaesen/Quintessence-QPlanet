@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -17,6 +18,12 @@ using Quintessence.QCandidate.Configuration;
 using Quintessence.QCandidate.Filters.Actions;
 using Quintessence.QCandidate.Logic.Queries;
 using System.Globalization;
+using System.Security.Principal;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Quintessence.QCandidate.Infrastructure.EntityFrameworkCore.Commands;
+using Quintessence.QCandidate.Logic.Commands;
+using System.Security.Principal;
 
 namespace Quintessence.QCandidate
 {
@@ -48,17 +55,34 @@ namespace Quintessence.QCandidate
                     options.Filters.Add(new AuthorizeFilter(policy));
                 })
                 .AddRazorViewEngine()
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix/*, opts => { opts.ResourcesPath = "Resources"; }*/);
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix/*, opts => { opts.ResourcesPath = "Resources"; }*/)
+                .AddNewtonsoftJson();
 
+            
             services.AddMediatR(typeof(GetAssessmentByCandidateIdAndDateAndLanguageQueryHandler).Assembly);
+
+            services.AddTransient<IPrincipal>(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
+            services.AddTransient<IPrincipalProvider, PrincipalProvider>();
+
             services.AddScoped<IDbConnectionFactory>(_ =>
                 new SqlDbConnectionFactory(Configuration.GetConnectionString("QPlanet")));
+
+            services.AddTransient(_ =>
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<DbContext>();
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("QPlanet"));
+                return optionsBuilder.Options;
+            });
+
+            services.AddScoped<QCandidateUnitOfWork>();
+            services.AddScoped(typeof(IMemoProgramComponentRepository), typeof(MemoProgramComponentRepository));
 
             services.Configure<Settings>(Configuration);
             services.Configure<AzureAdB2CSettings>(Configuration.GetSection("AzureAdB2C"));
 
             services.AddAuthentication(AzureADB2CDefaults.AuthenticationScheme)
                 .AddAzureADB2C(options => Configuration.Bind("AzureAdB2C", options));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

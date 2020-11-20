@@ -6,13 +6,13 @@ namespace Quintessence.QCandidate.Core.Queries
 {
     public class GetSimulationCombinationPdfByIdAndLanguageQuery : IRequest<FileStream>
     {
-        public GetSimulationCombinationPdfByIdAndLanguageQuery(Guid simulationCombinationId, string language)
+        public GetSimulationCombinationPdfByIdAndLanguageQuery(Guid id, string language)
         {
-            SimulationCombinationId = simulationCombinationId;
+            Id = id;
             Language = language;
         }
 
-        public Guid SimulationCombinationId { get; }
+        public Guid Id { get; }
         public string Language { get; }
     }
 }

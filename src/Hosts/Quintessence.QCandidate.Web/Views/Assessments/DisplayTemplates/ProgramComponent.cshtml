@@ -1,25 +1,36 @@
-﻿@model Quintessence.QCandidate.Models.Assessments.ProgramComponent
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Quintessence.QCandidate.Core.Domain
+@inject IViewLocalizer Localizer
+@model Quintessence.QCandidate.Models.Assessments.ProgramComponent
 
 
-<li class="program-component" data-date="@Model.Start.ToString("HH:mm") - @Model.End.ToString("HH:mm")">
-    <h3>@Html.DisplayFor(m => Model.Title)</h3>
-    <p>@Html.DisplayFor(m => Model.Location)
-    @{ 
-        if (!string.IsNullOrEmpty(Model.Assessors))
+    <li class="program-component" data-date="@Model.Start.ToString("HH:mm") - @Model.End.ToString("HH:mm")">
+        <h3>@Html.DisplayFor(m => Model.Title)</h3>
+        <p>
+            @Html.DisplayFor(m => Model.Location)
+            @{
+                if (!string.IsNullOrEmpty(Model.Assessors))
+                {
+                    @Html.Raw("- ") @Html.DisplayFor(m => Model.Assessors)
+                }
+            }
+
+
+        </p>
+
+        @if (Model.ShowDetailsLink)
         {
-            @Html.Raw("- ") @Html.DisplayFor(m => Model.Assessors)
+            if (Model.QCandidateLayout == QCandidateLayout.Pdf)
+            { 
+                @Html.ActionLink(Localizer.GetString("PdfDocument"), nameof(Quintessence.QCandidate.Controllers.PdfProgramComponentsController.Details), "PdfProgramComponents", new { Id = Model.Id})
+            }
+            if (Model.QCandidateLayout == QCandidateLayout.Memo)
+            {
+                @Html.ActionLink(Localizer.GetString("Memo"), nameof(Quintessence.QCandidate.Controllers.MemoProgramComponentsController.Details), "MemoProgramComponents", new { id = Model.Id })
+            }
         }
-    }
-    
-    
-    </p>
-    @{ 
-        if (Model.ShowDetailsLink)
-        {
-        <a href="@Url.Action(nameof(Quintessence.QCandidate.Controllers.ProgramComponentsController.Details), "ProgramComponents", new { id = Model.Id })">Documentation</a>
-        }
-    }
-</li>
+
+        </ li >
 
 
 

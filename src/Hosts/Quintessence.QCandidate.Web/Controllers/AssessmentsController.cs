@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Kenze.Domain;
+using MediatR;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+using Quintessence.QCandidate.Contracts.Responses;
+using Quintessence.QCandidate.Core.Commands;
+using Quintessence.QCandidate.Core.Domain;
+using Quintessence.QCandidate.Core.Queries;
+using Quintessence.QCandidate.Models.Assessments;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using MediatR;
-using Quintessence.QCandidate.Core.Queries;
-using System.Threading.Tasks;
-using Quintessence.QCandidate.Contracts.Responses;
-using Quintessence.QCandidate.Models.Assessments;
-using Microsoft.AspNetCore.Localization;
 using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Quintessence.QCandidate.Controllers
 {
@@ -25,8 +28,9 @@ namespace Quintessence.QCandidate.Controllers
         {
             var candidateIdClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId");
             var candidateId = new Guid(candidateIdClaim.Value);
-
             var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateAndLanguageQuery(candidateId, DateTime.Now, CultureInfo.CurrentCulture.ToString()));
+            
+
             Assessment assessment = null;
             if (assessmentDto != null)
             {
@@ -47,20 +51,23 @@ namespace Quintessence.QCandidate.Controllers
             //DayProgram is null when no day program was found for that day
             if (assessment.DayProgram?.ProgramComponents != null)
             {
-                foreach(var programComponent in assessment.DayProgram.ProgramComponents)
+                foreach (var programComponent in assessment.DayProgram.ProgramComponents.OrderBy(pc => pc.Start))
                 {
+
                     var title = programComponent.Description ?? programComponent.Name;
                     var location = programComponent.Room.Name;
-                    var showDetailsLink = false;
-                    
-                    if (programComponent.SimulationCombinationId.HasValue && programComponent.Start.Date == DateTime.Now.Date)
+
+                    var assessors = GetAssessorsString(programComponent.LeadAssessor, programComponent.CoAssessor);
+                    QCandidateLayout qCandidateLayout = Enumeration.FromId<QCandidateLayout>(programComponent.QCandidateLayoutId);
+
+                    var showDetailsLink = qCandidateLayout != QCandidateLayout.None && programComponent.Start.Date == DateTime.Now;
+
+                    if (qCandidateLayout == QCandidateLayout.Pdf)
                     {
                         showDetailsLink = await _mediator.Send(new HasSimulationCombinationPdfByIdAndLanguageQuery(programComponent.SimulationCombinationId.Value, language));
-                    }
-                       
-                    var assessors = GetAssessorsString(programComponent.LeadAssessor, programComponent.CoAssessor);
+                    }                  
 
-                    var programComponentModel = new ProgramComponent(programComponent.Id, title, location, showDetailsLink, assessors, programComponent.Start, programComponent.End);
+                    var programComponentModel = new ProgramComponent(programComponent.Id, title, location, showDetailsLink, assessors, programComponent.Start, programComponent.End, qCandidateLayout);
                     result.Add(programComponentModel);
                 }
             }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Web.Mvc;
 using Quintessence.QService.QPlanetService.Contracts.DataContracts.Shared;
 
 namespace Quintessence.QService.QPlanetService.Contracts.DataContracts.ProjectManagement

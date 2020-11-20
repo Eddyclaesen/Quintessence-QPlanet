@@ -11,6 +11,8 @@ namespace Quintessence.QCandidate.Logic.Queries
 {
     public class HasSimulationCombinationPdfByIdAndLanguageQueryHandler : IRequestHandler<HasSimulationCombinationPdfByIdAndLanguageQuery, bool>
     {
+        private const string SimulationCombinationsFolder = "SimulationCombinations";
+
         private readonly Settings _settings;
 
         public HasSimulationCombinationPdfByIdAndLanguageQueryHandler(IOptionsMonitor<Settings> settings)
@@ -20,7 +22,7 @@ namespace Quintessence.QCandidate.Logic.Queries
 
         public Task<bool> Handle(HasSimulationCombinationPdfByIdAndLanguageQuery request, CancellationToken cancellationToken)
         {
-            var filePath = FileLocationHelper.GetPdfFileLocation(_settings.PdfStorageLocation, request.SimulationCombinationId, request.Language);
+            var filePath = FileLocationHelper.GetPdfFileLocation(Path.Combine(_settings.PdfStorageLocation, SimulationCombinationsFolder), request.SimulationCombinationId, request.Language);
 
             return Task.FromResult(File.Exists(filePath));
 
