@@ -4,9 +4,9 @@ using Quintessence.QCandidate.Core.Domain;
 
 namespace Quintessence.QCandidate.Core.Commands
 {
-    public class CreateMemoProgramComponentIfNotExistsCommand : IRequest<MemoProgramComponent>
+    public class CreateMemoProgramComponentCommand : IRequest<MemoProgramComponent>
     {
-        public CreateMemoProgramComponentIfNotExistsCommand(Guid id, Guid userId, Guid simulationCombinationId)
+        public CreateMemoProgramComponentCommand(Guid id, Guid userId, Guid simulationCombinationId)
         {
             Id = id;
             UserId = userId;

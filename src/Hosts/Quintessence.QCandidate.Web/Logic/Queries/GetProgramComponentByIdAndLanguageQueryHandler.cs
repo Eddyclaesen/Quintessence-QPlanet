@@ -11,18 +11,19 @@ using Quintessence.QCandidate.Core.Queries;
 
 namespace Quintessence.QCandidate.Logic.Queries
 {
-    public class GetProgramComponentByIdQueryHandler : DapperQueryHandler<GetProgramComponentByIdQuery, ProgramComponentDto>
+    public class GetProgramComponentByIdAndLanguageQueryHandler : DapperQueryHandler<GetProgramComponentByIdAndLanguageQuery, ProgramComponentDto>
     {
-        public GetProgramComponentByIdQueryHandler(IDbConnectionFactory dbConnectionFactory)
+        public GetProgramComponentByIdAndLanguageQueryHandler(IDbConnectionFactory dbConnectionFactory)
             : base(dbConnectionFactory)
         {
         }
 
-        public override async Task<ProgramComponentDto> Handle(GetProgramComponentByIdQuery query, CancellationToken cancellationToken)
+        public override async Task<ProgramComponentDto> Handle(GetProgramComponentByIdAndLanguageQuery query, CancellationToken cancellationToken)
         {
             var idParameter = new SqlParameter("id", SqlDbType.UniqueIdentifier) { Value = query.Id };
+            var languageIdParameter = new SqlParameter("languageId", SqlDbType.Int) { Value = query.Language.Id };
 
-            var command = new StoredProcedureCommandDefinition("[QCandidate].[ProgramComponent_GetById]", idParameter).ToCommandDefinition();
+            var command = new StoredProcedureCommandDefinition("[dbo].[ProgramComponent_GetByIdAndLanguageId]", idParameter, languageIdParameter).ToCommandDefinition();
 
             using (var dbConnection = DbConnectionFactory.Create())
             {

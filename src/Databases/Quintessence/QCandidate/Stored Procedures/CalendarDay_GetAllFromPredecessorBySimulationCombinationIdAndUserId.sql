@@ -7,6 +7,7 @@ SET NOCOUNT ON
 
 SELECT 
 	[CD].[Id],
+	[CD].[Day],
 	[CD].[Note]
 FROM [QCandidate].[CalendarDays] CD
     INNER JOIN [QCandidate].[MemoProgramComponents] MPC

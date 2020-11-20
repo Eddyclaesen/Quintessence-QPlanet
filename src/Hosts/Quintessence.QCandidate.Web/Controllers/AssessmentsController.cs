@@ -67,15 +67,7 @@ namespace Quintessence.QCandidate.Controllers
                     if (qCandidateLayout == QCandidateLayout.Pdf)
                     {
                         showDetailsLink = await _mediator.Send(new HasSimulationCombinationPdfByIdAndLanguageQuery(programComponent.SimulationCombinationId.Value, language));
-                    }
-
-                    if (qCandidateLayout == QCandidateLayout.Memo)
-                    {
-                        await _mediator.Send(new CreateMemoProgramComponentIfNotExistsCommand(
-                                                        programComponent.Id,
-                                                        new Guid(User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId").Value),
-                                                        programComponent.SimulationCombinationId.Value));
-                    }
+                    }                  
 
                     var programComponentModel = new ProgramComponent(programComponent.Id, title, location, showDetailsLink, assessors, programComponent.Start, programComponent.End, qCandidateLayout);
                     result.Add(programComponentModel);
