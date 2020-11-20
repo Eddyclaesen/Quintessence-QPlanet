@@ -103,7 +103,7 @@
                 </div>
             </div>
             <div id="agenda" class="col s12">
-                <h2>Agenda</h2>
+                <h2>@Localizer["Agenda"]</h2>
                 <div class="calendar">
                     @foreach (var calendarDay in Model.CalendarDays.OrderBy(x => x.Day))
                     {
@@ -111,9 +111,7 @@
                             <div class="calendar-date">
                                 @calendarDay.Day.ToString("D", CultureInfo.CurrentUICulture)
                             </div>
-                            <textarea class="calendar-text" onblur="saveCalendarDay(event, '@calendarDay.Id')" id="@calendarDay.Id">
-                            @calendarDay.Note
-                        </textarea>
+                            <textarea class="calendar-text" onblur="saveCalendarDay(event, '@calendarDay.Id')" id="@calendarDay.Id">@calendarDay.Note</textarea>
                         </div>
                     }
                 </div>
