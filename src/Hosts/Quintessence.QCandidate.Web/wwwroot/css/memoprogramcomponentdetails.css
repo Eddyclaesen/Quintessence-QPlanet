@@ -173,6 +173,7 @@
   .calendar-text {
     border: 1px solid #F0F0F0;
     height: 100px;
+    resize: none;
   }
 
   #outerContainer #mainContainer div.toolbar {
