@@ -660,7 +660,7 @@ PRINT N'Creating [QCandidate].[Assessment_GetByCandidateIdAndDateAndLanguage]...
 
 
 GO
-CREATE PROCEDURE [QCandidate].[Assessment_GetByCandidateIdAndDateAndLanguage]
+ALTER PROCEDURE [QCandidate].[Assessment_GetByCandidateIdAndDateAndLanguage]
 	@candidateId UNIQUEIDENTIFIER,
 	@date DATE,
 	@language char(2)
@@ -707,7 +707,10 @@ SELECT
 					END AS [Name],
 			prc.Description,
 			prc.SimulationCombinationId,
-			ISNULL(sc.QCandidateLayoutId, 0) AS QCandidateLayoutId,
+			CASE 
+				WHEN uLeadAssess.[Id] IS NULL AND sc.[Preparation] > 0 THEN ISNULL(sc.QCandidateLayoutId, 0) -- Only show the link when preparing, not when executing
+				ELSE 0
+				END AS [QCandidateLayoutId],
 			--Room
 				ar.Id,
 				ar.[Name],

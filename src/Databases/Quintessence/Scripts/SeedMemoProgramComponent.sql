@@ -54,7 +54,10 @@ SELECT
 	Name + '5'
 FROM dbo.Language
 
-
+UPDATE dbo.SimulationCombination
+SET Preparation = 20
+WHERE ID = @simulationCombinationId
+	AND Preparation = 0
 
 
 
