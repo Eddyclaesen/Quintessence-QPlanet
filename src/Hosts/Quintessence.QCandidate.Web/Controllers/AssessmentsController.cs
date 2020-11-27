@@ -29,7 +29,6 @@ namespace Quintessence.QCandidate.Controllers
             var candidateIdClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId");
             var candidateId = new Guid(candidateIdClaim.Value);
             var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateAndLanguageQuery(candidateId, DateTime.Now, CultureInfo.CurrentCulture.ToString()));
-            
 
             Assessment assessment = null;
             if (assessmentDto != null)
@@ -60,7 +59,7 @@ namespace Quintessence.QCandidate.Controllers
                     var assessors = GetAssessorsString(programComponent.LeadAssessor, programComponent.CoAssessor);
                     QCandidateLayout qCandidateLayout = Enumeration.FromId<QCandidateLayout>(programComponent.QCandidateLayoutId);
 
-                    var showDetailsLink = qCandidateLayout != QCandidateLayout.None && programComponent.Start.Date == DateTime.Now;
+                    var showDetailsLink = qCandidateLayout != QCandidateLayout.None && programComponent.Start.Date == DateTime.Now.Date;
 
                     if (qCandidateLayout == QCandidateLayout.Pdf)
                     {
