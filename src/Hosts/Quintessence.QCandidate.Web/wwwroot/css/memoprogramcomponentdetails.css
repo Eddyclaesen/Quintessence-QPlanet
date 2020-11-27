@@ -84,8 +84,11 @@
   }
 
   .pdf-content {
-      width: 100%;
+      width: 850px;
       height: 1075px;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
   }
 
   .block-new {
@@ -170,6 +173,7 @@
   .calendar-text {
     border: 1px solid #F0F0F0;
     height: 100px;
+    resize: none;
   }
 
   #outerContainer #mainContainer div.toolbar {
