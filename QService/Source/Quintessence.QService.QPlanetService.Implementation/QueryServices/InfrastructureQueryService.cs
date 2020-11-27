@@ -448,7 +448,7 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
                 builder.Append(gotAccess);
                 builder.Append("<br /><strong><span style=\"color: #002649; font-family: calibri; font-size: 11pt;\">");
                 builder.Append($"{usernameLabel}: {username}<br />");
-                builder.Append($"{passwordLabel}: {password}<br />");
+                builder.Append($"{passwordLabel}: {password}");
                 builder.Append("</span></strong></p>");
             }
             else if(qCandidateAccess == QCandidateAccess.UserAlreadyExists)

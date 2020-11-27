@@ -121,18 +121,18 @@
     <value>Agenda</value>
   </data>
   <data name="Context" xml:space="preserve">
-    <value>Context</value>
+    <value>Contexte</value>
   </data>
   <data name="FunctionDescription" xml:space="preserve">
-    <value>Functie omschrijving</value>
+    <value>Description de la fonction</value>
   </data>
   <data name="Introduction" xml:space="preserve">
-    <value>Inleiding</value>
+    <value>Introduction</value>
   </data>
   <data name="Memos" xml:space="preserve">
-    <value>Memos</value>
+    <value>Mémos</value>
   </data>
   <data name="Quit" xml:space="preserve">
-    <value>Onderdeel afsluiten</value>
+    <value>Terminer l'exercice</value>
   </data>
 </root>

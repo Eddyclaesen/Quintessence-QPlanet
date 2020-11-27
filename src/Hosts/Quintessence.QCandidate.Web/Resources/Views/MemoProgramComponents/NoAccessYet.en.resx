@@ -118,10 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="NoAccessYet" xml:space="preserve">
-    <value>U kan hier de relevante informatie terugvinden &lt;span style="text-decoration: underline;"&gt;op het moment dat de oefening van start gaat&lt;/span&gt;. &lt;br&gt;&lt;br&gt;&lt;br&gt;Bedankt voor uw geduld
-            &lt;/div&gt;</value>
+    <value>You can consult all relevant information here &lt;span style="text-decoration: underline;"&gt;as soon as your exercise commences.&lt;/span&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;Thank you for your patience&lt;/div&gt;</value>
   </data>
   <data name="Quit" xml:space="preserve">
-    <value>Onderdeel afsluiten</value>
+    <value>End exercise</value>
   </data>
 </root>
