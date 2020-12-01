@@ -660,7 +660,7 @@ PRINT N'Creating [QCandidate].[Assessment_GetByCandidateIdAndDateAndLanguage]...
 
 
 GO
-ALTER PROCEDURE [QCandidate].[Assessment_GetByCandidateIdAndDateAndLanguage]
+CREATE PROCEDURE [QCandidate].[Assessment_GetByCandidateIdAndDateAndLanguage]
 	@candidateId UNIQUEIDENTIFIER,
 	@date DATE,
 	@language char(2)
