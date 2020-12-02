@@ -687,7 +687,10 @@ SELECT
 		@date AS Date,
 		--Location
 			o.Id,
-			o.FullName AS Name,
+			case 
+				when pc.OnlineAssessment = 1 then 'Online'
+				else o.FullName 
+			end AS Name,
 		--ProgramComponents
 			prc.Id,
 			prc.[Start],

@@ -120,7 +120,16 @@
   <data name="Memo" xml:space="preserve">
     <value>Memo</value>
   </data>
+  <data name="OfficeEvaluation" xml:space="preserve">
+    <value>&lt;a href="https://evaluation.quintessence.be/default_en.aspx" target="_blank"&gt;Evaluation form&lt;/a&gt;</value>
+  </data>
+  <data name="OnlineEvaluation" xml:space="preserve">
+    <value>&lt;a href="https://evaluation.quintessence.be/online_en.aspx" target="_blank"&gt;Evaluation form&lt;/a&gt;</value>
+  </data>
   <data name="PdfDocument" xml:space="preserve">
     <value>Document</value>
+  </data>
+  <data name="SelfReflection" xml:space="preserve">
+    <value>&lt;a href="https://evaluation.quintessence.be/selfreflection.aspx?ID={0}" target="_blank"&gt;Selfreflection&lt;/a&gt;</value>
   </data>
 </root>

@@ -13,9 +13,24 @@
                 {
                     @Html.Raw("- ") @Html.DisplayFor(m => Model.Assessors)
                 }
+
+                if (Model.Title == "Evaluation Form")
+                {
+                    if (TempData["Location"].ToString() == "Online")
+                    {
+                        @Localizer["OnlineEvaluation"]
+                    }
+                    else
+                    {
+                        @Localizer["OfficeEvaluation"]
+                    }
+                }
+
+                if (Model.Title.Contains("Self reflection"))
+                {
+                    @Html.Raw(String.Format(Localizer["SelfReflection"].Value, Model.Id))
+                }
             }
-
-
         </p>
 
         @if (Model.ShowDetailsLink)

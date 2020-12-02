@@ -30,6 +30,8 @@ namespace Quintessence.QCandidate.Controllers
             var candidateId = new Guid(candidateIdClaim.Value);
             var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateAndLanguageQuery(candidateId, DateTime.Now, CultureInfo.CurrentCulture.ToString()));
 
+            TempData["Location"] = assessmentDto.DayProgram.Location.Name;
+
             Assessment assessment = null;
             if (assessmentDto != null)
             {
