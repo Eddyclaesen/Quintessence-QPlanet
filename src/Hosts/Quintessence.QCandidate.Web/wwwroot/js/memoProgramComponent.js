@@ -50,15 +50,6 @@ function saveCalendarDay(evt, calendarDayId) {
     });
 };
 
-class Memo {
-    constructor(id, position, title, content) {
-        this.Id = id;
-        this.Position = position;
-        this.Title = title;
-        this.Content = content;
-    }
-}
-
 function saveMemos() {
 
     var memoProgramComponentId = document.getElementById("memoProgramComponentId").value;
@@ -67,7 +58,7 @@ function saveMemos() {
     var memosToUpdate = [];
     var everyChild = document.querySelectorAll("#memo-list div");
     for (var i = 0; i < everyChild.length; i++) {
-        memosToUpdate.push(new Memo(everyChild[i].id, i+1, null, null));
+        memosToUpdate.push({ Id: everyChild[i].id, Position: i + 1 });
     }
 
     $.ajax({
