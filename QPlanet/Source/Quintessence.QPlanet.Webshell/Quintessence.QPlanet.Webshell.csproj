@@ -400,6 +400,7 @@
     <Content Include="Images\Background\qplanet_bg2.jpg" />
     <Content Include="Images\Background\qplanet_bg1.jpg" />
     <Content Include="Images\Background\Vertigo.jpg" />
+    <Content Include="Images\demo.gif" />
     <Content Include="Images\Error\Error01.png" />
     <Content Include="Images\Error\Error02.png" />
     <Content Include="Images\Error\Error03.png" />

@@ -208,6 +208,9 @@
     @RenderSection("AdditionalScripts", false)
 </head>
 <body>
+    <div>
+        <img src="https://quintessenceconsulting.be/images/Q_logo.png" style="position: absolute;margin-top: 10px;height: 5%;left: 49%;right: 49%;bottom: 1%;">
+    </div>
     <header>
         <div class="container_16 qplanet-logo">
             <div class="grid_12">
@@ -216,8 +219,8 @@
             </div>
             <div class="grid_4">
                 @Html.Action("Index", "Profile", new { area = string.Empty })
-                <div style="text-align: right;">
-                    <input type="text" style="width: 300px" id="GeneralSearchBox">
+                <div style="text-align: left;">
+                    <input type="text" style="width: 190px; margin-left: 20px;" id="GeneralSearchBox">
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -269,7 +272,7 @@
             <tr style="display: table-row;">
                 <td style="display: table-cell; vertical-align: top; text-align: left; min-width: 150px;
                     padding: 0">
-                    <img src="@Url.Content("~/Images/Error/Error0" + new Random().Next(1, 5) + ".png")"/>
+                    <img src="@Url.Content("~/Images/Error/Error0" + new Random().Next(1, 5) + ".png")" />
                 </td>
                 <td style="display: table-cell; vertical-align: top; text-align: left; width: 100%">
                     <p>One or more errors occured during the operation:</p>
@@ -284,8 +287,8 @@
         string message;
         if (Configuration.GetImportantMessage(out message))
         {
-        <div id="ImportantMessage" style="display: none" data-message="@message">
-        </div>
+            <div id="ImportantMessage" style="display: none" data-message="@message">
+            </div>
         }
     }
 </body>

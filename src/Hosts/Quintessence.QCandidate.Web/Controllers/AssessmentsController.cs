@@ -28,13 +28,12 @@ namespace Quintessence.QCandidate.Controllers
         {
             var candidateIdClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId");
             var candidateId = new Guid(candidateIdClaim.Value);
-            var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateAndLanguageQuery(candidateId, DateTime.Now, CultureInfo.CurrentCulture.ToString()));
-
-            TempData["Location"] = assessmentDto.DayProgram.Location.Name;
+            var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateAndLanguageQuery(candidateId, DateTime.Now, CultureInfo.CurrentCulture.ToString()));           
 
             Assessment assessment = null;
             if (assessmentDto != null)
             {
+                TempData["Location"] = assessmentDto.DayProgram.Location.Name;
                 var programComponents = await MapProgramComponents(assessmentDto);
                 assessment = new Assessment(assessmentDto.Position.Name, assessmentDto.Customer.Name,
                     assessmentDto.DayProgram.Location.Name, assessmentDto.DayProgram.Date,

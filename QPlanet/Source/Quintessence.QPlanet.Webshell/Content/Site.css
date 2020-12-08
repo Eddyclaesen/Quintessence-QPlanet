@@ -30,15 +30,15 @@ header {
     /*background: -webkit-gradient(linear, left top, left bottom, from(#5A8E22), to(#346310));*/
     /* MSIE */
     /*filter: progid:DXImageTransform.Microsoft.Gradient( StartColorStr='#5A8E22', EndColorStr='#346310', GradientType=0);*/
-	
-	background: #4b8ca7; /* fallback for old browsers */
-	background: -webkit-linear-gradient(to left, #1b6ca7 , #4b8ca7); /* Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient(to left, #1b6ca7  , #4b8ca7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
+
+    background: #4b8ca7; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #2A003F, #4b8ca7); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #2A003F, #4b8ca7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     border-bottom: 1px solid darkgreen;
     box-shadow: 0px 0px 25px 0px;
     position: fixed;
-    padding-bottom: 3px;   
-    z-index:1;
+    padding-bottom: 3px;
+    z-index: 1;
 }
 
 body.mceContentBody {
@@ -46,7 +46,7 @@ body.mceContentBody {
 }
 
 .qplanet-logo {
-    background: url('../Images/QPlanet_128.png') no-repeat right;
+    background: url('../Images/demo.gif') no-repeat right;
 }
 
 li.circle {
@@ -304,7 +304,8 @@ h6 {
 }
 
 fieldset {
-    border-top: 1px solid #5A8E22;
+    /*border-top: 1px solid #5A8E22;*/
+    border-top: 1px solid #fff;
     padding: 15px;
     margin-bottom: 10px;
     position: relative;
@@ -315,9 +316,10 @@ fieldset {
 legend {
     /*padding: 10px;
     font-weight: bold;*/
-	padding:15px;
-	font-family:AlternateGotNo2D;
-	font-size:20pt;
+    /*padding:15px;*/
+    font-family: AlternateGotNo2D;
+    font-size: 20pt;
+    padding-top: 50px;
 }
 
 input,

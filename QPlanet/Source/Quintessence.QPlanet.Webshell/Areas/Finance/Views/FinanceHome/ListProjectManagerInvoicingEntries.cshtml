@@ -1,7 +1,13 @@
 ﻿@using Quintessence.QPlanet.ViewModel.Fin
 @model Quintessence.QPlanet.Webshell.Areas.Finance.Models.FinanceHome.ListProjectManagerInvoicingModel
+
 @using (Html.BeginForm("SaveProjectManagerInvoicingEntries", "FinanceHome", FormMethod.Post, new { id = "SaveProjectManagerInvoicingForm" }))
 {
+    <legend style="padding-top:0px; margin-left:35px;">
+        Ready for invoicing: € @TempData["Total"]<br />
+        Other: € @TempData["Other"]
+    </legend>
+
     <div class="right-text">
         <a href="javascript:void(0);" class="button" id="SaveProjectManagerInvoicingEntriesButton">Save</a>
     </div>
