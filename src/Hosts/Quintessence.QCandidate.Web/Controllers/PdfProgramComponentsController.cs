@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Localization;
@@ -22,7 +23,8 @@ namespace Quintessence.QCandidate.Controllers
         [Route("{action}/{id}")]
         public async Task<IActionResult> Details(Guid id)
         {
-            var language = HttpContext.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name;
+            //var language = HttpContext.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name;
+            var language = User.Claims.SingleOrDefault(c => c.Type == "extension_Language").Value.ToLower();
             var programComponentDto = await _mediator.Send(new GetProgramComponentByIdAndLanguageQuery(id, Language.FromCode(language)));
             
             var pdfExists = await _mediator.Send(new HasSimulationCombinationPdfByIdAndLanguageQuery(programComponentDto.SimulationCombinationId.Value, language));

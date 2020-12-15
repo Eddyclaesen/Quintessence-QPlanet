@@ -4,43 +4,49 @@
 
 @inject IViewLocalizer Localizer
 
-@{ 
-if (Model != null) 
+@{
+
+    var language = User.Claims.SingleOrDefault(c => c.Type == "extension_Language").Value.ToLower();
+    System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo(language);
+    System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo(language);
+
+    if (Model != null)
     {
-    <div class="container">
-        <div class="context">
-            <span class="company">@Model.CustomerName</span> <span class="project">@Model.PositionName</span>
-            <h1>@Model.Date.ToLongDateString()</h1>
-            <span class="location">@Model.LocationName</span>
+        <div class="container">
+            <div class="context">
+                <span class="company">@Model.CustomerName</span> <span class="project">@Model.PositionName</span>
+                <h1>@Model.Date.ToLongDateString()</h1>
+                <span class="location">@Model.LocationName</span>
+            </div>
+
+            @*<div class="assessment-context">
+                    <h2>Assessment context</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam et scelerisque tortor. Donec vel aliquam tortor. Sed suscipit tortor eu enim condimentum condimentum. Nulla egestas arcu nec nunc suscipit, eu semper odio lobortis. Maecenas at dolor sit amet quam ultrices mattis. Nam eleifend, ligula at vestibulum bibendum, lectus neque consequat tellus, id malesuada nunc est non dolor. Sed non sagittis dui. Vivamus ullamcorper ultrices magna id vehicula. Praesent quis molestie sapien.</p>
+                </div>*@
         </div>
 
-        @*<div class="assessment-context">
-                <h2>Assessment context</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam et scelerisque tortor. Donec vel aliquam tortor. Sed suscipit tortor eu enim condimentum condimentum. Nulla egestas arcu nec nunc suscipit, eu semper odio lobortis. Maecenas at dolor sit amet quam ultrices mattis. Nam eleifend, ligula at vestibulum bibendum, lectus neque consequat tellus, id malesuada nunc est non dolor. Sed non sagittis dui. Vivamus ullamcorper ultrices magna id vehicula. Praesent quis molestie sapien.</p>
-            </div>*@
-    </div>
 
-
-    <div class="container calendar-wrap">
-        <ul class="timeline">
-            @foreach(var programComponent in Model.ProgramComponents)
-            {
-                @Html.DisplayFor(m => programComponent)
-            }
-        </ul>
-    </div>
+        <div class="container calendar-wrap">
+            <ul class="timeline">
+                @foreach (var programComponent in Model.ProgramComponents)
+                {
+                    @Html.DisplayFor(m => programComponent)
+                }
+            </ul>
+        </div>
 
     }
-else {
+    else
+    {
 
-    <div style="height:1075px; width:100%; clear:both;">
-        <div class="row">
-            <div class="col-md-12 center" style="margin-top: 10%;">
-                <h5>@Localizer["WelcomeQCandidate"]</h5>
-                <p>@Localizer["WelcomeMessage"]</p>
+        <div style="height:1075px; width:100%; clear:both;">
+            <div class="row">
+                <div class="col-md-12 center" style="margin-top: 10%;">
+                    <h5>@Localizer["WelcomeQCandidate"]</h5>
+                    <p>@Localizer["WelcomeMessage"]</p>
+                </div>
             </div>
         </div>
-    </div>
 
     }
 }

@@ -25,7 +25,8 @@ namespace Quintessence.QCandidate.Controllers
         [Route("{action}/{id}")]
         public async Task<IActionResult> Details(Guid id)
         {
-            var language = Language.FromCode(HttpContext.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name);
+            //var language = Language.FromCode(HttpContext.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name);
+            var language = Language.FromCode(User.Claims.SingleOrDefault(c => c.Type == "extension_Language").Value.ToLower());
 
             var model = await _mediator.Send(new GetMemoProgramComponentByIdAndLanguageQuery(id, language));
 

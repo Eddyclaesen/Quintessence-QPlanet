@@ -8,6 +8,12 @@
     <link href="/css/memoprogramcomponentdetails.css" rel="stylesheet" />
 }
 
+@{ 
+    var language = User.Claims.SingleOrDefault(c => c.Type == "extension_Language").Value.ToLower();
+    System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo(language);
+    System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo(language);
+}
+
 <div class="container">
     <div class="context">
         @Html.ActionLink(Localizer["Quit"].Value, nameof(AssessmentsController.Get), "Assessments", null, new { @class = "btn" })

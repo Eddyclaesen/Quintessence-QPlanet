@@ -27,13 +27,17 @@ namespace Quintessence.QCandidate.Controllers
         public async Task<IActionResult> Get()
         {
             var candidateIdClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId");
+            var candidateLanguage = User.Claims.SingleOrDefault(c => c.Type == "extension_Language").Value.ToLower();
+            var culturedlanguage = CultureInfo.CurrentCulture.ToString();
             var candidateId = new Guid(candidateIdClaim.Value);
-            var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateAndLanguageQuery(candidateId, DateTime.Now, CultureInfo.CurrentCulture.ToString()));           
+
+            var assessmentDto = await _mediator.Send(new GetAssessmentByCandidateIdAndDateAndLanguageQuery(candidateId, DateTime.Now, candidateLanguage));           
 
             Assessment assessment = null;
             if (assessmentDto != null)
             {
                 TempData["Location"] = assessmentDto.DayProgram.Location.Name;
+                TempData.Keep("Location");
                 var programComponents = await MapProgramComponents(assessmentDto);
                 assessment = new Assessment(assessmentDto.Position.Name, assessmentDto.Customer.Name,
                     assessmentDto.DayProgram.Location.Name, assessmentDto.DayProgram.Date,
@@ -46,7 +50,8 @@ namespace Quintessence.QCandidate.Controllers
         private async Task<List<ProgramComponent>> MapProgramComponents(AssessmentDto assessment)
         {
             var result = new List<ProgramComponent>();
-            var language = HttpContext.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name;
+            //var language = HttpContext.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name;
+            var language = User.Claims.SingleOrDefault(c => c.Type == "extension_Language").Value.ToLower();
 
             //DayProgram is null when no day program was found for that day
             if (assessment.DayProgram?.ProgramComponents != null)
