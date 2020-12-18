@@ -109,16 +109,6 @@ namespace Quintessence.QPlanet.Webshell.Areas.Finance.Controllers
 
                     var invoicingEntries = CastInvoicingViewsToEditModels(entries);
 
-                    var total = invoicingEntries.Where(item => item.InvoiceStatusCode == 90).Sum(item => item.InvoiceAmount);
-                    var other = invoicingEntries.Where(item => item.InvoiceStatusCode == 10 
-                                                        || item.InvoiceStatusCode == 20
-                                                        || item.InvoiceStatusCode == 30
-                                                        || item.InvoiceStatusCode == 50
-                                                        || item.InvoiceStatusCode == 80).Sum(item => item.InvoiceAmount);
-
-                    TempData["Total"] = total.ToString();
-                    TempData["Other"] = other.ToString();
-
                     var viewModel = new ListProjectManagerInvoicingModel
                     {
                         InvoicingEntries = invoicingEntries.OrderBy(e => e.InvoiceStatusCode).ToList()

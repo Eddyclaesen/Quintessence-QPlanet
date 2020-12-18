@@ -3,9 +3,17 @@
 
 @using (Html.BeginForm("SaveProjectManagerInvoicingEntries", "FinanceHome", FormMethod.Post, new { id = "SaveProjectManagerInvoicingForm" }))
 {
+
+    var total = Model.InvoicingEntries.Where(item => item.InvoiceStatusCode == 90).Sum(item => item.InvoiceAmount);
+    var other = Model.InvoicingEntries.Where(item => item.InvoiceStatusCode == 10
+                                                        || item.InvoiceStatusCode == 20
+                                                        || item.InvoiceStatusCode == 30
+                                                        || item.InvoiceStatusCode == 50
+                                                        || item.InvoiceStatusCode == 80).Sum(item => item.InvoiceAmount);
+
     <legend style="padding-top:0px; margin-left:35px;">
-        Ready for invoicing: € @TempData["Total"]<br />
-        Other: € @TempData["Other"]
+        Ready for invoicing: <span class="w3-badge w3-green">€ @total</span><br />
+        Other: <span class="w3-badge w3-yellow">€ @other</span>
     </legend>
 
     <div class="right-text">
@@ -27,7 +35,7 @@
                 <th>Remarks</th>
                 <th style="display:none;">Proposal</th>
                 <th>P.M.</th>
-                <th>C.A.</th>                
+                <th>C.A.</th>
             </tr>
         </thead>
         <tbody>
@@ -46,55 +54,55 @@
                         var invoicingProjectCandidateEntry = Model.InvoicingEntries[i] as EditProjectCandidateInvoicingEntryModel;
                         if (invoicingProjectCandidateEntry != null)
                         {
-                                @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerProjectCandidateInvoicingModel")
+                            @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerProjectCandidateInvoicingModel")
                         }
 
                         var invoicingProjectCandidateCategoryType1Entry = Model.InvoicingEntries[i] as EditProjectCandidateCategoryType1InvoicingEntryModel;
                         if (invoicingProjectCandidateCategoryType1Entry != null)
                         {
-                                @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerProjectCandidateCategoryType1InvoicingModel")
+                            @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerProjectCandidateCategoryType1InvoicingModel")
                         }
 
                         var invoicingProjectCandidateCategoryType2Entry = Model.InvoicingEntries[i] as EditProjectCandidateCategoryType2InvoicingEntryModel;
                         if (invoicingProjectCandidateCategoryType2Entry != null)
                         {
-                                @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerProjectCandidateCategoryType2InvoicingModel")
+                            @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerProjectCandidateCategoryType2InvoicingModel")
                         }
 
                         var invoicingProjectCandidateCategoryType3Entry = Model.InvoicingEntries[i] as EditProjectCandidateCategoryType3InvoicingEntryModel;
                         if (invoicingProjectCandidateCategoryType3Entry != null)
                         {
-                                @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerProjectCandidateCategoryType3InvoicingModel")
+                            @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerProjectCandidateCategoryType3InvoicingModel")
                         }
 
                         var invoicingProjectProductEntry = Model.InvoicingEntries[i] as EditProjectProductInvoicingEntryModel;
                         if (invoicingProjectProductEntry != null)
                         {
-                                @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerProjectProductInvoicingModel")
+                            @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerProjectProductInvoicingModel")
                         }
 
                         var invoicingAcdcProjectFixedPriceEntry = Model.InvoicingEntries[i] as EditAssessmentDevelopmentProjectFixedPriceInvoicingEntryModel;
                         if (invoicingAcdcProjectFixedPriceEntry != null)
                         {
-                                @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerAcdcProjectFixedPriceInvoicingModel")
+                            @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerAcdcProjectFixedPriceInvoicingModel")
                         }
 
                         var invoicingConsultancyProjectFixedPriceEntry = Model.InvoicingEntries[i] as EditConsultancyProjectFixedPriceInvoicingEntryModel;
                         if (invoicingConsultancyProjectFixedPriceEntry != null)
                         {
-                                @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerConsultancyProjectFixedPriceInvoicingModel")
+                            @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerConsultancyProjectFixedPriceInvoicingModel")
                         }
-                        
+
                         var invoicingProductSheetEntry = Model.InvoicingEntries[i] as EditProductSheetEntryInvoicingEntryModel;
                         if (invoicingProductSheetEntry != null)
                         {
-                                @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerProductSheetEntryInvoicingModel")
+                            @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerProductSheetEntryInvoicingModel")
                         }
-                        
+
                         var invoicingTimesheetEntry = Model.InvoicingEntries[i] as EditTimesheetEntryInvoicingEntryModel;
                         if (invoicingTimesheetEntry != null)
                         {
-                                @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerTimesheetEntryInvoicingModel")
+                            @Html.EditorFor(m => m.InvoicingEntries[i], "EditProjectManagerTimesheetEntryInvoicingModel")
                         }
                     }
 

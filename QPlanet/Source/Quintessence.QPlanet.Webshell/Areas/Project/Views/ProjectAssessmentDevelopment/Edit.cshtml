@@ -1245,6 +1245,21 @@
             </div>
             <div class="clear"></div>
 
+            @if (Model.ProjectManagerId.ToString() == Session["UserId"].ToString()
+                    || Model.CoProjectManagerId.ToString() == Session["UserId"].ToString()
+                    || Model.CustomerAssistantId.ToString() == Session["UserId"].ToString())
+            {
+                <div class="grid_5 table">
+                    <div class="label">@Html.LabelFor(m => m.Confidential)</div>
+                </div>
+
+                <div class="grid_7 table">
+                    <div class="value">@Html.CheckBoxFor(m => m.Confidential)</div>
+                </div>
+
+                <div class="clear"></div>
+            }            
+
             <div style="text-align: right">
                 <a href="javascript:void(0)" data-name="SubmitFormButtonLink" class="button">Save</a>
             </div>

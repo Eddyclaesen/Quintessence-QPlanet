@@ -788,3 +788,26 @@ table.dataTable thead th {
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
 	font-family: Calibri;
 }
+
+.w3-badge, .w3-tag {
+    background-color: #000;
+    color: #fff;
+    display: inline-block;
+    padding-left: 8px;
+    padding-right: 8px;
+    text-align: center
+}
+
+.w3-badge {
+    border-radius: 15%
+}
+
+.w3-green, .w3-hover-green:hover {
+    color: #fff !important;
+    background-color: #4CAF50 !important
+}
+
+.w3-yellow, .w3-hover-yellow:hover {
+    color: #000 !important;
+    background-color: #ffeb3b !important
+}
