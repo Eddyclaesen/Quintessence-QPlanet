@@ -62,7 +62,7 @@ namespace Quintessence.QCandidate.Logic.Queries
                 predecessorIntro,
                 functionDescription,
                 contextId,
-                memoProgramComponentDto.Memos.Select(m => new Memo(m.Id, m.Position, m.Title, GetMemoContent(memoProgramComponentDto.SimulationCombinationId, m, query.Language), m.HasPredecessorOrigin)),
+                memoProgramComponentDto.Memos.Select(m => new Memo(m.Id, m.Position, m.Title, GetMemoContent(memoProgramComponentDto.PredecessorSimulationCombinationId ?? memoProgramComponentDto.SimulationCombinationId, m, query.Language), m.HasPredecessorOrigin)),
                 memoProgramComponentDto.CalendarDays.Select(cd => new CalendarDay(cd.Id, cd.Day, cd.Note))
                 );
         }
