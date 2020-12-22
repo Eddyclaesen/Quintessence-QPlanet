@@ -465,7 +465,7 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
                         gotAccess = $"You can access our QCandidate platform on the day mentioned above by clicking: {qCandidateUrl} and log in using the credentials previously sent.";
                         break;
                     case "fr":
-                        gotAccess = $"Vous pouvez accéder à notre portail QCandidate le jour même en cliquant sur le lien {qCandidateUrl} et en utilisant les données envoyées précédemment.";
+                        gotAccess = $"Le jour de votre évaluation, vous aurez accès aux simulations et à d'autres informations pertinentes via notre plateforme QCandidate. Vous pouvez accéder QCandidate en cliquant sur le lien {qCandidateUrl} et en utilisant les données envoyées précédemment.";
                         break;
                     case "de":
                         gotAccess = $"Sie haben Zugriff auf unsere QCandidate-Plattform unter: {qCandidateUrl} und können sich mit den zuvor gesendeten Informationen anmelden.";

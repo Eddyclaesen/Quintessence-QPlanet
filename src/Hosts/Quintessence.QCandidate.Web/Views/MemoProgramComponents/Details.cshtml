@@ -115,7 +115,7 @@
                     {
                         <div class="calendar-block">
                             <div class="calendar-date">
-                                @calendarDay.Day.ToString("D", CultureInfo.CurrentUICulture)
+                                @calendarDay.Day.ToString("dddd, MMMM dd", CultureInfo.CurrentUICulture)
                             </div>
                             <textarea class="calendar-text" onblur="saveCalendarDay(event, '@calendarDay.Id')" id="@calendarDay.Id">@calendarDay.Note</textarea>
                         </div>
