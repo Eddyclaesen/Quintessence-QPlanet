@@ -9,6 +9,7 @@
                                                         || item.InvoiceStatusCode == 20
                                                         || item.InvoiceStatusCode == 30
                                                         || item.InvoiceStatusCode == 50
+                                                        || item.InvoiceStatusCode == 95
                                                         || item.InvoiceStatusCode == 80).Sum(item => item.InvoiceAmount);
 
     <legend style="padding-top:0px; margin-left:35px;">
