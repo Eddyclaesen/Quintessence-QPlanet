@@ -4,6 +4,14 @@
 
 @inject IViewLocalizer Localizer
 
+@section Scripts
+{
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+}
+
 @{
 
     var language = User.Claims.SingleOrDefault(c => c.Type == "extension_Language").Value.ToLower();
@@ -35,6 +43,41 @@
             </ul>
         </div>
 
+        <div class="modal fade" id="modalPrepWarning" role="dialog" style="background-color: transparent; max-height: none;">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body" style="text-align:center;">
+                        <p>@Localizer["SimulationStart"]</p>
+                        <p id="labelPrep"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            var items = @Json.Serialize(Model.ProgramComponents);
+            var interval = setInterval(function () { myFunction(); }, 60000);
+
+            function myFunction() {
+
+                var today = new Date();
+                var now = today.getHours() + ':' + today.getMinutes();
+                
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].title.indexOf("voorbereiding") >= 1 || items[i].title.indexOf("préparation") >= 1 || items[i].title.indexOf("preparation") >= 1) {
+                        var l = items[i].start.length;
+                        var st = items[i].start.substr(l - 8, 5);
+                        if (st === now) {
+                            $('#labelPrep').text(items[i].title);
+                            $("#modalPrepWarning").modal();
+                        }
+                    }
+                }
+            }
+        </script>
     }
     else
     {
@@ -50,4 +93,3 @@
 
     }
 }
-

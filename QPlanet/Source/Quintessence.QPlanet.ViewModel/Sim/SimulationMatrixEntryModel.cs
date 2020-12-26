@@ -29,5 +29,7 @@ namespace Quintessence.QPlanet.ViewModel.Sim
         public Guid Id { get; set; }
 
         public string LanguageNames { get; set; }
+
+        public int QCandidateLayoutId { get; set; }
     }
 }

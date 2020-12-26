@@ -47,5 +47,8 @@ namespace Quintessence.QService.QueryModel.Prm
 
         [DataMember]
         public string LanguageNames { get; set; }
+
+        [DataMember]
+        public string QCandidateLayout { get; set; }
     }
 }

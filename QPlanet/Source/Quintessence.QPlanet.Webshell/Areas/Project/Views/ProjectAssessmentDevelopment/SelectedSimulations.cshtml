@@ -7,9 +7,10 @@
             <th style="width: 20%;">Department</th>
             <th style="width: 10%;">Level</th>
             <th style="width: 20%;">Simulation</th>
-            <th style="width: 20%;">Languages</th>
+            <th style="width: 15%;">Languages</th>
             <th style="width: 5%;">Prep</th>
             <th style="width: 5%;">Exec</th>
+            <th style="width: 5%;">Layout</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -24,6 +25,7 @@
                 <td>@entry.LanguageNames</td>
                 <td>@entry.Preparation</td>
                 <td>@entry.Execution</td>
+                <td>@entry.QCandidateLayout</td>
                 <td><a href="javascript:void(0);" data-function="DeleteSelectedSimulation" data-id="@entry.Id">Remove</a></td>
             </tr>
         }
