@@ -593,6 +593,7 @@
     <Build Include="dbo\Stored Procedures\ProgramComponent_GetByIdAndLanguageId.sql" />
     <Build Include="dbo\Stored Procedures\SimulationCombinationMemo_GetAllBySimulationCombinationId.sql" />
     <Build Include="dbo\Stored Procedures\Context_GetIdByProgramComponentId.sql" />
+    <Build Include="Scripts\Release_v2.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="QCandidate\Stored Procedures\Assessment_GetByCandidateIdAndDateAndLanguage.sql" />

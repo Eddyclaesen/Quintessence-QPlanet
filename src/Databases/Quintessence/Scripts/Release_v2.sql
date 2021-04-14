@@ -207,3 +207,19 @@ where pd.ProjectId = @ProjectId
 and pv.CandidateId = @CandidateId
 and pc.SurveyPlanningId = 2
 GO
+
+ALTER TABLE ProjectCandidate 
+ADD [Consent] BIT NOT NULL DEFAULT 0;
+GO
+
+CREATE PROCEDURE [QCandidate].[SetConsentByCandidateIdAndProjectId]
+	@check BIT,
+	@candidateid UNIQUEIDENTIFIER,
+	@projectid UNIQUEIDENTIFIER
+AS
+	UPDATE	ProjectCandidate
+	SET		Consent		= @check
+	WHERE	CandidateId = @candidateid
+		AND ProjectId	= @projectid
+GO
+
