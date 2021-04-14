@@ -207,6 +207,10 @@ namespace Quintessence.QService.QPlanetService.Contracts.ServiceContracts.QueryS
 
         [OperationContract]
         [FaultContract(typeof(ValidationContainer))]
+        List<ProjectCandidateView> ListQCandidateProjectCandidates(ListUserProjectCandidatesRequest request);
+
+        [OperationContract]
+        [FaultContract(typeof(ValidationContainer))]
         ListProjectCandidateSimulationScoresResponse ListProjectCandidateSimulationScores(Guid projectCandidateId);
 
         [OperationContract]

@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Assessors" xml:space="preserve">
+    <value>De assessor(en)</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Terug</value>
+  </data>
+  <data name="ConsentIntro" xml:space="preserve">
+    <value>&lt;p&gt;Tijdens uw assessment is het mogelijk dat één of meerdere simulaties worden opgenomen. Dit doen we uiteraard niet zonder uw expliciete goedkeuring. &lt;br /&gt;Deze opnames dienen enkel voor intern gebruik en worden  x-aantal dagen na uw assessment gewist.&lt;/p&gt;</value>
+  </data>
+  <data name="ConsentSub" xml:space="preserve">
+    <value>&lt;p&gt;&lt;strong&gt;Door aanvinken van de checkbox geef ik toestemming tot opname van de simulaties.&lt;/strong&gt;&lt;/p&gt;</value>
+  </data>
+  <data name="Context" xml:space="preserve">
+    <value>&lt;p&gt;Tijdens uw assessment willen wij graag kunnen zien hoe u met een aantal werksituaties omgaat.&lt;/p&gt;
+&lt;p&gt;Deze werksituaties zijn uiteraard niet uw werkelijke problematieken, maar een aantal cases waarin u kunt tonen wat uw sterkten zijn. Deze cases spelen zich af in een fictieve context, u wordt voor even werknemer van een denkbeeldige organisatie, nl. &lt;strong&gt;{0}&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Het is belangrijk dat u voor uw assessment de website van &lt;strong&gt;{0}&lt;/strong&gt; al eens grondig doorneemt zodat u zich reeds een goed beeld kan vormen van de organisatie waarin u terecht zal komen.&lt;/p&gt;
+&lt;p&gt;Het is niet de bedoeling dat u deze informatie uit het hoofd leert! Maar maak zeker kennis met de structuur, context, de waarden en de normen van de &lt;strong&gt;{0}&lt;/strong&gt; organisatie. Het zal u comfort geven tijdens uw assessment.&lt;/p&gt;&lt;p&gt;U hebt toegang tot deze informatie via volgende link: &lt;a href="https://simulation.quintessence.be/nl/login" target="_blank"&gt;LINK&lt;/a&gt;.&lt;br/&gt;</value>
+  </data>
+  <data name="Evaluation" xml:space="preserve">
+    <value>Jouw feedback is goud waard!</value>
+  </data>
+  <data name="EvaluationLink" xml:space="preserve">
+    <value>https://evaluation.quintessence.be</value>
+  </data>
+  <data name="EvaluationOnlineLink" xml:space="preserve">
+    <value>https://evaluation.quintessence.be/online_nl</value>
+  </data>
+  <data name="EvaluationSub" xml:space="preserve">
+    <value>Mogen we je nog even om feedback vragen?&lt;br/&gt;Mocht je dit al op de dag van je assessment hebben ingevuld, hartelijk dank!</value>
+  </data>
+  <data name="Hoera" xml:space="preserve">
+    <value>https://epub02.publitas.com/quintessence/9/</value>
+  </data>
+  <data name="HoeraImg" xml:space="preserve">
+    <value>hoera.png</value>
+  </data>
+  <data name="Intro" xml:space="preserve">
+    <value>&lt;p&gt;Op vraag van {0} nodigen wij u uit voor een assessment center.&lt;/p&gt;</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Ons kantoor</value>
+  </data>
+  <data name="LocationAC" xml:space="preserve">
+    <value>Locatie:</value>
+  </data>
+  <data name="LocationON" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="LocationQA" xml:space="preserve">
+    <value>Antwerpen</value>
+  </data>
+  <data name="LocationQB" xml:space="preserve">
+    <value>Brussel</value>
+  </data>
+  <data name="LocationQG" xml:space="preserve">
+    <value>Gent</value>
+  </data>
+  <data name="RouteElse" xml:space="preserve">
+    <value>Onderaan deze pagina kan je een wegbeschrijving vinden naar ons kantoor.</value>
+  </data>
+  <data name="RouteOn" xml:space="preserve">
+    <value>Voor het online assessment zal je een afzonderlijke mail ontvangen.</value>
+  </data>
+  <data name="WhatToExpect" xml:space="preserve">
+    <value>Wat mag je verwachten?</value>
+  </data>
+  <data name="WhatToExpectSub" xml:space="preserve">
+    <value>&lt;p&gt;Op de dag van je assessment krijg je hier een gedetailleerd overzicht van je dagplanning.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Vergeet daarom zeker je login gegevens niet.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Je dagplanning is chronologisch opgebouwd en bestaat uit sloten waar je individueel mee aan de slag gaat en waar je mogelijks in interactie gaat met een assessor.&lt;/p&gt;
+&lt;p&gt;Indien je assessment plaatsvind in één van onze kantoren dan kan je deze simulaties via een notebook behandelen die we je ter beschikking stellen.&lt;br/&gt;
+Om je alvast een idee te geven hoe dit juist werkt nodigen we je uit om al eens een kijkje te nemen via deze &lt;a href="https://demo-qcandidate.quintessenceconsulting.be/"&gt;LINK&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Let op:&lt;/strong&gt; dit is een voorbeeld en dient enkel om je een idee te geven van de werking van ons platform. De inhoud staat los van de oefeningen die u de dag zelf zal doorlopen.&lt;/p&gt;</value>
+  </data>
+</root>

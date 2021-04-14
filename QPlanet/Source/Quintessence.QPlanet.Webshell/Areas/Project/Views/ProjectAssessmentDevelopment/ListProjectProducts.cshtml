@@ -5,7 +5,7 @@
     <thead>
         <tr>
             <th style="width: 30%">Name</th>
-            <th style="width: 47%">Description</th>
+            <th style="width: 47%">Invoice remarks</th>
             <th style="width: 10%">Invoice amount</th>
             <th style="width: 10%">Invoice status</th>
             <th style="width: 9%">Deadline invoicing</th>
@@ -18,7 +18,7 @@
         {
             <tr>
                 <td>@projectProduct.ProductTypeName</td>
-                <td>@projectProduct.Description</td>
+                <td>@projectProduct.InvoiceRemarks</td>
                 <td>@projectProduct.InvoiceAmount.GetValueOrDefault().ToString("C")</td>
                 <td>@EnumMemberNameAttribute.GetName((InvoiceStatusType)projectProduct.InvoiceStatusCode)</td>
                 <td>

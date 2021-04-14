@@ -91,10 +91,10 @@
     <Content Include="SecurityQueryService.svc" />
     <Content Include="CustomerRelationshipManagementQueryService.svc" />
     <Content Include="DictionaryManagementQueryService.svc" />
-    <Content Include="Web.config">
+    <None Include="Web.config">
       <TransformOnBuild>true</TransformOnBuild>
       <SubType>Designer</SubType>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

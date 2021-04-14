@@ -48,5 +48,8 @@ namespace Quintessence.QService.QPlanetService.Contracts.DataContracts.ProjectMa
 
         [DataMember]
         public bool OnlineAssessment { get; set; }
+
+        [DataMember]
+        public bool Consent { get; set; }
     }
 }

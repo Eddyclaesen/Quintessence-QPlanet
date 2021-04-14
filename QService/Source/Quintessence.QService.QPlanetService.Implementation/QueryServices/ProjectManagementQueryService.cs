@@ -346,6 +346,26 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
             });
         }
 
+        public List<ProjectCandidateView> ListQCandidateProjectCandidates(ListUserProjectCandidatesRequest request)
+        {
+            LogTrace("List project candidates for QCandidate.");
+
+            return Execute(() =>
+            {
+                var securityContext = Container.Resolve<SecurityContext>();
+
+                var securityQueryService = Container.Resolve<ISecurityQueryService>();
+                var crmQueryService = Container.Resolve<ICustomerRelationshipManagementQueryService>();
+
+                var repository = Container.Resolve<IProjectManagementQueryRepository>();
+
+                var userProjectCandidates = repository.ListQCandidateProjectCandidates(request.StartDate, request.EndDate);
+
+                return userProjectCandidates
+                    .ToList();
+            });
+        }
+
         public ListProjectCandidateSimulationScoresResponse ListProjectCandidateSimulationScores(Guid projectCandidateId)
         {
             LogTrace("Retrieve project candidate simulation scores project.");

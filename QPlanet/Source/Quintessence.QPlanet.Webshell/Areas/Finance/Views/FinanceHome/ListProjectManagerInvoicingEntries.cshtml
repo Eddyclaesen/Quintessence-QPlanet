@@ -8,7 +8,9 @@
     var other = Model.InvoicingEntries.Where(item => item.InvoiceStatusCode == 10
                                                         || item.InvoiceStatusCode == 20
                                                         || item.InvoiceStatusCode == 30
+                                                        || item.InvoiceStatusCode == 40
                                                         || item.InvoiceStatusCode == 50
+                                                        || item.InvoiceStatusCode == 60
                                                         || item.InvoiceStatusCode == 95
                                                         || item.InvoiceStatusCode == 80).Sum(item => item.InvoiceAmount);
 

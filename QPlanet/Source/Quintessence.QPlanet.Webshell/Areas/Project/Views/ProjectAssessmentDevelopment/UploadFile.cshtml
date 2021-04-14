@@ -12,7 +12,7 @@
         {
             <tr>
                 <td>
-                    @Html.ActionLink(file.Name, "Download", new { FileName = file.Name, FullPath = file.FullName.ToString() })
+                    @Html.ActionLink(Server.UrlDecode(file.Name), "Download", new { FileName = file.Name, FullPath = file.FullName.ToString() })
                 </td>
             </tr>
         }

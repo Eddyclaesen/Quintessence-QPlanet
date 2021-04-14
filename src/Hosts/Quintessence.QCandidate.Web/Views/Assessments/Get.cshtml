@@ -7,9 +7,34 @@
 @section Scripts
 {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+
+    <style>
+        .alertify .ajs-footer .ajs-buttons.ajs-primary .ajs-button {
+            border-radius: 5px;
+        }
+    </style>    
+
+    <script type="text/javascript">
+        RefreshAllAssessments();
+
+        function RefreshAllAssessments() {
+            $.ajax({
+                url: '@Url.Action("GetAllAssessments")',
+                cache: false,
+                success: function (html) {
+                    $('#allassessments').html(html);
+                }
+            });
+        }
+    </script>
 }
 
 @{
@@ -65,14 +90,15 @@
 
                 var today = new Date();
                 var now = today.getHours() + ':' + today.getMinutes();
-                
+
                 for (var i = 0; i < items.length; i++) {
                     if (items[i].title.indexOf("voorbereiding") >= 1 || items[i].title.indexOf("préparation") >= 1 || items[i].title.indexOf("preparation") >= 1) {
                         var l = items[i].start.length;
                         var st = items[i].start.substr(l - 8, 5);
                         if (st === now) {
                             $('#labelPrep').text(items[i].title);
-                            $("#modalPrepWarning").modal();
+                            //$("#modalPrepWarning").modal();
+                            alertify.alert('@Localizer["SimulationStart"]').set({ title: "" });
                         }
                     }
                 }
@@ -82,14 +108,19 @@
     else
     {
 
-        <div style="height:1075px; width:100%; clear:both;">
+        <div class="container">
             <div class="row">
                 <div class="col-md-12 center" style="margin-top: 10%;">
-                    <h5>@Localizer["WelcomeQCandidate"]</h5>
-                    <p>@Localizer["WelcomeMessage"]</p>
+                    @Localizer["WelcomeQCandidate"]
+                    @Localizer["WelcomeMessage"]
                 </div>
             </div>
+
+            <div id="allassessments"></div>
         </div>
 
+        <div style="margin-top: 135px;">
+            <img src="https://qcandidate-demo.quintessenceconsulting.be/img/digitalhr.jpg" style="width: 100%;" />
+        </div>
     }
 }

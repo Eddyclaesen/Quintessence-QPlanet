@@ -83,6 +83,10 @@
                     <div>@Html.DisplayNameFor(m => m.OnlineAssessment):</div>
                     <div>@Html.CheckBoxFor(m => m.OnlineAssessment)</div>
                 </div>
+                <div class="row">
+                    <div>@Html.DisplayNameFor(m => m.Consent):</div>
+                    <div>@Html.CheckBoxFor(m => m.Consent, new { @disabled = "disabled" })</div>
+                </div>
                 <!--@if (Model.MainProjectCategoryDetail is ISimulationSelectionModel)
                 {
                     <div class="row">

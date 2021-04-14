@@ -6,6 +6,7 @@ using Quintessence.QPlanet.Infrastructure.Logging;
 using Quintessence.QPlanet.Webshell.Infrastructure;
 using Quintessence.QPlanet.Webshell.Infrastructure.ActionFilters;
 using Quintessence.QPlanet.Webshell.Infrastructure.Controllers;
+using Quintessence.QService.QPlanetService.Contracts.DataContracts.InfrastructureManagement;
 using Quintessence.QService.QPlanetService.Contracts.DataContracts.ProjectManagement;
 using Quintessence.QService.QPlanetService.Contracts.ServiceContracts.QueryServiceContracts;
 using Quintessence.QService.QueryModel.Dom;
@@ -47,6 +48,8 @@ namespace Quintessence.QPlanet.Webshell.Controllers
 
             bool alreadyExistsToday = assessorsToday.Any(x => x.AssessorId == token.UserId);
             bool alreadyExistsTomorrow = assessorsTomorrow.Any(x => x.AssessorId == token.UserId);
+
+            Session["RoleId"] = token.User.RoleId;
 
             if (alreadyExistsToday)
             {
@@ -105,6 +108,46 @@ namespace Quintessence.QPlanet.Webshell.Controllers
                 {
                     LogManager.LogError(exception);
                     return HandleError(exception, isPartial: true);
+                }
+            }
+        }
+
+        public ActionResult QCandidateProjectCandidates()
+        {
+            using (DurationLog.Create())
+            {
+                try
+                {
+                    var request = new ListUserProjectCandidatesRequest
+                    {
+                        StartDate = DateTime.Now.Date,
+                        EndDate = DateTime.Now.Date.AddDays(100)
+                    };
+                    var userProjectCandidates = this.InvokeService<IProjectManagementQueryService, List<ProjectCandidateView>>(service => service.ListQCandidateProjectCandidates(request));
+
+                    return PartialView(userProjectCandidates);
+                }
+                catch (Exception exception)
+                {
+                    LogManager.LogError(exception);
+                    return HandleError(exception, isPartial: true);
+                }
+            }
+        }
+
+        public ActionResult SendCandidateInvitationMail(Guid id, int languageId)
+        {
+            using (DurationLog.Create())
+            {
+                try
+                {
+                    var response = this.InvokeService<IInfrastructureQueryService, CreateProjectCandidateInvitationMailResponse>(service => service.CreateProjectCandidateInvitationMail(id));
+                    return Json((new { to = response.To, subject = response.Subject, body = response.Body, bcc = response.Bcc }), JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception exception)
+                {
+                    LogManager.LogError(exception);
+                    return HandleStatusCodeError(exception);
                 }
             }
         }

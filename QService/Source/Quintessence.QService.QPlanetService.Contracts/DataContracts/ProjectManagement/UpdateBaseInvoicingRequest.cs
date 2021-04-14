@@ -16,5 +16,8 @@ namespace Quintessence.QService.QPlanetService.Contracts.DataContracts.ProjectMa
 
         [DataMember]
         public decimal InvoiceAmount { get; set; }
+
+        [DataMember]
+        public string InvoiceRemarks { get; set; }
     }
 }

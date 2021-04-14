@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SimulationStart" xml:space="preserve">
-    <value>Je kan aan het volgende onderdeel starten:</value>
+    <value>Je kan aan de voorbereiding starten van het volgende onderdeel.</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Nog even geduld, op de dag van het Center zal u hier alle relevante informatie terugvinden.</value>
+    <value>&lt;p&gt;Op de dag van het assessment center zal je hier alle relevante informatie terugvinden voor het specifieke assessment.&lt;/p&gt;</value>
   </data>
   <data name="WelcomeQCandidate" xml:space="preserve">
-    <value>Welkom bij QCandidate!</value>
+    <value>&lt;h3&gt;Welkom bij QCandidate!&lt;/h3&gt;&lt;br&gt;&lt;p&gt;Dit is jouw &lt;strong&gt;persoonlijke&lt;/strong&gt; Q-pagina.&lt;/p&gt;</value>
   </data>
 </root>

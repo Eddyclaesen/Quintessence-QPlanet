@@ -10,7 +10,7 @@
     <nav class="area">
         <ul>
             <li class="current"><a href="javascript:void(0);">@Model.Name</a></li>
-</ul>
+        </ul>
     </nav>
 }
 @section DetailActionNavigation
@@ -57,7 +57,7 @@
                     case "CU":
                         <li>@Html.ActionLink(Model.ProjectTypeCategoryName, "EditProjectCategoryCuDetail", "ProjectAssessmentDevelopment", new RouteValueDictionary(new { area = "Project", id = Model.Id }), null)</li>
                         break;
-                        
+
                     case "CO":
                         <li>@Html.ActionLink(Model.ProjectTypeCategoryName, "EditProjectCategoryCoDetail", "ProjectAssessmentDevelopment", new RouteValueDictionary(new { area = "Project", id = Model.Id }), null)</li>
                         break;
@@ -69,18 +69,21 @@
             }
             @if (Model.HasSubProjectCategoryDetails)
             {
-                <li>@Html.ActionLink("Subcategories", "SubProjectCategoryDetails", "ProjectAssessmentDevelopment", new { area = "Project", id = Model.Id }, null)
-                </li>
-            }
+                <li>
+                    @Html.ActionLink("Subcategories", "SubProjectCategoryDetails", "ProjectAssessmentDevelopment", new { area = "Project", id = Model.Id }, null)
+            </li>
+        }
             @if (Model.ProjectTypeCategoryId.HasValue)
             {
-                <li>@Html.ActionLink("Candidates", "EditProjectCandidates", "ProjectAssessmentDevelopment", new RouteValueDictionary(new { area = "Project", id = Model.Id }), null)
-                </li>
-            }
-            <li>@Html.ActionLink("Invoicing", "InvoiceOverview", "ProjectAssessmentDevelopment", new { area = "Project", id = Model.Id }, null)
+                <li>
+                    @Html.ActionLink("Candidates", "EditProjectCandidates", "ProjectAssessmentDevelopment", new RouteValueDictionary(new { area = "Project", id = Model.Id }), null)
             </li>
-        </ul>
-    </nav>
+        }
+            <li>
+                @Html.ActionLink("Invoicing", "InvoiceOverview", "ProjectAssessmentDevelopment", new { area = "Project", id = Model.Id }, null)
+        </li>
+    </ul>
+</nav>
 }
 @section LeftNavigation
 {
@@ -99,7 +102,8 @@
         }
         else
         {
-            <li><a href="#ProjectFixedPrice"></a></li> 
+            <li><a href="#ProjectFixedPrice"></a></li>
+
         }
 
     </ul>
@@ -110,6 +114,8 @@
     <script src="@Url.Content("~/Scripts/persist.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/jquery.cookie.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.filedrop.js")" type="text/javascript"></script>
+
     <script type="text/javascript">
         $(function () {
             $('#ChangeProjectManagerNameLink').hide();
@@ -169,7 +175,7 @@
 
             @if (Model.PricingModelType == PricingModelType.FixedPrice)
             {
-                @:RefreshUnitPrices();                
+                @:RefreshUnitPrices();
             }
             else
             {
@@ -449,7 +455,7 @@
                     }
                 });
             });
-            
+
             $(this).on('click', 'a[data-function=SaveCrmProjectButton]', null, function (event) {
                 event.preventDefault();
 
@@ -1067,13 +1073,40 @@
             });
         }
     </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#dropArea').filedrop({
+                url: '@Url.Action("UploadFile", "ProjectAssessmentDevelopment", new { id = Model.Id })',
+                paramname: 'files',
+                maxfiles: 5,
+                maxfilesize: 5, // in MB
+                dragOver: function () {
+                    $('#dropArea').addClass('active-drop');
+                },
+                dragLeave: function () {
+                    $('#dropArea').removeClass('active-drop');
+                },
+                drop: function () {
+                    $('#dropArea').removeClass('active-drop');
+                },
+                afterAll: function (e) {
+                    $('#dropArea').html('file(s) uploaded successfully');
+                    RefreshDocumentTable();
+                },
+                uploadFinished: function (i, file, response, time) {
+                    $('#uploadList').append('<li class="list-group-item">'+file.name+'</li>')
+                }
+            })
+        })
+    </script>
 }
 <fieldset id="ProjectInformation">
     <legend>Project information</legend>
     @using (Html.BeginForm("Edit", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "ProjectForm" }))
     {
         <h4>General information</h4>
-            
+
         @Html.EditorFor(m => m, "BaseEntityViewTemplate")
 
         <div class="container_12 nomargin">
@@ -1106,207 +1139,222 @@
                 <div class="label">@Html.LabelFor(m => m.ProjectTypeName)</div>
             </div>
             <div class="grid_7 table">
-                <div class="value">@Html.DisplayFor(m => m.ProjectTypeName)
-                </div>
-            </div>
-            <div class="clear"></div>
-
-            <div class="grid_5 table">
-                <div class="label">@Html.LabelFor(m => m.PricingModelId)</div>
-            </div>
-            <div class="grid_7 table">
-                <div class="value">@Html.DropDownListFor(m => m.PricingModelId, Model.CreatePricingModelSelectListItems(Model.PricingModelId))
-                </div>
-            </div>
-            <div class="clear"></div>
-
-            <div class="grid_5 table">
-                <div class="label">@Html.LabelFor(m => m.StatusCode)</div>
-            </div>
-            <div class="grid_7 table">
-                <div class="value">@Html.DropDownListFor(m => m.StatusCode, Model.ProjectStatusses)
-                </div>
-            </div>
-            <div class="clear"></div>
-
-            <div class="grid_5 table">
-                <div class="label">@Html.LabelFor(m => m.ContactFullName)</div>
-            </div>
-            <div class="grid_7 table">
-                <div class="value">@Html.DisplayFor(m => m.ContactFullName)</div>
-            </div>
-            <div class="clear"></div>
-
-            <div class="grid_5 table">
-                <div class="label">@Html.LabelFor(m => m.DictionaryId)</div>
-            </div>
-            <div class="grid_7 table">
-                <div class="value">@Html.DropDownListFor(m => m.DictionaryId, Model.Dictionaries)
-                </div>
-            </div>
-            <div class="clear"></div>
-
-            <div class="grid_5 table">
-                <div class="label">@Html.LabelFor(m => m.ProjectManagerFullName)</div>
-            </div>
-            <div class="grid_7 table">
-                <div class="value">@Html.HiddenFor(m => m.ProjectManagerId)
-                    @Html.TextBoxFor(m => m.ProjectManagerFullName)
-                    <a href="javascript:void(0);" id="ChangeProjectManagerNameLink" title="Click on this link to change the Project Manager">
-                    </a>
-                </div>
-            </div>
-            <div class="clear"></div>
-
-            <div class="prefix_5 grid_7">@Html.ValidationMessageFor(m => m.ProjectManagerFullName)
-            </div>
-            <div class="clear"></div>
-
-            <div class="grid_5 table">
-                <div class="label">@Html.LabelFor(m => m.CoProjectManagerFullName)</div>
-            </div>
-            <div class="grid_7 table">
-                <div class="value">@Html.HiddenFor(m => m.CoProjectManagerId)
-                    @Html.TextBoxFor(m => m.CoProjectManagerFullName)
-                    <a href="javascript:void(0);" id="ChangeCoProjectManagerNameLink" title="Click on this link to change the Co-Project Manager">
-                    </a>
-                </div>
-            </div>
-            <div class="clear"></div>
-
-            <div class="prefix_5 grid_7">@Html.ValidationMessageFor(m => m.CoProjectManagerFullName)
-            </div>
-            <div class="clear"></div>
-
-            <div class="grid_5 table">
-                <div class="label">@Html.LabelFor(m => m.CustomerAssistantFullName)</div>
-            </div>
-            <div class="grid_7 table">
-                <div class="value">@Html.HiddenFor(m => m.CustomerAssistantId)
-                    @Html.TextBoxFor(m => m.CustomerAssistantFullName)
-                    <a href="javascript:void(0);" id="ChangeCustomerAssistantNameLink" title="Click on this link to change the Customer Assistant">
-                    </a>
-                </div>
-            </div>
-            <div class="clear"></div>
-            <div class="prefix_5 grid_7">@Html.ValidationMessageFor(m => m.CustomerAssistantFullName)
-            </div>
-            <div class="clear"></div>
-
-            <div class="grid_5 table">
-                <div class="label">@Html.LabelFor(m => m.FunctionTitle)</div>
-            </div>
-            <div class="grid_7 table">
-                <div class="value">@Html.TextBoxFor(m => m.FunctionTitle)</div>
-            </div>
-            <div class="clear"></div>
-
-            <div class="grid_5 table">
-                <div class="label">@Html.LabelFor(m => m.FunctionTitleEN)</div>
-            </div>
-            <div class="grid_7 table">
-                <div class="value">@Html.TextBoxFor(m => m.FunctionTitleEN)</div>
-            </div>
-            <div class="clear"></div>
-
-            <div class="grid_5 table">
-                <div class="label">@Html.LabelFor(m => m.FunctionTitleFR)</div>
-            </div>
-            <div class="grid_7 table">
-                <div class="value">@Html.TextBoxFor(m => m.FunctionTitleFR)</div>
-            </div>
-            <div class="clear"></div>
-
-            <div class="grid_5 table">
-                <div class="label">@Html.LabelFor(m => m.FunctionInformation)</div>
-            </div>
-            <div class="grid_7 table">
-                <div class="value">@Html.TextAreaFor(m => m.FunctionInformation)
-                </div>
-            </div>
-            <div class="clear"></div>
-
-            <div class="grid_5 table">
-                <div class="label">@Html.LabelFor(m => m.DepartmentInformation)
+                <div class="value">
+                    @Html.DisplayFor(m => m.ProjectTypeName)
             </div>
         </div>
-            <div class="grid_7 table">
-                <div class="value">@Html.TextAreaFor(m => m.DepartmentInformation)
-                </div>
-            </div>
-            <div class="clear"></div>
+        <div class="clear"></div>
 
-            <div class="grid_5 table">
-                <div class="label">@Html.LabelFor(m => m.Remarks)</div>
-            </div>
-            <div class="grid_7 table">
-                <div class="value">@Html.TextAreaFor(m => m.Remarks)
-                </div>
-            </div>
-            <div class="clear"></div>
-
-            @if (Model.ProjectManagerId.ToString() == Session["UserId"].ToString()
-                    || Model.CoProjectManagerId.ToString() == Session["UserId"].ToString()
-                    || Model.CustomerAssistantId.ToString() == Session["UserId"].ToString())
-            {
-                <div class="grid_5 table">
-                    <div class="label">@Html.LabelFor(m => m.Confidential)</div>
-                </div>
-
-                <div class="grid_7 table">
-                    <div class="value">@Html.CheckBoxFor(m => m.Confidential)</div>
-                </div>
-
-                <div class="clear"></div>
-            }            
-
-            <div style="text-align: right">
-                <a href="javascript:void(0)" data-name="SubmitFormButtonLink" class="button">Save</a>
-            </div>
-
-            <h4>Categories</h4>
-
-            <div class="grid_5 table">
-                <div class="label">@Html.LabelFor(m => m.ProjectTypeCategoryId)</div>
-            </div>
-            <div class="grid_7 table">
-                <div class="value">@Html.DropDownListFor(m => m.ProjectTypeCategoryId, Model.AvailableMainProjectCategories)
-                </div>
-            </div>
-            <div class="clear"></div>
-
-            <div class="grid_5 table">
-                <div class="label">Sub categories</div>
-            </div>
-            @if (Model.AvailableProjectSubCategories.Count == 0)
-            {
-                <div class="clear"></div>
-            }
-            else
-            {
-                for (var i = 0; i < Model.AvailableProjectSubCategories.Count; i++)
-                {
-                    if (i == 0)
-                    {
-                <div class="grid_7">
-                    @Html.EditorFor(m => m.AvailableProjectSubCategories[i])
-                </div>   
-                    }
-                    else
-                    {
-                <div class="prefix_5 grid_7">
-                    @Html.EditorFor(m => m.AvailableProjectSubCategories[i])
-                </div>                        
-                    }
-                }
-                <div class="clear"></div>
-            }
-
-            <div style="text-align: right">
-                <a href="javascript:void(0)" data-name="SubmitFormButtonLink" class="button">Save</a>
-            </div>
+        <div class="grid_5 table">
+            <div class="label">@Html.LabelFor(m => m.PricingModelId)</div>
         </div>
+        <div class="grid_7 table">
+            <div class="value">
+                @Html.DropDownListFor(m => m.PricingModelId, Model.CreatePricingModelSelectListItems(Model.PricingModelId))
+        </div>
+    </div>
+    <div class="clear"></div>
+
+    <div class="grid_5 table">
+        <div class="label">@Html.LabelFor(m => m.StatusCode)</div>
+    </div>
+    <div class="grid_7 table">
+        <div class="value">
+            @Html.DropDownListFor(m => m.StatusCode, Model.ProjectStatusses)
+    </div>
+</div>
+<div class="clear"></div>
+
+<div class="grid_5 table">
+    <div class="label">@Html.LabelFor(m => m.ContactFullName)</div>
+</div>
+<div class="grid_7 table">
+    <div class="value">@Html.DisplayFor(m => m.ContactFullName)</div>
+</div>
+<div class="clear"></div>
+
+<div class="grid_5 table">
+    <div class="label">@Html.LabelFor(m => m.DictionaryId)</div>
+</div>
+<div class="grid_7 table">
+    <div class="value">
+        @Html.DropDownListFor(m => m.DictionaryId, Model.Dictionaries)
+</div>
+</div>
+<div class="clear"></div>
+
+<div class="grid_5 table">
+    <div class="label">@Html.LabelFor(m => m.ProjectManagerFullName)</div>
+</div>
+<div class="grid_7 table">
+    <div class="value">
+        @Html.HiddenFor(m => m.ProjectManagerId)
+    @Html.TextBoxFor(m => m.ProjectManagerFullName)
+    <a href="javascript:void(0);" id="ChangeProjectManagerNameLink" title="Click on this link to change the Project Manager">
+    </a>
+</div>
+</div>
+<div class="clear"></div>
+
+<div class="prefix_5 grid_7">
+    @Html.ValidationMessageFor(m => m.ProjectManagerFullName)
+</div>
+<div class="clear"></div>
+
+<div class="grid_5 table">
+    <div class="label">@Html.LabelFor(m => m.CoProjectManagerFullName)</div>
+</div>
+<div class="grid_7 table">
+    <div class="value">
+        @Html.HiddenFor(m => m.CoProjectManagerId)
+    @Html.TextBoxFor(m => m.CoProjectManagerFullName)
+    <a href="javascript:void(0);" id="ChangeCoProjectManagerNameLink" title="Click on this link to change the Co-Project Manager">
+    </a>
+</div>
+</div>
+<div class="clear"></div>
+
+<div class="prefix_5 grid_7">
+    @Html.ValidationMessageFor(m => m.CoProjectManagerFullName)
+</div>
+<div class="clear"></div>
+
+<div class="grid_5 table">
+    <div class="label">@Html.LabelFor(m => m.CustomerAssistantFullName)</div>
+</div>
+<div class="grid_7 table">
+    <div class="value">
+        @Html.HiddenFor(m => m.CustomerAssistantId)
+    @Html.TextBoxFor(m => m.CustomerAssistantFullName)
+    <a href="javascript:void(0);" id="ChangeCustomerAssistantNameLink" title="Click on this link to change the Customer Assistant">
+    </a>
+</div>
+</div>
+<div class="clear"></div>
+<div class="prefix_5 grid_7">
+    @Html.ValidationMessageFor(m => m.CustomerAssistantFullName)
+</div>
+<div class="clear"></div>
+
+<div class="grid_5 table">
+    <div class="label">@Html.LabelFor(m => m.FunctionTitle)</div>
+</div>
+<div class="grid_7 table">
+    <div class="value">@Html.TextBoxFor(m => m.FunctionTitle)</div>
+</div>
+<div class="clear"></div>
+
+<div class="grid_5 table">
+    <div class="label">@Html.LabelFor(m => m.FunctionTitleEN)</div>
+</div>
+<div class="grid_7 table">
+    <div class="value">@Html.TextBoxFor(m => m.FunctionTitleEN)</div>
+</div>
+<div class="clear"></div>
+
+<div class="grid_5 table">
+    <div class="label">@Html.LabelFor(m => m.FunctionTitleFR)</div>
+</div>
+<div class="grid_7 table">
+    <div class="value">@Html.TextBoxFor(m => m.FunctionTitleFR)</div>
+</div>
+<div class="clear"></div>
+
+<div class="grid_5 table">
+    <div class="label">@Html.LabelFor(m => m.FunctionInformation)</div>
+</div>
+<div class="grid_7 table">
+    <div class="value">
+        @Html.TextAreaFor(m => m.FunctionInformation)
+</div>
+</div>
+<div class="clear"></div>
+
+<div class="grid_5 table">
+    <div class="label">
+        @Html.LabelFor(m => m.DepartmentInformation)
+</div>
+</div>
+<div class="grid_7 table">
+    <div class="value">
+        @Html.TextAreaFor(m => m.DepartmentInformation)
+</div>
+</div>
+<div class="clear"></div>
+
+<div class="grid_5 table">
+    <div class="label">@Html.LabelFor(m => m.Remarks)</div>
+</div>
+<div class="grid_7 table">
+    <div class="value">
+        @Html.TextAreaFor(m => m.Remarks)
+</div>
+</div>
+<div class="clear"></div>
+
+@if (Model.ProjectManagerId.ToString() == Session["UserId"].ToString()
+        || Model.CoProjectManagerId.ToString() == Session["UserId"].ToString()
+        || Model.CustomerAssistantId.ToString() == Session["UserId"].ToString())
+{
+    <div class="grid_5 table">
+        <div class="label">@Html.LabelFor(m => m.Confidential)</div>
+    </div>
+
+    <div class="grid_7 table">
+        <div class="value">@Html.CheckBoxFor(m => m.Confidential)</div>
+    </div>
+
+    <div class="clear"></div>
+}
+
+<div style="text-align: right">
+    <a href="javascript:void(0)" data-name="SubmitFormButtonLink" class="button">Save</a>
+</div>
+
+<h4>Categories</h4>
+
+<div class="grid_5 table">
+    <div class="label">@Html.LabelFor(m => m.ProjectTypeCategoryId)</div>
+</div>
+<div class="grid_7 table">
+    <div class="value">
+        @Html.DropDownListFor(m => m.ProjectTypeCategoryId, Model.AvailableMainProjectCategories)
+</div>
+</div>
+<div class="clear"></div>
+
+<div class="grid_5 table">
+    <div class="label">Sub categories</div>
+</div>
+@if (Model.AvailableProjectSubCategories.Count == 0)
+{
+    <div class="clear"></div>
+}
+else
+{
+    for (var i = 0; i < Model.AvailableProjectSubCategories.Count; i++)
+    {
+        if (i == 0)
+        {
+            <div class="grid_7">
+                @Html.EditorFor(m => m.AvailableProjectSubCategories[i])
+            </div>
+        }
+        else
+        {
+            <div class="prefix_5 grid_7">
+                @Html.EditorFor(m => m.AvailableProjectSubCategories[i])
+            </div>
+        }
     }
+    <div class="clear"></div>
+}
+
+<div style="text-align: right">
+    <a href="javascript:void(0)" data-name="SubmitFormButtonLink" class="button">Save</a>
+</div>
+</div>
+}
 </fieldset>
 
 <fieldset id="Products">
@@ -1336,23 +1384,25 @@
     {
         @Html.EditorFor(m => m, "BaseEntityViewTemplate")
         @Html.EditorFor(m => m.ContactDetail, "BaseEntityViewTemplate")
-            
+
         <div class="container_12 nomargin">
             <div class="grid_5 table">
                 <div class="label">@Html.LabelFor(m => m.ContactDetail.Remarks)</div>
             </div>
             <div class="grid_7 table">
-                <div class="value">@Html.TextAreaFor(m => m.ContactDetail.Remarks)
-                </div>
+                <div class="value">
+                    @Html.TextAreaFor(m => m.ContactDetail.Remarks)
             </div>
-            <div class="clear"></div>
         </div>
-    }
+        <div class="clear"></div>
+    </div>
+}
     <br />
     <br />
     <div style="text-align: right">
         <a href="javascript:void(0);" id="SubmitContactDetailFormButtonLink" class="button">
-            Save</a>
+            Save
+        </a>
     </div>
     <br />
     <h4>Cultural fit</h4>
@@ -1362,7 +1412,8 @@
     <br />
     <div class="right-text">
         <a href="javascript:void(0);" class="button" id="CreateCulturalFitContactRequestButton" data-contact-id="@Model.ContactId" data-project-id="@Model.Id">
-            Create</a>
+            Create
+        </a>
     </div>
     <div id="CreateCulturalFitContactRequestDialog"></div>
     <div id="CulturalFitInviteDialog">
@@ -1370,11 +1421,11 @@
         <br />
         <div class="center-text">
             <a href="javascript:void(0);" data-function="CreateCulturalFitInviteSubmitButton"
-                data-id="" data-language-id="1" title="Dutch">NL</a>
+               data-id="" data-language-id="1" title="Dutch">NL</a>
             <a href="javascript:void(0);" data-function="CreateCulturalFitInviteSubmitButton"
-                data-id="" data-language-id="2" title="French fries">FR</a>
+               data-id="" data-language-id="2" title="French fries">FR</a>
             <a href="javascript:void(0);" data-function="CreateCulturalFitInviteSubmitButton"
-                data-id="" data-language-id="3" title="English">EN</a>
+               data-id="" data-language-id="3" title="English">EN</a>
         </div>
     </div>
     <div id="CulturalFitReportDialog">
@@ -1382,11 +1433,11 @@
         <br />
         <div class="center-text">
             <a href="javascript:void(0);" data-function="CreateCulturalFitReportSubmitButton"
-                data-language-id="1" title="Dutch">NL</a>
+               data-language-id="1" title="Dutch">NL</a>
             <a href="javascript:void(0);" data-function="CreateCulturalFitReportSubmitButton"
-                data-language-id="2" title="French fries">FR</a>
+               data-language-id="2" title="French fries">FR</a>
             <a href="javascript:void(0);" data-function="CreateCulturalFitReportSubmitButton"
-                data-language-id="3" title="English">EN</a>
+               data-language-id="3" title="English">EN</a>
         </div>
     </div>
     <div id="EditCulturalFitContactRequestDialog"></div>
@@ -1414,20 +1465,14 @@
 <fieldset id="UploadedDocuments">
     <legend>Documents</legend>
 
-    @using (Html.BeginForm("UploadFile", "ProjectAssessmentDevelopment", new { id = Model.Id }, FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <div id="DocumentTablePlaceholder"></div>
+    <div id="DocumentTablePlaceholder"></div>
 
-        <div class="row">
-            <div id="multiple">
-                <input type="file" class="multiple" name="files" multiple />
-            </div>
-        </div>
-
-        <div class="row">
-            <button class="button">Upload</button>
-        </div>
-    }
+    <div id="dropArea">
+        Drop your files here
+    </div>
+    <p>Uploaded files</p>
+    <ul class="list-group" id="uploadList">
+    </ul>
 </fieldset>
 
 <fieldset id="Reporting">

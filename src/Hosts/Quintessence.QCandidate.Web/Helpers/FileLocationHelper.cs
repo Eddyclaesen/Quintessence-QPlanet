@@ -17,5 +17,17 @@ namespace Quintessence.QCandidate.Helpers
 
             return Path.Combine(pdfFolder, language, filename);
         }
+
+        public static string GetNeoFileLocation(string pdfFolder, Guid candidateId)
+        {
+            if (string.IsNullOrWhiteSpace(pdfFolder))
+            {
+                return null;
+            }
+
+            var filename = $"{candidateId}.pdf";
+
+            return Path.Combine(pdfFolder, filename);
+        }
     }
 }

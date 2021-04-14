@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SimulationStart" xml:space="preserve">
-    <value>You can start on the next section:</value>
+    <value>You can start on the preparation of the exercise.</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Thank you for your patience, you may find all relevant information here the day your Center is scheduled.</value>
+    <value>&lt;p&gt;You may find all relevant information here the day your Center is scheduled.&lt;/p&gt;</value>
   </data>
   <data name="WelcomeQCandidate" xml:space="preserve">
-    <value>Welcome at QCandidate!</value>
+    <value>&lt;h3&gt;Welcome at QCandidate!&lt;/h3&gt;&lt;br&gt;&lt;p&gt;This is your personal page.&lt;/p&gt;</value>
   </data>
 </root>

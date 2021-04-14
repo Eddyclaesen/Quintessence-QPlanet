@@ -22,6 +22,8 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectAssessmentDe
 
         public bool NoInvoice { get; set; }
 
+        public string InvoiceRemarks { get; set; }
+
         public IEnumerable<SelectListItem> CreateProductTypeSelectListItems()
         {
             return ProductTypes.Select(pt => new SelectListItem { Selected = pt.Id == ProductTypeId, Value = pt.Id.ToString(), Text = pt.Name });

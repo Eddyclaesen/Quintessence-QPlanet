@@ -5,7 +5,7 @@
 <td>
     @Model.ProductName
 </td>
-
+<td></td>
 <td>
     @Html.TextBoxFor(m => m.InvoiceAmount)
 </td>
@@ -15,14 +15,15 @@
         switch (invoiceStatusType)
         {
             case InvoiceStatusType.Invoiced:
-                @Html.DropDownListFor(m => m.InvoiceStatusCode, Model.CreateInvoiceStatusSelectListItems(Model.InvoiceStatusCode, invoiceStatusType), new{data_control_id="InvoiceStatusType"})        
-                break;
-                
-            default:
                 @EnumMemberNameAttribute.GetName(invoiceStatusType)
+                break;
+
+            default:
+                @Html.DropDownListFor(m => m.InvoiceStatusCode, Model.CreateInvoiceStatusSelectListItems(Model.InvoiceStatusCode, invoiceStatusType), new { data_control_id = "InvoiceStatusType" })
                 break;
         }
     }
 </td>
-
-
+<td>
+    @Html.TextBoxFor(m => m.InvoiceRemarks)
+</td>

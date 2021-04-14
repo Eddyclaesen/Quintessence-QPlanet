@@ -1,0 +1,33 @@
+﻿@model List<Quintessence.QService.QueryModel.Prm.ProjectCandidateView>
+
+<table id="UserProjectCandidatesDataTable" class="dataTable">
+    <thead>
+        <tr>
+            <th class="left-text">Project</th>
+            <th class="left-text">Candidate</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model == null || Model.Count < 1)
+        {
+            <tr>
+                <td colspan="7" class="center-text">No candidates to invite found</td>
+            </tr>
+        }
+        else
+        {
+            for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <a href="@Url.Action("Edit", "ProjectGeneral", new { id = @Model[i].Project.Id })" target="@Model[i].Project.Id">@Model[i].Project.Name</a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Candidate", new { id = @Model[i].Candidate.Id, area = "Candidate" })" target="@Model[i].Candidate.Id">@Model[i].Candidate.FullName</a>
+                    </td>
+            </tr>
+            }
+        }
+
+    </tbody>
+</table>

@@ -126,6 +126,9 @@
   <data name="OnlineEvaluation" xml:space="preserve">
     <value>&lt;a href="https://evaluation.quintessence.be/online_nl.aspx" target="_blank"&gt;Evaluatieformulier&lt;/a&gt;</value>
   </data>
+  <data name="OrderForm" xml:space="preserve">
+    <value>&lt;a href="https://evaluation.quintessence.be/lunch_nl.aspx?ID={0}" target="_blank"&gt;Lunch&lt;/a&gt;</value>
+  </data>
   <data name="PdfDocument" xml:space="preserve">
     <value>Document</value>
   </data>

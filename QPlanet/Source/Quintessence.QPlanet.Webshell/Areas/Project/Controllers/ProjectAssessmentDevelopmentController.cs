@@ -158,7 +158,7 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Controllers
                         Directory.CreateDirectory(filePath);
                     }
 
-                    file.SaveAs(Path.Combine(filePath, Path.GetFileName(file.FileName)));
+                    file.SaveAs(Server.UrlDecode(Path.Combine(filePath, Path.GetFileName(file.FileName))));
                 }
             }
 

@@ -1,7 +1,10 @@
-﻿using Kenze.Domain;
+﻿using Dapper;
+using Kenze.Domain;
+using Kenze.Infrastructure.Dapper;
 using MediatR;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Quintessence.QCandidate.Contracts.Responses;
 using Quintessence.QCandidate.Core.Commands;
 using Quintessence.QCandidate.Core.Domain;
@@ -9,6 +12,8 @@ using Quintessence.QCandidate.Core.Queries;
 using Quintessence.QCandidate.Models.Assessments;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,11 +23,15 @@ namespace Quintessence.QCandidate.Controllers
     public class AssessmentsController : Controller
     {
         private readonly IMediator _mediator;
+        private readonly IConfiguration _configuration;
 
-        public AssessmentsController(IMediator mediator)
+        public AssessmentsController(IMediator mediator, IConfiguration config)
         {
             _mediator = mediator;
+            _configuration = config;
         }
+
+        public IConfigurationRoot Configuration { get; }
 
         public async Task<IActionResult> Get()
         {
@@ -49,6 +58,9 @@ namespace Quintessence.QCandidate.Controllers
 
         private async Task<List<ProgramComponent>> MapProgramComponents(AssessmentDto assessment)
         {
+            var candidateIdClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId");
+            var candidateId = new Guid(candidateIdClaim.Value);
+
             var result = new List<ProgramComponent>();
             //var language = HttpContext.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name;
             var language = User.Claims.SingleOrDefault(c => c.Type == "extension_Language").Value.ToLower();
@@ -56,6 +68,8 @@ namespace Quintessence.QCandidate.Controllers
             //DayProgram is null when no day program was found for that day
             if (assessment.DayProgram?.ProgramComponents != null)
             {
+                bool lunch = assessment.DayProgram.ProgramComponents.Any(item => (item.Description ?? item.Name).Contains("Lunch"));
+
                 foreach (var programComponent in assessment.DayProgram.ProgramComponents.OrderBy(pc => pc.Start))
                 {
 
@@ -70,7 +84,17 @@ namespace Quintessence.QCandidate.Controllers
                     if (qCandidateLayout == QCandidateLayout.Pdf)
                     {
                         showDetailsLink = await _mediator.Send(new HasSimulationCombinationPdfByIdAndLanguageQuery(programComponent.SimulationCombinationId.Value, language));
-                    }                  
+                    }              
+                    
+                    if (title.Contains("Debriefing"))
+                    {
+                        showDetailsLink = await _mediator.Send(new HasNeoPdfByCandidateIdQuery(candidateId));
+                    }
+
+                    if (title.Contains("Intro") && lunch)
+                    {
+                        showDetailsLink = true;
+                    }
 
                     var programComponentModel = new ProgramComponent(programComponent.Id, title, location, showDetailsLink, assessors, programComponent.Start, programComponent.End, qCandidateLayout);
                     result.Add(programComponentModel);
@@ -96,6 +120,61 @@ namespace Quintessence.QCandidate.Controllers
             }
 
             return $"{user.FirstName} {user.LastName}".Trim();
+        }
+
+        public async Task<ActionResult> GetAllAssessments()
+        {
+            var candidateIdClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId");
+            var candidateId = new Guid(candidateIdClaim.Value);
+
+            var allAssessments = await _mediator.Send(new GetAllAssessmentsByCandidateIdQuery(candidateId));
+         
+            return PartialView(allAssessments);
+        }
+
+        public async Task<ActionResult> GetProject(Guid projectId)
+        {
+            var candidateIdClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId");
+            var candidateId = new Guid(candidateIdClaim.Value);
+
+            var project = await _mediator.Send(new GetProjectByCandidateIdAndProjectIdQuery(candidateId, projectId));
+
+            return View(project);
+        }
+
+        public async Task<ActionResult> GetSubCategories(Guid projectId)
+        {
+            var candidateIdClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId");
+            var candidateId = new Guid(candidateIdClaim.Value);
+
+            var subCategories = await _mediator.Send(new GetSubCategoriesByCandidateIdAndProjectIdQuery(candidateId, projectId));
+
+            return PartialView(subCategories);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> SaveCheckbox(bool check, Guid projectId)
+        {
+            var candidateIdClaim = User.Claims.SingleOrDefault(c => c.Type == "extension_QPlanet_CandidateId");
+            var candidateId = new Guid(candidateIdClaim.Value);
+
+            var connectionString = _configuration.GetConnectionString("QPlanet");
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                await connection.OpenAsync();
+
+                var consent = new SqlParameter("check", SqlDbType.Bit) { Value = check };
+                var candidateid = new SqlParameter("candidateid", SqlDbType.UniqueIdentifier) { Value = candidateId };
+                var projectid = new SqlParameter("projectid", SqlDbType.UniqueIdentifier) { Value = projectId };
+
+                var parameters = new SqlParameter[] { consent, candidateid, projectid };
+                var command = new StoredProcedureCommandDefinition("[QCandidate].[SetConsentByCandidateIdAndProjectId]", parameters).ToCommandDefinition();
+
+                var result = await connection.ExecuteAsync(command);
+            }
+
+            return Ok();
         }
     }
 }

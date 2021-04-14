@@ -535,6 +535,7 @@
     <Content Include="Scripts\jquery-1.7.2.min.js" />
     <Content Include="Scripts\jquery.complexify.js" />
     <Content Include="Scripts\jquery.dataTables.FixedColumns.js" />
+    <Content Include="Scripts\jquery.filedrop.js" />
     <Content Include="Scripts\jquery.ui.slider.js" />
     <Content Include="Scripts\jquery.ui.touch-punch.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -1459,6 +1460,7 @@
     <Content Include="Views\Home\StickyBlogEntries.cshtml" />
     <Content Include="Views\General\Help.cshtml" />
     <Content Include="Views\Home\UserPreviousProjectCandidates.cshtml" />
+    <Content Include="Views\Home\QCandidateProjectCandidates.cshtml" />
     <None Include="Web.Build.Dev01.config">
       <DependentUpon>Web.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>

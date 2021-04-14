@@ -4,45 +4,54 @@
 @model Quintessence.QCandidate.Models.Assessments.ProgramComponent
 
 
-    <li class="program-component" data-date="@Model.Start.ToString("HH:mm") - @Model.End.ToString("HH:mm")">
-        <h3>@Html.DisplayFor(m => Model.Title)</h3>
-        <p>
-            @Html.DisplayFor(m => Model.Location)
-            @{
-                if (!string.IsNullOrEmpty(Model.Assessors))
-                {
-                    @Html.Raw("- ") @Html.DisplayFor(m => Model.Assessors)
-                }
-
-                if (Model.Title == "Evaluation Form")
-                {
-                    if (TempData["Location"].ToString() == "Online")
-                    {
-                        @Localizer["OnlineEvaluation"]
-                    }
-                    else
-                    {
-                        @Localizer["OfficeEvaluation"]
-                    }
-                }
-
-                if (Model.Title.Contains("Self reflection"))
-                {
-                    @Html.Raw(String.Format(Localizer["SelfReflection"].Value, Model.Id))
-                }
-            }
-        </p>
-
-        @if (Model.ShowDetailsLink)
-        {
-            if (Model.QCandidateLayout == QCandidateLayout.Pdf)
-            { 
-                @Html.ActionLink(Localizer.GetString("PdfDocument"), nameof(Quintessence.QCandidate.Controllers.PdfProgramComponentsController.Details), "PdfProgramComponents", new { Id = Model.Id})
-            }
-            if (Model.QCandidateLayout == QCandidateLayout.Memo)
+<li class="program-component" data-date="@Model.Start.ToString("HH:mm") - @Model.End.ToString("HH:mm")">
+    <h3>@Html.DisplayFor(m => Model.Title)</h3>
+    <p>
+        @Html.DisplayFor(m => Model.Location)
+        @{
+            if (!string.IsNullOrEmpty(Model.Assessors))
             {
-                @Html.ActionLink(Localizer.GetString("Memo"), nameof(Quintessence.QCandidate.Controllers.MemoProgramComponentsController.Details), "MemoProgramComponents", new { id = Model.Id })
+                @Html.Raw("- ") @Html.DisplayFor(m => Model.Assessors)
             }
-        }
 
-    </li>
+            if (Model.Title == "Evaluation Form")
+            {
+                if (TempData["Location"].ToString() == "Online")
+                {
+                    @Localizer["OnlineEvaluation"]
+                }
+                else
+                {
+                    @Localizer["OfficeEvaluation"]
+                }
+            }
+
+            if (Model.Title.Contains("Self reflection"))
+            {
+                @Html.Raw(String.Format(Localizer["SelfReflection"].Value, Model.Id))
+            }
+
+        }
+    </p>
+
+    @if (Model.ShowDetailsLink)
+    {
+        if (Model.QCandidateLayout == QCandidateLayout.Pdf)
+        {
+            @Html.ActionLink(Localizer.GetString("PdfDocument"), nameof(Quintessence.QCandidate.Controllers.PdfProgramComponentsController.Details), "PdfProgramComponents", new { Id = Model.Id })
+        }
+        if (Model.QCandidateLayout == QCandidateLayout.Memo)
+        {
+            @Html.ActionLink(Localizer.GetString("Memo"), nameof(Quintessence.QCandidate.Controllers.MemoProgramComponentsController.Details), "MemoProgramComponents", new { id = Model.Id })
+        }
+        if (Model.Title.Contains("Debriefing"))
+        {
+            @Html.ActionLink(Localizer.GetString("PdfDocument"), nameof(Quintessence.QCandidate.Controllers.NeoProgramComponentsController.Details), "NeoProgramComponents", new { id = Model.Id })
+        }
+        if (Model.Title.Contains("Intro") && TempData["Location"].ToString() != "Online")
+        {
+            @Html.Raw(String.Format(Localizer["OrderForm"].Value, Model.Id))
+        }
+    }
+
+</li>

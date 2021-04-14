@@ -84,9 +84,9 @@
                                         <span class="truncate">
                                             @Html.DisplayFor(m => memo.Title)
                                         </span>
-                                        <i class="material-icons">
+                                        <!--<i class="material-icons">
                                             chevron_right
-                                        </i>
+                                        </i>-->
                                     </div>
                                 }
 
@@ -115,7 +115,7 @@
                     {
                         <div class="calendar-block">
                             <div class="calendar-date">
-                                @calendarDay.Day.ToString("dddd, MMMM dd", CultureInfo.CurrentUICulture)
+                                @calendarDay.Day.ToString("dddd", CultureInfo.CurrentUICulture)
                             </div>
                             <textarea class="calendar-text" onblur="saveCalendarDay(event, '@calendarDay.Id')" id="@calendarDay.Id">@calendarDay.Note</textarea>
                         </div>

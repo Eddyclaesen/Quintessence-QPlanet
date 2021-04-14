@@ -1,0 +1,209 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model Quintessence.QCandidate.Models.Assessments.Project
+
+@inject IViewLocalizer Localizer
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts {
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    @if (Model.AppointmentDate > DateTime.Now)
+    {
+    <script type="text/javascript">
+            var Id = "@(Model.ProjectId.ToString())";
+
+            RefreshSubCategories();         
+
+            function RefreshSubCategories() {
+                $.ajax({
+                    url: '@Url.Action("GetSubCategories")',
+                    data: { projectId: Id },
+                    cache: false,
+                    success: function (html) {
+                        $('#getcategories').html(html);
+                    }
+                });
+                }
+
+            function UpdateCustomer(elem) {
+                var isDone = $(elem).is(':checked');
+                var cid = $(elem).data('customerid');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("SaveCheckbox")',
+                    data: { check: isDone, projectId: cid },
+                    cache: false,
+                    success: function () { }
+                });
+            }
+    </script>
+    }
+}
+
+@{
+    var language = User.Claims.SingleOrDefault(c => c.Type == "extension_Language").Value.ToLower();
+    System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo(language);
+    System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo(language);
+
+
+    if (Model != null)
+    {
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 center">
+                <a style="margin: 50px;" href='@Url.Action("Get", "Assessments")' class="btn btn-primary">@Localizer["Back"]</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 center">
+                <h4>@Html.DisplayFor(model => model.AppointmentDate)<span> - </span>@Html.DisplayFor(model => model.FunctionTitle)</h4>
+                <p>
+                    @Localizer["LocationAC"] <strong>
+                        @switch (Model.Location)
+                        {
+                            case "ON":
+                                @Localizer["LocationON"]
+                                break;
+                            case "QA":
+                                @Localizer["LocationQA"]
+                                break;
+                            case "QB":
+                                @Localizer["LocationQB"]
+                                break;
+                            case "QG":
+                                @Localizer["LocationQG"]
+                                break;
+                            default:
+                                break;
+                        }
+                    </strong>
+                    <br />@(Model.AppointmentDate > DateTime.Now ? (Model.Location == "ON" ? @Localizer["RouteOn"] : @Localizer["RouteElse"]) : null)
+                </p>
+            </div>
+        </div>
+
+        <hr style="width: 30%; margin: 50px auto;" />
+
+        @if (Model.AppointmentDate > DateTime.Now)
+        {
+            <div class="row">
+                <div class="col-md-12 center">
+                    @Localizer["Intro", @Html.DisplayFor(model => model.Company)]
+                    @if (Model.Context != null && Model.ContextUserName != null)
+                    {
+                        @Localizer["Context", @Html.DisplayFor(model => model.Context)]
+                        <p>
+                            <label>Username: </label>@Html.DisplayFor(model => model.ContextUserName)<br />
+                            <label>Password: </label>@Html.DisplayFor(model => model.ContextPassword)
+                        </p>
+                    }
+                </div>
+            </div>
+
+            <div id="getcategories"></div>
+
+            <hr style="width: 30%; margin: 50px auto;" />
+
+            <div class="row">
+                <div class="col-md-12 center">
+                    <h4 style="margin-bottom: 20px;">@Localizer["WhatToExpect"]</h4>
+                    @Localizer["WhatToExpectSub"]
+                </div>
+            </div>
+
+            @if (Model.AssessmentType == "Focused assessment" || Model.AssessmentType == "Focused development")
+            {
+            <hr style="width: 30%; margin: 50px auto;" />
+
+            <div class="row" style="padding: 20px; border: 1px solid orange; border-image: none;">
+                <div class="col-md-12 center">
+                    @Localizer["ConsentIntro"]
+                    @Html.EditorFor(model => model.Consent, new { htmlAttributes = new { @style = "opacity: 1; pointer-events: auto; position: relative", @onclick = "UpdateCustomer(this)", data_customerid = Model.ProjectId } })
+                    @Localizer["ConsentSub"]
+                </div>
+            </div>
+            }
+
+            <hr style="width: 30%; margin: 50px auto;" />
+
+            <div class="row">
+                <div class="col-md-6 offset-3 center">
+                    <div>
+                        <a href="@Localizer["Hoera"]" target="_blank">
+                            <div>
+                                <img class="responsive glow" src="~/img/@Localizer["HoeraImg"]" />
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.Location != "ON")
+            {
+                <hr style="width: 30%; margin: 50px auto;" />
+
+                <div class="row">
+                    <div class="col-md-12 center">
+                        <h5>@Localizer["Location"]</h5>
+                        <iframe src="@(Model.Location == "QB" ? "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2518.4947098291786!2d4.392809415954692!3d50.85904056572001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3c34503d7ea65%3A0xfeaedad367fee883!2sGeneraal%20Wahislaan%203%2C%201030%20Schaarbeek!5e0!3m2!1snl!2sbe!4v1609276200518!5m2!1snl!2sbe" : "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2502.884227510792!2d4.436328!3d51.147486!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xf9ca87e6e974781a!2sQuintessence%20Consulting!5e0!3m2!1snl!2sus!4v1593530301713!5m2!1snl!2sus")" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-md-12 center">
+                    <h5>@Localizer["Assessors"]</h5>
+                </div>
+            </div>
+
+            <table style="margin: 0px auto; width: 80%;">
+                <tbody>
+                    <tr style="border: none;">
+                        <td style="width: @(Model.CoAssessor != null ? 50 : 100)%; text-align: center;">
+                            <img onError="this.onerror=null;this.src='https://quintessenceconsulting.be/images/Quintessence/na.jpg';" class="glow" style="width:99%;" src="https://quintessenceconsulting.be/images/Quintessence/@(Model.LeadAssessor).jpg" />
+                            <h5 style="margin-top: 25px;">@Html.DisplayFor(model => model.LeadAssessor)</h5>
+                        </td>
+                        @if (Model.CoAssessor != null)
+                        {
+                            <td style="width: 50%; text-align: center;">
+                                <img onError="this.onerror=null;this.src='https://quintessenceconsulting.be/images/Quintessence/na.jpg';" class="glow" style="width:99%;" src="https://quintessenceconsulting.be/images/Quintessence/@(Model.CoAssessor).jpg" />
+                                <h5 style="margin-top: 25px;">@Html.DisplayFor(model => model.CoAssessor)</h5>
+                            </td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr style="width: 30%; margin: 50px auto;" />
+
+            <div class="row">
+                <div class="col-md-12 center">
+                    <h5>@Localizer["Evaluation"]</h5>
+                    <p>@Localizer["EvaluationSub"]</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 center">
+                    <a href="@(Model.Location != "ON" ? Localizer["EvaluationLink"] : Localizer["EvaluationOnlineLink"])" target="_blank">
+                        <img class="responsive glow" src="~/img/evaluation.jpg" />
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+    }
+}

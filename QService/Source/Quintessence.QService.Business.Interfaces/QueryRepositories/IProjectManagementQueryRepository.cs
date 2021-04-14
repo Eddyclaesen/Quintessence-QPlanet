@@ -58,6 +58,7 @@ namespace Quintessence.QService.Business.Interfaces.QueryRepositories
         ProjectCandidateResumeView RetrieveProjectCandidateResume(Guid id);
         List<AdviceView> ListAdvices();
         List<ProjectCandidateView> ListUserProjectCandidates(DateTime startDate, DateTime endDate, int? associateId = null);
+        List<ProjectCandidateView> ListQCandidateProjectCandidates(DateTime startDate, DateTime endDate, int? associateId = null);
         List<ProjectCandidateView> ListProjectCandidateDetails(Guid projectId);
         List<ProposalView> ListProposalsByYear(int year);
         List<int> ListProposalYears();

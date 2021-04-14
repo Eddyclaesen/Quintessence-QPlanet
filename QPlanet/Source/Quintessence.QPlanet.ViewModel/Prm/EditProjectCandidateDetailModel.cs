@@ -116,6 +116,9 @@ namespace Quintessence.QPlanet.ViewModel.Prm
         [Display(Name = "Is online assessment")]
         public bool OnlineAssessment { get; set; }
 
+        [Display(Name ="Video consent")]
+        public bool Consent { get; set; }
+
         [Display(Name = "Archive number")]
         public int CrmCandidateInfoId { get; set; }
 

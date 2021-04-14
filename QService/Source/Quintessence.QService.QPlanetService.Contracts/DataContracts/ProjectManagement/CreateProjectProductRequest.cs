@@ -23,5 +23,8 @@ namespace Quintessence.QService.QPlanetService.Contracts.DataContracts.ProjectMa
 
         [DataMember]
         public bool NoInvoice { get; set; }
+        
+        [DataMember]
+        public string InvoiceRemarks { get; set; }
     }
 }

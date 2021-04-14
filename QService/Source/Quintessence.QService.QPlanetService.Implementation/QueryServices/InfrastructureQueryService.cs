@@ -424,19 +424,22 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
                 switch(language?.ToLower())
                 {
                     case "nl":
-                        gotAccess = $"Op de dag van uw assessment heeft u toegang tot de simulaties en andere relevante informatie via ons QCandidate-platform op: {qCandidateUrl} en u kunt hierop inloggen met de volgende informatie:";
+                        gotAccess = $"In het kader van uw programma verlenen wij u toegang tot ons <strong>Qcandidate-platform</strong>. U kan hier alle nodige informatie terugvinden ter voorbereiding en een link naar <strong>de vragenlijsten die u op voorhand dient in te vullen.</strong> Gelieve ons tijdig te verwittigen indien dit voor u niet mogelijk is.<br /><br />" +
+                            $"<strong>Hoe gaat u te werk?</strong><br /><br />Surf naar: {qCandidateUrl}<br />U kan aanmelden met volgende gegevens:<br />";
                         usernameLabel = "Gebruikersnaam";
                         passwordLabel = "Paswoord";
                         break;
                     case "en":
-                        gotAccess = $"You can access our QCandidate platform on the day mentioned above by clicking: {qCandidateUrl} and log in using the following credentials:";
+                        gotAccess = $"As part of your programme we will grant you access to our <strong>Qcandidate platform</strong>. Here you can find all the necessary preparatory information and a link to <strong>the questionnaires that you need to fill in beforehand.</strong> Please let us know in good time if this is not possible for you.<br /><br />" +
+                            $"<strong>How to proceed:</strong><br /><br />Visit {qCandidateUrl} and log in using the following credentials:<br />";
                         usernameLabel = "Username";
                         passwordLabel = "Password";
                         break;
                     case "fr":
-                        gotAccess = $"Vous pouvez accéder à notre portail QCandidate le jour même en cliquant sur le lien {qCandidateUrl} et en utilisant les données suivantes:";
-                        usernameLabel = "Nom d'utilisateur";
-                        passwordLabel = "Mot de passe";
+                        gotAccess = $"Dans le cadre de votre programme, nous vous donnerons accès à notre <strong>plateforme Qcandidate</strong>. Vous trouverez ici toutes les informations nécessaires pour vous préparer ainsi qu’un lien vers <strong>les questionnaires que vous devez remplir au préalable</strong>. Si cela n'est pas possible pour vous, veuillez nous en informer à temps.<br /><br />" +
+                            $"<strong>Comment procéder ?</strong><br /><br />Surfez sur : {qCandidateUrl}<br />Vous pouvez vous enregistrer avec les données suivantes :";
+                        usernameLabel = "Nom d'utilisateur ";
+                        passwordLabel = "Mot de passe ";
                         break;
                     case "de":
                         gotAccess = $"Sie haben Zugriff auf unsere QCandidate-Plattform unter: {qCandidateUrl} und können sich mit folgenden Informationen anmelden:";
@@ -459,13 +462,16 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
                 switch(language?.ToLower())
                 {
                     case "nl":
-                        gotAccess = $"Op de dag van uw assessment heeft u toegang tot de simulaties en andere relevante informatie via ons QCandidate-platform op: {qCandidateUrl} en kunt hierop inloggen met de eerder verzonden informatie.";
+                        gotAccess = $"In het kader van uw programma verlenen wij u toegang tot ons <strong>Qcandidate-platform</strong>. U kan hier alle nodige informatie terugvinden ter voorbereiding en een koppeling naar <strong>de vragenlijsten die u op voorhand dient in te vullen.</strong> Gelieve ons tijdig te verwittigen indien dit voor u niet mogelijk is.<br /><br />" +
+                            $"<strong>Hoe gaat u te werk?</strong><br /><br />Surf naar: {qCandidateUrl}<br />U kan aanmelden met de alreeds verkregen gegevens. Mocht u deze niet meer ter beschikking hebben dan kan u via het portaal een nieuw wachtwoord aanvragen.";
                         break;
                     case "en":
-                        gotAccess = $"You can access our QCandidate platform on the day mentioned above by clicking: {qCandidateUrl} and log in using the credentials previously sent.";
+                        gotAccess = $"As part of your programme we will grant you access to our <strong>Qcandidate platform</strong>. Here you can find all the necessary preparatory information and a link to <strong>the questionnaires that you need to fill in beforehand.</strong> Please let us know in good time if this is not possible for you.<br /><br />" +
+                            $"<strong>How to proceed:</strong><br /><br />Visit {qCandidateUrl} and log in using the credentials previously sent. If you no longer have access to your credentials, you can request a new password via the portal.";
                         break;
                     case "fr":
-                        gotAccess = $"Le jour de votre évaluation, vous aurez accès aux simulations et à d'autres informations pertinentes via notre plateforme QCandidate. Vous pouvez accéder QCandidate en cliquant sur le lien {qCandidateUrl} et en utilisant les données envoyées précédemment.";
+                        gotAccess = $"Dans le cadre de votre programme, nous vous donnerons accès à notre <strong>plateforme Qcandidate</strong>. Vous trouverez ici toutes les informations nécessaires pour vous préparer ainsi qu’un lien vers <strong>les questionnaires que vous devez remplir au préalable</strong>. Si cela n'est pas possible pour vous, veuillez nous en informer à temps.<br /><br />" +
+                            $"<strong>Comment procéder ?</strong><br /><br />Surfez sur : {qCandidateUrl} et utilisant les données envoyées précédemment. Si vous ne disposez plus de ce mot de passe, vous pouvez en demander un nouveau via le portail.";
                         break;
                     case "de":
                         gotAccess = $"Sie haben Zugriff auf unsere QCandidate-Plattform unter: {qCandidateUrl} und können sich mit den zuvor gesendeten Informationen anmelden.";
@@ -473,9 +479,8 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
                 }
 
                 builder.Append(gotAccess);
+                builder.Append("<br />");
             }
-
-            builder.Append("<br />");
 
             return builder.ToString();
         }
@@ -629,9 +634,9 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
 
         private static string GenerateNewPassword(int lowercase, int uppercase, int numerics)
         {
-            var lowers = "abcdefghijklmnopqrstuvwxyz";
-            var uppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            var number = "0123456789";
+            var lowers = "abcdefghjkmnpqrstuvwxyz";
+            var uppers = "ABCDEFGHJKMNPQRSTUVWXYZ";
+            var number = "123456789";
 
             var random = new Random();
             var generated = "!";

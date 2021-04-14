@@ -15,6 +15,7 @@ namespace Quintessence.QPlanet.ViewModel.Prm
         public decimal InvoiceAmount { get; set; }
         public string InvoiceNumber { get; set; }
         public DateTime? InvoicedDate { get; set; }
+        public string InvoiceRemarks { get; set; }
         public string DetailType { get { return GetType().FullName; } }
 
         public IEnumerable<SelectListItem> CreateInvoiceStatusSelectListItems(int invoiceStatusCode, InvoiceStatusType currentType)

@@ -568,6 +568,35 @@ namespace Quintessence.QService.Business.QueryRepositories
             }
         }
 
+        public List<ProjectCandidateView> ListQCandidateProjectCandidates(DateTime startDate, DateTime endDate, int? associateId = null)
+        {
+            using (DurationLog.Create())
+            {
+                try
+                {
+                    using (var context = CreateContext())
+                    {
+                        var projectCandidates = context.ProjectCandidates
+                            .Include(pc => pc.Project)
+                            .Include(pc => pc.Candidate)
+                            .Include(pc => pc.ProjectCandidateDetail)
+                            .Where(pc => pc.ProjectCandidateDetail.AssessmentStartDate >= startDate && pc.ProjectCandidateDetail.AssessmentStartDate <= endDate
+                                && (pc.CandidateHasQCandidateAccess == true)
+                                && (pc.CandidateQCandidateUserId == null)
+                                && (pc.Project.ContactId == 708))
+                            .ToList();
+
+                        return projectCandidates;
+                    }
+                }
+                catch (Exception exception)
+                {
+                    LogManager.LogError(exception);
+                    throw;
+                }
+            }
+        }
+
         public List<ProjectCandidateIndicatorSimulationScoreView> ListProjectCandidateIndicatorSimulationScores(Guid projectCandidateId)
         {
             using (DurationLog.Create())

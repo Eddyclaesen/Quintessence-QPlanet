@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "QPlanet - Home";   
+    ViewBag.Title = "QPlanet - Home";
 }
 
 @section AdditionalScripts
@@ -9,6 +9,7 @@
         $(function () {
             InitializeUserProjectCandidates();
             InitializeUserPreviousProjectCandidates();
+            InitializeQCandidateProjectCandidates()
             //RefreshStickyBlogEntries();
             //RefreshBlogEntries();
         });
@@ -39,7 +40,20 @@
                 }
             });
         }
-        
+
+        function InitializeQCandidateProjectCandidates() {
+            $('#QCandidateProjectCandidatesPlaceholder').loading('Retrieving your previous activities.');
+            $.ajax({
+                url: '@Url.Action("QCandidateProjectCandidates")',
+                success: function (html) {
+                    $('#QCandidateProjectCandidatesPlaceholder').html(html);
+                },
+                error: function (err) {
+                    ShowErrorDetailDialog('Loading previous activities.', err);
+                }
+            });
+        }
+
         function RefreshBlogEntries() {
             $('#BlogEntriesPlaceholder').loading('Retrieve Sharepoint messages.');
             $.ajax({
@@ -69,7 +83,8 @@
 }
 <div class="grid_16">
     <fieldset>
-        <legend>Day program
+        <legend>
+            Day program
         </legend>
         <div id="UserProjectCandidatesPlaceholder"></div>
     </fieldset>
@@ -111,24 +126,37 @@
                 {
                     <a href='@Session["Tomorrow"].ToString()'>DOWNLOAD</a>
                 }
-            </p>                    
+            </p>
             <p style="text-align:right">Quintessence Consulting</p>
         </div>
     </fieldset>
 </div>
 <div class="clear"></div>
 
+
+@if(Session["RoleId"].ToString() == ("D3D0E788-BED4-49EF-A93E-78542D7296CE").ToLower() || Session["RoleId"].ToString() == ("E60C52B1-942B-4735-BFD9-5C05E542C79E").ToLower()) 
+{
+    <div class="grid_16">
+        <fieldset>
+            <legend>
+                QCandidate Candidates to invite
+            </legend>
+            <div id="QCandidateProjectCandidatesPlaceholder" style="font-size:11pt;"></div>
+        </fieldset>
+    </div>
+}
+
 <!--<div class="grid_8">
     <fieldset>
         <legend>Stickies</legend>
-        
+
         <div id="StickyBlogEntriesPlaceholder"></div>
     </fieldset>
 </div>
 <div class="grid_8">
     <fieldset>
         <legend>Messages</legend>
-        
+
         <div id="BlogEntriesPlaceholder"></div>
     </fieldset>
 </div>-->
