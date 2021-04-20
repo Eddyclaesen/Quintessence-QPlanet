@@ -33,30 +33,6 @@ else
     </td>
 }
 <td data-isdirty="@Html.IdFor(m => m.IsDiry)">@Html.TextBoxFor(m => m.InvoiceRemarks, new { data_function = "InvoiceRemarks" })</td>
-<td>
-    @if (Model.ProposalId.HasValue)
-    {
-        @Html.CheckBox("AddProposal", true, new
-        {            
-            disabled = "disabled"
-        })
-    }
-    else
-    {
-        @Html.CheckBox("AddProposal", false, new
-        {
-            data_function = "ProposalForProjectCandidateCategoryType3", 
-            data_name = "ProposalAdded",
-            data_Id = @Model.Id,
-            data_VersionId = @Model.AuditVersionId,
-            data_ProjectName = @Model.ProjectName,
-            data_CandidateFullName = @Model.CandidateFullName,
-            data_ProductName = @Model.ProductName,
-            data_ContactId = @Model.ContactId,  
-            data_InvoiceAmount = @Model.InvoiceAmount                    
-        })
-    }   
-</td>
 <td data-isdirty="@Html.IdFor(m => m.IsDiry)">@Html.TextBoxFor(m => m.PurchaseOrderNumber)</td>
 <td title="@Model.ProjectManagerFullName">@Model.ProjectManagerUserName</td>
 <td title="@Model.CustomerAssistantFullName">@Model.CustomerAssistantUserName</td>
