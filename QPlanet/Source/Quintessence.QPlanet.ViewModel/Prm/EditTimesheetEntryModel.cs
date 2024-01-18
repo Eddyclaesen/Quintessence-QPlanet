@@ -48,5 +48,6 @@ namespace Quintessence.QPlanet.ViewModel.Prm
 
         public string Description { get; set; }
         public string Category { get; set; }
+        public string BceEntity { get; set; }
     }
 }

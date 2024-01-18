@@ -72,6 +72,9 @@ namespace Quintessence.QService.QueryModel.Prm
         [DataMember]
         public string Category { get; set; }
 
+        [DataMember]
+        public string BceEntity { get; set; }
+
         public InvoiceStatusType Status
         {
             get { return (InvoiceStatusType)InvoiceStatusCode; }

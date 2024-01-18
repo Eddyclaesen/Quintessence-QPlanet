@@ -24,5 +24,8 @@ namespace Quintessence.QService.QPlanetService.Contracts.DataContracts.ProjectMa
 
         [DataMember]
         public string Description { get; set; }
+
+        [DataMember]
+        public string BceEntity { get; set; }
     }
 }
