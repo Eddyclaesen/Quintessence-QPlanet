@@ -4,6 +4,12 @@
 @Html.HiddenFor(m => m.ProjectId)
 @Html.HiddenFor(m => m.ProductName)
 
+<style>
+    .ui-datepicker {
+        top: 50% !important;
+    }
+</style>
+
 <div class="row">
     <div>@Html.DisplayNameFor(m => m.ProductId)</div>
     <div>@Html.DropDownListFor(m => m.ProductId, Model.ProductSelectListItems)

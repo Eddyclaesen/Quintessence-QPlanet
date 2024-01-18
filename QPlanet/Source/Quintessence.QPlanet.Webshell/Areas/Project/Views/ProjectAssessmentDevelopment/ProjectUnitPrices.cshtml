@@ -18,6 +18,12 @@
             <a href="javascript:void(0);" data-id="@Model.ProjectCategoryDetails[i].ProjectTypeCategoryId" data-function="ShowUnitPricesOverview" title="Show unit prices">
                 <img alt="prices" src="@Url.Content("~/Images/Icons/calculator16.png")" />
             </a>
+            @if (Model.ProjectCategoryDetails[i].UnitPrice == 0 && Model.ProjectCategoryDetails[i].ProjectTypeCategoryName != "NEO-pir" && Model.ProjectCategoryDetails[i].ProjectTypeCategoryName != "Q-Drives")
+            {
+                <script>
+					$("#ProjectRemarks").append("<p style='margin-left:10px;font-weight:700; color: red; font-size: small;'>@Model.ProjectCategoryDetails[i].ProjectTypeCategoryName: unit price missing</p>");
+                </script>
+            }
         </div>
     </div>
         }
@@ -60,6 +66,7 @@ else
 
         $('#SaveProjectUnitPricesButton').click(function () {
             var form = $('#ProjectUnitPricesForm');
+            $("#ProjectRemarks").html("");
             $.ajax({
                 url: form.attr('action'),
                 type: 'POST',

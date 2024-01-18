@@ -127,6 +127,17 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
             });
         }
 
+        public List<AvailableBceView> ListAvailableBces(int contactId)
+        {
+            return Execute(() =>
+            {
+                using (var repository = Container.Resolve<IDictionaryManagementQueryRepository>())
+                {
+                    return repository.ListAvailableBces(contactId);
+                }
+            });
+        }
+
         public ListDictionariesResponse ListDictionaries(ListDictionariesRequest request)
         {
             return Execute(() =>

@@ -29,8 +29,7 @@ namespace Quintessence.QService.Business.QueryRepositories
                             .Include(at => at.User)
                             .SingleOrDefault(at => at.Id == id);
 
-                        if (token == null)
-                            throw new UnauthorizedAccessException();
+                        //if (token == null) throw new UnauthorizedAccessException();
 
                         return token;
                     }

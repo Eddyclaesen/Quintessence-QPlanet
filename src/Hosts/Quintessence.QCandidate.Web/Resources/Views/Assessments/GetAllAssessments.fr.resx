@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="FutAssessment" xml:space="preserve">
-    <value>Assessment(s) à venir</value>
+    <value>Programme(s) à venir</value>
   </data>
   <data name="NoAssessment" xml:space="preserve">
-    <value>Pas d'évaluation(s)</value>
+    <value>Pas de programme(s)</value>
   </data>
   <data name="PrevAssessment" xml:space="preserve">
-    <value>Assessment(s) précédent(s)</value>
+    <value>Programme(s) précédent(s)</value>
   </data>
 </root>

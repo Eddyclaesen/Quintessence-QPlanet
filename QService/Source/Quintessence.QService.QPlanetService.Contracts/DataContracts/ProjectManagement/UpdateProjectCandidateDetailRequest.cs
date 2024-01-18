@@ -34,8 +34,8 @@ namespace Quintessence.QService.QPlanetService.Contracts.DataContracts.ProjectMa
         [DataMember]
         public int ReportStatusId { get; set; }
 
-        [DataMember]
-        public decimal InvoiceAmount { get; set; }
+        //[DataMember]
+        //public decimal InvoiceAmount { get; set; }
 
         [DataMember]
         public string Remarks { get; set; }
@@ -51,5 +51,8 @@ namespace Quintessence.QService.QPlanetService.Contracts.DataContracts.ProjectMa
 
         [DataMember]
         public bool Consent { get; set; }
+
+        [DataMember]
+        public string BceEntity { get; set; }
     }
 }

@@ -341,12 +341,64 @@
                     </a>
                 </div>
             </div>
+                if(Model.CopyProject != null)
+                {
+                    if(Model.CopyProject.ProjectType.Code == "ACDC")
+                    {
+                    <div class="row">
+                        <div class="width-30-percent">Convert to</div>
+                        <div>
+                            <select name="ConvertProjectType" id="ConvertProjectType">
+                                <option value="NA">--Keep existing--</option>
+                                @if (Model.CopyProject.Name.Contains("(AC)"))
+                                {
+                                    <option value="3D77256A-8508-4477-9F29-9EF3DEAEC99B">Development Center</option>
+                                    <option value="7E12207A-F27E-4EE9-BB9C-0CCC0F8D168A">Executive Assessment</option>
+                                }
+
+                                @if (Model.CopyProject.Name.Contains("(DC)"))
+                                {
+                                    <option value="36011DF7-4B7C-40F7-9930-390D092C8C39">Assessment Center</option>
+                                    <option value="7E12207A-F27E-4EE9-BB9C-0CCC0F8D168A">Executive Assessment</option>
+                                }
+                                @if (Model.CopyProject.Name.Contains("(EA)"))
+                                {
+                                    <option value="36011DF7-4B7C-40F7-9930-390D092C8C39">Assessment Center</option>
+                                    <option value="3D77256A-8508-4477-9F29-9EF3DEAEC99B">Development Center</option>
+                                }
+                                @if (Model.CopyProject.Name.Contains("(FA)"))
+                                {
+                                    <option value="1A938E2F-3CE2-4F61-AE2D-ABF83695C538">Focused Development</option>
+                                }
+                                @if (Model.CopyProject.Name.Contains("(FD)"))
+                                {
+                                    <option value="99BE6D85-7889-4256-A7A4-5958C30EA42A">Focused Assessment</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    }  
+                }                          
             }
         }
         <br />
         <br />
         <div class="right-text">
             <button id="CreateNewProjectButton" class="button">Create</button>
+        </div>
+    </fieldset>
+</div>
+<div class="grid_12">
+    <fieldset>
+        <legend>Additional information</legend>
+        <div>
+            <p>When copying an existing assessment project please be advised that the following items <strong>must be set manually</strong>:</p>
+            <ul>
+                <li>* Simulation context</li>
+                <li>* Report template</li>
+                <li>* Score report type</li>
+            </ul>
+            <p>Converting assessment types is only possible between AC-DC-EA and between FA-FD.</p>
         </div>
     </fieldset>
 </div>

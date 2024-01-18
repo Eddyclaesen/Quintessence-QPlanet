@@ -65,11 +65,12 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" style="background-color:#002649; padding:30px;">
             <div class="col-md-12 center">
-                <h4>@Html.DisplayFor(model => model.AppointmentDate)<span> - </span>@Html.DisplayFor(model => model.FunctionTitle)</h4>
-                <p>
-                    @Localizer["LocationAC"] <strong>
+                <h2 style="color:white;">@Html.DisplayFor(model => model.FunctionTitle)</h2>
+                <h4 style="color:white;">@Html.DisplayFor(model => model.AppointmentDate)</h4>
+                <p style="color:white;">
+                    @Localizer["LocationAC"] <strong style="color:white;">
                         @switch (Model.Location)
                         {
                             case "ON":
@@ -93,11 +94,9 @@
             </div>
         </div>
 
-        <hr style="width: 30%; margin: 50px auto;" />
-
         @if (Model.AppointmentDate > DateTime.Now)
         {
-            <div class="row">
+            <div class="row" style="margin-top:30px;">
                 <div class="col-md-12 center">
                     @Localizer["Intro", @Html.DisplayFor(model => model.Company)]
                     @if (Model.Context != null && Model.ContextUserName != null)
@@ -122,8 +121,6 @@
                 </div>
             </div>
 
-            @if (Model.AssessmentType == "Focused assessment" || Model.AssessmentType == "Focused development")
-            {
             <hr style="width: 30%; margin: 50px auto;" />
 
             <div class="row" style="padding: 20px; border: 1px solid orange; border-image: none;">
@@ -133,7 +130,6 @@
                     @Localizer["ConsentSub"]
                 </div>
             </div>
-            }
 
             <hr style="width: 30%; margin: 50px auto;" />
 
@@ -156,7 +152,18 @@
                 <div class="row">
                     <div class="col-md-12 center">
                         <h5>@Localizer["Location"]</h5>
-                        <iframe src="@(Model.Location == "QB" ? "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2518.4947098291786!2d4.392809415954692!3d50.85904056572001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3c34503d7ea65%3A0xfeaedad367fee883!2sGeneraal%20Wahislaan%203%2C%201030%20Schaarbeek!5e0!3m2!1snl!2sbe!4v1609276200518!5m2!1snl!2sbe" : Model.Location == "QG" ? "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2508.9065569504037!2d3.732997116110973!3d51.036346552854894!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c371303845e6c3%3A0x5b2e3cdd97798a4b!2sSpaces%20-%20Ghent%2C%20Spaces%20Zuiderpoort!5e0!3m2!1snl!2sbe!4v1619603092143!5m2!1snl!2sbe" : "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2502.884227510792!2d4.436328!3d51.147486!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xf9ca87e6e974781a!2sQuintessence%20Consulting!5e0!3m2!1snl!2sus!4v1593530301713!5m2!1snl!2sus")" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                        @if (Model.Location == "QA")
+                        {
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2502.884227510792!2d4.436328!3d51.147486!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xf9ca87e6e974781a!2sQuintessence%20Consulting!5e0!3m2!1snl!2sus!4v1593530301713!5m2!1snl!2sus" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                        }
+                        @if (Model.Location == "QB")
+                        {
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2516.6774848912873!2d4.310815077358788!3d50.892679271680144!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3c180469905ff%3A0x7deae42f705638a6!2sBurgemeester%20Etienne%20Demunterlaan%203%2C%201090%20Jette!5e0!3m2!1snl!2sbe!4v1705565340749!5m2!1snl!2sbe" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                        }
+                        @if (Model.Location == "QG")
+                        {
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2509.853523406179!2d3.7774436771865383!3d51.01885484627474!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c374340b5764f1%3A0x8b0750e3de421082!2sBrusselsesteenweg%2074a%2C%209090%20Melle!5e0!3m2!1snl!2sbe!4v1685617222566!5m2!1snl!2sbe" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                        }
                     </div>
                 </div>
             }

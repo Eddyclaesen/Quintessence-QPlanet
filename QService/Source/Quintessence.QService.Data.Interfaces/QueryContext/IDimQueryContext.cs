@@ -22,6 +22,7 @@ namespace Quintessence.QService.Data.Interfaces.QueryContext
         DbQuery<DictionaryIndicatorAdminView> DictionaryIndicatorAdmins { get; }
         DbQuery<DictionaryClusterTranslationView> DictionaryClusterTranslations { get; }
         IEnumerable<AvailableDictionaryView> ListAvailableDictionariesForContact(int contactId);
+        IEnumerable<AvailableBceView> ListAvailableBcesForContact(int contactId);
         IEnumerable<DictionaryIndicatorMatrixEntryView> ListDictionaryIndicatorMatrixEntries(Guid dictionaryId, int? languageId = null);
     }
 }

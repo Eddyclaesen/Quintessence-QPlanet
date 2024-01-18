@@ -19,14 +19,18 @@
 {
     <nav class="action">
         <ul>
-            <li>@Html.ActionLink("Simulation Scores", "EditProjectCandidateSimulationScores", new { id = Model.ProjectCandidate.Id })
+            <li>
+                @Html.ActionLink("Simulation Scores", "EditProjectCandidateSimulationScores", new { id = Model.ProjectCandidate.Id })
             </li>
-            <li>@Html.ActionLink("Assessors Overview", "EditProjectCandidateScores", new { id = Model.ProjectCandidate.Id })
+            <li>
+                @Html.ActionLink("Assessors Overview", "EditProjectCandidateScores", new { id = Model.ProjectCandidate.Id })
             </li>
             <li class="current">Product scores</li>
-            <li>@Html.ActionLink("Resume", "EditProjectCandidateResume", new { id = Model.ProjectCandidate.Id })
+            <li>
+                @Html.ActionLink("Resume", "EditProjectCandidateResume", new { id = Model.ProjectCandidate.Id })
             </li>
-            <li>@Html.ActionLink("Reporting", "ProjectCandidateReporting", new { id = Model.ProjectCandidate.Id })
+            <li>
+                @Html.ActionLink("Reporting", "ProjectCandidateReporting", new { id = Model.ProjectCandidate.Id })
             </li>
         </ul>
     </nav>
@@ -43,6 +47,10 @@
         {
             <li><a href="#Leiderschap"></a></li>
         }
+        @if (Model.MotivationInterview)
+        {
+            <li><a href="#ROI"></a></li>
+        }
     </ul>
 }
 @section AdditionalScripts
@@ -54,7 +62,36 @@
 
     <script>
         $(function () {
+            InitializeButtons();
         });
+
+        function InitializeButtons() {
+            $(this).on('click', 'a[data-function=SaveRoiScores]', null, function () {
+                ShowDetailSaveDialog();
+
+                $('#ScoreForm input').each(
+                    function (index) {
+                        var input = $(this);
+                        var id = input.attr('id');
+                        var value = input.val();
+                        //alert('Type: ' + input.attr('type') + 'Id: ' + input.attr('id') + 'Value: ' + input.val());
+
+                        $.ajax({
+                            url: '@Url.Action("EditProjectCandidateRoiScores", "ProjectAssessmentDevelopment")',
+                            type: 'POST',
+                            data: {  'id': id, 'score': value },
+                            success: function () {
+                                HideDetailSaveDialog();
+                            },
+                            error: function (err) {
+                                HideDetailSaveDialog();
+                                alert(err.statusText);
+                            }
+                        });
+                    }
+                );
+            });
+        }
     </script>
 }
 
@@ -62,52 +99,52 @@
 {
     <fieldset id="Neopir">
         <legend>Neopir</legend>
-        
-        Please <a href="http://neopir.myquintessence.be">click here</a> for the Neopir score. 
+
+        Please <a href="http://neopir.myquintessence.be">click here</a> for the Neopir score.
         This application is not accessible from the internet but can be used when connected with VPN.
 
-       <!-- @if (Model.NeopirScores.Count == 0)
-        {
-            <p>There are no scores found for this candidate.</p>
-        }
-        else
-        {
-            <table class="dataTable">
-                <thead>
-                    <tr>
-                        <th style="min-width: 20px;"></th>
-                        <th style="min-width: 200px;"></th>
-                        @for (int i = 10; i >= 1; i--)
-                        {
-                            <th>@i</th>
-                        }
-                    </tr>
-                </thead>
-                @{
-                        var alternator = 0;
-                }
+        <!-- @if (Model.NeopirScores.Count == 0)
+         {
+             <p>There are no scores found for this candidate.</p>
+         }
+         else
+         {
+             <table class="dataTable">
+                 <thead>
+                     <tr>
+                         <th style="min-width: 20px;"></th>
+                         <th style="min-width: 200px;"></th>
+                         @for (int i = 10; i >= 1; i--)
+                         {
+                             <th>@i</th>
+                         }
+                     </tr>
+                 </thead>
+                 @{
+                         var alternator = 0;
+                 }
 
-                @foreach (var score in Model.NeopirScores.OrderBy(s => s.Label))
-                {
-                    <tr class="@(alternator++ % 2 == 0 ? "odd" : "even")">
-                        <td>@score.Scale</td>
-                        <td>@score.Description</td>
-                        @for (int i = 10; i >= 1; i--)
-                        {
-                            if (score.NormScore == i)
-                            {
-                            <td>@i</td>
-                            }
-                            else
-                            {
-                            <td></td>
-                            }
-                        }
-                    </tr>
-                }
-            </table>
-        }-->
-    </fieldset>  
+                 @foreach (var score in Model.NeopirScores.OrderBy(s => s.Label))
+                 {
+                     <tr class="@(alternator++ % 2 == 0 ? "odd" : "even")">
+                         <td>@score.Scale</td>
+                         <td>@score.Description</td>
+                         @for (int i = 10; i >= 1; i--)
+                         {
+                             if (score.NormScore == i)
+                             {
+                             <td>@i</td>
+                             }
+                             else
+                             {
+                             <td></td>
+                             }
+                         }
+                     </tr>
+                 }
+             </table>
+         }-->
+    </fieldset>
 }
 @if (Model.Project.ProjectCategoryDetails.OfType<ProjectCategoryDetailType3View>().Any(pcdt => pcdt.ProjectTypeCategory.Code.ToUpperInvariant() == "LEIDERSTIJ"))
 {
@@ -124,59 +161,198 @@
 
             if (leaderScore != null)
             {
-            <table style="width: 100%">
-                <tr>
-                    <td style="width: 50%"></td>
-                    <td>
-                        <table style="width: 400px;">
-                            <tr style="border-bottom: 1px solid black; height: 200px;">
-                                <td style="border-right: 1px solid black; width: 200px; vertical-align: middle;">
-                                    <div class="center-text">
-                                        Consult<br />
-                                        <span style="font-size: 3em;">@leaderScore.Consult</span>
-                                    </div>
-                                </td>
-                                <td style="border-left: 1px solid black; width: 200px; vertical-align: middle;">
-                                    <div class="center-text">
-                                        Convince<br />
-                                        <span style="font-size: 3em;">@leaderScore.Convince</span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr style="border-top: 1px solid black; height: 200px;">
-                                <td style="border-right: 1px solid black; width: 200px; vertical-align: middle;">
-                                    <div class="center-text">
-                                        Delegate<br />
-                                        <span style="font-size: 3em;">@leaderScore.Delegate</span>
-                                    </div>
-                                </td>
-                                <td style="border-left: 1px solid black; width: 200px; vertical-align: middle;">
-                                    <div class="center-text">
-                                        Instruct<br />
-                                        <span style="font-size: 3em;">@leaderScore.Instruct</span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr style="height: 100px;">
-                                <td style="width: 200px; vertical-align: middle;">
-                                    <div class="center-text">
-                                        Effectivity<br />
-                                        <span style="font-size: 3em;">@leaderScore.Effectivity</span>
-                                    </div>
-                                </td>
-                                <td style="width: 200px; vertical-align: middle;">
-                                    <div class="center-text">
-                                        Decile<br />
-                                        <span style="font-size: 3em;">@leaderScore.Decile</span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td style="width: 50%"></td>
-                </tr>
-            </table>
+                <table style="width: 100%">
+                    <tr>
+                        <td style="width: 50%"></td>
+                        <td>
+                            <table style="width: 400px;">
+                                <tr style="border-bottom: 1px solid black; height: 200px;">
+                                    <td style="border-right: 1px solid black; width: 200px; vertical-align: middle;">
+                                        <div class="center-text">
+                                            Consult<br />
+                                            <span style="font-size: 3em;">@leaderScore.Consult</span>
+                                        </div>
+                                    </td>
+                                    <td style="border-left: 1px solid black; width: 200px; vertical-align: middle;">
+                                        <div class="center-text">
+                                            Convince<br />
+                                            <span style="font-size: 3em;">@leaderScore.Convince</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr style="border-top: 1px solid black; height: 200px;">
+                                    <td style="border-right: 1px solid black; width: 200px; vertical-align: middle;">
+                                        <div class="center-text">
+                                            Delegate<br />
+                                            <span style="font-size: 3em;">@leaderScore.Delegate</span>
+                                        </div>
+                                    </td>
+                                    <td style="border-left: 1px solid black; width: 200px; vertical-align: middle;">
+                                        <div class="center-text">
+                                            Instruct<br />
+                                            <span style="font-size: 3em;">@leaderScore.Instruct</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr style="height: 100px;">
+                                    <td style="width: 200px; vertical-align: middle;">
+                                        <div class="center-text">
+                                            Effectivity<br />
+                                            <span style="font-size: 3em;">@leaderScore.Effectivity</span>
+                                        </div>
+                                    </td>
+                                    <td style="width: 200px; vertical-align: middle;">
+                                        <div class="center-text">
+                                            Decile<br />
+                                            <span style="font-size: 3em;">@leaderScore.Decile</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width: 50%"></td>
+                    </tr>
+                </table>
             }
         }
     </fieldset>
+}
+@if (Model.MotivationInterview)
+{
+    <style>
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black;
+            background-color: lightgray;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            padding-top: 2px;
+            font-weight: 700;
+        }
+
+            .tooltip .tooltiptext {
+                visibility: hidden;
+                width: 400px;
+                background-color: black;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                font-weight: 300;
+                /* Position the tooltip */
+                position: absolute;
+                z-index: 1;
+                top: 100%;
+                left: 50%;
+                margin-left: -60px;
+            }
+
+            .tooltip:hover .tooltiptext {
+                visibility: visible;
+            }
+    </style>
+    using (Html.BeginForm("EditProjectCandidateRoiScores", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "ScoreForm" }))
+    {
+        <fieldset id="ROI">
+            <legend>
+                ROI/Motivation
+            </legend>
+
+            <table>
+                @if (Model.RoiScores.Any())
+                {
+                    foreach (var roi in Model.RoiScores)
+                    {
+                        <tr>
+                            <td>
+                                <label>@roi.RoiQuestion</label>
+                                <div class="tooltip">
+                                    ?
+                                    <span class="tooltiptext">
+                                        @if (roi.RoiId == new Guid("AD664405-B3A0-46D5-9276-4969423CB691"))
+                                        {
+                                            <span>
+                                                1. Develops knowledge within own area of expertise.<br />
+                                                2. Demonstrates awareness of his own development points or pitfalls.<br />
+                                                3. Develops himself in order to be more versatile within his own field of expertise.<br />
+                                                4. Develops himself to be employable outside his own field of expertise.<br />
+                                                5. Imposes learning objectives on himself in function of his own career development.
+                                            </span>
+                                        }
+
+                                        @if (roi.RoiId == new Guid("3B2C493C-353F-4171-A9E3-B17D94DF802E"))
+                                        {
+                                            <span>
+                                                1. Adheres strictly to the timetable.<br />
+                                                2. Displays his willingness to work a slightly flexible schedule.<br />
+                                                3. Regularly works in the evening and sometimes at a different location.<br />
+                                                4. Works regularly at weekends, although this is not obligatory. <br />
+                                                5. Continuously works at the weekend and regularly travels abroad for work.
+                                            </span>
+                                        }
+
+                                        @if (roi.RoiId == new Guid("B39CDA11-B15C-441A-BF91-24D6271FD551"))
+                                        {
+                                            <span>
+                                                1. Has many activities or responsibilities outside of work that take up time and space.<br />
+                                                2. Has some activities or responsibilities outside of work that take up space at set times.<br />
+                                                3. Has some activities or responsibilities outside of work that take up time and space, but are reschedulable.<br />
+                                                4. Arranges activities or responsibilities outside work according to the work agenda.<br />
+                                                5. Does not have to take into account any other activities or responsibilities outside of work at all.
+                                            </span>
+                                        }
+
+                                        @if (roi.RoiId == new Guid("5C710EFD-59E4-4220-9D27-071C6E667E30"))
+                                        {
+                                            <span>
+                                                1. Is disturbed by goals and deadlines. Does not set the bar high.<br />
+                                                2. Strives for the goals that are been set, but does not show ambition. <br />
+                                                3. Strictly adheres to the goals set and performs his work properly. Is open to extra responsibility at his own job level.<br />
+                                                4. Sets the bar higher than expected and consciously strives for extra responsibility.<br />
+                                                5. Sets higher and higher standards for himself and sets new and ambitious goals spontaneously.
+                                            </span>
+                                        }
+
+                                        @if (roi.RoiId == new Guid("16D9E416-FF70-43AC-B13C-54E2335829F2"))
+                                        {
+                                            <span>
+                                                1. Financial reward and status have no motivating impact on the performance.<br />
+                                                2. Strives for fair remuneration, but is not concerned with the job title or prestige that comes with the role. <br />
+                                                3. Considers financial reward to be an important source of recognition.<br />
+                                                4. Expects to be paid according to performance and attaches great importance to status symbols such as type of company car, job title, company image, etc.<br />
+                                                5. Strives to make lots of money as quickly as possible. Wouldn't want to work without bonuses and is willing to leave the current job for another with a higher salary.
+                                            </span>
+                                        }
+
+                                        @if (roi.RoiId == new Guid("AAFBD926-AA13-4B1D-9FEC-3612A9A8A76E"))
+                                        {
+                                            <span>
+                                                1. Has no experience in the sector and in the job.<br />
+                                                2. Has some experience in the sector, but in another function.<br />
+                                                3. Has briefly held a similar position, although with limited experience, whether or not in the same sector. <br />
+                                                4. Has held a similar position for some time in another context/sector/type of organisation.<br />
+                                                5. Has held a similar position for a considerable time in the same context/sector/type of organisation.
+                                            </span>
+                                        }
+                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                <input id="@roi.ProjectCandidateRoiScoreId" type="number" value="@roi.Score" />
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+
+            <div class="right-text">
+                <a href="javascript:void(0);" class="button" data-function="SaveRoiScores">
+                    Save
+                </a>
+            </div>
+        </fieldset>
+    }
 }

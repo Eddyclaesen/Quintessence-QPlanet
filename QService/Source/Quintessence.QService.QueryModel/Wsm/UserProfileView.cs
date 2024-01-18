@@ -40,5 +40,8 @@ namespace Quintessence.QService.QueryModel.Wsm
 
         [DataMember]
         public List<UserProfileContactView> Contacts { get; set; }
+
+        [DataMember]
+        public string Color { get; set; }
     }
 }

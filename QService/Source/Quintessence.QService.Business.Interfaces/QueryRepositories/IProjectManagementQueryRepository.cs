@@ -93,6 +93,7 @@ namespace Quintessence.QService.Business.Interfaces.QueryRepositories
         ProjectComplaintView RetrieveProjectComplaintByCrmProject(int crmProjectId);
         List<NeopirScoreView> ListNeopirScores(Guid projectCandidateId);
         List<LeaderScoreView> ListLeiderschapScores(Guid projectCandidateId);
+        List<ProjectCandidateRoiScoreView> ListRoiScores(Guid projectCandidateId);
         List<ProjectCategoryDetailView> ListProjectCategoryDetails(Guid projectId);
         List<ProjectReportRecipientView> ListProjectReportRecipientsByProjectId(Guid projectId);
         List<ProjectCandidateOverviewEntryView> ListProjectCandidateOverviewEntries(DateTime? startDate, DateTime? endDate, Guid? customerAssistantId);

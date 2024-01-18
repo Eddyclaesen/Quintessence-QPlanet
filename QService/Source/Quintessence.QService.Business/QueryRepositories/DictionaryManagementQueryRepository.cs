@@ -277,6 +277,25 @@ namespace Quintessence.QService.Business.QueryRepositories
             }
         }
 
+        public List<AvailableBceView> ListAvailableBces(int contactId)
+        {
+            using (DurationLog.Create())
+            {
+                try
+                {
+                    using (var context = CreateContext())
+                    {
+                        return context.ListAvailableBcesForContact(contactId).ToList();
+                    }
+                }
+                catch (Exception exception)
+                {
+                    LogManager.LogError(exception);
+                    throw;
+                }
+            }
+        }
+
         public List<DictionaryView> ListDetailedDictionaries(int? contactId, bool tillClusters = false, bool tillCompetences = false, bool tillLevels = false, bool tillIndicators = false)
         {
             using (DurationLog.Create())

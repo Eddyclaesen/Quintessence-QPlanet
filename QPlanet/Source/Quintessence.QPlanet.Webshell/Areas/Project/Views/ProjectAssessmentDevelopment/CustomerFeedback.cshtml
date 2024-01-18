@@ -2,31 +2,33 @@
 @using (Html.BeginForm("CustomerFeedback", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "CustomerFeedbackForm" }))
 {
     <div class="row">
+        <div style="font-weight:700;">@Html.DisplayNameFor(m => m.ReportDeadlineStep)</div>
+        <div>@Html.TextBoxFor(m => m.ReportDeadlineStep, new { style = "width:30px;" })</div>
+    </div>
+    <div class="row">
+        <!--<div>@Html.DisplayNameFor(m => m.SendReportToParticipantRemarks)</div>-->
+        <div style="font-weight: 700; text-transform: uppercase;">General report remarks<br /><span style="color:darkorange;">Recipients are set in Qportal</span></div>
+        <div>@Html.TextAreaFor(m => m.SendReportToParticipantRemarks)</div>
+    </div>
+    <div class="row" style="display:none;">
         <div>@Html.DisplayNameFor(m => m.PhoneCallRemarks)</div>
         <div>@Html.TextAreaFor(m => m.PhoneCallRemarks)</div>
     </div>
     <div class="row">
-        <div>@Html.DisplayNameFor(m => m.ReportRemarks)</div>
-        <div>@Html.TextAreaFor(m => m.ReportRemarks)</div>
+        <!--<div>@Html.DisplayNameFor(m => m.ReportRemarks)</div>-->
+        <div style="font-weight: 700; text-transform: uppercase;">Archived remarks</div>
+        <div style="opacity:0.4; pointer-events:none;">@Html.TextAreaFor(m => m.ReportRemarks)</div>
     </div>
-    <div class="row">
-        <div>@Html.DisplayNameFor(m => m.ReportDeadlineStep)</div>
-        <div>@Html.TextBoxFor(m => m.ReportDeadlineStep)</div>
-    </div>
-    <div class="row">
+    <div class="row" style="display:none;">
         <div>@Html.CheckBoxFor(m => m.IsRevisionByPmRequired)</div>
         <div>@Html.LabelFor(m => m.IsRevisionByPmRequired)</div>
     </div>
-    <div class="row">
+    <div class="row" style="display:none;">
         <div>@Html.CheckBoxFor(m => m.SendReportToParticipant)</div>
         <div>@Html.LabelFor(m => m.SendReportToParticipant)</div>
     </div>
-    <div class="row">
-        <div>@Html.DisplayNameFor(m => m.SendReportToParticipantRemarks)</div>
-        <div>@Html.TextAreaFor(m => m.SendReportToParticipantRemarks)</div>
-    </div>
-    <br/>
-    <br/>
+    <br />
+    <br />
     <div class="right-text">
         <a href="javascript:void(0);" class="button" id="SaveCustomerFeedbackButton">Save</a>
     </div>

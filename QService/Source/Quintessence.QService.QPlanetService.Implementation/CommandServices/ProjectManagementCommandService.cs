@@ -27,7 +27,8 @@ using Quintessence.QService.QueryModel.Prm;
 using UpdateProjectCandidateInvoicingRequest = Quintessence.QService.QPlanetService.Contracts.DataContracts.ProjectManagement.UpdateProjectCandidateInvoicingRequest;
 using Quintessence.QService.Business.Interfaces.QueryRepositories;
 using Quintessence.QService.DataModel.Scm;
-
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
 {
@@ -113,9 +114,7 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
                     else
                     {
                         ((ConsultancyProject)project).ProjectInformation = ((ConsultancyProjectView)copyProject).ProjectInformation;
-                    }
-                    
-                    
+                    }                                        
                 }
 
                 //If the new project is a copy of another project, check if it's an AssessmentDevelopment project then try to copy the dictionary
@@ -158,6 +157,11 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
                         //Copy the project category details
                         foreach (var projectCategoryDetailView in copyAssesmentProject.ProjectCategoryDetails)
                         {
+                            if(request.ConvertProjectType != "NA" && projectCategoryDetailView.ProjectTypeCategory.IsMain)
+                            {
+                                projectCategoryDetailView.ProjectTypeCategoryId = Guid.Parse(request.ConvertProjectType);
+                            }
+
                             var projectCategoryDetail = repository.PrepareProjectCategoryDetail(projectCategoryDetailView.ProjectTypeCategoryId);
                             
                             projectCategoryDetail.ProjectId = projectId;
@@ -235,7 +239,8 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
                                         Id = projectdetailModel.Id,
                                         Description = copyprojectdetailModel.Description,
                                         SurveyPlanningId = copyprojectdetailModel.SurveyPlanningId,
-                                        AuditVersionid = copyprojectdetailModel.Audit.VersionId
+                                        AuditVersionid = copyprojectdetailModel.Audit.VersionId,
+                                        IncludeInCandidateReport = copyprojectdetailModel.IncludeInCandidateReport
                                     };
 
                                     UpdateProjectCategoryDetailType3(updateProjectCategoryDetailTypeRequest);
@@ -366,6 +371,8 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
                 var storeStatusCode = (ProjectStatusCodeType)project.StatusCode;
                 var pricingModelId = project.PricingModelId;
 
+                updateProjectRequest.Lock = project.Lock;
+
                 Mapper.DynamicMap(updateProjectRequest, project);
                 if (project is AssessmentDevelopmentProject)
                     Mapper.DynamicMap(updateProjectRequest, project);
@@ -411,11 +418,11 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
                             //Remove existing scores of candidates
                             foreach (var candidate in candidates)
                                 repository.DeleteProjectCandidateScores(candidate.Id);
-
+                            
                             //Remove existing linked indicators, simulations and combinations
                             repository.DeleteProjectCategoryDetailDictionaryIndicators(existingMainProjectCategoryDetail.Id);
                             repository.DeleteProjectCategoryDetailCompetenceSimulations(existingMainProjectCategoryDetail.Id);
-                            repository.DeleteProjectCategoryDetailSimulationCombinations(existingMainProjectCategoryDetail.Id);
+                            repository.DeleteProjectCategoryDetailSimulationCombinations(existingMainProjectCategoryDetail.Id);                                                     
 
                             repository.Delete<ProjectCategoryDetail>(existingMainProjectCategoryDetail.Id);
                             existingMainProjectCategoryDetail = null;
@@ -829,6 +836,95 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
                     repository.Save(projectCategoryDetail2Competence2Combination);
                 }
             });
+        }
+
+        public void SetRoiOrder(string projectId, string detailId, string[] order)
+        {
+            LogTrace();
+
+            using(var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Quintessence"].ToString()))
+            {
+                connection.Open();
+
+                var remove = "delete Quintessence.dbo.ProjectRoiOrder where ProjectId = @ProjectId";
+                using (var r_cmd = new SqlCommand(remove, connection))
+                {
+                    r_cmd.Parameters.AddWithValue("@ProjectId", projectId);
+                    r_cmd.ExecuteNonQuery();
+                }
+
+                var sql = "insert into Quintessence.dbo.ProjectRoiOrder(ProjectId, ProjectCategoryDetailId, CompetenceId, [Order], Audit_CreatedOn) Values (@ProjectId, @ProjectCategoryDetailId, @CompetenceId, @Order, getdate())";
+                using(var cmd = new SqlCommand(sql, connection))
+                {
+                    cmd.Parameters.Add("@ProjectId", System.Data.SqlDbType.NVarChar, -1);
+                    cmd.Parameters.Add("@ProjectCategoryDetailId", System.Data.SqlDbType.NVarChar, -1);
+                    cmd.Parameters.Add("@CompetenceId", System.Data.SqlDbType.NVarChar, -1);
+                    cmd.Parameters.Add("@Order", System.Data.SqlDbType.Int);
+
+                    for (int i = 0; i < order.Length; i++)
+                    {
+                        cmd.Parameters["@ProjectId"].Value = projectId;
+                        cmd.Parameters["@ProjectCategoryDetailId"].Value = detailId;
+                        cmd.Parameters["@CompetenceId"].Value = order[i];
+                        cmd.Parameters["@Order"].Value = i+1;
+                        
+                        cmd.ExecuteNonQuery();
+                    }                    
+                }
+                connection.Close();
+            }            
+        }
+
+        public void LockRoiOrder(string projectId, string lockRoi)
+        {
+            LogTrace();
+
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Quintessence"].ToString()))
+            {
+                connection.Open();
+
+                var sql = "update Quintessence.dbo.Project set Lock = " + (lockRoi == "true" ? "1" : "0") + " where Id = @ProjectId";
+                using (var cmd = new SqlCommand(sql, connection))
+                {
+                    cmd.Parameters.Add("@ProjectId", System.Data.SqlDbType.NVarChar, -1);                                   
+                    cmd.Parameters["@ProjectId"].Value = projectId;
+
+                    cmd.ExecuteNonQuery();
+                    
+                }
+                connection.Close();
+            }
+        }
+
+        public void SaveRoiScores(Guid id, int? score)
+        {
+            LogTrace();
+
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Quintessence"].ToString()))
+            {
+                connection.Open();
+
+                var sql = "update Quintessence.dbo.[ProjectCandidateRoiScore] set Score = @Score where [ProjectCandidateRoiScoreId] = @Id";
+                using (var cmd = new SqlCommand(sql, connection))
+                {
+                    cmd.Parameters.Add("@Score", System.Data.SqlDbType.Int);
+                    cmd.Parameters.Add("@Id", System.Data.SqlDbType.NVarChar, -1);
+
+                    if (score != null)
+                    {
+                        cmd.Parameters["@Score"].Value = score;
+                    }
+                    else
+                    {
+                        cmd.Parameters["@Score"].Value = DBNull.Value;
+                    }
+                    
+                    cmd.Parameters["@Id"].Value = id.ToString();
+
+                    cmd.ExecuteNonQuery();
+                }
+                connection.Close();
+            }
         }
 
         public void UnlinkProjectCategoryDetail2Competence2Combination(Guid projectCategoryDetailId, Guid dictionaryCompetenceId, Guid simulationCombinationId)
@@ -1444,6 +1540,18 @@ namespace Quintessence.QService.QPlanetService.Implementation.CommandServices
                 var repository = Container.Resolve<IProjectManagementCommandRepository>();
 
                 repository.Delete<ProjectFixedPrice>(id);
+            });
+        }
+
+        public void DeleteProject(Guid id)
+        {
+            LogTrace("delete project.");
+
+            ExecuteTransaction(() =>
+            {
+                var repository = Container.Resolve<IProjectManagementCommandRepository>();
+
+                repository.Delete<Project>(id);
             });
         }
 

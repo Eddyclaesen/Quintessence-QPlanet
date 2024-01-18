@@ -6,10 +6,11 @@ namespace Quintessence.QCandidate.Models.Assessments
 {
     public class ProgramComponent
     {
-        public ProgramComponent(Guid id, string title, string location, bool showDetailsLink, string assessors, DateTime start, DateTime end, QCandidateLayout qCandidateLayout)
+        public ProgramComponent(Guid id, string title, string description, string location, bool showDetailsLink, string assessors, DateTime start, DateTime end, QCandidateLayout qCandidateLayout)
         {
             Id = id;
             Title = title;
+            Description = description;
             Location = location;
             ShowDetailsLink = showDetailsLink;
             Assessors = assessors;
@@ -20,6 +21,7 @@ namespace Quintessence.QCandidate.Models.Assessments
 
         public Guid Id { get; }
         public string Title { get; }
+        public string Description { get; }
         public string Location { get; }
         public bool ShowDetailsLink { get; }
         public string Assessors { get; }

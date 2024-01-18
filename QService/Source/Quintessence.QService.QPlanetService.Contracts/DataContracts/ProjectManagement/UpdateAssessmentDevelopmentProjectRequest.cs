@@ -53,7 +53,16 @@ namespace Quintessence.QService.QPlanetService.Contracts.DataContracts.ProjectMa
         public string Remarks { get; set; }
 
         [DataMember]
-        public bool Confidential { get; set; }
+        public bool Confidential { get; set; }        
+
+        [DataMember]
+        public bool Roi { get; set; }
+
+        [DataMember]
+        public bool Executive { get; set; }
+
+        [DataMember]
+        public bool Lock { get; set; }
 
         [DataMember]
         public List<Guid> SelectedProjectTypeCategoryIds

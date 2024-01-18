@@ -184,6 +184,9 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Controllers
 
                     case "CONS":
                         return RedirectToAction("Edit", "ProjectConsultancy", new { area = "Project", id });
+
+                    case "VTO":
+                        return RedirectToAction("EditVTO", "ProjectConsultancy", new { area = "Project", id });
                 }
 
                 return new HttpNotFoundResult();
@@ -698,10 +701,36 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Controllers
                 }
                 var token = this.InvokeService<IAuthenticationQueryService, AuthenticationTokenView>(service => service.RetrieveAuthenticationTokenDetail(new Guid(identity.Ticket.UserData)));
 
+                if(model.CopyProject.ProjectType.Code == "ACDC")
+                {
+                    var c = this.InvokeService<IProjectManagementQueryService, AssessmentDevelopmentProjectView>(service => service.RetrieveAssessmentDevelopmentProjectDetail(id));
+                    if(c.ProjectTypeCategoryCode != null)
+                    {
+                        model.CopyProject.Name = model.CopyProject.Name + " (" + c.ProjectTypeCategoryCode + ")";
+                    }
+                }
+
                 model.ProjectManagerUserId = token.UserId;
                 model.ProjectManagerFullName = token.User.FullName;
 
                 return View("Create", model);
+            }
+        }
+
+        public ActionResult Delete(Guid id)
+        {
+            using (DurationLog.Create())
+            {
+                try
+                {
+                    this.InvokeService<IProjectManagementCommandService>(service => service.DeleteProject(id));
+                }
+                catch (Exception exception)
+                {
+                    LogManager.LogError(exception);
+                }
+
+                return RedirectToAction("Index", "ProjectHome");
             }
         }
 

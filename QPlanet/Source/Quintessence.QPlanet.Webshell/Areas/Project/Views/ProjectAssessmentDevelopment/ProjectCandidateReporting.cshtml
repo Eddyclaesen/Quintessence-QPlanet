@@ -155,6 +155,29 @@
             </div>
         </div>
         }
+
+        if(Model.Project.ROI)
+        {
+        <div class="right-text">
+            @Html.ActionLink("ROI", "GenerateReport", "ProjectGeneral", new { id = Model.ProjectCandidate.Id, code = "CANDIDATE", reportDefinitionId = "C4AC128E-7B6E-4985-ADEE-F5AB5A9E34A8", outputFormat = ReportOutputFormat.Pdf }, new { @class = "button" })
+            <p style="font-style:italic;font-size:smaller;">
+                @if (!Model.Project.Lock)
+                {
+                    <span style="color: indianred;">Matrix has NOT been locked.<br />ROI order might be incorrect.</span>
+                }
+            </p>
+        </div>
+        }
+
+        if (!Model.MotivationScores)
+        {
+            <div class="right-text">
+                <p style="font-style:italic;font-size:smaller;">
+                    <span style="color: indianred;">There are still empty motivation scores</span>
+                </p>
+            </div>
+        }
+
     }
 </fieldset>
 

@@ -51,5 +51,7 @@ namespace Quintessence.QPlanet.ViewModel.Prm
         public Guid? ProjectCandidateId { get; set; }
 
         public ProjectView CopyProject { get; set; }
+
+        public string ConvertProjectType { get; set; }
     }
 }

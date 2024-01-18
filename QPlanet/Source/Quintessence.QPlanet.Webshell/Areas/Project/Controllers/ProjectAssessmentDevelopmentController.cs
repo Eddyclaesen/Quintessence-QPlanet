@@ -55,6 +55,10 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Controllers
                     var projectView = this.InvokeService<IProjectManagementQueryService, AssessmentDevelopmentProjectView>(service => service.RetrieveAssessmentDevelopmentProjectDetail(id));
                     var contactDetailView = this.InvokeService<ICustomerRelationshipManagementQueryService, ContactDetailView>(service => service.RetrieveContactDetail(projectView.ContactId));
 
+                    Session["ProjectId"] = projectView.Id.ToString();
+                    Session["Roi"] = projectView.ROI;
+                    Session["Lock"] = projectView.Lock;
+
                     var mainProjectView = this.InvokeService<IProjectManagementQueryService, MainProjectView>(service => service.RetrieveMainProject(id));
                     var projectModel = Mapper.Map<EditProjectAssessmentDevelopmentModel>(projectView);
 
@@ -158,7 +162,7 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Controllers
                         Directory.CreateDirectory(filePath);
                     }
 
-                    file.SaveAs(Server.UrlDecode(Path.Combine(filePath, Path.GetFileName(file.FileName))));
+                    file.SaveAs(Server.UrlDecode(Path.Combine(filePath, Path.GetFileName(Uri.UnescapeDataString(file.FileName).Replace("é", "e").Replace("ë", "e")))));
                 }
             }
 
@@ -633,6 +637,48 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Controllers
                 {
                     LogManager.LogError(exception);
                     return HandleError(exception, isPartial: true);
+                }
+            }
+        }
+
+        [HttpPost]
+        public ActionResult SetRoiOrder(string[] order, string detailId)
+        {
+            string projectId = Session["ProjectId"].ToString();
+
+            using (DurationLog.Create())
+            {
+                try
+                {                 
+                    this.InvokeService<IProjectManagementCommandService>(service => service.SetRoiOrder(projectId, detailId, order));
+                    
+                    return new HttpStatusCodeResult(HttpStatusCode.OK);
+                }
+                catch (Exception exception)
+                {
+                    LogManager.LogError(exception);
+                    return HandleStatusCodeError(exception);
+                }
+            }
+        }
+
+        [HttpPost]
+        public ActionResult LockRoiOrder(string lockRoi)
+        {
+            string projectId = Session["ProjectId"].ToString();
+
+            using (DurationLog.Create())
+            {
+                try
+                {
+                    this.InvokeService<IProjectManagementCommandService>(service => service.LockRoiOrder(projectId, lockRoi));
+                    Session["Lock"] = true;
+                    return new HttpStatusCodeResult(HttpStatusCode.OK);
+                }
+                catch (Exception exception)
+                {
+                    LogManager.LogError(exception);
+                    return HandleStatusCodeError(exception);
                 }
             }
         }

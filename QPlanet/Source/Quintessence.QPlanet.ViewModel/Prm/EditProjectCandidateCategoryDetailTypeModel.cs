@@ -44,5 +44,7 @@ namespace Quintessence.QPlanet.ViewModel.Prm
         {
             get { return _offices ?? (_offices = new List<SelectListItem>()); }
         }
+
+        public string BceEntity { get; set; }
     }
 }

@@ -76,6 +76,7 @@ namespace Quintessence.QService.Data.Interfaces.QueryContext
         IEnumerable<ProjectDnaSelectedContactPersonView> ListProjectDnaContactPersons(Guid projectDnaId);
         IEnumerable<NeopirScoreView> ListNeopirScores(Guid projectCandidateId);
         IEnumerable<LeaderScoreView> ListLeiderschapScores(Guid projectCandidateId);
+        IEnumerable<ProjectCandidateRoiScoreView> ListRoiScores(Guid projectCandidateId);
         IEnumerable<ProjectCandidateReportRecipientView> ListProjectCandidateReportRecipients(Guid projectCandidateId);
         IEnumerable<ProjectCategoryDetailDictionaryIndicatorView> ListProjectCategoryDetailDictionaryIndicators(Guid projectCategoryDetailId, int? languageId = null);
         IEnumerable<ProjectCandidateOverviewEntryView> RetrieveProjectCandidateAssistantOverview(DateTime? startDate, DateTime? endDate, Guid? projectCandidateId = null, Guid? customerAssistantId = null);

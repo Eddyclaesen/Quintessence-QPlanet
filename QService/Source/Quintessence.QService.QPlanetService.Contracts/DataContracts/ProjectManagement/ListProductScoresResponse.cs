@@ -14,9 +14,15 @@ namespace Quintessence.QService.QPlanetService.Contracts.DataContracts.ProjectMa
         public List<LeaderScoreView> LeaderScores { get; set; }
 
         [DataMember]
+        public List<ProjectCandidateRoiScoreView> RoiScores { get; set; }
+
+        [DataMember]
         public ProjectCandidateView ProjectCandidate { get; set; }
 
         [DataMember]
         public ProjectView Project { get; set; }
+
+        [DataMember]
+        public bool MotivationInterview { get; set; }
     }
 }

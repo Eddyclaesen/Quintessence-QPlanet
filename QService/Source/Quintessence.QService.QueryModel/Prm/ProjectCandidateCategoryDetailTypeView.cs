@@ -69,5 +69,8 @@ namespace Quintessence.QService.QueryModel.Prm
 
         [DataMember]
         public bool Extra2Done { get; set; }
+
+        [DataMember]
+        public string BceEntity { get; set; }
     }
 }

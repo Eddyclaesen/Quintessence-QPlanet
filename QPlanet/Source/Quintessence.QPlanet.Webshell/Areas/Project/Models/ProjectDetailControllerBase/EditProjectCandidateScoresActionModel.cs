@@ -112,6 +112,7 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectDetailContro
                 return ProjectCandidateCompetenceSimulationScores
                     .Where(pccss => pccss.DictionaryClusterId == dictionaryClusterId)
                     .Where(pccss => pccss.Remarks != null)
+                    .OrderBy(pccss => pccss.DictionaryCompetenceName)
                     .Select(pccss => "<span style='font-weight: 700;'>" + pccss.DictionaryCompetenceName + " - " + pccss.SimulationName + "</span> " + pccss.Remarks);
             }
 
@@ -124,7 +125,9 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectDetailContro
             {
                 return ProjectCandidateCompetenceSimulationScores
                     .Where(pccss => pccss.DictionaryCompetenceId == dictionaryCompetenceId)
-                    .Select(pccss => pccss.Remarks);
+                    .Where(pccss => pccss.Remarks != null)
+                    .OrderBy(pccss => pccss.DictionaryCompetenceName)
+                    .Select(pccss => "<span style='font-weight: 700;'>" + pccss.DictionaryCompetenceName + " - " + pccss.SimulationName + "</span> " + pccss.Remarks);
             }
 
             return new List<string>(0);

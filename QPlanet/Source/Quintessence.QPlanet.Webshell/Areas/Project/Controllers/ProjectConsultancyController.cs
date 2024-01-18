@@ -72,8 +72,68 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Controllers
             }
         }
 
+        public ActionResult EditVTO(Guid id)
+        {
+            using (DurationLog.Create())
+            {
+                try
+                {
+                    var projectView =
+                        this.InvokeService<IProjectManagementQueryService, ConsultancyProjectView>(
+                            service => service.RetrieveConsultancyProjectDetail(id));
+                    var contactDetailView =
+                        this.InvokeService<ICustomerRelationshipManagementQueryService, ContactDetailView>(
+                            service => service.RetrieveContactDetail(projectView.ContactId));
+
+                    var projectModel = Mapper.Map<EditProjectConsultancyModel>(projectView);
+
+                    projectModel.ContactDetail = Mapper.Map<ContactDetailModel>(contactDetailView);
+                    projectModel.ContactDetail.ProjectId = projectView.Id;
+
+                    projectModel.IsCurrentUserProjectManager = projectView.ProjectManagerId == GetAuthenticationToken().UserId;
+                    projectModel.IsCurrentUserCustomerAssistant = projectView.CustomerAssistantId == GetAuthenticationToken().UserId;
+
+                    var possibleStatusses =
+                        this.InvokeService<IProjectManagementQueryService, List<ProjectStatusCodeViewType>>(
+                            service => service.ListPossibleStatusses(projectModel.StatusCode));
+
+                    projectModel.ProjectStatusses =
+                        possibleStatusses.Select(
+                            s => new ProjectStatusTypeSelectListItemModel { Id = (int)s, Name = s.ToString() }).ToList();
+
+                    return View(projectModel);
+                }
+                catch (Exception exception)
+                {
+                    LogManager.LogError(exception);
+                    return HandleError(exception);
+                }
+            }
+        }
+
         [HttpPost]
         public ActionResult Edit(EditProjectConsultancyModel model)
+        {
+            using (DurationLog.Create())
+            {
+                try
+                {
+                    var updateProjectRequest = Mapper.Map<UpdateConsultancyProjectRequest>(model);
+
+                    this.InvokeService<IProjectManagementCommandService>(service => service.UpdateConsultancyProject(updateProjectRequest));
+
+                    return new HttpStatusCodeResult(HttpStatusCode.OK);
+                }
+                catch (Exception exception)
+                {
+                    LogManager.LogError(exception);
+                    return HandleStatusCodeErrorHtml(exception);
+                }
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditVTO(EditProjectConsultancyModel model)
         {
             using (DurationLog.Create())
             {
@@ -380,6 +440,31 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Controllers
                     model.IsCurrentUserProjectManager = model.Project.ProjectManagerId == GetAuthenticationToken().UserId;
                     model.IsCurrentUserCustomerAssistant = model.Project.CustomerAssistantId == GetAuthenticationToken().UserId;
                     
+                    var request = new RetrieveProjectPlanDetailRequest { ProjectPlanId = model.Project.ProjectPlanId };
+                    var projectPlan = this.InvokeService<IProjectManagementQueryService, ProjectPlanView>(service => service.RetrieveProjectPlanDetail(request));
+                    model.ProjectPlan = Mapper.Map<EditProjectPlanModel>(projectPlan);
+
+                    return View(model);
+                }
+                catch (Exception exception)
+                {
+                    LogManager.LogError(exception);
+                    return HandleError(exception);
+                }
+            }
+        }
+
+        public ActionResult EditProjectPlanVTO(Guid id)
+        {
+            using (DurationLog.Create())
+            {
+                try
+                {
+                    var model = new EditProjectPlanActionModel();
+                    model.Project = (ConsultancyProjectView)this.InvokeService<IProjectManagementQueryService, ProjectView>(service => service.RetrieveProjectDetail(id));
+                    model.IsCurrentUserProjectManager = model.Project.ProjectManagerId == GetAuthenticationToken().UserId;
+                    model.IsCurrentUserCustomerAssistant = model.Project.CustomerAssistantId == GetAuthenticationToken().UserId;
+
                     var request = new RetrieveProjectPlanDetailRequest { ProjectPlanId = model.Project.ProjectPlanId };
                     var projectPlan = this.InvokeService<IProjectManagementQueryService, ProjectPlanView>(service => service.RetrieveProjectPlanDetail(request));
                     model.ProjectPlan = Mapper.Map<EditProjectPlanModel>(projectPlan);
@@ -1491,7 +1576,7 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Controllers
                         Directory.CreateDirectory(filePath);
                     }
                     
-                    file.SaveAs(Server.UrlDecode(Path.Combine(filePath, Path.GetFileName(file.FileName))));
+                    file.SaveAs(Server.UrlDecode(Path.Combine(filePath, Path.GetFileName(Uri.UnescapeDataString(file.FileName).Replace("é","e").Replace("ë","e")))));
                 }
             }
 

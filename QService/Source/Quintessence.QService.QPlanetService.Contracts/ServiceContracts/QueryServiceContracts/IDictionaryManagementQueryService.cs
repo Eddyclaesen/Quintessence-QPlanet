@@ -37,6 +37,10 @@ namespace Quintessence.QService.QPlanetService.Contracts.ServiceContracts.QueryS
 
         [OperationContract]
         [FaultContract(typeof(ValidationContainer))]
+        List<AvailableBceView> ListAvailableBces(int contactId);
+
+        [OperationContract]
+        [FaultContract(typeof(ValidationContainer))]
         ListDictionariesResponse ListDictionaries(ListDictionariesRequest request);
 
         [OperationContract]

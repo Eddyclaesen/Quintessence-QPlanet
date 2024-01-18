@@ -19,18 +19,22 @@
 {
     <nav class="action">
         <ul>
-            <li>@Html.ActionLink("Detail", "Edit", "ProjectGeneral", new RouteValueDictionary(new { area = "Project", id = Model.ProjectId }), null)
+            <li>
+                @Html.ActionLink("Detail", "Edit", "ProjectGeneral", new RouteValueDictionary(new { area = "Project", id = Model.ProjectId }), null)
             </li>
             <li class="current">@Model.ProjectTypeCategoryName</li>
 
             @if (Model.ProjectHasSubProjectCategoryDetails)
             {
-                <li>@Html.ActionLink("Subcategories", "SubProjectCategoryDetails", "ProjectAssessmentDevelopment", new { area = "Project", id = Model.ProjectId }, null)
+                <li>
+                    @Html.ActionLink("Subcategories", "SubProjectCategoryDetails", "ProjectAssessmentDevelopment", new { area = "Project", id = Model.ProjectId }, null)
                 </li>
             }
-            <li>@Html.ActionLink("Candidates", "EditProjectCandidates", "ProjectAssessmentDevelopment", new RouteValueDictionary(new { area = "Project", id = Model.ProjectId }), null)
+            <li>
+                @Html.ActionLink("Candidates", "EditProjectCandidates", "ProjectAssessmentDevelopment", new RouteValueDictionary(new { area = "Project", id = Model.ProjectId }), null)
             </li>
-            <li>@Html.ActionLink("Invoicing", "InvoiceOverview", "ProjectAssessmentDevelopment", new { area = "Project", id = Model.Id }, null)
+            <li>
+                @Html.ActionLink("Invoicing", "InvoiceOverview", "ProjectAssessmentDevelopment", new { area = "Project", id = Model.Id }, null)
             </li>
         </ul>
     </nav>
@@ -45,7 +49,8 @@
     <ul id="Tabs">
         @if (indicatorSelectionModel != null)
         {
-            <li><a href="#SelectedCompetenceIndicators"></a></li>   
+            <li><a href="#SelectedCompetenceIndicators"></a></li>
+
         }
         @if (roleSelectionModel != null)
         {
@@ -54,10 +59,20 @@
         @if (simulationSelectionModel != null)
         {
             <li><a href="#SelectedSimulationCombinations">Simulation Combinations</a></li>
-            <li><a href="#DictionarySimulationMatrix">Matrix</a></li>
+            <li>
+                <a href="#DictionarySimulationMatrix">
+                    Matrix
+                    @if ((bool)Session["Roi"])
+                    {
+                        <text>- ROI</text>
+                    }
+                </a>
+            </li>
         }
         <li><a href="#CustomerFeedback"></a></li>
     </ul>
+    <div id="ProjectRemarks"></div>
+    <div id="MatrixCountRemarks"></div>
 }
 @section AdditionalScripts
 {
@@ -67,6 +82,9 @@
     <script src="@Url.Content("~/Scripts/jquery.cookie.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/jquery.dataTables.columnFilter.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/tiny_mce/jquery.tinymce.js")" type="text/javascript"></script>
+    <script src="@Url.Content("https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tablednd.js")" type="text/javascript"></script>
+
     <script type="text/javascript">
         $(function () {
             InitializeButtons();
@@ -250,7 +268,7 @@
 
     @if (indicatorSelectionModel != null)
     {
-        <script>
+<script>
             $(function () {
                 InitializeIndicatorSelectionDialogs();
 
@@ -304,6 +322,28 @@
                     });
                 });
 
+                $(this).on('click', 'a[data-function=RemoveSelectedIndicators]', null, function () {
+                    ShowDetailSaveDialog();
+                    $("#SelectedIndicatorTable input[type=checkbox]:checked").each(function () {
+                        $.ajax({
+                            url: '@Url.Action("RemoveDictionaryIndicator")/' + this.id,
+                            success: function (msg) {
+
+                            },
+                            error: function (err) {
+                                var message = 'Unable to remove the selected indicators: ' + err.statusText;
+                                alert(message);
+                            }
+                        });
+                    });
+
+                    setTimeout(function () {
+                        RefreshCompetenceSimulationMatrix();
+                        HideDetailSaveDialog();
+                        RefreshSelectedIndicatorTable();
+                    }, 4000);
+                });
+
                 $(this).on('click', 'a[data-function=RefreshSelectedIndicatorButton]', null, function () {
                     RefreshSelectedIndicatorTable();
                 });
@@ -338,7 +378,7 @@
                         jsonArray[i] = checkedDictionaryIndicatorIds[i];
                     }
                     var json = { selectedIndicatorIds: jsonArray };
-                    
+
                     $.ajax({
                         url: '@Url.Action("AddDictionaryIndicators")/@Model.Id',
                         type: 'POST',
@@ -372,7 +412,7 @@
                     });
                 });
                 }
-        </script>
+</script>
     }
     @if (roleSelectionModel != null)
     {
@@ -664,11 +704,11 @@
                     //        checkedSimulationCombinationIds.push($(this).attr('data-id'));
                     //    }
                     //});
-                    
+
                     $('input[type=checkbox]:checked', $('#SelectNewSimulationTable').dataTable().fnGetNodes()).each(function() {
                         checkedSimulationCombinationIds.push($(this).attr('data-id'));
                     });
-                    
+
                     if (checkedSimulationCombinationIds.length < 1) {
                         HideDetailSaveDialog();
                         $.alert('Please select at least 1 simulation.', 'No simulation', 300, 200);
@@ -812,20 +852,30 @@
         }
         else
         {
-            <div style="text-align: right">
-                <a href="javascript:void(0);" data-function="RefreshSelectedIndicatorButton" class="button">
-                    Refresh</a>
-                <a href="javascript:void(0);" data-function="AddSelectedIndicatorButton" class="button">
-                    Add</a>
-            </div>
+        <div style="text-align: right">
+            <a href="javascript:void(0);" data-function="RefreshSelectedIndicatorButton" class="button">
+                Refresh
+            </a>
+            <a href="javascript:void(0);" data-function="AddSelectedIndicatorButton" class="button">
+                Add
+            </a>
+            <a href="javascript:void(0);" data-function="RemoveSelectedIndicators" class="button">
+                Remove Selected
+            </a>
+        </div>
             <div id="SelectedIndicatorTablePlaceholder"></div>
             <div style="text-align: right">
                 <a href="javascript:void(0);" data-function="RefreshSelectedIndicatorButton" class="button">
-                    Refresh</a>
+                    Refresh
+                </a>
                 <a href="javascript:void(0);" data-function="AddSelectedIndicatorButton" class="button">
-                    Add</a>
+                    Add
+                </a>
+                <a href="javascript:void(0);" data-function="RemoveSelectedIndicators" class="button">
+                    Remove Selected
+                </a>
             </div>
-                
+
             <div id="SelectIndicatorDialog" style="display: none; width: 100%; height: 100%">
                 @using (Html.BeginForm("DictionaryIndicators", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "AddSelectedIndicatorForm" }))
                 {
@@ -858,33 +908,33 @@
                 <div class="grid_5 table">
                     <div class="label">
                         @Html.LabelFor(m => roleSelectionModel.ProjectRoleName):&nbsp;
-                    @if (roleSelectionModel.ProjectRoleId.HasValue)
-                    {
-                        @Html.DisplayTextFor(m => roleSelectionModel.ProjectRoleName)
-                    }
-                    else
-                    {
-                        <i>None assigned</i>
-                    }
+                        @if (roleSelectionModel.ProjectRoleId.HasValue)
+                        {
+                            @Html.DisplayTextFor(m => roleSelectionModel.ProjectRoleName)
+                        }
+                        else
+                        {
+                            <i>None assigned</i>
+                        }
                     </div>
                 </div>
                 <div class="grid_6 table">
                     <div class="value">
                         <a href="javascript:void(0);" id="ChangeProjectRoleButton" title="Click to change or assign the project role."
-                            class="button">
+                           class="button">
                             @if (roleSelectionModel.ProjectRoleId.HasValue)
                             {
                                 @:Change
-                        }
+                            }
                             else
                             {
                                 @:Assign
-                        }
+                            }
                         </a>
                         @if (roleSelectionModel.ProjectRoleId.HasValue)
                         {
                             <a href="javascript:void" id="RemoveProjectRoleButton" title="Remove the assigned project role"
-                                class="button">Remove</a>
+                               class="button">Remove</a>
                         }
                     </div>
                 </div>
@@ -893,16 +943,20 @@
 
             <div style="text-align: right">
                 <a href="javascript:void(0);" data-function="RefreshSelectedLevelButton" class="button">
-                    Refresh</a>
+                    Refresh
+                </a>
                 <a href="javascript:void(0);" data-function="AddSelectedLevelButton" class="button">
-                    Add</a>
+                    Add
+                </a>
             </div>
             <div id="SelectedLevelTablePlaceholder"></div>
             <div style="text-align: right">
                 <a href="javascript:void(0);" data-function="RefreshSelectedLevelButton" class="button">
-                    Refresh</a>
+                    Refresh
+                </a>
                 <a href="javascript:void(0);" data-function="AddSelectedLevelButton" class="button">
-                    Add</a>
+                    Add
+                </a>
             </div>
 
             <div id="SelectLevelDialog" style="display: none; width: 100%; height: 100%">
@@ -913,13 +967,13 @@
                     <div style="text-align: right">
                         <a href="javascript:void(0);" id="ConfirmSelectedLevelButton" class="button">Confirm</a>
                         &nbsp;
-                                <a href="javascript:void(0);" id="CancelSelectedLevelButton" class="button">Cancel</a>
+                        <a href="javascript:void(0);" id="CancelSelectedLevelButton" class="button">Cancel</a>
                     </div>
                 }
             </div>
         }
     </fieldset>
-    
+
     <div id="ChangeProjectRoleDialog">
         @using (Html.BeginForm("ChangeProjectRole", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "ChangeProjectRoleForm" }))
         {
@@ -952,16 +1006,20 @@
             <legend>Simulation Combinations</legend>
             <div style="text-align: right">
                 <a href="javascript:void(0);" data-function="RefreshSelectedSimulationButton" class="button">
-                    Refresh</a>
+                    Refresh
+                </a>
                 <a href="javascript:void(0);" data-function="AddSelectedSimulationButton" class="button">
-                    Add</a>
+                    Add
+                </a>
             </div>
             <div id="SelectedSimulationTablePlaceholder"></div>
             <div style="text-align: right">
                 <a href="javascript:void(0);" data-function="RefreshSelectedSimulationButton" class="button">
-                    Refresh</a>
+                    Refresh
+                </a>
                 <a href="javascript:void(0);" data-function="AddSelectedSimulationButton" class="button">
-                    Add</a>
+                    Add
+                </a>
             </div>
         </fieldset>
 
@@ -976,7 +1034,8 @@
                         <div class="label">@Html.LabelFor(m => m.SimulationContextId)</div>
                     </div>
                     <div class="grid_7 table">
-                        <div class="value">@Html.DropDownList(Html.IdFor(m => m.SimulationContextId).ToString(), Model.CreateSimulationContextDropDownList(Model.SimulationContextId))
+                        <div class="value">
+                            @Html.DropDownList(Html.IdFor(m => m.SimulationContextId).ToString(), Model.CreateSimulationContextDropDownList(Model.SimulationContextId))
                         </div>
                     </div>
                     <div class="clear"></div>
@@ -985,7 +1044,8 @@
                         <div class="label">@Html.LabelFor(m => m.SimulationRemarks)</div>
                     </div>
                     <div class="grid_7 table">
-                        <div class="value">@Html.TextAreaFor(m => m.SimulationRemarks)
+                        <div class="value">
+                            @Html.TextAreaFor(m => m.SimulationRemarks)
                         </div>
                     </div>
                     <div class="clear"></div>
@@ -994,7 +1054,7 @@
                         <a href="javascript:void(0);" id="SubmitSimulationRemarksButton" class="button">Save</a>
                     </div>
                 </div>
-                    
+
             }
         </fieldset>
     </div>
@@ -1007,16 +1067,23 @@
             <div style="text-align: right">
                 <a href="javascript:void(0);" id="ConfirmSelectedSimulationButton" class="button">Confirm</a>
                 &nbsp;
-                            <a href="javascript:void(0);" id="CancelSelectedSimulationButton" class="button">Cancel</a>
+                <a href="javascript:void(0);" id="CancelSelectedSimulationButton" class="button">Cancel</a>
             </div>
         }
     </div>
-    
+
     <div id="DictionarySimulationMatrix">
         <fieldset>
-            <legend>Matrix</legend>
+            <legend>
+                Matrix
+                @if ((bool)Session["Roi"])
+                {
+                    <text>- ROI</text>
+                }
+            </legend>
 
             <div id="CompetenceSimulationMatrixPlaceholder"></div>
+
         </fieldset>
 
         <fieldset>
@@ -1028,7 +1095,8 @@
 
                 <div class="row">
                     <div>@Html.DisplayNameFor(m => m.ScoringTypeCode)</div>
-                    <div>@Html.DropDownListFor(m => m.ScoringTypeCode, Model.CreateScoringTypeModelSelectListItems(Model.ScoringTypeCode))
+                    <div>
+                        @Html.DropDownListFor(m => m.ScoringTypeCode, Model.CreateScoringTypeModelSelectListItems(Model.ScoringTypeCode))
                     </div>
                 </div>
                 <div class="row">
@@ -1058,12 +1126,33 @@
         <a href="javascript: void;" id="SubmitCandidateReportingButton" class="button">Save</a>
     </div>
 
-    <h4>Report recipients</h4>
-    <div id="ProjectReportRecipientsPlaceholder"></div>
+    <div style="display:none;">
+        <h4>Report recipients</h4>
+        <div id="ProjectReportRecipientsPlaceholder"></div>
+    </div>
 
-     <h4>Feedback</h4>
-     <div id="CustomerFeedbackPlaceholder"></div>
-     
+    <!--<h4>Feedback</h4>-->
+    <div id="CustomerFeedbackPlaceholder" style="margin-top:20px;"></div>
 </fieldset>
 
+<script>
+    if ($("#SimulationContextId option:selected").text() == "") {
+        $("#ProjectRemarks").html("<p style='margin-left:10px;font-weight:700; color: red; font-size: small;'>Context is missing</p>");
+    }
+    else {
+        $("#ProjectRemarks").html("");
+    }
+</script>
 
+<script>
+    $("#SimulationContextId").change(function () {
+        if ($("#SimulationContextId option:selected").text() == "") {
+            $("#ProjectRemarks").html("<p style='margin-left:10px;font-weight:700; color: red; font-size: small;'>Context is missing</p>");
+        }
+        else {
+            $("#ProjectRemarks").html("");
+        }
+
+        $('#SubmitSimulationRemarksButton').trigger('click');
+    });
+</script>

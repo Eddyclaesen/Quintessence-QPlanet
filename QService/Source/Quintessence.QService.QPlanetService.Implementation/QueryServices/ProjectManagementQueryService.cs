@@ -1095,7 +1095,8 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
                             AssessorId = assessorId,
                             FullName = user.FullName,
                             UserName = user.UserName,
-                            Email = user.Emails.Any() ? user.Emails.FirstOrDefault().Address : ""
+                            Email = user.Emails.Any() ? user.Emails.FirstOrDefault().Address : "",
+                            Color = user.Color
                         });
                 }
                 return dayPlanAssessors;
@@ -1433,22 +1434,6 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
             });
         }
 
-        //public ProjectComplaintResponse RetrieveProjectComplaintOverview(int crmProjectId)
-        //{
-        //    LogTrace();
-
-        //    return Execute(() =>
-        //    {
-        //        var projectComplaintResponse = new ProjectComplaintResponse
-        //            {
-        //                ProjectComplaint = RetrieveProjectComplaintByCrmProject(crmProjectId),
-        //                ComplaintTypes = ListComplaintTypes()
-        //            };
-
-        //        return projectComplaintResponse;
-        //    });
-        //}
-
         public ListProductScoresResponse ListProductScores(ListProductScoresRequest request)
         {
             LogTrace();
@@ -1461,8 +1446,25 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
 
                 response.NeopirScores = repository.ListNeopirScores(request.ProjectCandidateId);
                 response.LeaderScores = repository.ListLeiderschapScores(request.ProjectCandidateId);
+                response.RoiScores = repository.ListRoiScores(request.ProjectCandidateId);
                 response.ProjectCandidate = repository.RetrieveProjectCandidate(request.ProjectCandidateId);
                 response.Project = repository.RetrieveProjectDetail(response.ProjectCandidate.ProjectId);
+                response.MotivationInterview = false;
+
+                List<ProjectCategoryDetailSimulationCombinationView> simulationCombinations = null;
+
+                var projectMainCategoryDetail = response.Project.ProjectCategoryDetails.FirstOrDefault(pcd => pcd.ProjectTypeCategory.IsMain);
+                if (projectMainCategoryDetail != null)
+                {
+                    simulationCombinations = repository.ListProjectCategoryDetailSimulationCombinations(projectMainCategoryDetail.Id);
+
+                    for (int i = 0; i < simulationCombinations.Count; i++)
+                    {
+                        if (simulationCombinations[i].SimulationName.Contains("Motivatie interview")) response.MotivationInterview = true;
+                    }
+                }
+
+                if (response.Project.ROI) response.MotivationInterview = true;
 
                 return response;
             });

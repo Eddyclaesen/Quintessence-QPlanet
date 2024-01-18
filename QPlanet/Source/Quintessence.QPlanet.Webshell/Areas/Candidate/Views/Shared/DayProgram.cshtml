@@ -9,22 +9,23 @@
         @for (int i = 0; i < Model.Assessors.Count; i++)
         {
             <td style="padding-left: 5px; padding-right: 5px;">
-                <div title="@Model.Assessors[i].FullName" data-function="AssessorColor" data-assessor-id="@Model.Assessors[i].AssessorId" data-color="@Model.Colors[i].Color" style="width: 20px; height: 20px; float: left; background-color: @Model.Colors[i].Color">
+                <div title="@Model.Assessors[i].FullName" data-function="AssessorColor" data-assessor-id="@Model.Assessors[i].AssessorId" data-color="@Model.Assessors[i].Color" style="width: 20px; height: 20px; float: left; background-color: @Model.Assessors[i].Color">
                 </div>
             </td>
             <td style="min-width: 50px;" title="@Model.Assessors[i].FullName">@Model.Assessors[i].UserName</td>
         }
-        <td style="width: 100%">
-            <div class="right-text">
-                <a id="zoomIn" href="javascript:void(0);" class="button">Zoom in</a>
-                <a id="zoomOut" href="javascript:void(0);" class="button">Zoom out</a>
-                <a href="javascript:void(0);" data-function="PrintDayProgramButton" class="button">Print</a>
-                <a href="javascript:void(0);" data-function="RefreshDayProgramButton" class="button">Refresh</a>
-                <a href="javascript:void(0);" data-function="ShowEditDayProgramDialog" class="button">Edit</a>
-            </div>
+        <td style="width: 100%">            
         </td>
     </tr>
 </table>
+
+<div>
+    <a id="zoomIn" href="javascript:void(0);" class="button">Zoom in</a>
+    <a id="zoomOut" href="javascript:void(0);" class="button">Zoom out</a>
+    <a href="javascript:void(0);" data-function="PrintDayProgramButton" class="button">Print</a>
+    <a href="javascript:void(0);" data-function="RefreshDayProgramButton" class="button">Refresh</a>
+    <a href="javascript:void(0);" data-function="ShowEditDayProgramDialog" class="button">Edit</a>
+</div>
 
 <div id="divDayProgram" style="overflow: auto;">
     <table>

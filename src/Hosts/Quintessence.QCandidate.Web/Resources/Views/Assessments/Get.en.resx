@@ -121,7 +121,7 @@
     <value>You can start on the preparation of the exercise.</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>&lt;p&gt;You may find all relevant information here the day your Center is scheduled.&lt;/p&gt;</value>
+    <value>&lt;p&gt;You may find all relevant information here the day your center is scheduled.&lt;/p&gt;</value>
   </data>
   <data name="WelcomeQCandidate" xml:space="preserve">
     <value>&lt;h3&gt;Welcome at QCandidate!&lt;/h3&gt;&lt;br&gt;&lt;p&gt;This is your personal page.&lt;/p&gt;</value>

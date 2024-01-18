@@ -54,6 +54,14 @@ namespace Quintessence.QService.Business.CommandRepositories
                                 consultancyProject.Name = projectName;
                                 consultancyProject.PricingModelId = 1;
                                 return consultancyProject;
+
+                            case "VTO":
+                                var vtoProject = context.Create<ConsultancyProject>();
+                                vtoProject.ProjectTypeId = projectTypeId;
+                                vtoProject.StatusCode = (int)ProjectStatusCodeType.Draft;
+                                vtoProject.Name = projectName;
+                                vtoProject.PricingModelId = 1;
+                                return vtoProject;
                         }
 
                         return null;

@@ -17,5 +17,8 @@ namespace Quintessence.QService.QueryModel.Prm
 
         [DataMember]
         public string Email { get; set; }
+
+        [DataMember]
+        public string Color { get; set; }
     }
 }

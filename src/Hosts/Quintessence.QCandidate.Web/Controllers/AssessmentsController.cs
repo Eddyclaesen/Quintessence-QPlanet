@@ -73,7 +73,8 @@ namespace Quintessence.QCandidate.Controllers
                 foreach (var programComponent in assessment.DayProgram.ProgramComponents.OrderBy(pc => pc.Start))
                 {
 
-                    var title = programComponent.Description ?? programComponent.Name;
+                    var title = programComponent.Name ?? programComponent.Description;
+                    var description = programComponent.Description;
                     var location = programComponent.Room.Name;
 
                     var assessors = GetAssessorsString(programComponent.LeadAssessor, programComponent.CoAssessor);
@@ -96,7 +97,12 @@ namespace Quintessence.QCandidate.Controllers
                         showDetailsLink = true;
                     }
 
-                    var programComponentModel = new ProgramComponent(programComponent.Id, title, location, showDetailsLink, assessors, programComponent.Start, programComponent.End, qCandidateLayout);
+                    if (description != null && description.Contains("http"))
+                    {
+                        showDetailsLink = true;
+                    }
+
+                    var programComponentModel = new ProgramComponent(programComponent.Id, title, description, location, showDetailsLink, assessors, programComponent.Start, programComponent.End, qCandidateLayout);
                     result.Add(programComponentModel);
                 }
             }

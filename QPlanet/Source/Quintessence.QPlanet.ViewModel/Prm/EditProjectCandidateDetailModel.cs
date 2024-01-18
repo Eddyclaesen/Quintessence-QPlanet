@@ -119,6 +119,8 @@ namespace Quintessence.QPlanet.ViewModel.Prm
         [Display(Name ="Video consent")]
         public bool Consent { get; set; }
 
+        public string BceEntity { get; set; }
+
         [Display(Name = "Archive number")]
         public int CrmCandidateInfoId { get; set; }
 

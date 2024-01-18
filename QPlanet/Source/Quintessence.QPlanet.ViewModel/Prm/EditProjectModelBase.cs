@@ -68,6 +68,15 @@ namespace Quintessence.QPlanet.ViewModel.Prm
         [Display(Name = "Confidential")]
         public bool Confidential { get; set; }
 
+        [Display(Name = "ROI")]
+        public bool ROI { get; set; }
+
+        [Display(Name = "Executive")]
+        public bool Executive { get; set; }
+
+        [Display(Name = "Lock")]
+        public bool Lock { get; set; }
+
         public IEnumerable<SelectListItem> CreatePricingModelSelectListItems(int pricingModelId)
         {
             switch (Status)

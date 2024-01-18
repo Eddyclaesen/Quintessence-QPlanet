@@ -16,5 +16,7 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectAssessmentDe
         {
             return CandidateReportDefinition != null ? CandidateReportDefinition.Id : Guid.Empty;
         }
+
+        public bool MotivationScores { get; set; }
     }
 }

@@ -69,7 +69,6 @@
     <Folder Include="dbo\Stored Procedures\" />
     <Folder Include="QCandidate" />
     <Folder Include="QCandidate\Stored Procedures" />
-    <Folder Include="Scripts" />
     <Folder Include="QCandidate\Tables" />
   </ItemGroup>
   <ItemGroup>
@@ -593,14 +592,11 @@
     <Build Include="dbo\Stored Procedures\ProgramComponent_GetByIdAndLanguageId.sql" />
     <Build Include="dbo\Stored Procedures\SimulationCombinationMemo_GetAllBySimulationCombinationId.sql" />
     <Build Include="dbo\Stored Procedures\Context_GetIdByProgramComponentId.sql" />
-    <Build Include="Scripts\Release_v2.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="QCandidate\Stored Procedures\Assessment_GetByCandidateIdAndDateAndLanguage.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Scripts\Release.sql" />
-    <None Include="Scripts\SeedMemoProgramComponent.sql" />
     <None Include="QCandidate\Stored Procedures\MemoProgramComponent_GetByIdAndLanguage.sql" />
     <None Include="QCandidate\Stored Procedures\CalendarDay_GetAllFromPredecessorBySimulationCombinationIdAndUserId.sql" />
     <None Include="QCandidate\Stored Procedures\Memos_GetAllFromPredecessorBySimulationCombinationIdAndUserId.sql" />

@@ -155,6 +155,8 @@
     <Compile Include="Cam\UpdateProgramComponentStart.cs" />
     <Compile Include="Crm\ContactDetailModel.cs" />
     <Compile Include="Crm\UnsynchronizedEmployeeModel.cs" />
+    <Compile Include="Dim\BceListItemModel.cs" />
+    <Compile Include="Dim\BceSelectListItemModel.cs" />
     <Compile Include="Dim\CreateNewDictionaryClusterModel.cs" />
     <Compile Include="Dim\CreateNewDictionaryCompetenceModel.cs" />
     <Compile Include="Dim\CreateNewDictionaryIndicatorModel.cs" />
@@ -269,6 +271,7 @@
     <Compile Include="Prm\FilterProjectCandidateOverviewModel.cs" />
     <Compile Include="Prm\FocusedScoresSimulationCombinationModel.cs" />
     <Compile Include="Prm\LeaderScoreModel.cs" />
+    <Compile Include="Prm\EditProjectCandidateRoiScoreModel.cs" />
     <Compile Include="Prm\NeopirScoreModel.cs" />
     <Compile Include="Prm\ProjectCandidateReportingFiltersModel.cs" />
     <Compile Include="Prm\StandardScoresSimulationCombinationModel.cs" />

@@ -180,7 +180,6 @@ namespace Quintessence.QService.Business.Integration.Tests.ServiceImplementation
 
                 var consultancyProject = (ConsultancyProjectView)project;
 
-                const string functionTitle = "Function Title";
                 const string functionInformation = "Function Information";
                 const string departmentInformation = "Department Information";
                 const string remarks = "Remarks";
@@ -1188,7 +1187,6 @@ namespace Quintessence.QService.Business.Integration.Tests.ServiceImplementation
 
             //Create ProjectProduct
             var invoiceAmount = productType.UnitPrice;
-            const int invoiceStatusCode = (int)InvoiceStatusType.Planned;
             var createRequest = new CreateProjectProductRequest
                 {
                     ProjectId = projectId,
@@ -1222,7 +1220,6 @@ namespace Quintessence.QService.Business.Integration.Tests.ServiceImplementation
 
             //Create ProjectProduct
             var invoiceAmount = productType.UnitPrice;
-            const int invoiceStatusCode = (int)InvoiceStatusType.Planned;
             var createRequest = new CreateProjectProductRequest
             {
                 ProjectId = projectId,
@@ -1333,7 +1330,6 @@ namespace Quintessence.QService.Business.Integration.Tests.ServiceImplementation
 
             //Create ProjectProduct
             var invoiceAmount = productType.UnitPrice;
-            const int invoiceStatusCode = (int)InvoiceStatusType.Planned;
             var createRequest = new CreateProjectProductRequest
             {
                 ProjectId = projectId,
@@ -1654,8 +1650,6 @@ namespace Quintessence.QService.Business.Integration.Tests.ServiceImplementation
 
             //Create ProjectComplaint
             const string subject = "My Complaint",
-                         submitter = "John Appleseed",
-                         details = "There was a complaint with low priority.",
                          followUp = "The complaint is in progress.";
             var complaintDate = new DateTime(2012,1,1);
             const int complaintSeverityTypeId = (int)ComplaintSeverityType.Low;
@@ -1699,8 +1693,6 @@ namespace Quintessence.QService.Business.Integration.Tests.ServiceImplementation
 
             //Create ProjectComplaint
             const string subject = "My Complaint",
-                         submitter = "John Appleseed",
-                         details = "There was a complaint with low priority.",
                          followUp = "The complaint is in progress.";
             var complaintDate = new DateTime(2012, 1, 1);
             const int complaintSeverityTypeId = (int)ComplaintSeverityType.Low;
@@ -1768,8 +1760,6 @@ namespace Quintessence.QService.Business.Integration.Tests.ServiceImplementation
 
             //Create ProjectComplaint
             const string subject = "My Complaint",
-                         submitter = "John Appleseed",
-                         details = "There was a complaint with low priority.",
                          followUp = "The complaint is in progress.";
             var complaintDate = new DateTime(2012, 1, 1);
             const int complaintSeverityTypeId = (int)ComplaintSeverityType.Low;
@@ -1793,8 +1783,6 @@ namespace Quintessence.QService.Business.Integration.Tests.ServiceImplementation
 
             //Update ProjectComplaint
             const string updateSubject = "My Complaint",
-                         updateSubmitter = "John Appleseed",
-                         updateDetails = "There was a complaint with low priority.",
                          updateFollowUp = "The complaint is in progress.";
             const int updateComplaintSeverityTypeId = (int)ComplaintSeverityType.Medium;
             //Retrieve other complaint type for update

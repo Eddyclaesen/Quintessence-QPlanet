@@ -593,7 +593,8 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Controllers
                         || projectCategoryDetail is ProjectCategoryFaDetailView
                         || projectCategoryDetail is ProjectCategoryFdDetailView
                         || projectCategoryDetail is ProjectCategoryPsDetailView
-                        || projectCategoryDetail is ProjectCategorySoDetailView)
+                        || projectCategoryDetail is ProjectCategorySoDetailView
+                        || projectCategoryDetail is ProjectCategoryCaDetailView)
                     {
                         model.IsIndicatorScoringEnabled = ((ScoringTypeCodeType)(int)((dynamic)projectCategoryDetail).ScoringTypeCode) == ScoringTypeCodeType.WithIndicators;
                     }
@@ -670,8 +671,9 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Controllers
                         || projectCategoryDetail is ProjectCategoryFaDetailView
                         || projectCategoryDetail is ProjectCategoryFdDetailView
                         || projectCategoryDetail is ProjectCategoryPsDetailView
-                        || projectCategoryDetail is ProjectCategorySoDetailView)
-                    {
+                        || projectCategoryDetail is ProjectCategorySoDetailView
+                        || projectCategoryDetail is ProjectCategoryCaDetailView)
+                        {
                         model.IsIndicatorScoringEnabled = ((ScoringTypeCodeType)(int)((dynamic)projectCategoryDetail).ScoringTypeCode) == ScoringTypeCodeType.WithIndicators;
                     }
 
@@ -818,11 +820,13 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Controllers
                     var projectCategoryDetail = this.InvokeService<IProjectManagementQueryService, ProjectCategoryDetailView>(service => service.RetrieveProjectMainCategoryDetail(model.ProjectCandidate.ProjectId));
 
                     if (projectCategoryDetail is ProjectCategoryAcDetailView
-                        || projectCategoryDetail is ProjectCategoryDcDetailView || projectCategoryDetail is ProjectCategoryEaDetailView
+                        || projectCategoryDetail is ProjectCategoryDcDetailView 
+                        || projectCategoryDetail is ProjectCategoryEaDetailView
                         || projectCategoryDetail is ProjectCategoryFaDetailView
                         || projectCategoryDetail is ProjectCategoryFdDetailView
                         || projectCategoryDetail is ProjectCategoryPsDetailView
-                        || projectCategoryDetail is ProjectCategorySoDetailView)
+                        || projectCategoryDetail is ProjectCategorySoDetailView
+                        || projectCategoryDetail is ProjectCategoryCaDetailView)
                     {
                         model.IsIndicatorScoringEnabled = ((ScoringTypeCodeType)(int)((dynamic)projectCategoryDetail).ScoringTypeCode) == ScoringTypeCodeType.WithIndicators;
                     }
@@ -899,7 +903,24 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Controllers
             }
         }
 
-        
+        [HttpPost]
+        public ActionResult EditProjectCandidateRoiScores(Guid id, int? score)
+        {
+            using (DurationLog.Create())
+            {
+                try
+                {                  
+                    this.InvokeService<IProjectManagementCommandService>(service => service.SaveRoiScores(id, score));
+                    return new HttpStatusCodeResult(HttpStatusCode.OK);
+                }
+                catch (Exception exception)
+                {
+                    LogManager.LogError(exception);
+                    return HandleStatusCodeError(exception);
+                }
+            }
+        }
+
         public ActionResult EditProjectCandidateResume(Guid id)
         {
             using (DurationLog.Create())
@@ -990,9 +1011,24 @@ namespace Quintessence.QPlanet.Webshell.Areas.Project.Controllers
             {
                 try
                 {
+                    var request = new ListProductScoresRequest { ProjectCandidateId = id };
+
+                    var scores = this.InvokeService<IProjectManagementQueryService, ListProductScoresResponse>(service => service.ListProductScores(request));
+
+                    var motivationscores = true;
+
+                    if (scores.MotivationInterview)
+                    {
+                        for (int i = 0; i < scores.RoiScores.Count; i++)
+                        {
+                            if (scores.RoiScores[i].Score == null) motivationscores = false;
+                        }
+                    }                    
+
                     var response = this.InvokeService<IProjectManagementQueryService, RetrieveProjectCandidateReportingResponse>(service => service.RetrieveProjectCandidateReporting(id));
 
                     var model = Mapper.DynamicMap<ProjectCandidateReportingActionModel>(response);
+                    model.MotivationScores = motivationscores;
 
                     return View(model);
                 }

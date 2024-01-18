@@ -1,34 +1,38 @@
 ﻿@model Quintessence.QPlanet.Webshell.Areas.Project.Models.ProjectAssessmentDevelopment.IndicatorSimulationsModel
 @{
     var tableWidth = (Model.SimulationCombinations.Count + 1 > 5 ? 5 : Model.SimulationCombinations.Count) * 20;
+    var count = 0;
 }
 
-<table style="width: @tableWidth%" class="dataTable">
-    <tr>
-        <td style="min-width: 250px; width: @(tableWidth / (Model.SimulationCombinations.Count + 1))%"></td>
+<table style="width: @tableWidth%" class="dataTable" id="tblsort">
+    <tr id="trexclude" class="nodrop nodrag" style="border-bottom: 1px solid lightgray;">
+        <th style="min-width: 250px; width: @(tableWidth / (Model.SimulationCombinations.Count + 1))%"></th>
         @foreach (var combination in Model.SimulationCombinations)
         {
-            <td style="width: @(tableWidth / (Model.SimulationCombinations.Count + 1))%; text-align: center">@combination.SimulationName
-            </td>
+            <th style="width: @(tableWidth / (Model.SimulationCombinations.Count + 1))%; text-align: center; vertical-align:bottom;">
+                @combination.SimulationName <br />(<span style="font-weight:700;" id="sim_@count"></span>)
+                <br />
+                <input type="checkbox" id="checkall_@count" class="checkall" />
+            </th>
+            count++;
         }
     </tr>
 
     @foreach (var groupedIndicators in Model.DictionaryIndicators
-                                .OrderBy(di => di.DictionaryClusterOrder)
-                                .ThenBy(di => di.DictionaryCompetenceOrder)
+                                .OrderBy(di => di.DictionaryCompetenceOrder)
                                 .ThenBy(di => di.DictionaryLevelLevel)
                                 .ThenBy(di => di.DictionaryIndicatorOrder)
                                 .GroupBy(i => i.DictionaryCompetenceId))
     {
-        var competence = new { Id = groupedIndicators.First().DictionaryCompetenceId, Name = groupedIndicators.First().DictionaryCompetenceName };
-        <tr>
+        var competence = new { Id = groupedIndicators.First().DictionaryCompetenceId, Name = groupedIndicators.First().DictionaryCompetenceName, DetailId = groupedIndicators.First().ProjectCategoryDetailId };
+        <tr class="results" id="@competence.Id" data-detailid="@competence.DetailId">
             <td>
-                <img src="@Url.Content("~/Images/Icons/Warning16.png")" 
-                     alt="At least 2 simulations should be selected for this competence" 
-                     title="At least 2 simulations should be selected for this competence" 
-                     data-competenceid="@competence.Id" 
-                     data-function="CompetenceWarningImage" 
-                     style="display: none"/>
+                <img src="@Url.Content("~/Images/Icons/Warning16.png")"
+                     alt="At least 2 simulations should be selected for this competence"
+                     title="At least 2 simulations should be selected for this competence"
+                     data-competenceid="@competence.Id"
+                     data-function="CompetenceWarningImage"
+                     style="display: none" />
                 @competence.Name
             </td>
 
@@ -42,6 +46,15 @@
     }
 </table>
 
+@if (Model.DictionaryIndicators.Any() && (bool)Session["Roi"])
+{
+    <div style="text-align: right;padding: 15px 15px 0px 0px;font-style: italic;">
+        Competences can be dragged to set ROI order.
+        <input id="chkLock" @(Convert.ToBoolean(Session["Lock"]) == true ? "checked='checked'" : string.Empty) type="checkbox" />
+        <span>Lock to confirm ROI/Matrix</span>
+    </div>
+}
+
 <script>
     $(function () {
         RefreshWarningMessages();
@@ -49,4 +62,159 @@
             RefreshWarningMessages();
         });
     });
+</script>
+
+<script>
+    $("#tblsort").tableDnD({
+        onDrop: function (table, row) {
+            var rows = table.tBodies[0].rows;
+            var data = [];
+            var detailid = $("#tblsort tr:nth-child(2)").data("detailid");
+
+            //var debugStr = "Row dropped was " + row.id + ". New order: ";
+
+            for (var i = 1; i < rows.length; i++) {
+                //debugStr += rows[i].id + " - ";
+                //alert(i + " - " + rows[i].id);
+                data.push(rows[i].id);
+            }
+
+            $.ajax({
+                type: 'POST',
+                data: { order: data, detailId: detailid },
+                traditional: true,
+                url: '@Url.Action("SetRoiOrder","ProjectAssessmentDevelopment")'
+            })
+        }
+    });
+</script>
+
+<script>
+    $('input[type="checkbox"]').change(function () {
+        var result = [];
+
+        $('.results').each(function () {
+            $(this).find('input[type="checkbox"]').each(function (i) {
+                result[i] = result[i] || 0;
+                result[i] += this.checked;
+                $('#sim_' + i.toString()).text(result[i]);
+            })
+        })
+    });
+</script>
+
+<script>
+    $("#chkLock").change(function () {
+        var locked = "";
+        if (this.checked) {
+            $('#tblsort tr').addClass("nodrag nodrop");
+            $('#tblsort tr').css("cursor", "initial");
+            $('.dragtable-sortable').attr('-user-select', 'none');
+            $('#tblsort input[type=checkbox]').attr('disabled', 'true');
+            locked = "true";
+        }
+        else {
+            $('#tblsort tr').removeClass("nodrag nodrop");
+            $('#tblsort tr').css("cursor", "move");
+            $('.dragtable-sortable').attr('-user-select', 'text');
+            $('#trexclude').addClass("nodrag nodrop");
+            $('#tblsort input[type=checkbox]').removeAttr('disabled');
+            locked = "false";
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: { lockRoi: locked },
+            traditional: true,
+            url: '@Url.Action("LockRoiOrder","ProjectAssessmentDevelopment")'
+            })
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#MatrixCountRemarks").html("");
+        $('#tblsort tr').not(":first").each(function () {
+            var count = 0;
+            var $tds = $(this).find('td');
+            count = $(this).find(':checkbox:checked').length;
+            if (count == "0") {
+                competence = $tds.eq(0).text();
+                $("#MatrixCountRemarks").append("<p style='margin-left:10px;font-weight:700; color: red; font-size: small;'>" + competence + "matrix missing</p>");
+            };
+        });
+
+        var result = [];
+
+        $('.results').each(function () {
+            $(this).find('input[type="checkbox"]').each(function (i) {
+                result[i] = result[i] || 0;
+                result[i] += this.checked;
+                $('#sim_' + i.toString()).text(result[i]);
+            })
+        })
+
+    })
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".checkall").click(function () {  
+            var checkedStatus = this.checked;
+            var index = $(this).parent().index() + 1;
+            $("#tblsort tbody tr td:nth-child(" + index + ") input:checkbox").each(function () {
+                var $row = $(this).parent().parent();
+                //alert($row.attr("data-detailid"));
+                //alert($(this).attr("data-competence-id"));
+                //alert($(this).attr("data-combination-id"));
+                if ($(this).prop("checked")) {
+                    if (checkedStatus) {
+                        //alert("is al aangevinkt dus laten we zo");
+                    }
+                    else {
+                        $.ajax({
+                            type: 'POST',
+                            data: { projectCategoryDetailId: $row.attr("data-detailid"), competenceId: $(this).attr("data-competence-id"), combinationId: $(this).attr("data-combination-id") },
+                            traditional: true,
+                            async: false,
+                            url: '@Url.Action("RemoveSimulationCompetence", "ProjectAssessmentDevelopment")'
+                            })
+                    }
+                }
+                else {
+                    if (checkedStatus) {
+                        $.ajax({
+                            type: 'POST',
+                            data: { projectCategoryDetailId: $row.attr("data-detailid"), competenceId: $(this).attr("data-competence-id"), combinationId: $(this).attr("data-combination-id") },
+                            traditional: true,
+                            async: false,
+                            url: '@Url.Action("AddSimulationCompetence", "ProjectAssessmentDevelopment")'
+                            })
+                    }
+                    else {
+                        //alert("is afgevinkt en moet zo blijven");
+                    }
+                }
+                this.checked = checkedStatus;
+            });
+        });        
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        if ($('#chkLock').is(':checked')) {
+            $('#tblsort tr').addClass("nodrag nodrop");
+            $('#tblsort tr').css("cursor", "initial");
+            $('.dragtable-sortable').attr('-user-select', 'none');
+            $('#tblsort input[type=checkbox]').attr('disabled', 'true');
+        }
+        else {
+            $('#tblsort tr').removeClass("nodrag nodrop");
+            $('#tblsort tr').css("cursor", "move");
+            $('.dragtable-sortable').attr('-user-select', 'text');
+            $('#trexclude').addClass("nodrag nodrop");
+            $('#tblsort input[type=checkbox]').removeAttr('disabled');
+        }
+    })
 </script>

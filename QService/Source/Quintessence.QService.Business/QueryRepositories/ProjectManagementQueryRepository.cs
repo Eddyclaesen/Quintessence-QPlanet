@@ -1541,6 +1541,27 @@ namespace Quintessence.QService.Business.QueryRepositories
             }
         }
 
+        public List<ProjectCandidateRoiScoreView> ListRoiScores(Guid projectCandidateId)
+        {
+            using (DurationLog.Create())
+            {
+                try
+                {
+                    using (var context = CreateContext())
+                    {
+                        var roiScores = context.ListRoiScores(projectCandidateId).ToList();
+
+                        return roiScores;
+                    }
+                }
+                catch (Exception exception)
+                {
+                    LogManager.LogError(exception);
+                    throw;
+                }
+            }
+        }
+
         public List<ProjectCategoryDetailView> ListProjectCategoryDetails(Guid projectId)
         {
             using (DurationLog.Create())

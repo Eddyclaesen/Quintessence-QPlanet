@@ -32,5 +32,8 @@ namespace Quintessence.QService.QPlanetService.Contracts.DataContracts.ProjectMa
 
         [DataMember]
         public Guid? CopyProjectId { get; set; }
+
+        [DataMember]
+        public string ConvertProjectType { get; set; }
     }
 }

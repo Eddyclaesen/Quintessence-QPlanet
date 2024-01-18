@@ -1,8 +1,11 @@
 ﻿@model IEnumerable<Quintessence.QService.QueryModel.Prm.ProjectCategoryDetailDictionaryIndicatorView>
 
+<p style="margin-left:5px; font-weight:700;">Clusters: @Model.GroupBy(p => p.DictionaryClusterId).Count() │ Competences: @Model.GroupBy(i => i.DictionaryCompetenceName).Count() │ Indicators: @Model.Count()</p>
+
 <table id="SelectedIndicatorTable" class="dataTable">
     <thead>
         <tr>
+            <th></th>
             <th>Cluster</th>
             <th>Competence</th>
             <th>Level</th>
@@ -11,13 +14,14 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var entry in Model
+        @foreach (var entry in Model
             .OrderBy(m => m.DictionaryClusterOrder)
             .ThenBy(m => m.DictionaryCompetenceOrder)
             .ThenBy(m => m.DictionaryLevelLevel)
             .ThenBy(m => m.DictionaryIndicatorOrder))
         {
             <tr>
+                <td><input id="@entry.Id" type="checkbox" /></td>
                 <td>@entry.DictionaryClusterName</td>
                 <td>@entry.DictionaryCompetenceName</td>
                 <td>@entry.DictionaryLevelName</td>

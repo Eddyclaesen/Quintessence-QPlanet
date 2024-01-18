@@ -29,6 +29,12 @@ namespace Quintessence.QService.Data.QueryContext
             return query;
         }
 
+        public IEnumerable<AvailableBceView> ListAvailableBcesForContact(int contactId)
+        {
+            var query = Database.SqlQuery<AvailableBceView>("Bce_ListAvailableEntitiesForContact {0}", contactId);
+            return query;
+        }
+
         public IEnumerable<DictionaryIndicatorMatrixEntryView> ListDictionaryIndicatorMatrixEntries(Guid dictionaryId, int? languageId = null)
         {
             var query = Database.SqlQuery<DictionaryIndicatorMatrixEntryView>("Dictionary_ListDictionaryIndicatorMatrixEntries {0}, {1}", dictionaryId, languageId);

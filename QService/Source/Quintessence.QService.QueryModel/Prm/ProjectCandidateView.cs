@@ -129,6 +129,9 @@ namespace Quintessence.QService.QueryModel.Prm
         public bool Consent { get; set; }
 
         [DataMember]
+        public string BceEntity { get; set; }
+
+        [DataMember]
         public Guid? ScoringCoAssessorId { get; set; }
 
         [DataMember]

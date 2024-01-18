@@ -118,5 +118,8 @@ namespace Quintessence.QService.QueryModel.Fin
         [DataMember]
         public Guid AuditVersionId { get; set; }
 
+        [DataMember]
+        public string BceEntity { get; set; }
+
     }
 }

@@ -465,7 +465,7 @@ namespace Quintessence.QService.QPlanetService.Implementation.QueryServices
                         gotAccess = $"<strong>How to proceed:</strong><br /><br />Visit {qCandidateUrl} and log in using the credentials previously sent. If you no longer have access to your credentials, you can request a new password via the portal.";
                         break;
                     case "fr":
-                        gotAccess = $"<strong>Comment procéder ?</strong><br /><br />Surfez sur : {qCandidateUrl} et utilisant les données envoyées précédemment. Si vous ne disposez plus de ce mot de passe, vous pouvez en demander un nouveau via le portail.";
+                        gotAccess = $"<strong>Comment procéder ?</strong><br /><br />Surfez sur : {qCandidateUrl} et utilisez les données envoyées précédemment. Si vous ne disposez plus de ce mot de passe, vous pouvez en demander un nouveau via le portail.";
                         break;
                     case "de":
                         gotAccess = $"Sie haben Zugriff auf unsere QCandidate-Plattform unter: {qCandidateUrl} und können sich mit den zuvor gesendeten Informationen anmelden.";

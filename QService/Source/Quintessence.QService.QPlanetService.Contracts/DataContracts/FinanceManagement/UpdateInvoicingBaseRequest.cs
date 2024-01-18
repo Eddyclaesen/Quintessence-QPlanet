@@ -33,5 +33,8 @@ namespace Quintessence.QService.QPlanetService.Contracts.DataContracts.FinanceMa
 
         [DataMember]
         public decimal? InvoiceAmount { get; set; }
+
+        [DataMember]
+        public string BceEntity { get; set; }
     }
 }

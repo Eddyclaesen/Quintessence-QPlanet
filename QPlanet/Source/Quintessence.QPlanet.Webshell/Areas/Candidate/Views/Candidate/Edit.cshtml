@@ -122,6 +122,14 @@
                         <td class="value">
                             @Html.EditorFor(m => m.Phone)
                         </td>
+                        <td>
+                            @{ 
+                                if(Model.Phone != null && Model.Phone.Length > 7)
+                                {
+                                    <a href="tel:@Model.Phone"><img src="~/Images/phone.gif" style="margin-left:5px;margin-top:1px;" /></a>
+                                }
+                            }
+                        </td>
                     </tr>
                     <tr>
                         <td class="label">

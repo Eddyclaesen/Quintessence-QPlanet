@@ -26,6 +26,10 @@ namespace Quintessence.QService.DataModel.Prm
 
         public bool Confidential { get; set; }
 
+        public bool ROI { get; set; }
+        public bool Executive { get; set; }
+        public bool Lock { get; set; }
+
         public string Remarks { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "Illegal customer selected.")]

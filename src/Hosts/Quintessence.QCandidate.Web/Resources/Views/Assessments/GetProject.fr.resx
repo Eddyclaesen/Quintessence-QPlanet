@@ -124,17 +124,16 @@
     <value>Retour</value>
   </data>
   <data name="ConsentIntro" xml:space="preserve">
-    <value>&lt;p&gt;Lors de votre assessment, c’est possible qu'une ou plusieurs simulations soient enregistrées. Évidemment, nous ne le ferons pas sans votre accord explicite.
-Ces enregistrements sont uniquement réservés à un usage interne et seront effacés x jours après votre assessment.&lt;/p&gt;</value>
+    <value>&lt;p&gt;Quintessence Consulting vous informe que nous considérons qu'il est de notre devoir moral de vous garantir toute la confidentialité durant votre présence chez nous. A ce titre, toutes les données confidentielles collectées sont traitées avec le plus grand soin et les enregistrements vidéo qui sont réalisés sont uniquement destinés à nos consultants-assesseurs pour étayer leurs observations des simulations et leur usage interne. &lt;br/&gt;Ces enregistrements ne seront pas conservés plus longtemps que nécessaire pour une évaluation correcte des compétences observées et seront supprimés après 2 mois. Seules les simulations interactives feront l'objet d'un enregistrement, pas le temps de préparation ni les réflexions partagées avec votre évaluateur par la suite.&lt;/p&gt;</value>
   </data>
   <data name="ConsentSub" xml:space="preserve">
     <value>&lt;p&gt;&lt;strong&gt;En cochant la check box, je donne l'autorisation d'enregistrer les simulations.&lt;/strong&gt;&lt;/p&gt;</value>
   </data>
   <data name="Context" xml:space="preserve">
-    <value>&lt;p&gt;Durant votre assessment, nous souhaiterions voir de quelle manière vous abordez un certain nombre de situations professionnelles. &lt;/p&gt;
+    <value>&lt;p&gt;Durant votre centre, nous souhaiterions voir de quelle manière vous abordez un certain nombre de situations professionnelles. &lt;/p&gt;
 &lt;p&gt;Ces situations professionnelles ne sont bien sûr pas vos problématiques professionnelles réelles, mais quelques cas pratiques dans lesquels vous pourrez montrer quels sont vos points forts. Ces cas pratiques se déroulent dans un contexte fictif : vous êtes employé d'une organisation fictive : &lt;strong&gt;{0}&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;Il est important que vous puissiez parcourir au moins une fois de manière approfondie le site Web de &lt;strong&gt;{0}&lt;/strong&gt; avant votre assessment, ceci afin que vous ayez déjà une vision précise de l'organisation dans laquelle vous allez vous retrouver.&lt;/p&gt;
-&lt;p&gt;Le but n'est pas que vous appreniez ces informations par cœur ! Familiarisez-vous plutôt avec la structure, le contexte, les valeurs et les normes en vigueur au sein de l'organisation &lt;strong&gt;{0}&lt;/strong&gt;. Cela vous mettra dans une position plus confortable pendant votre assessment.&lt;/p&gt;&lt;p&gt;Vous trouverez toutes les informations importantes ici : &lt;a href="https://simulation.quintessence.be/fr/login" target="_blank"&gt;LIEN&lt;/a&gt;.&lt;br/&gt;
+&lt;p&gt;Le but n'est pas que vous appreniez ces informations par cœur ! Familiarisez-vous plutôt avec la structure, le contexte, les valeurs et les normes en vigueur au sein de l'organisation &lt;strong&gt;{0}&lt;/strong&gt;. Cela vous mettra dans une position plus confortable pendant votre programme.&lt;/p&gt;&lt;p&gt;Vous trouverez toutes les informations importantes ici : &lt;a href="https://simulation.quintessence.be/fr/" target="_blank"&gt;LIEN&lt;/a&gt;.&lt;br/&gt;
 </value>
   </data>
   <data name="Evaluation" xml:space="preserve">
@@ -156,7 +155,7 @@ Ces enregistrements sont uniquement réservés à un usage interne et seront eff
     <value>hoera_fr.png</value>
   </data>
   <data name="Intro" xml:space="preserve">
-    <value>&lt;p&gt;A la demande de {0}, nous vous invitons à vous rendre dans un centre d'évaluation.&lt;/p&gt;</value>
+    <value>&lt;p&gt;A la demande de {0}, nous vous invitons.&lt;/p&gt;</value>
   </data>
   <data name="Location" xml:space="preserve">
     <value>Notre bureau</value>
@@ -186,7 +185,7 @@ Ces enregistrements sont uniquement réservés à un usage interne et seront eff
     <value>À quoi pouvez-vous vous attendre ?</value>
   </data>
   <data name="WhatToExpectSub" xml:space="preserve">
-    <value>&lt;p&gt;Le jour de votre assessment, vous recevez un aperçu détaillé de votre planning de la journée ici.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;N'oubliez donc pas d'apporter vos données de connexion.&lt;/strong&gt;&lt;/p&gt;
+    <value>&lt;p&gt;Le jour même vous recevez un aperçu détaillé de votre planning de la journée ici.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;N'oubliez donc pas d'apporter vos données de connexion.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Votre planning du jour est structuré chronologiquement et comprend à la fois des moments où vous allez travailler individuellement et des moments où vous allez interagir avec un assesseur.&lt;/p&gt; &lt;p&gt;Parce que nous travaillons le plus possible sans papier, vous pouvez gérer ces simulations via un carnet que nous mettrons à votre disposition si votre évaluation a lieu dans l'un de nos bureaux..&lt;br/&gt;
 Pour vous donner une idée du fonctionnement, nous vous invitons à jeter un coup d'œil à ce &lt;a href="https://demo-qcandidate.quintessenceconsulting.be/"&gt;LINK&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Veuillez noter :&lt;/strong&gt; il s'agit d'un exemple et il n'est pas lié aux exercices que vous ferez le jour d'évaluation.&lt;/p&gt;</value>
   </data>

@@ -16,9 +16,11 @@ using Quintessence.QService.QPlanetService.Contracts.DataContracts.ProjectManage
 using Quintessence.QService.QPlanetService.Contracts.ServiceContracts.CommandServiceContracts;
 using Quintessence.QService.QPlanetService.Contracts.ServiceContracts.QueryServiceContracts;
 using Quintessence.QService.QueryModel.Fin;
+using Quintessence.QService.QueryModel.Dim;
 using Quintessence.QService.QueryModel.Prm;
 using Quintessence.QService.QueryModel.Sec;
 using Quintessence.QPlanet.Infrastructure.Logging;
+using Quintessence.QPlanet.ViewModel.Dim;
 
 namespace Quintessence.QPlanet.Webshell.Areas.Finance.Controllers
 {
@@ -109,10 +111,25 @@ namespace Quintessence.QPlanet.Webshell.Areas.Finance.Controllers
 
                     var invoicingEntries = CastInvoicingViewsToEditModels(entries);
 
+                    foreach(var entry in invoicingEntries)
+                    {                        
+                        var possibleBces = this.InvokeService<IDictionaryManagementQueryService, List<AvailableBceView>>(service => service.ListAvailableBces(entry.ContactId));
+                        
+                        foreach(var item in possibleBces)
+                        {
+                            entry.Bces.Add(new BceSelectListItemModel
+                            {
+                                Id = item.Id,
+                                Name = item.Name
+                            });
+                        }
+                    }
+
                     var viewModel = new ListProjectManagerInvoicingModel
                     {
                         InvoicingEntries = invoicingEntries.OrderBy(e => e.InvoiceStatusCode).ToList()
                     };
+
                     return PartialView("ListProjectManagerInvoicingEntries", viewModel);
                 }
                 catch (Exception exception)
@@ -596,12 +613,12 @@ namespace Quintessence.QPlanet.Webshell.Areas.Finance.Controllers
             //Do casting to appropriate edit models.
             var invoicingEntries = new List<EditInvoicingBaseEntryModel>();
             foreach (var entry in entries)
-            {
+            {             
                 //project candidate
                 var projectCandidateInvoicingEntry = entry as InvoicingProjectCandidateEntryView;
                 if (projectCandidateInvoicingEntry != null)
                 {
-                    invoicingEntries.Add(Mapper.DynamicMap<EditProjectCandidateInvoicingEntryModel>(projectCandidateInvoicingEntry));
+                    invoicingEntries.Add(Mapper.DynamicMap<EditProjectCandidateInvoicingEntryModel>(projectCandidateInvoicingEntry));                    
                 }
 
                 //project candidate category type 1

@@ -54,8 +54,11 @@
                         "fnRender": function (obj) {
                             var editUrl = '@Url.Action("Edit", "ProjectGeneral", new{area="Project"})/' + obj.aData[5];
                             var copyUrl = '@Url.Action("Copy", "ProjectGeneral", new{area="Project"})/' + obj.aData[5];
+                            var deleteUrl = '@Url.Action("Delete", "ProjectGeneral", new{area="Project"})/' + obj.aData[5];
+                            var onclicktext = '\'Are you sure? Make sure there are no candidates and/or any invoicing attached. This can only be reversed by an administrator.\'';
                             return '<a href="' + editUrl + '" target="' + obj.aData[5] + '" class="edit-link" title="Edit">Edit</a>' +
-                                '<a href="' + copyUrl + '" target="' + obj.aData[5] + '" class="copy-link" title="Copy">Copy</a>';
+                                '<a href="' + copyUrl + '" target="' + obj.aData[5] + '" class="copy-link" title="Copy">Copy</a>' +
+                                '<a href="' + deleteUrl + '" onclick="return confirm(' + onclicktext + ')" target="' + obj.aData[5] + '" class="delete-link" title="Delete">Copy</a>';
                         }
                     }],
                 "bProcessing": true,
@@ -77,9 +80,9 @@
                 <th style="width: 30%;">Name</th>
                 <th style="width: 20%;">Type</th>
                 <th style="width: 25%;">Customer</th>
-                <th style="width: 15%;">Status</th>
+                <th style="width: 5%;">Status</th>
                 <th style="width: 10%;">Date</th>
-                <th>Actions</th>
+                <th style="width: 10%;">Actions</th>
             </tr>
         </thead>
         <tbody></tbody>

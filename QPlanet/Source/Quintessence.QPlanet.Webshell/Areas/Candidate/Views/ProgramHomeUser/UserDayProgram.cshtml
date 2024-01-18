@@ -9,7 +9,7 @@
         @for (int i = 0; i < Model.Assessors.Keys.Count; i++)
         {
             <td style="padding-left: 5px; padding-right: 5px;">
-                <div data-function="AssessorColor" data-assessor-id="@Model.Assessors.Keys.ElementAt(i)" data-color="@Model.Colors[i].Color" style="width: 20px; height: 20px; float: left; background-color: @Model.Colors[i].Color">
+                <div data-function="AssessorColor" data-assessor-id="@Model.Assessors.Keys.ElementAt(i)" data-color="@Model.Assessors[i].Color" style="width: 20px; height: 20px; float: left; background-color: @Model.Assessors[i].Color">
                 </div>
             </td>
             <td style="min-width: 150px;">@Model.Assessors.Values.ElementAt(i)</td>

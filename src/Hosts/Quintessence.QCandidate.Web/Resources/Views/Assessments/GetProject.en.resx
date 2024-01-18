@@ -124,16 +124,16 @@
     <value>Back</value>
   </data>
   <data name="ConsentIntro" xml:space="preserve">
-    <value>&lt;p&gt;During your assessment it is possible that one or more simulations are included. Of course, we will not do this without your explicit approval. &lt;br /&gt;These recordings are for internal use only and will be deleted x-number of days after your assessment.&lt;/p&gt;</value>
+    <value>&lt;p&gt;Quintessence Consulting hereby informs you that we consider it our moral duty to guarantee you all  confidentiality during your attendance with us. As such, all confidential data collected are treated with the utmost care and video recordings that are made are only intended for our consultant-assessors to support their observations of the simulations and internal use. &lt;br /&gt;These recordings, will not be kept longer than necessary for proper assessment of the observed competencies and will be deleted after 2 months. Only the interactive simulations will be subject to recording, not the preparation time nor reflections shared with your assessor after.&lt;/p&gt;</value>
   </data>
   <data name="ConsentSub" xml:space="preserve">
     <value>&lt;p&gt;&lt;strong&gt;By ticking the checkbox I give permission to record the simulations.&lt;/strong&gt;&lt;/p&gt;</value>
   </data>
   <data name="Context" xml:space="preserve">
-    <value>&lt;p&gt;During your assessment center, we would like to see how you approach a number of different work situations.&lt;/p&gt;
+    <value>&lt;p&gt;During your center, we would like to see how you approach a number of different work situations.&lt;/p&gt;
 &lt;p&gt;It goes without saying that they are not the actual issues you face, but a number of cases that give you the opportunity to show what your strengths are. These cases take place in a fictional context in which you work for an imaginary organisation: &lt;strong&gt;{0}&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;It’s important that you have already thoroughly examined the &lt;strong&gt;{0}&lt;/strong&gt; website so that you can form a good image of the organisation in which you’ll find yourself.&lt;/p&gt;
-&lt;p&gt;You’re not expected to learn this information by heart! But please make sure you know the structure, context, values and standards of the &lt;strong&gt;{0}&lt;/strong&gt; organisation. It will be of help to you during your assessment center.&lt;/p&gt;&lt;p&gt;You’ll find all the important details here: &lt;a href="https://simulation.quintessence.be/en/login" target="_blank"&gt;LINK&lt;/a&gt;.&lt;br/&gt;</value>
+&lt;p&gt;You’re not expected to learn this information by heart! But please make sure you know the structure, context, values and standards of the &lt;strong&gt;{0}&lt;/strong&gt; organisation. It will be of help to you during your program.&lt;/p&gt;&lt;p&gt;You’ll find all the important details here: &lt;a href="https://simulation.quintessence.be/en/" target="_blank"&gt;LINK&lt;/a&gt;.&lt;br/&gt;</value>
   </data>
   <data name="Evaluation" xml:space="preserve">
     <value>Your opinion matters !</value>
@@ -154,7 +154,7 @@
     <value>hoera_en.png</value>
   </data>
   <data name="Intro" xml:space="preserve">
-    <value>&lt;p&gt;At the request of {0} we invite you for an assessment centre.&lt;/p&gt;</value>
+    <value>&lt;p&gt;At the request of {0} we invite you.&lt;/p&gt;</value>
   </data>
   <data name="Location" xml:space="preserve">
     <value>Our office</value>
@@ -184,7 +184,7 @@
     <value>What to expect?</value>
   </data>
   <data name="WhatToExpectSub" xml:space="preserve">
-    <value>&lt;p&gt;On the day of your assessment you will get a detailed overview of your day schedule.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Don't forget to bring your login details.&lt;/strong&gt;&lt;/p&gt;
+    <value>&lt;p&gt;On the specified day you will find a detailed overview of your day schedule here.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Don't forget to bring your login details.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Your daily schedule is structured chronologically and consists of slots where you will work individually and where you will interact with an assessor.&lt;/p&gt;&lt;p&gt;Because we work paperless as much as possible, you can handle these simulations via a notebook which we will put at your disposal if your assessment takes place in one of our offices.&lt;/p&gt; &lt;p&gt;To give you an idea of how this works we invite you to have a look at this &lt;a href="https://demo-qcandidate.quintessenceconsulting.be/"&gt;LINK&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Please note:&lt;/strong&gt; this is an example and is not related to the exercises you will be doing on the day of the assessment.&lt;/p&gt;</value>
   </data>
 </root>

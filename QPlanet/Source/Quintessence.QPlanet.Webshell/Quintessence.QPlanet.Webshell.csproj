@@ -411,6 +411,7 @@
     <Content Include="Images\Icons\neo16.png" />
     <Content Include="Images\Icons\pdf16.png" />
     <Content Include="Images\Icons\plus16.png" />
+    <Content Include="Images\phone.gif" />
     <Content Include="Images\QPlanet_128.png" />
     <Content Include="Images\Icons\reopen16.png" />
     <Content Include="Images\Icons\save16.png" />
@@ -530,12 +531,15 @@
     <Content Include="Scripts\global.js" />
     <Content Include="Areas\Project\Views\ProjectConsultancy\UploadFile.cshtml" />
     <Content Include="Areas\Project\Views\ProjectAssessmentDevelopment\UploadFile.cshtml" />
+    <Content Include="Areas\Project\Views\ProjectConsultancy\EditVTO.cshtml" />
+    <Content Include="Areas\Project\Views\ProjectConsultancy\EditProjectPlanVTO.cshtml" />
     <None Include="Scripts\jquery-1.7.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.2.js" />
     <Content Include="Scripts\jquery-1.7.2.min.js" />
     <Content Include="Scripts\jquery.complexify.js" />
     <Content Include="Scripts\jquery.dataTables.FixedColumns.js" />
     <Content Include="Scripts\jquery.filedrop.js" />
+    <Content Include="Scripts\jquery.tablednd.js" />
     <Content Include="Scripts\jquery.ui.slider.js" />
     <Content Include="Scripts\jquery.ui.touch-punch.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />

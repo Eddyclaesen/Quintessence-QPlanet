@@ -686,9 +686,24 @@
                         .attr('name', textbox.attr('name'))
                         .attr('cols', '20')
                         .attr('rows', '4')
+                        .attr('id', textbox.attr('id'))
                         .attr('data-function', textbox.attr('data-function'));
                     parentCell.html(textarea);
                     $(textarea).focus();
+
+                    var textareaid = textarea.attr('id');
+                    var textarealength = textarea.val().length;
+                    var labelid = $('#lbl_' + textareaid);
+
+                    $(textarea).keyup(function () {
+                        if (textarea.val().length > 100) {
+                            labelid.html('<span style="color:red;">' + textarea.val().length + '</span>');
+                        }
+                        else {
+                            labelid.html('<span style="color:slategray;">' + textarea.val().length + '</span>');
+                        }
+
+                    });
                 });
 
                 $(this).on('focusout', '#ProjectManagerInvoicingDataTable textarea[data-function=InvoiceRemarks]', null, function () {
@@ -696,8 +711,20 @@
                     var parentCell = textarea.parent();
                     var textbox = $('<input type="text">').val(textarea.val())
                         .attr('name', textarea.attr('name'))
+                        .attr('id', textarea.attr('id'))
                         .attr('data-function', textarea.attr('data-function'));
                     parentCell.html(textbox);
+
+                    var cellLength = textbox.val().length;
+                    var id = textbox.attr('id');
+                    var lblValue = $('#lbl_' + id);
+
+                    if (cellLength > 100) {
+                        lblValue.html('<span style="color:red;">' + cellLength + '</span>');
+                    }
+                    else {
+                        lblValue.html('<span style="color:slategray;">' + cellLength + '</span>');
+                    }
                 });
             }
 

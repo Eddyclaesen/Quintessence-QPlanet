@@ -1,0 +1,1180 @@
+﻿@using Quintessence.QService.QueryModel.Prm
+@model Quintessence.QPlanet.ViewModel.Prm.EditProjectConsultancyModel
+@{
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    ViewData["ProjectId"] = Model.Id;
+    ViewBag.Title = "VTO - Edit project";
+}
+@section DetailAreaNavigation
+{
+    <nav class="area">
+        <ul>
+            <li class="current"><a href="javascript:void(0);">@Model.Name</a></li>
+        </ul>
+    </nav>
+}
+@section DetailActionNavigation
+{
+    <nav class="action">
+        <ul>
+            <li class="current">Detail</li>
+            <li>
+                @Html.ActionLink("Timeline", "EditProjectPlanVTO", "ProjectConsultancy", new RouteValueDictionary(new { area = "Project", id = Model.Id }), null)
+            </li>
+        </ul>
+    </nav>
+}
+@section LeftNavigation
+{
+    <ul id="Tabs">
+        <li><a href="#ProjectInformation"></a></li>
+        <li><a href="#ProductInformation"></a></li>
+        <li><a href="#ProjectFixedPrice"></a></li>
+        <li><a href="#SuperofficeProjects"></a></li>
+        <li><a href="#UploadedDocuments"></a></li>
+    </ul>
+}
+@section AdditionalScripts
+{
+    <style>
+        #ActivityProfileTable td.numeric input[type=text] {
+            width: 100px;
+        }
+    </style>
+
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.treeTable.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.cookie.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/persist.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.filedrop.js")" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#ChangeProjectManagerNameLink').hide();
+            $('#ChangeCoProjectManagerNameLink').hide();
+            $('#ChangeCustomerAssistantNameLink').hide();
+
+            InitializeProjectManagerNameAutocomplete();
+            InitializeCoProjectManagerNameAutocomplete();
+            InitializeCustomerAssistantNameAutocomplete();
+
+            InitializeChangeProjectManagerNameLink();
+            InitializeChangeCoProjectManagerNameLink();
+            InitializeChangeCustomerAssistantNameLink();
+
+            if ($('#@Html.IdFor(m => m.ProjectManagerId)').val() != null) {
+                HandleProjectManagerSelection($('#@Html.IdFor(m => m.ProjectManagerId)').val(), $('#@Html.IdFor(m => m.ProjectManagerFullName)')[0].value);
+            }
+
+            if ($('#@Html.IdFor(m => m.CoProjectManagerId)').val() != undefined && $('#@Html.IdFor(m => m.CoProjectManagerId)').val() != "") {
+                HandleCoProjectManagerSelection($('#@Html.IdFor(m => m.CoProjectManagerId)').val(), $('#@Html.IdFor(m => m.CoProjectManagerFullName)')[0].value);
+            } else {
+                $('#CoProjectManagerFullName').show();
+            }
+
+            if ($('#@Html.IdFor(m => m.CustomerAssistantId)').val() != undefined && $('#@Html.IdFor(m => m.CustomerAssistantId)').val() != "") {
+                HandleCustomerAssistantSelection($('#@Html.IdFor(m => m.CustomerAssistantId)').val(), $('#@Html.IdFor(m => m.CustomerAssistantFullName)')[0].value);
+            } else {
+                $('#CustomerAssistantFullName').show();
+            }
+
+            InitializeAddCrmProjectDialog();
+            InitializeSelectedCrmProjectsForm();
+
+            InitializeAddActivityDialog();
+            InitializeAddActivityProfileDialog();
+            InitializeAddProductDialog();
+
+            InitializeAddProjectFixedPriceDialog();
+            InitializeEditProjectFixedPriceDialog();
+
+            InitializeButtons();
+            InitializeProductCategoryDetailCheckboxes();
+
+            //InitializeSharePointDocumentTable();
+            RefreshCrmProjects();
+            RefreshProjectInvoiceAmountOverview();
+
+            RefreshActivityProfileTable();
+            RefreshProductTable();
+            RefreshProjectFixedPriceTable();
+            //RefreshSharePointDocumentTable();
+            RefreshDocumentTable();
+            //RefreshSubProjects();
+
+            $('#ProjectForm').validate();
+
+            ValidateProject();
+        });
+
+        function ValidateProject() {
+            RemoveNotification('ValidateProject');
+            $.getJSON('@Url.Action("ValidateProject", new { id = Model.Id })', function (data) {
+                $.each(data, function (key, val) {
+                    if (val.message != 'ok') {
+                        AddNotification('ValidateProject', val.message);
+                    }
+                });
+            });
+        }
+
+        function InitializeProjectManagerNameAutocomplete() {
+            $("#ProjectManagerFullName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("SearchProjectManager", "ProjectGeneral", new { area = "Project" })/' + request.term,
+                        data: request,
+                        dataType: "json",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.label,
+                                    value: item.label,
+                                    id: item.value
+                                };
+                            }));
+                        },
+                        error: function (err) {
+                            ShowDetailErrorDialog('Search project manager.', err);
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    HandleProjectManagerSelection(ui.item.id, ui.item.label);
+                }
+            });
+        }
+
+        function InitializeCoProjectManagerNameAutocomplete() {
+            $("#CoProjectManagerFullName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("SearchProjectManager", "ProjectGeneral", new { area = "Project" })/' + request.term,
+                        data: request,
+                        dataType: "json",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.label,
+                                    value: item.label,
+                                    id: item.value
+                                };
+                            }));
+                        },
+                        error: function (err) {
+                            ShowDetailErrorDialog('Search co project manager.', err);
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    HandleCoProjectManagerSelection(ui.item.id, ui.item.label);
+                }
+            });
+        }
+
+        function InitializeProductCategoryDetailCheckboxes() {
+            $('input[data-readonly=true').each(function (index, value) {
+                $(this).click(function () {
+                    return false;
+                });
+            });
+        }
+
+        function HandleProjectManagerSelection(id, label) {
+            $('#ProjectManagerId').val(id);
+            $('#ProjectManagerFullName').hide();
+            $('#ChangeProjectManagerNameLink').text(label);
+            $('#ChangeProjectManagerNameLink').show();
+        }
+
+        function HandleCoProjectManagerSelection(id, label) {
+            $('#CoProjectManagerId').val(id);
+            $('#CoProjectManagerFullName').hide();
+            $('#ChangeCoProjectManagerNameLink').text(label);
+            $('#ChangeCoProjectManagerNameLink').show();
+        }
+
+        function InitializeCustomerAssistantNameAutocomplete() {
+            $("#CustomerAssistantFullName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("SearchCustomerAssistant", "ProjectGeneral", new { area = "Project" })/' + request.term,
+                        data: request,
+                        dataType: "json",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.label,
+                                    value: item.label,
+                                    id: item.value
+                                };
+                            }));
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    HandleCustomerAssistantSelection(ui.item.id, ui.item.label);
+                }
+            });
+        }
+
+        function HandleCustomerAssistantSelection(id, label) {
+            $('#CustomerAssistantId').val(id);
+            $('#CustomerAssistantFullName').hide();
+            $('#ChangeCustomerAssistantNameLink').text(label);
+            $('#ChangeCustomerAssistantNameLink').show();
+        }
+
+        function InitializeChangeProjectManagerNameLink() {
+            $('#ChangeProjectManagerNameLink').click(function () {
+                $('#ProjectManagerId').val(null);
+                $('#ProjectManagerFullName').val(null);
+                $('#ChangeProjectManagerNameLink').hide();
+                $('#ProjectManagerFullName').show();
+                $('#ProjectManagerFullName').focus();
+            });
+        }
+
+        function InitializeChangeCoProjectManagerNameLink() {
+            $('#ChangeCoProjectManagerNameLink').click(function () {
+                $('#CoProjectManagerId').val(null);
+                $('#CoProjectManagerFullName').val(null);
+                $('#ChangeCoProjectManagerNameLink').hide();
+                $('#CoProjectManagerFullName').show();
+                $('#CoProjectManagerFullName').focus();
+            });
+        }
+
+        function InitializeChangeCustomerAssistantNameLink() {
+            $('#ChangeCustomerAssistantNameLink').click(function () {
+                $('#CustomerAssistantId').val(null);
+                $('#CustomerAssistantFullName').val(null);
+                $('#ChangeCustomerAssistantNameLink').hide();
+                $('#CustomerAssistantFullName').show();
+                $('#CustomerAssistantFullName').focus();
+            });
+        }
+
+
+        function InitializeAddCrmProjectDialog() {
+            $('#AddCrmProjectDialog').dialog(
+                {
+                    autoOpen: false,
+                    modal: true, resizable: false,
+                    width: 650,
+                    height: 500,
+                    title: 'Add new projects'
+                });
+        }
+
+        function InitializeButtons() {
+            $(this).on('click', 'a[data-function=LinkCrmProjectButton]', null, function () {
+                $('#AddCrmProjectDialog').dialog('open');
+                $('#AddCrmProjectDialog').loading('Initializing...');
+                $.ajax({
+                    url: '@Url.Action("SearchCrmProjects", "ProjectGeneral")/@Model.Id',
+                    success: function (html) {
+                        $('#AddCrmProjectDialog').html(html).fadeIn();
+                    }
+                });
+            });
+
+            $(this).on('click', 'a[data-function=SaveCrmProjectButton]', null, function (event) {
+                event.preventDefault();
+
+                ShowDetailSaveDialog();
+
+                var form = $('#ListCrmProjectsForm');
+
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    dataType: 'JSON',
+                    success: function () {
+                        HideDetailSaveDialog();
+                        RefreshCrmProjects();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Save crm project detail.', err);
+                    }
+                });
+            });
+
+            $(this).on('click', 'a[data-function=RemoveCrmProject]', null, function () {
+                if (!confirm('Are you sure you want to detach this TL project from this QPlanet project?'))
+                    return;
+
+                ShowDetailSaveDialog();
+
+                var url = '@Url.Action("UnlinkCrmProject", "ProjectGeneral", new { area = "Project" })/@Model.Id/' + $(this).attr('data-id');
+            $.ajax({
+                url: url,
+                success: function (data) {
+                    HideDetailSaveDialog();
+                    RefreshCrmProjects();
+                },
+                error: function (err) {
+                    HideDetailSaveDialog();
+                    alert(err.statusText);
+                    RefreshCrmProjects();
+                }
+            });
+            });
+
+        $('a[data-name=SubmitFormButtonLink]').each(function (index, value) {
+            $(this).click(function (event) {
+                event.preventDefault();
+
+                ShowDetailSaveDialog();
+
+                var form = $('#ProjectForm');
+
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    dataType: 'JSON',
+                    success: function () {
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Save project detail.', err);
+                    }
+                });
+            });
+        });
+
+        $('#SubmitContactDetailFormButtonLink').click(function () {
+            var form = $('#ContactDetailForm');
+
+            if (form.valid()) {
+                ShowDetailSaveDialog();
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function () {
+                        HideDetailSaveDialog();
+                    },
+                    error: function (err) {
+                        HideDetailSaveDialog();
+                        ShowDetailErrorDialog('Save contact detail.', err);
+                    }
+                });
+            }
+        });
+
+        $('a[data-function=SubmitActivityProfileFormButton]').click(function () {
+            ShowDetailSaveDialog();
+
+            var form = $('#ActivityProfileForm');
+
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                success: function () {
+                    RefreshActivityProfileTable();
+                    HideDetailSaveDialog();
+                },
+                error: function (err) {
+                    HideDetailSaveDialog();
+                    alert(err.statusText);
+                }
+            });
+        });
+
+        $('#SubmitProductFormButton').click(function () {
+            ShowDetailSaveDialog();
+
+            var form = $('#ProductForm');
+
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                success: function () {
+                    RefreshProductTable();
+                    HideDetailSaveDialog();
+                },
+                error: function (err) {
+                    HideDetailSaveDialog();
+                    alert(err.statusText);
+                }
+            });
+        });
+
+        $('a[data-function=AddActivityButton]').click(function () {
+            ShowDetailSaveDialog();
+            $('#AddActivityDialogFormPlaceholder').loading('Loading activity information.');
+            $.ajax({
+                url: '@Url.Action("AddActivity")/@Model.Id',
+                success: function (msg) {
+                    $('#AddActivityDialogFormPlaceholder').html(msg);
+                    HideDetailSaveDialog();
+                    $('#AddActivityDialog').dialog('open');
+                },
+                error: function (err) {
+                    HideDetailSaveDialog();
+                    alert(err.statusText);
+                }
+            });
+        });
+
+            $('#AddProductButton').click(function () {
+                ShowDetailSaveDialog();
+                $('#AddProductDialogFormPlaceholder').html('');
+                $.ajax({
+                    url: '@Url.Action("AddProduct")/@Model.Id',
+                        success: function (msg) {
+                            $('#AddProductDialogFormPlaceholder').html(msg);
+                            HideDetailSaveDialog();
+                            $('#AddProductDialog').dialog('open');
+                        },
+                        error: function (err) {
+                            HideDetailSaveDialog();
+                            alert(err.statusText);
+                        }
+                    });
+                });
+
+                $(this).on('click', 'a[data-function=DeleteActivityProfile]', null, function () {
+                    ShowDetailSaveDialog();
+
+                    $.ajax({
+                        url: '@Url.Action("DeleteActivityProfile")/' + $(this).attr('data-id'),
+                        success: function () {
+                            RefreshActivityProfileTable();
+                            HideDetailSaveDialog();
+                        },
+                        error: function (err) {
+                            HideDetailSaveDialog();
+                            ShowDetailErrorDialog('Delete activity profile', err);
+                        }
+                    });
+                });
+
+                    $(this).on('click', 'a[data-function=DeleteActivity]', null, function () {
+                        ShowDetailSaveDialog();
+
+                        $.ajax({
+                            url: '@Url.Action("DeleteActivity")/' + $(this).attr('data-id'),
+                            success: function () {
+                                RefreshActivityProfileTable();
+                                HideDetailSaveDialog();
+                            },
+                            error: function (err) {
+                                HideDetailSaveDialog();
+                                ShowDetailErrorDialog('Delete activity', err);
+                            }
+                        });
+                    });
+
+            $(this).on('click', 'a[data-function=CopyActivity]', null, function () {
+                ShowDetailSaveDialog();
+
+                $.ajax({
+                    url: '@Url.Action("CopyActivity")/' + $(this).attr('data-id'),
+                            success: function () {
+                                RefreshActivityProfileTable();
+                                HideDetailSaveDialog();
+                            },
+                            error: function (err) {
+                                HideDetailSaveDialog();
+                                alert(err.statusText);
+                            }
+                        });
+             });
+
+                    $(this).on('click', 'a[data-function=AddActivityProfile]', null, function () {
+                        $('#AddActivityProfileDialogFormPlaceholder').html('Add profile');
+                        ShowDetailSaveDialog();
+                        $.ajax({
+                            url: '@Url.Action("AddActivityProfile")/' + $(this).attr('data-id'),
+                        success: function (msg) {
+                            $('#AddActivityProfileDialogFormPlaceholder').html(msg);
+                            HideDetailSaveDialog();
+                            $('#AddActivityProfileDialog').dialog('open');
+                        },
+                        error: function (err) {
+                            HideDetailSaveDialog();
+                            ShowDetailErrorDialog('Add profile', err);
+                        }
+                    });
+                });
+
+
+                    $(this).on('click', 'a[data-function=DeleteProduct]', null, function () {
+                        ShowDetailSaveDialog();
+
+                        $.ajax({
+                            url: '@Url.Action("DeleteProduct")/' + $(this).attr('data-id'),
+                        success: function () {
+                            RefreshProductTable();
+                            HideDetailSaveDialog();
+                        },
+                        error: function (err) {
+                            HideDetailSaveDialog();
+                            ShowDetailErrorDialog('Delete product', err);
+                        }
+                    });
+                });
+
+                $('#AddProjectFixedPrice').click(function () {
+                    ShowDetailSaveDialog();
+
+                    $.ajax({
+                        url: '@Url.Action("AddProjectFixedPrice", new { id = Model.Id })',
+                        success: function (msg) {
+                            HideDetailSaveDialog();
+                            $('#AddProjectFixedPriceFormPlaceholder').html(msg);
+                            $('#AddProjectFixedPriceDialog').dialog('open');
+                        },
+                        error: function (err) {
+                            HideDetailSaveDialog();
+                            alert(err.statusText);
+                        }
+                    });
+                });
+
+                $(this).on('click', 'a[data-function=EditProjectFixedPrice]', null, function () {
+                    ShowDetailSaveDialog();
+
+                    $.ajax({
+                        url: '@Url.Action("EditProjectFixedPrice")/' + $(this).attr('data-id'),
+                        success: function (msg) {
+                            HideDetailSaveDialog();
+                            $('#EditProjectFixedPriceFormPlaceholder').html(msg);
+                            $('#EditProjectFixedPriceDialog').dialog('open');
+                        },
+                        error: function (err) {
+                            HideDetailSaveDialog();
+                            alert(err.statusText);
+                        }
+                    });
+                });
+
+                    $(this).on('click', 'a[data-function=DeleteProjectFixedPrice]', null, function () {
+                        ShowDetailSaveDialog();
+
+                        $.ajax({
+                            url: '@Url.Action("DeleteProjectFixedPrice")/' + $(this).attr('data-id'),
+                            success: function () {
+                                RefreshProjectFixedPriceTable();
+                                HideDetailSaveDialog();
+                            },
+                            error: function (err) {
+                                HideDetailSaveDialog();
+                                alert(err.statusText);
+                            }
+                        });
+                    });
+
+                    $(this).on('click', 'a[data-function=RefreshSharePointDocumentsLink]', null, function () {
+                        RefreshSharePointDocumentTable();
+                    });
+                }
+
+                function InitializeSelectedCrmProjectsForm() {
+                    $(this).on('submit', '#SelectedCrmProjectsForm', null, function (event) {
+                        event.preventDefault();
+
+                        ShowDetailSaveDialog();
+
+                        var form = $(this);
+                        $.ajax({
+                            url: '@Url.Action("LinkCrmProjects", "ProjectGeneral", new { area = "Project" })/@Model.Id',
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function () {
+                        $('#AddCrmProjectDialog').dialog('close');
+                        HideDetailSaveDialog();
+                        RefreshCrmProjects();
+                        ValidateProject();
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                        HideDetailSaveDialog();
+                    }
+                });
+            });
+        }
+
+        function RefreshCrmProjects() {
+            $('#CrmProjectTablePlaceholder').loading('Loading crm projects');
+            $.ajax({
+                url: '@Url.Action("ListCrmProjects", "ProjectGeneral", new { area = "Project" })/@Model.Id',
+                    success: function (html) {
+                        $('#CrmProjectTablePlaceholder').html(html);
+                        $('#CrmProjectTable').dataTable();
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
+                });
+        }
+
+        function RefreshProjectInvoiceAmountOverview() {
+            $('#ProjectInvoiceAmountOverviewTablePlaceholder').loading('Loading project invoice amount overview...');
+            $.ajax({
+                url: '@Url.Action("ListProjectInvoiceAmountOverview", "ProjectGeneral", new { area = "Project" })/@Model.Id',
+                            success: function (html) {
+                                $('#ProjectInvoiceAmountOverviewTablePlaceholder').html(html);
+                                $('#ProjectInvoiceAmountOverviewTable').dataTable();
+                            },
+                            error: function (err) {
+                                alert(err.statusText);
+                            }
+                        });
+                    }
+
+            //function RefreshSubProjects() {
+            //    $('#SubProjectsPlaceholder').loading('Loading projects...');
+            //    $.ajax({
+            //        url: '@Url.Action("SubProjects")/@Model.Id',
+            //        success: function (html) {
+            //            $('#SubProjectsPlaceholder').html(html);
+            //            HideDetailSaveDialog();
+            //        },
+            //        error: function (err) {
+            //            $('#SubProjectsPlaceholder').html(err.statusText);
+            //            HideDetailSaveDialog();
+            //            alert(err.statusText);
+            //        }
+            //    });
+            //}
+
+            function InitializeSharePointDocumentTable() {
+                $(this).on('change', 'input[type=checkbox][data-function=MarkDocumentAsImportant]', null, function () {
+                    var url = '';
+
+                    if ($(this).attr('checked') == 'checked') {
+                        url = '@Url.Action("MarkDocumentAsImportant")/@Model.Id/' + $(this).attr('data-uniqueid');
+                    } else {
+                        url = '@Url.Action("UnmarkDocumentAsImportant")/@Model.Id/' + $(this).attr('data-uniqueid');
+                    }
+
+                    $.ajax({
+                        url: url,
+                        success: function () {
+                        },
+                        error: function (err) {
+                            alert(err.statusText);
+                            RefreshSharePointDocumentTable();
+                        }
+                    });
+                });
+            }
+
+            function RefreshSharePointDocumentTable() {
+                $('#SharePointDocumentTablePlaceholder').loading('Retrieving documents');
+                $.ajax({
+                    url: '@Url.Action("ListSharePointDocuments", "ProjectGeneral")/@Model.Id',
+                    success: function (html) {
+                        $('#SharePointDocumentTablePlaceholder').html(html);
+                        $('#SharePointDocumentTable').dataTable({ "bSort": false });
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
+                });
+            }
+
+        function RefreshDocumentTable() {
+            $('#DocumentTablePlaceholder').loading('Retrieving documents');
+            $.ajax({
+                url: '@Url.Action("UploadFile", "ProjectConsultancy")/@Model.Id',
+                success: function (html) {
+                    $('#DocumentTablePlaceholder').html(html);
+                    $('#DocumentTable').dataTable({ "bSort": false });
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+        }
+
+            function InitializeAddActivityDialog() {
+                $('#AddActivityDialog').dialog({
+                    autoOpen: false,
+                    modal: true, resizable: false,
+                    width: 500,
+                    height: 250,
+                    title: 'Add new activity'
+                });
+
+                $('#SubmitActivityButton').click(function (event) {
+                    ShowDetailSaveDialog();
+
+                    event.preventDefault();
+
+                    var form = $('#AddActivityForm');
+                    $.ajax({
+                        url: form.attr('action'),
+                        type: 'POST',
+                        data: form.serialize(),
+                        success: function () {
+                            RefreshActivityProfileTable();
+                            HideDetailSaveDialog();
+                            $('#AddActivityDialog').dialog('close');
+                        },
+                        error: function () {
+                            HideDetailSaveDialog();
+                            $('#AddActivityDialog').dialog('close');
+                        }
+                    });
+                });
+            }
+
+            function InitializeAddProductDialog() {
+                $('#AddProductDialog').dialog({
+                    autoOpen: false,
+                    modal: true, resizable: false,
+                    width: 500,
+                    height: 300,
+                    title: 'Add new product'
+                });
+
+                $('#SubmitProductButton').click(function (event) {
+                    ShowDetailSaveDialog();
+
+                    event.preventDefault();
+
+                    var form = $('#AddProductForm');
+                    $.ajax({
+                        url: form.attr('action'),
+                        type: 'POST',
+                        data: form.serialize(),
+                        success: function () {
+                            RefreshProductTable();
+                            HideDetailSaveDialog();
+                            $('#AddProductDialog').dialog('close');
+                        },
+                        error: function () {
+                            HideDetailSaveDialog();
+                            $('#AddProductDialog').dialog('close');
+                        }
+                    });
+                });
+            }
+
+            function InitializeAddActivityProfileDialog() {
+                $('#AddActivityProfileDialog').dialog({
+                    autoOpen: false,
+                    modal: true, resizable: false,
+                    width: 600,
+                    height: 350,
+                    title: 'Add new profile'
+                });
+
+                $('#SubmitActivityProfileButton').click(function (event) {
+                    ShowDetailSaveDialog();
+
+                    event.preventDefault();
+
+                    var form = $('#AddActivityProfileForm');
+                    $.ajax({
+                        url: form.attr('action'),
+                        type: 'POST',
+                        data: form.serialize(),
+                        success: function () {
+                            RefreshActivityProfileTable();
+                            HideDetailSaveDialog();
+                            $('#AddActivityProfileDialog').dialog('close');
+                        },
+                        error: function (err) {
+                            HideDetailSaveDialog();
+                            ShowDetailErrorDialog('Add profile', err);
+                        }
+                    });
+                });
+            }
+
+        function InitializeAddProjectFixedPriceDialog() {
+            $('#AddProjectFixedPriceDialog').dialog({
+                autoOpen: false,
+                modal: true, resizable: false,
+                width: 750,
+                height: 300,
+                title: 'Add new project price'
+            });
+
+            $('#AddProjectFixedPriceButton').click(function () {
+                ShowDetailSaveDialog();
+
+                var form = $('#AddProjectFixedPriceForm');
+
+                $.ajax({
+                    url: '@Url.Action("AddProjectFixedPrice")',
+                    data: form.serialize(),
+                    type: 'POST',
+                    success: function () {
+                        $('#AddProjectFixedPriceDialog').dialog('close');
+                        HideDetailSaveDialog();
+                        RefreshProjectFixedPriceTable();
+                    },
+                    error: function () {
+                        $('#AddProjectFixedPriceDialog').dialog('close');
+                        HideDetailSaveDialog();
+                    }
+                });
+            });
+        }
+
+        function InitializeEditProjectFixedPriceDialog() {
+            $('#EditProjectFixedPriceDialog').dialog({
+                autoOpen: false,
+                modal: true, resizable: false,
+                width: 750,
+                height: 300,
+                title: 'Edit project price'
+            });
+
+            $('#EditProjectFixedPriceButton').click(function () {
+                ShowDetailSaveDialog();
+
+                var form = $('#EditProjectFixedPriceForm');
+
+                $.ajax({
+                    url: '@Url.Action("EditProjectFixedPrice")',
+                    data: form.serialize(),
+                    type: 'POST',
+                    success: function () {
+                        $('#EditProjectFixedPriceDialog').dialog('close');
+                        HideDetailSaveDialog();
+                        RefreshProjectFixedPriceTable();
+                    },
+                    error: function () {
+                        $('#EditProjectFixedPriceDialog').dialog('close');
+                        HideDetailSaveDialog();
+                    }
+                });
+            });
+        }
+
+        function RefreshActivityProfileTable() {
+            $('#ActivityProfileTablePlaceholder').loading('Loading activities and profiles.');
+            $.ajax({
+                url: '@Url.Action("ActivityProfiles")/@Model.Id',
+                success: function (msg) {
+                    $('#ActivityProfileTablePlaceholder').html(msg);
+                    $('#ActivityProfileTable').treeTable({ persist: true });
+                }
+            });
+        }
+
+        function RefreshProductTable() {
+            $('#ProductTablePlaceholder').loading('Loading products.');
+            $.ajax({
+                url: '@Url.Action("Products")/@Model.Id',
+                success: function (msg) {
+                    $('#ProductTablePlaceholder').html(msg);
+                    $('#ProductTable').treeTable();
+                }
+            });
+        }
+
+        function RefreshProjectFixedPriceTable() {
+            $('#ProjectFixedPriceTablePlaceholder').loading('Loading fixed price information.');
+            $.ajax({
+                url: '@Url.Action("ProjectFixedPrice", new { id = Model.Id })',
+                success: function (html) {
+                    $('#ProjectFixedPriceTablePlaceholder').html(html);
+                }
+            });
+        }
+
+        $(function () {
+            if(window.FileReader != null){
+                $('#single').hide();
+                $('.single').prop('disabled', true);
+            } else {
+                $('#multiple').hide();
+                $('.multiple').prop('disabled', true);
+            }
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#dropArea').filedrop({
+                url: '@Url.Action("UploadFile", "ProjectConsultancy", new { id = Model.Id })',
+                paramname: 'files',
+                maxfiles: 5,
+                maxfilesize: 5, // in MB
+                dragOver: function () {
+                    $('#dropArea').addClass('active-drop');
+                },
+                dragLeave: function () {
+                    $('#dropArea').removeClass('active-drop');
+                },
+                drop: function () {
+                    $('#dropArea').removeClass('active-drop');
+                },
+                afterAll: function (e) {
+                    $('#dropArea').html('file(s) uploaded successfully');
+                    RefreshDocumentTable();
+                },
+                uploadFinished: function (i, file, response, time) {
+                    $('#uploadList').append('<li class="list-group-item">'+file.name+'</li>')
+                }
+            })
+        })
+    </script>
+}
+<fieldset id="ProjectInformation">
+    <legend>Project information</legend>
+    @using (Html.BeginForm("EditVTO", "ProjectConsultancy", FormMethod.Post, new { id = "ProjectForm" }))
+    {
+        <h4>General information</h4>
+
+        @Html.EditorFor(m => m, "BaseEntityViewTemplate")
+
+        <div class="container_12 nomargin">
+            <div class="grid_5 table">
+                <div class="label">@Html.LabelFor(m => m.Name)</div>
+            </div>
+            <div class="grid_7 table">
+                <div class="value">@Html.EditorFor(m => m.Name)</div>
+            </div>
+            <div class="clear"></div>
+            <div class="prefix_5 grid_7">@Html.ValidationMessageFor(m => m.Name)</div>
+            <div class="clear"></div>
+
+            <div class="grid_5 table">
+                <div class="label">@Html.LabelFor(m => m.ProjectTypeName)</div>
+            </div>
+            <div class="grid_7 table">
+                <div class="value">
+                    @Html.DisplayFor(m => m.ProjectTypeName)
+                </div>
+            </div>
+            <div class="clear"></div>
+
+            <div class="grid_5 table">
+                <div class="label">@Html.LabelFor(m => m.PricingModelId)</div>
+            </div>
+            <div class="grid_7 table">
+                <div class="value">
+                    @Html.DropDownListFor(m => m.PricingModelId, Model.CreatePricingModelSelectListItems(Model.PricingModelId))
+                </div>
+            </div>
+            <div class="clear"></div>
+
+            <div class="grid_5 table">
+                <div class="label">@Html.LabelFor(m => m.StatusCode)</div>
+            </div>
+            <div class="grid_7 table">
+                <div class="value">
+                    @Html.DropDownListFor(m => m.StatusCode, Model.ProjectStatusses)
+                </div>
+            </div>
+            <div class="clear"></div>
+
+            <div class="grid_5 table">
+                <div class="label">@Html.LabelFor(m => m.ContactFullName)</div>
+            </div>
+            <div class="grid_7 table">
+                <div class="value">@Html.DisplayFor(m => m.ContactFullName)</div>
+            </div>
+            <div class="clear"></div>
+
+            <div class="grid_5 table">
+                <div class="label">@Html.LabelFor(m => m.ProjectManagerFullName)</div>
+            </div>
+            <div class="grid_7 table">
+                <div class="value">
+                    @Html.HiddenFor(m => m.ProjectManagerId)
+                    @Html.TextBoxFor(m => m.ProjectManagerFullName)
+                    <a href="javascript:void(0);" id="ChangeProjectManagerNameLink" title="Click on this link to change the Project Manager">
+                    </a>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="prefix_5 grid_7">
+                @Html.ValidationMessageFor(m => m.ProjectManagerFullName)
+            </div>
+            <div class="clear"></div>
+
+            <div class="grid_5 table">
+                <div class="label">@Html.LabelFor(m => m.CoProjectManagerFullName)</div>
+            </div>
+            <div class="grid_7 table">
+                <div class="value">
+                    @Html.HiddenFor(m => m.CoProjectManagerId)
+                    @Html.TextBoxFor(m => m.CoProjectManagerFullName)
+                    <a href="javascript:void(0);" id="ChangeCoProjectManagerNameLink" title="Click on this link to change the Project Manager">
+                    </a>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="prefix_5 grid_7">
+                @Html.ValidationMessageFor(m => m.CoProjectManagerFullName)
+            </div>
+            <div class="clear"></div>
+
+            <div class="grid_5 table">
+                <div class="label">@Html.LabelFor(m => m.CustomerAssistantFullName)</div>
+            </div>
+            <div class="grid_7 table">
+                <div class="value">
+                    @Html.HiddenFor(m => m.CustomerAssistantId)
+                    @Html.TextBoxFor(m => m.CustomerAssistantFullName)
+                    <a href="javascript:void(0);" id="ChangeCustomerAssistantNameLink" title="Click on this link to change the Customer Assistant">
+                    </a>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="prefix_5 grid_7">
+                @Html.ValidationMessageFor(m => m.CustomerAssistantFullName)
+            </div>
+            <div class="clear"></div>
+
+            <div class="grid_5 table">
+                <div class="label">Traject information</div>
+            </div>
+            <div class="grid_7 table">
+                <div class="value">
+                    @Html.TextAreaFor(m => m.ProjectInformation)
+                </div>
+            </div>
+            <div class="clear"></div>
+
+            <div style="text-align: right">
+                <a href="#" data-name="SubmitFormButtonLink" class="button">Save</a>
+            </div>
+        </div>
+    }
+</fieldset>
+
+<fieldset id="ProductInformation">
+    <legend>Products</legend>
+
+    @using (Html.BeginForm("Products", "ProjectConsultancy", FormMethod.Post, new { id = "ProductForm" }))
+    {
+        <div id="ProductTablePlaceholder">
+        </div>
+        <br />
+        <br />
+        <div style="text-align: right">
+            <a href="javascript:void(0);" id="AddProductButton" class="button">Add Product</a>
+            <a href="javascript:void(0);" id="SubmitProductFormButton" class="button">Save</a>
+        </div>
+    }
+</fieldset>
+
+<!--<fieldset id="SubProjects">
+    <legend>QPlanet projects</legend>
+
+    <div id="SubProjectsPlaceholder"></div>
+    <br />
+    <br />
+    <br />
+    <div class="right-text">
+        <a href="javascript:void(0);" title="Refresh the linked qplanet projects" class="button"
+            data-function="RefreshSubProjectsButton">Refresh</a>
+        @Html.ActionLink("Create", "Create", "ProjectGeneral", new { id = Model.Id }, new { target = "_blank", @class = "button" })
+    </div>
+
+</fieldset>-->
+
+<fieldset id="ProjectFixedPrice">
+    <legend>Project fixed price</legend>
+
+    <div id="ProjectFixedPriceTablePlaceholder">
+    </div>
+    <br />
+    <br />
+    <br />
+    <div style="text-align: right">
+        <a href="javascript:void(0);" id="AddProjectFixedPrice" class="button">Add</a>
+    </div>
+</fieldset>
+
+<fieldset id="SuperofficeProjects">
+    <legend>CRM projects</legend>
+
+    <div id="CrmProjectTablePlaceholder"></div>
+    <br />
+    <br />
+    <h4>Overview fiscal years</h4>
+    <div id="ProjectInvoiceAmountOverviewTablePlaceholder"></div>
+</fieldset>
+
+<!--<fieldset id="SharePointDocuments">
+    <legend>Sharepoint documents</legend>
+    <div class="right-text">
+        <a href="javascript:void(0);" data-function="RefreshSharePointDocumentsLink" class="button">
+            Refresh</a>
+    </div>
+    <div id="SharePointDocumentTablePlaceholder"></div>
+</fieldset>-->
+
+<fieldset id="UploadedDocuments">
+    <legend>Documents</legend>
+
+    <div id="DocumentTablePlaceholder"></div>
+
+    <div id="dropArea">
+        Drop your files here
+    </div>
+    <p>Uploaded files</p>
+    <ul class="list-group" id="uploadList">
+    </ul>
+</fieldset>
+
+<div id="AddCrmProjectDialog">
+</div>
+
+<div id="AddActivityDialog">
+    <div id="AddActivityDialogFormPlaceholder">
+    </div>
+    <br />
+    <br />
+    <div style="text-align: right">
+        <a href="javascript:void(0);" id="SubmitActivityButton" class="button">Save</a>
+    </div>
+</div>
+
+<div id="AddProductDialog">
+    <div id="AddProductDialogFormPlaceholder">
+    </div>
+    <br />
+    <br />
+    <div style="text-align: right">
+        <a href="javascript:void(0);" id="SubmitProductButton" class="button">Save</a>
+    </div>
+</div>
+
+<div id="AddActivityProfileDialog">
+    <div id="AddActivityProfileDialogFormPlaceholder">
+    </div>
+    <br />
+    <br />
+    <div style="text-align: right">
+        <a href="javascript:void(0);" id="SubmitActivityProfileButton" class="button">Save</a>
+    </div>
+</div>
+
+<div id="AddProjectFixedPriceDialog">
+    <div id="AddProjectFixedPriceFormPlaceholder">
+    </div>
+    <br />
+    <br />
+    <div style="text-align: right">
+        <a href="javascript:void(0);" id="AddProjectFixedPriceButton" class="button">Save</a>
+    </div>
+</div>
+
+<div id="EditProjectFixedPriceDialog">
+    <div id="EditProjectFixedPriceFormPlaceholder">
+    </div>
+    <br />
+    <br />
+    <div style="text-align: right">
+        <a href="javascript:void(0);" id="EditProjectFixedPriceButton" class="button">Save</a>
+    </div>
+</div>

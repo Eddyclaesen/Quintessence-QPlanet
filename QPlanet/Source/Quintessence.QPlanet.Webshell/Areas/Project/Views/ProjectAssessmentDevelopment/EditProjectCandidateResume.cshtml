@@ -139,28 +139,30 @@
             @foreach (var projectCandidateCompetenceSimulationScoreGroup in Model.ProjectCandidateCompetenceSimulationScores.GroupBy(pccss => new { pccss.DictionaryCompetenceId, pccss.DictionaryCompetenceName }))
             {
                 <tr>
-                    <td>@projectCandidateCompetenceSimulationScoreGroup.Key.DictionaryCompetenceName
+                    <td>
+                        @projectCandidateCompetenceSimulationScoreGroup.Key.DictionaryCompetenceName
                     </td>
                     <td>
                         @{
-                if (Model.ProjectCandidateCompetenceScores != null)
-                {
-                    var projectCandidateCompetenceScore = Model.ProjectCandidateCompetenceScores.SingleOrDefault(pccs => pccs.DictionaryCompetenceId == projectCandidateCompetenceSimulationScoreGroup.Key.DictionaryCompetenceId);
-                    if (projectCandidateCompetenceScore != null)
-                    {
-                            @projectCandidateCompetenceScore.Score.ToString("G29")
-                    }
-                }
+                            if (Model.ProjectCandidateCompetenceScores != null)
+                            {
+                                var projectCandidateCompetenceScore = Model.ProjectCandidateCompetenceScores.SingleOrDefault(pccs => pccs.DictionaryCompetenceId == projectCandidateCompetenceSimulationScoreGroup.Key.DictionaryCompetenceId);
+                                if (projectCandidateCompetenceScore != null)
+                                {
+                                    @projectCandidateCompetenceScore.Score.ToString("G29")
+                                }
+                            }
                         }
                     </td>
-                    <td>@{
-                var average = projectCandidateCompetenceSimulationScoreGroup.Average(pccss => pccss.Score);
+                    <td>
+                        @{
+                            var average = projectCandidateCompetenceSimulationScoreGroup.Average(pccss => pccss.Score);
 
-                if (average.HasValue)
-                {
-                        @Math.Round(average.Value, 2).ToString("G29")
-                }
-                    }
+                            if (average.HasValue)
+                            {
+                                @Math.Round(average.Value, 2).ToString("G29")
+                            }
+                        }
                     </td>
                     @foreach (var simulation in simulations)
                     {
@@ -169,7 +171,8 @@
                                                       && pccss.SimulationDepartmentId == simulation.SimulationDepartmentId
                                                       && pccss.SimulationLevelId == simulation.SimulationLevelId
                                                       && pccss.SimulationId == simulation.SimulationId);
-                        <td>@(projectCandidateCompetenceSimulationScore != null ? projectCandidateCompetenceSimulationScore.Score.ToString("G29") : null)
+                        <td>
+                            @(projectCandidateCompetenceSimulationScore != null ? projectCandidateCompetenceSimulationScore.Score.ToString("G29") : null)
                         </td>
                     }
                 </tr>
@@ -178,13 +181,21 @@
     </table>
     <br />
 
-    <h4>Advice</h4>
+    @if (Model.ReportDefinition.Name == "Orientation Center")
+    {
+        <h4>Report texts</h4>
+    }
+    else
+    {
+        <h4>Advice</h4>
+    }
+
     @using (Html.BeginForm("EditProjectCandidateResume", "ProjectAssessmentDevelopment", FormMethod.Post, new { id = "EditProjectCandidateResumeForm" }))
     {
         @Html.HiddenFor(m => m.ProjectCandidate.Id)
         @Html.EditorFor(m => Model.ProjectCandidateResume, "BaseEntityViewTemplate")
         <table style="width: 100%;">
-            <tr>
+            <tr class="oc-hide">
                 <td style="width: 20%">Advice</td>
                 <td>
                     @foreach (var advice in Model.Advices)
@@ -201,9 +212,15 @@
                     <br />
                 </td>
             </tr>
-            <tr>
-                <td>Reasoning</td>
-                <td>@if (Model.ReportDefinition.Name.Contains("NEW")) {
+            <tr class="oc-hide">
+                <td>
+                    Reasoning<br />
+                    <span style="font-weight:700;">FA/FD?</span><br />
+                    <span style="font-weight:700;text-decoration:underline;">You/U-vorm</span> or <span style="font-weight:700;text-decoration:underline;">3rd person</span>
+                </td>
+                <td>
+                    @if (Model.ReportDefinition.Name.Contains("NEW"))
+                    {
                         @Html.TextAreaFor(m => m.ProjectCandidateResume.Reasoning)
                     }
                     else
@@ -216,25 +233,37 @@
                     <br />
                 </td>
             </tr>
+
             @if (Model.ProjectCandidateResume != null && Model.ProjectCandidateResume.ProjectCandidateResumeFields != null)
             {
                 for (int i = 0; i < Model.ProjectCandidateResume.ProjectCandidateResumeFields.Count; i++)
                 {
-                <tr>
-                    <td>
-                        @Html.EditorFor(m => Model.ProjectCandidateResume.ProjectCandidateResumeFields[i], "BaseEntityViewTemplate")
-                        @Model.ProjectCandidateResume.ProjectCandidateResumeFields[i].CandidateReportDefinitionFieldName
-                    </td>
-                    <td>@Html.TextAreaFor(m => m.ProjectCandidateResume.ProjectCandidateResumeFields[i].Statement)
-                        <div class="right-text">
-                            <a href="javascript:void(0);" data-function="EditProjectCandidateResumeButton" class="button">
-                                Save</a>
-                        </div>
-                        <br />
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            @Html.EditorFor(m => Model.ProjectCandidateResume.ProjectCandidateResumeFields[i], "BaseEntityViewTemplate")
+                            @Model.ProjectCandidateResume.ProjectCandidateResumeFields[i].CandidateReportDefinitionFieldName
+                        </td>
+                        <td>
+                            @Html.TextAreaFor(m => m.ProjectCandidateResume.ProjectCandidateResumeFields[i].Statement)
+                            <div class="right-text">
+                                <a href="javascript:void(0);" data-function="EditProjectCandidateResumeButton" class="button">
+                                    Save
+                                </a>
+                            </div>
+                            <br />
+                        </td>
+                    </tr>
                 }
             }
         </table>
+    }
+
+    @if (Model.ReportDefinition.Name == "Orientation Center")
+    {
+        <style>
+            .oc-hide {
+                display: none;
+            }
+        </style>
     }
 </fieldset>

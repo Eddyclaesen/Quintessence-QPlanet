@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Quintessence.QPlanet.ViewModel.Base;
+using Quintessence.QPlanet.ViewModel.Dim;
 
 namespace Quintessence.QPlanet.ViewModel.Fin
 {
     public abstract class EditInvoicingBaseEntryModel : BaseEntityModel
     {
+        private List<BceSelectListItemModel> _bces;
+
         public Guid ProjectId { get; set; }
 
         public bool IsDiry { get; set; }
@@ -60,5 +63,16 @@ namespace Quintessence.QPlanet.ViewModel.Fin
         public string DetailType { get { return GetType().FullName; } }
 
         public Guid? ProposalId { get; set; }
+
+        public string BceEntity { get; set; }
+
+        public List<BceSelectListItemModel> Bces 
+        { 
+            get
+            {
+                return _bces
+                    ?? (_bces = new List<BceSelectListItemModel> { new BceSelectListItemModel { Id = null, Name = string.Empty } });
+            }
+        }
     }
 }

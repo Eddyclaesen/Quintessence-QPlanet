@@ -19,5 +19,7 @@ namespace Quintessence.QPlanet.ViewModel.Prm
         public decimal CancelledInvoiceAmount { get; set; }
 
         public string CandidateFullName { get; set; }
+
+        public decimal InvoiceAmount { get; set; }
     }
 }

@@ -16,156 +16,172 @@
         <tr id="node-details-@Model.Id-detail" class="child-of-node-details-@Model.Id">
             <td colspan="3">
                 <div class="row">
-                    <div>@Html.DisplayNameFor(m => m.ProjectCandidateDetailAssessmentStartDate):
-                    </div>
                     <div>
-                        @{
-    var diff = Model.ProjectCandidateDetailAssessmentEndDate.Subtract(Model.ProjectCandidateDetailAssessmentStartDate);
-    var linkText = diff.Days >= 1
-                       ? string.Format("{0} - {1}", Model.ProjectCandidateDetailAssessmentStartDate.ToString("dd/MM/yyyy HH:mm"), Model.ProjectCandidateDetailAssessmentEndDate.ToString("dd/MM/yyyy HH:mm"))
-                       : Model.ProjectCandidateDetailAssessmentStartDate.ToString("dd/MM/yyyy HH:mm");
-    var candidate = Model;
-                        }
-                        @if (candidate.AssessmentRoomId.HasValue)
+                        @Html.DisplayNameFor(m => m.ProjectCandidateDetailAssessmentStartDate):
+                </div>
+                <div>
+                    @{
+                        var diff = Model.ProjectCandidateDetailAssessmentEndDate.Subtract(Model.ProjectCandidateDetailAssessmentStartDate);
+                        var linkText = diff.Days >= 1
+                                           ? string.Format("{0} - {1}", Model.ProjectCandidateDetailAssessmentStartDate.ToString("dd/MM/yyyy HH:mm"), Model.ProjectCandidateDetailAssessmentEndDate.ToString("dd/MM/yyyy HH:mm"))
+                                           : Model.ProjectCandidateDetailAssessmentStartDate.ToString("dd/MM/yyyy HH:mm");
+                        var candidate = Model;
+                    }
+                    @if (candidate.AssessmentRoomId.HasValue)
+                    {
+                        var routeValues = new
                         {
-                            var routeValues = new
-                                {
-                                    area = "Candidate",
-                                    officeId = Model.RetrieveOfficeId(candidate.AssessmentRoomId.Value),
-                                    year = candidate.ProjectCandidateDetailAssessmentStartDate.Year,
-                                    month = candidate.ProjectCandidateDetailAssessmentStartDate.Month,
-                                    day = candidate.ProjectCandidateDetailAssessmentStartDate.Day
-                                };
-                            @Html.ActionLink(linkText, "Edit", "ProgramDetail", routeValues, new { target = string.Format("dayprogram{0}", candidate.ProjectCandidateDetailAssessmentStartDate.ToString("yyyyMMdd")) })
-                        }
-                        else
+                            area = "Candidate",
+                            officeId = Model.RetrieveOfficeId(candidate.AssessmentRoomId.Value),
+                            year = candidate.ProjectCandidateDetailAssessmentStartDate.Year,
+                            month = candidate.ProjectCandidateDetailAssessmentStartDate.Month,
+                            day = candidate.ProjectCandidateDetailAssessmentStartDate.Day
+                        };
+                        @Html.ActionLink(linkText, "Edit", "ProgramDetail", routeValues, new { target = string.Format("dayprogram{0}", candidate.ProjectCandidateDetailAssessmentStartDate.ToString("yyyyMMdd")) })
+                    }
+                    else
+                    {
+                        var routeValues = new
                         {
-                            var routeValues = new
-                                {
-                                    area = "Candidate",
-                                    officeId = 1,
-                                    year = candidate.ProjectCandidateDetailAssessmentStartDate.Year,
-                                    month = candidate.ProjectCandidateDetailAssessmentStartDate.Month,
-                                    day = candidate.ProjectCandidateDetailAssessmentStartDate.Day
-                                };
-                            @Html.ActionLink(linkText, "Edit", "ProgramDetail", routeValues, new { target = string.Format("dayprogram{0}", candidate.ProjectCandidateDetailAssessmentStartDate.ToString("yyyyMMdd")) })
-                        }
-                    </div>
+                            area = "Candidate",
+                            officeId = 1,
+                            year = candidate.ProjectCandidateDetailAssessmentStartDate.Year,
+                            month = candidate.ProjectCandidateDetailAssessmentStartDate.Month,
+                            day = candidate.ProjectCandidateDetailAssessmentStartDate.Day
+                        };
+                        @Html.ActionLink(linkText, "Edit", "ProgramDetail", routeValues, new { target = string.Format("dayprogram{0}", candidate.ProjectCandidateDetailAssessmentStartDate.ToString("yyyyMMdd")) })
+                    }
                 </div>
-                <div class="row">
-                    <div>
-                        @Html.HiddenFor(m => m.IsCancelled)
-                        @Html.HiddenFor(m => m.CandidateId)
-                        @Html.HiddenFor(m => m.Code)
-                        @Html.HiddenFor(m => m.ProjectCandidateDetailAssessmentStartDate)
-                        @Html.DisplayNameFor(m => m.ProjectCandidateDetailLeadAssessorFirstName):
-                    </div>
-                    <div>
-                        @(string.Format("{0} {1}", Model.ProjectCandidateDetailLeadAssessorFirstName, Model.ProjectCandidateDetailLeadAssessorLastName))
-                    </div>
+            </div>
+            <div class="row">
+                <div>
+                    @Html.HiddenFor(m => m.IsCancelled)
+                    @Html.HiddenFor(m => m.CandidateId)
+                    @Html.HiddenFor(m => m.Code)
+                    @Html.HiddenFor(m => m.ProjectCandidateDetailAssessmentStartDate)
+                    @Html.DisplayNameFor(m => m.ProjectCandidateDetailLeadAssessorFirstName):
                 </div>
-                <div class="row">
-                    <div>
-                        @Html.DisplayNameFor(m => Model.ProjectCandidateDetailCoAssessors):
-                    </div>
-                    <div>@string.Join(", ", Model.ProjectCandidateDetailCoAssessors.Select(ca => string.Format("{0} {1}", ca.AssessorFirstName, ca.AssessorLastName)))
-                    </div>
+                <div>
+                    @(string.Format("{0} {1}", Model.ProjectCandidateDetailLeadAssessorFirstName, Model.ProjectCandidateDetailLeadAssessorLastName))
                 </div>
-                <div class="row">
-                    <div>@Html.DisplayNameFor(m => m.IsAccompaniedByCustomer):</div>
-                    <div>@Html.CheckBoxFor(m => m.IsAccompaniedByCustomer)</div>
+            </div>
+            <div class="row">
+                <div>
+                    @Html.DisplayNameFor(m => Model.ProjectCandidateDetailCoAssessors):
                 </div>
-                <div class="row">
-                    <div>@Html.DisplayNameFor(m => m.InternalCandidate):</div>
-                    <div>@Html.CheckBoxFor(m => m.InternalCandidate)</div>
-                </div>
-                <div class="row">
-                    <div>@Html.DisplayNameFor(m => m.OnlineAssessment):</div>
-                    <div>@Html.CheckBoxFor(m => m.OnlineAssessment)</div>
-                </div>
-                <div class="row">
-                    <div>@Html.DisplayNameFor(m => m.Consent):</div>
-                    <div>@Html.CheckBoxFor(m => m.Consent, new { @disabled = "disabled" })</div>
-                </div>
-                <!--@if (Model.MainProjectCategoryDetail is ISimulationSelectionModel)
-                {
-                    <div class="row">
-                        <div>Scores:</div>
-                        <div>@Html.ActionLink("Scores", "EditProjectCandidateSimulationScores", new { id = @Model.Id }, new { target = @Model.Id })
-                        </div>
-                    </div>
-                }-->
+                <div>
+                    @string.Join(", ", Model.ProjectCandidateDetailCoAssessors.Select(ca => string.Format("{0} {1}", ca.AssessorFirstName, ca.AssessorLastName)))
+            </div>
+            </div>
+            <div class="row">
+                <div>@Html.DisplayNameFor(m => m.IsAccompaniedByCustomer):</div>
+                <div>@Html.CheckBoxFor(m => m.IsAccompaniedByCustomer)</div>
+            </div>
+            <div class="row">
+                <div>@Html.DisplayNameFor(m => m.InternalCandidate):</div>
+                <div>@Html.CheckBoxFor(m => m.InternalCandidate)</div>
+            </div>
+            <div class="row">
+                <div>@Html.DisplayNameFor(m => m.OnlineAssessment):</div>
+                <div>@Html.CheckBoxFor(m => m.OnlineAssessment)</div>
+            </div>
+            <div class="row">
+                <div>@Html.DisplayNameFor(m => m.Consent):</div>
+                <div>@Html.CheckBoxFor(m => m.Consent, new { @disabled = "disabled" })</div>
+            </div>
+            <!--@if (Model.MainProjectCategoryDetail is ISimulationSelectionModel)
+{
+    <div class="row">
+        <div>Scores:</div>
+        <div>@Html.ActionLink("Scores", "EditProjectCandidateSimulationScores", new { id = @Model.Id }, new { target = @Model.Id })
+        </div>
+    </div>
+}-->
 
-                <div class="row">
-                    <div>Scores:</div>
-                    <div>
-                        @if (Model.Project.Confidential == false)
+            <div class="row">
+                <div>Scores:</div>
+                <div>
+                    @if (Model.Project.Confidential == false)
+                    {
+                        @Html.ActionLink("Scores", "EditProjectCandidateSimulationScores", new { id = @Model.Id }, new { target = @Model.Id })
+                    }
+                    else
+                    {
+                        if (Model.Project.ProjectManagerId.ToString() == Session["UserId"].ToString())
                         {
                             @Html.ActionLink("Scores", "EditProjectCandidateSimulationScores", new { id = @Model.Id }, new { target = @Model.Id })
                         }
                         else
                         {
-                            if (Model.Project.ProjectManagerId.ToString() == Session["UserId"].ToString())
-                            {
-                                @Html.ActionLink("Scores", "EditProjectCandidateSimulationScores",  new { id = @Model.Id }, new { target = @Model.Id })
-                            }
-                            else
-                            {
-                                <span style="color:darksalmon;">Confidential</span>
-                            }
+                            <span style="color:darksalmon;">Confidential</span>
                         }
-                                                
-                    </div>
-                </div>
+                    }
 
-                <div class="row">
-                    <div>Candidate file:</div>
-                    <div>
-                        @Html.ActionLink("Generate", "GenerateCandidateMap", new { id = @Model.CandidateId,  projectid = @Model.ProjectId })
-                    </div>
                 </div>
+            </div>
 
+            <div class="row">
+                <div>Candidate file:</div>
+                <div>
+                    @Html.ActionLink("Generate", "GenerateCandidateMap", new { id = @Model.CandidateId, projectid = @Model.ProjectId })
+                </div>
+            </div>
+
+            <div class="row">
+                <div>@Html.DisplayNameFor(m => m.CandidateLanguageId):</div>
+                <div>
+                    @Html.DropDownListFor(m => m.CandidateLanguageId, Model.CreateLanguageSelectListItems(Model.CandidateLanguageId))
+                </div>
+            </div>
+            <div class="row">
+                <div>@Html.DisplayNameFor(m => m.CandidateGender):</div>
+                <div>
+                    @Html.DropDownListFor(m => m.CandidateGender, Model.CreateGenderSelectListItems(Model.CandidateGender))
+                </div>
+            </div>
+            <div class="row">
+                <div>@Html.DisplayNameFor(m => m.CandidateEmail):</div>
+                <div>
+                    @Html.TextBoxFor(m => m.CandidateEmail)
+                    <a href="javascript:void(0);" data-function="SendCandidateInvitationMailButton" data-id="@Model.Id" data-language-id="@Model.CandidateLanguageId">
+                        Invite
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div>@Html.DisplayNameFor(m => m.CandidatePhone):</div>
+                <div>@Html.TextBoxFor(m => m.CandidatePhone)</div>
+            </div>
+            <div class="row">
+                <div>Report remarks:</div>
+                <div style="color: red;">
+                    @if (string.IsNullOrEmpty(Model.Project.SendReportToParticipantRemarks))
+                    {
+                        @:None
+                    }
+                    else
+                    {
+                        @Html.Raw(Model.Project.SendReportToParticipantRemarks)
+                    }
+                </div>
+            </div>
+            @if (Model.Project.PricingModelType == PricingModelType.FixedPrice)
+            {
                 <div class="row">
-                    <div>@Html.DisplayNameFor(m => m.CandidateLanguageId):</div>
+                    <div>@Html.DisplayNameFor(m => m.InvoiceAmount):</div>
                     <div>
-                        @Html.DropDownListFor(m => m.CandidateLanguageId, Model.CreateLanguageSelectListItems(Model.CandidateLanguageId))
+                        @if (Model.InvoiceStatusCode == (int)InvoiceStatusType.Planned)
+                        {
+                            @Html.TextBoxFor(m => m.InvoiceAmount, new { data_id = "CandidateInvoiceAmount" })
+                        }
+                        else
+                        {
+                            var statusCode = EnumMemberNameAttribute.GetName(Enum.GetValues(typeof(InvoiceStatusType)).OfType<InvoiceStatusType>().FirstOrDefault(invoiceStatusType => (int)invoiceStatusType == Model.InvoiceStatusCode));
+                            @(string.Format("{0} ({1})", Model.InvoiceAmount.ToString("C"), statusCode))
+                        }
                     </div>
                 </div>
-                <div class="row">
-                    <div>@Html.DisplayNameFor(m => m.CandidateGender):</div>
-                    <div>
-                        @Html.DropDownListFor(m => m.CandidateGender, Model.CreateGenderSelectListItems(Model.CandidateGender))
-                    </div>
-                </div>
-                <div class="row">
-                    <div>@Html.DisplayNameFor(m => m.CandidateEmail):</div>
-                    <div>
-                        @Html.TextBoxFor(m => m.CandidateEmail)
-                        <a href="javascript:void(0);" data-function="SendCandidateInvitationMailButton" data-id="@Model.Id" data-language-id="@Model.CandidateLanguageId">
-                            Invite</a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div>@Html.DisplayNameFor(m => m.CandidatePhone):</div>
-                    <div>@Html.TextBoxFor(m => m.CandidatePhone)</div>
-                </div>
-                @if (Model.Project.PricingModelType == PricingModelType.FixedPrice)
-                {
-                    <div class="row">
-                        <div>@Html.DisplayNameFor(m => m.InvoiceAmount):</div>
-                        <div>
-                            @if (Model.InvoiceStatusCode == (int)InvoiceStatusType.Planned)
-                            {
-                                @Html.TextBoxFor(m => m.InvoiceAmount, new { data_id = "CandidateInvoiceAmount" })
-                            }
-                            else
-                            {
-                                var statusCode = EnumMemberNameAttribute.GetName(Enum.GetValues(typeof(InvoiceStatusType)).OfType<InvoiceStatusType>().FirstOrDefault(invoiceStatusType => (int)invoiceStatusType == Model.InvoiceStatusCode));
-                                @(string.Format("{0} ({1})", Model.InvoiceAmount.ToString("C"), statusCode))
-                            }
-                        </div>
-                    </div>
-                }
+            }
 
             </td>
         </tr>
@@ -321,7 +337,11 @@
         @if (Model.ProjectCandidateCategoryDetailTypes.Count > 0)
         {
             <tr id="node-Categories-@Model.Id">
-                <td class="3">Categories</td>
+                <td class="3">Categories @if (@Model.ProjectCandidateCategoryDetailTypes.Where(p => p.SurveyPlanningId == 2).Count() > 0)
+                    {
+                        <span style="color:orange" ;>(@Model.ProjectCandidateCategoryDetailTypes.Where(p => p.SurveyPlanningId == 2).Count() Before)</span>
+                    }
+                </td>
             </tr>
             for (int j = 0; j < Model.ProjectCandidateCategoryDetailTypes.Count; j++)
             {

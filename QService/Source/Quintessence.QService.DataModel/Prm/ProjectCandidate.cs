@@ -30,6 +30,7 @@ namespace Quintessence.QService.DataModel.Prm
         public bool InternalCandidate { get; set; }
         public bool OnlineAssessment { get; set; }
         public bool Consent { get; set; }
+        public string BceEntity { get; set; }
         public Guid? ScoringCoAssessorId { get; set; }
         public bool FollowUpDone { get; set; }
         public DateTime? OrderConfirmationSentDate { get; set; }

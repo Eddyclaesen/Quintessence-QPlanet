@@ -119,6 +119,12 @@ namespace Quintessence.QService.Data.QueryContext
             return query;
         }
 
+        public IEnumerable<ProjectCandidateRoiScoreView> ListRoiScores(Guid projectCandidateId)
+        {
+            var query = Database.SqlQuery<ProjectCandidateRoiScoreView>("Roi_ListProjectCandidateScores {0}", projectCandidateId);
+            return query;
+        }
+
         public IEnumerable<ProjectCategoryDetailDictionaryIndicatorView> ListProjectCategoryDetailDictionaryIndicators(Guid projectCategoryDetailId, int? languageId = null)
         {
             var query = Database.SqlQuery<ProjectCategoryDetailDictionaryIndicatorView>("ProjectCategoryDetail_ListDictionaryIndicators {0}, {1}", projectCategoryDetailId, languageId);

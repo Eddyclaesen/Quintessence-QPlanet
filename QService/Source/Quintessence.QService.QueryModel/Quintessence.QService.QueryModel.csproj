@@ -126,6 +126,7 @@
     <Compile Include="Crm\CrmAssessorAppointmentView.cs" />
     <Compile Include="Crm\CrmUnregisteredCandidateAppointmentView.cs" />
     <Compile Include="Crm\CrmUnsynchronizedEmployeeView.cs" />
+    <Compile Include="Dim\AvailableBceView.cs" />
     <Compile Include="Dim\AvailableDictionaryView.cs" />
     <Compile Include="Dim\DictionaryClusterImportView.cs" />
     <Compile Include="Dim\DictionaryClusterTranslationAdminView.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="Prm\IProjectCandidateCategoryDetailTypeView.cs" />
     <Compile Include="Prm\IProjectCandidateCategoryDetailTypeScheduledDateView.cs" />
     <Compile Include="Prm\NeopirScoreView.cs" />
+    <Compile Include="Prm\ProjectCandidateRoiScoreView.cs" />
     <Compile Include="Prm\ProjectCandidateOverviewEntryType.cs" />
     <Compile Include="Prm\ProjectCandidateOverviewEntryView.cs" />
     <Compile Include="Prm\ProjectCandidateReportingOverviewEntryView.cs" />
@@ -234,6 +236,7 @@
     <Compile Include="Prm\ProjectCandidateCategoryDetailType3View.cs" />
     <Compile Include="Prm\ProjectCandidateProjectView.cs" />
     <Compile Include="Prm\ProjectCandidateStatusType.cs" />
+    <Compile Include="Prm\ProjectRoiOrderView.cs" />
     <Compile Include="Prm\ProjectComplaintView.cs" />
     <Compile Include="Prm\ProjectDnaCommercialTranslationView.cs" />
     <Compile Include="Prm\ProjectDnaSelectedContactPersonView.cs" />
@@ -373,6 +376,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

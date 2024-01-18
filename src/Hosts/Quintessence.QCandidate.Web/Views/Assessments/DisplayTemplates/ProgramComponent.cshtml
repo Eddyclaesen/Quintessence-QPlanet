@@ -3,7 +3,6 @@
 @inject IViewLocalizer Localizer
 @model Quintessence.QCandidate.Models.Assessments.ProgramComponent
 
-
 <li class="program-component" data-date="@Model.Start.ToString("HH:mm") - @Model.End.ToString("HH:mm")">
     <h3>@Html.DisplayFor(m => Model.Title)</h3>
     <p>
@@ -52,6 +51,9 @@
         {
             @Html.Raw(String.Format(Localizer["OrderForm"].Value, Model.Id))
         }
+        if (Model.Description != null && Model.Description.StartsWith("http"))
+        {
+            <a href="@Model.Description" target="_blank">Start</a>
+        }
     }
-
 </li>

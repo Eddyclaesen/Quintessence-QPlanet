@@ -72,6 +72,18 @@ namespace Quintessence.QService.QPlanetService.Contracts.ServiceContracts.Comman
 
         [OperationContract]
         [FaultContract(typeof(ValidationContainer))]
+        void SetRoiOrder(string projectId, string detailId, string[] order);
+
+        [OperationContract]
+        [FaultContract(typeof(ValidationContainer))]
+        void LockRoiOrder(string projectId, string lockRoi);
+
+        [OperationContract]
+        [FaultContract(typeof(ValidationContainer))]
+        void SaveRoiScores(Guid id, int? score);
+
+        [OperationContract]
+        [FaultContract(typeof(ValidationContainer))]
         void UnlinkProjectCategoryDetail2Competence2Combination(Guid projectCategoryDetailId,
                                                                 Guid dictionaryCompetenceId,
                                                                 Guid simulationCombinationId);
@@ -163,6 +175,10 @@ namespace Quintessence.QService.QPlanetService.Contracts.ServiceContracts.Comman
         [OperationContract]
         [FaultContract(typeof(ValidationContainer))]
         void DeleteProjectFixedPrice(Guid id);
+
+        [OperationContract]
+        [FaultContract(typeof(ValidationContainer))]
+        void DeleteProject(Guid id);
 
         //[OperationContract]
         //[FaultContract(typeof(ValidationContainer))]

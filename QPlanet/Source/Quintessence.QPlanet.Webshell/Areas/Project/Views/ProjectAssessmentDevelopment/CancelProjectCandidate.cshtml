@@ -15,4 +15,12 @@
         <div>@Html.LabelFor(m => m.CancelledInvoiceAmount)</div>
         <div>@Html.EditorFor(m => m.CancelledInvoiceAmount)</div>
     </div>
+    <div class="row">
+        <div>@Html.LabelFor(m => m.InvoiceAmount)</div>
+        <div style="font-size: small;">
+            @Html.TextBoxFor(m => m.InvoiceAmount, new { disabled = "disabled" })
+            <br />50% : @((Model.InvoiceAmount * 50)/100)
+            <br />80% : @((Model.InvoiceAmount * 80)/100)
+        </div>
+    </div>
 }

@@ -118,13 +118,13 @@
                     <a href='@Session["Today"].ToString()'>DOWNLOAD</a>
                 }
                 <br />
-                Tomorrow: @if (Session["Tomorrow"].ToString() == "na")
+                Next: @if (Session["Tomorrow"].ToString() == "na")
                 {
                     <span>not (yet) available</span>
                 }
                 else
                 {
-                    <a href='@Session["Tomorrow"].ToString()'>DOWNLOAD</a>
+            <a href='@Session["Tomorrow"].ToString()'>@Session["Date"]</a>
                 }
             </p>
             <p style="text-align:right">Quintessence Consulting</p>

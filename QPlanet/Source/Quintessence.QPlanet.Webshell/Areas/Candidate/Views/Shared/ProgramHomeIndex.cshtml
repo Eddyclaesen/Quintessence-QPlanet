@@ -237,7 +237,7 @@
     {
         <script>
             function RefreshDisplay(year, month, day) {
-                $('#ProgramPlaceholder').loading('Retrieving program for tomorrow...<br />@Html.ActionLink("Click here", "Edit", "ProgramDetail", new { officeId = Model.Id, year = today.Year, month = today.Month, day = today.Day }, new { target = string.Format("dayprogram{0}{1}{2}", today.Year, today.Month, today.Day) }) for today.');
+                $('#ProgramPlaceholder').loading('Retrieving next program...<br />@Html.ActionLink("Click here", "Edit", "ProgramDetail", new { officeId = Model.Id, year = today.Year, month = today.Month, day = today.Day }, new { target = string.Format("dayprogram{0}{1}{2}", today.Year, today.Month, today.Day) }) for today.');
                 $('#ProgramDate').text(day + '/' + month + '/' + year);
             }
         </script>

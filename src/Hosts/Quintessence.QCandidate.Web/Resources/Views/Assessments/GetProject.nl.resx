@@ -124,16 +124,16 @@
     <value>Terug</value>
   </data>
   <data name="ConsentIntro" xml:space="preserve">
-    <value>&lt;p&gt;Tijdens uw assessment is het mogelijk dat één of meerdere simulaties worden opgenomen. Dit doen we uiteraard niet zonder uw expliciete goedkeuring. &lt;br /&gt;Deze opnames dienen enkel voor intern gebruik en worden  x-aantal dagen na uw assessment gewist.&lt;/p&gt;</value>
+    <value>&lt;p&gt;Quintessence Consulting informeert je hierbij dat we het als onze morele plicht beschouwen om je alle vertrouwelijkheid te garanderen tijdens je deelname bij ons. Als dusdanig worden alle verzamelde vertrouwelijke gegevens met de grootste zorg behandeld en video-opnames die gemaakt worden zijn enkel bedoeld voor onze consultant-assessoren ter ondersteuning van hun observaties van de simulaties en intern gebruik. &lt;br /&gt;Deze opnames worden niet langer bewaard dan nodig is voor een goede beoordeling van de geobserveerde competenties en worden na 2 maanden verwijderd. Alleen de interactieve simulaties worden opgenomen, niet de voorbereidingstijd en ook niet de reflecties die je daarna met je assessor deelt.&lt;/p&gt;</value>
   </data>
   <data name="ConsentSub" xml:space="preserve">
     <value>&lt;p&gt;&lt;strong&gt;Door aanvinken van de checkbox geef ik toestemming tot opname van de simulaties.&lt;/strong&gt;&lt;/p&gt;</value>
   </data>
   <data name="Context" xml:space="preserve">
-    <value>&lt;p&gt;Tijdens uw assessment willen wij graag kunnen zien hoe u met een aantal werksituaties omgaat.&lt;/p&gt;
+    <value>&lt;p&gt;Tijdens het assessment brengen we graag in kaart hoe u met een aantal werksituaties omgaat.&lt;/p&gt;
 &lt;p&gt;Deze werksituaties zijn uiteraard niet uw werkelijke problematieken, maar een aantal cases waarin u kunt tonen wat uw sterkten zijn. Deze cases spelen zich af in een fictieve context, u wordt voor even werknemer van een denkbeeldige organisatie, nl. &lt;strong&gt;{0}&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;Het is belangrijk dat u voor uw assessment de website van &lt;strong&gt;{0}&lt;/strong&gt; al eens grondig doorneemt zodat u zich reeds een goed beeld kan vormen van de organisatie waarin u terecht zal komen.&lt;/p&gt;
-&lt;p&gt;Het is niet de bedoeling dat u deze informatie uit het hoofd leert! Maar maak zeker kennis met de structuur, context, de waarden en de normen van de &lt;strong&gt;{0}&lt;/strong&gt; organisatie. Het zal u comfort geven tijdens uw assessment.&lt;/p&gt;&lt;p&gt;U hebt toegang tot deze informatie via volgende link: &lt;a href="https://simulation.quintessence.be/nl/login" target="_blank"&gt;LINK&lt;/a&gt;.&lt;br/&gt;</value>
+&lt;p&gt;Het is niet de bedoeling dat u deze informatie uit het hoofd leert! Maar maak zeker kennis met de structuur, context, de waarden en de normen van de &lt;strong&gt;{0}&lt;/strong&gt; organisatie. Het zal u comfort geven tijdens uw programma.&lt;/p&gt;&lt;p&gt;U hebt toegang tot deze informatie via volgende link: &lt;a href="https://simulation.quintessence.be/nl/" target="_blank"&gt;LINK&lt;/a&gt;.&lt;br/&gt;</value>
   </data>
   <data name="Evaluation" xml:space="preserve">
     <value>Jouw feedback is goud waard!</value>
@@ -154,7 +154,7 @@
     <value>hoera.png</value>
   </data>
   <data name="Intro" xml:space="preserve">
-    <value>&lt;p&gt;Op vraag van {0} nodigen wij u uit voor een assessment center.&lt;/p&gt;</value>
+    <value>&lt;p&gt;Op vraag van {0} nodigen wij u uit.&lt;/p&gt;</value>
   </data>
   <data name="Location" xml:space="preserve">
     <value>Ons kantoor</value>
@@ -184,9 +184,9 @@
     <value>Wat mag je verwachten?</value>
   </data>
   <data name="WhatToExpectSub" xml:space="preserve">
-    <value>&lt;p&gt;Op de dag van je assessment krijg je hier een gedetailleerd overzicht van je dagplanning.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Vergeet daarom zeker je login gegevens niet.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Je dagplanning is chronologisch opgebouwd en bestaat uit sloten waar je individueel mee aan de slag gaat en waar je mogelijks in interactie gaat met een assessor.&lt;/p&gt;
-&lt;p&gt;Indien je assessment plaatsvind in één van onze kantoren dan kan je deze simulaties via een notebook behandelen die we je ter beschikking stellen.&lt;br/&gt;
+    <value>&lt;p&gt;Op de dag zelf krijg je hier een gedetailleerd overzicht van je dagplanning.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Vergeet daarom zeker je login gegevens niet.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Je dagplanning is chronologisch opgebouwd en bestaat uit slots waar je individueel mee aan de slag gaat en waar je mogelijks in interactie gaat met een assessor.&lt;/p&gt;
+&lt;p&gt;Indien je programma plaatsvindt in één van onze kantoren dan kan je deze simulaties via een notebook behandelen die we je ter beschikking stellen dan wel via een eigen toestel mocht dat uw voorkeur wegdragen.&lt;br/&gt;
 Om je alvast een idee te geven hoe dit juist werkt nodigen we je uit om al eens een kijkje te nemen via deze &lt;a href="https://demo-qcandidate.quintessenceconsulting.be/"&gt;LINK&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Let op:&lt;/strong&gt; dit is een voorbeeld en dient enkel om je een idee te geven van de werking van ons platform. De inhoud staat los van de oefeningen die u de dag zelf zal doorlopen.&lt;/p&gt;</value>
   </data>
 </root>

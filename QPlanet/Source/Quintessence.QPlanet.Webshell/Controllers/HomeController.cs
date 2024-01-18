@@ -21,33 +21,39 @@ namespace Quintessence.QPlanet.Webshell.Controllers
         {
             var token = GetAuthenticationToken();
 
-            var assessorsQBToday = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(2, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Today.Day)));
-            var assessorsQBTomorrow = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(2, DateTime.Today.AddDays(1)));
-
-            var assessorsQGToday = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(3, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Today.Day)));
-            var assessorsQGTomorrow = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(3, DateTime.Today.AddDays(1)));
-
-            var assessorsEXToday = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(4, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Today.Day)));
-            var assessorsEXTomorrow = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(4, DateTime.Today.AddDays(1)));
-
-            var assessorsONToday = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(5, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Today.Day)));
-            var assessorsONTomorrow = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(5, DateTime.Today.AddDays(1)));
-
             var assessorsToday = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(1, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Today.Day)));
-            var assessorsTomorrow = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(1, DateTime.Today.AddDays(1)));
+            var assessorsQBToday = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(2, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Today.Day)));
+            var assessorsQGToday = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(3, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Today.Day)));
+            var assessorsEXToday = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(4, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Today.Day)));
+            var assessorsONToday = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(5, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Today.Day)));        
 
             assessorsToday.AddRange(assessorsQBToday);
             assessorsToday.AddRange(assessorsQGToday);
             assessorsToday.AddRange(assessorsEXToday);
             assessorsToday.AddRange(assessorsONToday);
 
-            assessorsTomorrow.AddRange(assessorsQBTomorrow);
-            assessorsTomorrow.AddRange(assessorsQGTomorrow);
-            assessorsTomorrow.AddRange(assessorsEXTomorrow);
-            assessorsTomorrow.AddRange(assessorsONTomorrow);
-
             bool alreadyExistsToday = assessorsToday.Any(x => x.AssessorId == token.UserId);
-            bool alreadyExistsTomorrow = assessorsTomorrow.Any(x => x.AssessorId == token.UserId);
+
+            bool alreadyExistsTomorrow = false;
+            int i = 0;
+
+            while (i < 4 && !alreadyExistsTomorrow)
+            {
+                i++;
+
+                var assessorsTomorrow = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(1, DateTime.Today.AddDays(i)));
+                var assessorsQBTomorrow = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(2, DateTime.Today.AddDays(i)));
+                var assessorsQGTomorrow = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(3, DateTime.Today.AddDays(i)));
+                var assessorsEXTomorrow = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(4, DateTime.Today.AddDays(i)));
+                var assessorsONTomorrow = this.InvokeService<IProjectManagementQueryService, List<DayPlanAssessorView>>(service => service.ListProjectCandidateAssessorsForPlanning(5, DateTime.Today.AddDays(i)));
+
+                assessorsTomorrow.AddRange(assessorsQBTomorrow);
+                assessorsTomorrow.AddRange(assessorsQGTomorrow);
+                assessorsTomorrow.AddRange(assessorsEXTomorrow);
+                assessorsTomorrow.AddRange(assessorsONTomorrow);
+
+                alreadyExistsTomorrow = assessorsTomorrow.Any(x => x.AssessorId == token.UserId);               
+            }
 
             Session["RoleId"] = token.User.RoleId;
 
@@ -59,7 +65,9 @@ namespace Quintessence.QPlanet.Webshell.Controllers
 
             if (alreadyExistsTomorrow)
             {
-                Session["Tomorrow"] = string.Format("https://www.qplanet.be/Candidate/ProgramDetail/GenerateDayplan/{0}/{1}/{2}/{3}/Program.pdf", token.UserId.ToString(), DateTime.Today.AddDays(1).Year.ToString(), DateTime.Today.AddDays(1).Month.ToString(), DateTime.Today.AddDays(1).Day.ToString());
+                Session["Tomorrow"] = string.Format("https://www.qplanet.be/Candidate/ProgramDetail/GenerateDayplan/{0}/{1}/{2}/{3}/Program.pdf", token.UserId.ToString(), DateTime.Today.AddDays(i).Year.ToString(), DateTime.Today.AddDays(i).Month.ToString(), DateTime.Today.AddDays(i).Day.ToString());
+                System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("en-GB");
+                Session["Date"] = DateTime.Today.AddDays(i).ToString("dddd", ci);
             }
             else Session["Tomorrow"] = "na";
 

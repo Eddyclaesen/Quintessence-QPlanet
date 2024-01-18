@@ -71,6 +71,15 @@ namespace Quintessence.QService.QueryModel.Prm
         public bool Confidential { get; set; }
 
         [DataMember]
+        public bool ROI { get; set; }
+
+        [DataMember]
+        public bool Executive { get; set; }
+
+        [DataMember]
+        public bool Lock { get; set; }
+
+        [DataMember]
         public List<ProjectCategoryDetailView> ProjectCategoryDetails { get; set; }
 
         [DataMember]

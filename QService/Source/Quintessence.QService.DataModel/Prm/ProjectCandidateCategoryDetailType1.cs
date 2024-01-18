@@ -22,7 +22,7 @@ namespace Quintessence.QService.DataModel.Prm
         public string Extra2 { get; set; }
         public bool Extra1Done { get; set; }
         public bool Extra2Done { get; set; }
-
+        public string BceEntity { get; set; }
         public Guid? ProposalId { get; set; }
     }
 }
