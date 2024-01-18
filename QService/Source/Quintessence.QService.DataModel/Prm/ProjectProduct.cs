@@ -16,7 +16,7 @@ namespace Quintessence.QService.DataModel.Prm
         public string Description { get; set; }
         public DateTime? Deadline { get; set; }
         public bool NoInvoice { get; set; }
-
+        public string BceEntity { get; set; }
         public Guid? ProposalId { get; set; }
     }
 }

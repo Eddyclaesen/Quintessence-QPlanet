@@ -30,6 +30,8 @@ namespace Quintessence.QPlanet.ViewModel.Prm
 
         public string Description { get; set; }
 
+        public string BceEntity { get; set; }
+
         public InvoiceStatusType Status
         {
             get { return (InvoiceStatusType)InvoiceStatusCode; }

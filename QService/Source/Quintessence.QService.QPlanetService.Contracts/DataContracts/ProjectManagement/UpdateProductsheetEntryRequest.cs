@@ -8,5 +8,8 @@ namespace Quintessence.QService.QPlanetService.Contracts.DataContracts.ProjectMa
     {
         [DataMember]
         public int InvoiceStatusCode { get; set; }
+
+        [DataMember]
+        public string BceEntity { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace Quintessence.QService.DataModel.Prm
         public string PurchaseOrderNumber { get; set; }
         public string InvoiceNumber { get; set; }
         public string Description { get; set; }
-
+        public string BceEntity { get; set; }
         public Guid? ProposalId { get; set; }
     }
 }

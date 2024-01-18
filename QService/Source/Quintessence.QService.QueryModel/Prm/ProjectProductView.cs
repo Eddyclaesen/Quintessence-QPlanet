@@ -42,5 +42,8 @@ namespace Quintessence.QService.QueryModel.Prm
 
         [DataMember]
         public bool NoInvoice { get; set; }
+
+        [DataMember]
+        public string BceEntity { get; set; }
     }
 }

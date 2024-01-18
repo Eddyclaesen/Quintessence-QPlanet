@@ -16,5 +16,6 @@ namespace Quintessence.QPlanet.ViewModel.Prm
         public DateTime? Deadline { get; set; }
         public bool NoInvoice { get; set; }
         public string InvoiceRemarks { get; set; }
+        public string BceEntity { get; set; }
     }
 }
