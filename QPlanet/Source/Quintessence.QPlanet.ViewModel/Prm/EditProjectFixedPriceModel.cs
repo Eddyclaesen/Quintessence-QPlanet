@@ -18,5 +18,7 @@ namespace Quintessence.QPlanet.ViewModel.Prm
         public decimal Amount { get; set; }
 
         public string InvoiceRemarks { get; set; }
+
+        public string BceEntity { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Quintessence.QService.DataModel.Prm
         public string PurchaseOrderNumber { get; set; }
         public string InvoiceNumber { get; set; }
         public DateTime Deadline { get; set; }
-
+        public string BceEntity { get; set; }
         public Guid? ProposalId { get; set; }
 
         public override System.Collections.Generic.IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

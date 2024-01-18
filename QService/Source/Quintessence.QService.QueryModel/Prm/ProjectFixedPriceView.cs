@@ -30,5 +30,8 @@ namespace Quintessence.QService.QueryModel.Prm
 
         [DataMember]
         public DateTime Deadline { get; set; }
+
+        [DataMember]
+        public string BceEntity { get; set; }
     }
 }
