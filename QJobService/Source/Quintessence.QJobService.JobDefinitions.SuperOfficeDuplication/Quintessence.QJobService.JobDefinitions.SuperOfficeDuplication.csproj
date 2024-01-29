@@ -132,6 +132,7 @@
     <Compile Include="SuperOffice\Models\SuperOfficeUser.cs" />
     <Compile Include="SuperOffice\Models\UserdefinedFields.cs" />
     <Compile Include="SuperOffice\WebApi\ApiResponse.cs" />
+    <Compile Include="SuperOffice\WebApi\CustomerState.cs" />
     <Compile Include="SuperOffice\WebApi\ISuperOfficeAccess.cs" />
     <Compile Include="SuperOffice\WebApi\SuperOfficeAccess.cs" />
     <Compile Include="SuperOffice\WebApi\TicketResponse.cs" />

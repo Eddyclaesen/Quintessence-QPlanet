@@ -10,17 +10,15 @@ namespace Quintessence.QJobService.JobDefinitions.SuperOfficeReplication.SuperOf
 {
     public class SuperOfficeAccess : WebApiBase, ISuperOfficeAccess
     {
-        public void Initialize(string ticketServiceUri, string ticketServiceApiKey, string superOfficeBaseUri, string superOfficeAppToken)
+        public void Initialize(string ticketServiceUri, string ticketServiceApiKey, string superOfficeCustomerStateUri, string superOfficeAppToken)
         {
             _ticketServiceUri = ticketServiceUri;
             _ticketServiceApiKey = ticketServiceApiKey;
-            _superOfficeBaseUri = superOfficeBaseUri;
-            if (!_superOfficeBaseUri.EndsWith("/"))
-                _superOfficeBaseUri = _superOfficeBaseUri + "/";
-
+            _superOfficeCustomerStateUri = superOfficeCustomerStateUri;
             _superOfficeAppToken = superOfficeAppToken;
-            
+
             RequestAPiAuthenticationTicket().Wait();
+            RequestCustomerState().Wait();
 
             _initialized = _superOfficeTicket != null && !String.IsNullOrEmpty(_superOfficeTicket.Ticket);
         }

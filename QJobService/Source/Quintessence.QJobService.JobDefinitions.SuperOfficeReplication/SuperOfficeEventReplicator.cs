@@ -21,10 +21,19 @@ namespace Quintessence.QJobService.JobDefinitions.SuperOfficeReplication
 
                 IReplicationDataAccess replicationDataAccess = new ReplicationDataAccess();
                 ISuperOfficeAccess superOfficeAccess = new SuperOfficeAccess();
-                
-                List<string> superOfficeSettings = new List<string> { SuperOffice.Constants.SettingKeys.TicketServiceUri, SuperOffice.Constants.SettingKeys.TicketServiceApiKey, SuperOffice.Constants.SettingKeys.SuperOfficeBaseUri, SuperOffice.Constants.SettingKeys.SuperOfficeAppToken };                
+
+                List<string> superOfficeSettings = new List<string>
+                {
+                    SuperOffice.Constants.SettingKeys.TicketServiceUri,
+                    SuperOffice.Constants.SettingKeys.TicketServiceApiKey,
+                    SuperOffice.Constants.SettingKeys.SuperOfficeCustomerStateUri,
+                    SuperOffice.Constants.SettingKeys.SuperOfficeAppToken
+                };
                 IDictionary<string, string> settings = replicationDataAccess.RetrieveCrmReplicationSettingsByKeys(superOfficeSettings);
-                superOfficeAccess.Initialize(settings[SuperOffice.Constants.SettingKeys.TicketServiceUri], settings[SuperOffice.Constants.SettingKeys.TicketServiceApiKey], settings[SuperOffice.Constants.SettingKeys.SuperOfficeBaseUri], settings[SuperOffice.Constants.SettingKeys.SuperOfficeAppToken]);
+                superOfficeAccess.Initialize(settings[SuperOffice.Constants.SettingKeys.TicketServiceUri],
+                                             settings[SuperOffice.Constants.SettingKeys.TicketServiceApiKey],
+                                             settings[SuperOffice.Constants.SettingKeys.SuperOfficeCustomerStateUri],
+                                             settings[SuperOffice.Constants.SettingKeys.SuperOfficeAppToken]);
 
                 new TeamLeaderEventReplicator(jobControllerService, replicationDataAccess, superOfficeAccess).RunAsync().Wait();
             }

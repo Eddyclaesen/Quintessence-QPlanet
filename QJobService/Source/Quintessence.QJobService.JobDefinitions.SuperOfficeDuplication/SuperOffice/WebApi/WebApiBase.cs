@@ -13,10 +13,11 @@ namespace Quintessence.QJobService.JobDefinitions.SuperOfficeDuplication.SuperOf
     {
         protected static string _ticketServiceUri = String.Empty;
         protected static string _ticketServiceApiKey = String.Empty;
-        protected static string _superOfficeBaseUri = String.Empty;
+        protected static string _superOfficeCustomerStateUri = String.Empty;
         protected static string _superOfficeAppToken = String.Empty;
 
         protected static TicketResponse _superOfficeTicket = null;
+        protected static CustomerState _customerState = null;
         protected static bool _initialized;
 
         private class WebResult
@@ -30,6 +31,8 @@ namespace Quintessence.QJobService.JobDefinitions.SuperOfficeDuplication.SuperOf
             if (!_initialized)
                 throw new Exception("SuperOffice Api not correctly initialized, call Initialize first with correct settings");
 
+            EnsureCustomerStateIsValid();
+
             using (var client = new HttpClient())
             {
                 AddRequestHeaders(client);
@@ -40,7 +43,7 @@ namespace Quintessence.QJobService.JobDefinitions.SuperOfficeDuplication.SuperOf
                 HttpResponseMessage response = null;
                 try
                 {
-                    response = await client.PostAsync(_superOfficeBaseUri + relUrl, content);
+                    response = await client.PostAsync(_customerState.SuperOfficeBaseUri + relUrl, content);
                 }
                 catch (Exception ex)
                 {
@@ -60,6 +63,8 @@ namespace Quintessence.QJobService.JobDefinitions.SuperOfficeDuplication.SuperOf
         {
             if (!_initialized)
                 throw new Exception("SuperOffice Api not correctly initialized, call Initialize first with correct credentials");
+            
+            EnsureCustomerStateIsValid();
 
             using (var client = new HttpClient())
             {
@@ -70,7 +75,7 @@ namespace Quintessence.QJobService.JobDefinitions.SuperOfficeDuplication.SuperOf
                 HttpResponseMessage response = null;
                 try
                 {
-                    response = await client.PostAsync(_superOfficeBaseUri + relUrl, content);
+                    response = await client.PostAsync(_customerState.SuperOfficeBaseUri + relUrl, content);
                 }
                 catch (Exception ex)
                 {
@@ -91,6 +96,8 @@ namespace Quintessence.QJobService.JobDefinitions.SuperOfficeDuplication.SuperOf
             if (!_initialized)
                 throw new Exception("SuperOffice Api not correctly initialized, call Initialize first with correct settings");
 
+            EnsureCustomerStateIsValid();
+
             using (var client = new HttpClient())
             {
                 AddRequestHeaders(client);
@@ -98,7 +105,7 @@ namespace Quintessence.QJobService.JobDefinitions.SuperOfficeDuplication.SuperOf
                 HttpResponseMessage response = null;
                 try
                 {
-                    response = await client.GetAsync(_superOfficeBaseUri + relUrl);
+                    response = await client.GetAsync(_customerState.SuperOfficeBaseUri + relUrl);
                 }
                 catch (Exception ex)
                 {
@@ -112,6 +119,37 @@ namespace Quintessence.QJobService.JobDefinitions.SuperOfficeDuplication.SuperOf
                 }
                 return await response.Content.ReadAsStringAsync();
             }
+        }
+
+        protected async Task RequestCustomerState()
+        {
+            using (var client = new HttpClient())
+            {
+                HttpResponseMessage response = null;
+                try
+                {
+                    response = await client.GetAsync(_superOfficeCustomerStateUri);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error calling SuperOffice API.", ex);
+                }
+
+                if (response != null && !response.IsSuccessStatusCode)
+                {
+                    throw new Exception(String.Format("SuperOffice, Unable to retrieve Customer State info from Api Url {0}", _superOfficeCustomerStateUri));
+                }
+                var rslt = await response.Content.ReadAsStringAsync();
+                _customerState = JsonConvert.DeserializeObject<CustomerState>(rslt);
+            }
+        }
+
+        private async Task EnsureCustomerStateIsValid()
+        {
+            if (_customerState == null || !_customerState.IsValid())
+                await RequestCustomerState();
+            if (!_customerState.IsValid())
+                throw new Exception("Unable to retrieve valid Customer state and the loadbalanced Api endpoint.");
         }
 
         private static string BuildExceptionMessage(string url, string content, string additionalPostData = null)
