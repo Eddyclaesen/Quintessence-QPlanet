@@ -113,7 +113,7 @@ namespace Quintessence.QJobService.JobDefinitions.SuperOfficeDuplication
                     }
                 } while (projectsFetched);
 
-                RegisterJobEnd(jobHistoryId, true, String.Format("{0} AppointmentDetail(s) duplicated", affected));
+                RegisterJobEnd(jobHistoryId, true, String.Format("{0} ProjectMember(s) duplicated", affected));
 
             }
             catch (Exception ex)
