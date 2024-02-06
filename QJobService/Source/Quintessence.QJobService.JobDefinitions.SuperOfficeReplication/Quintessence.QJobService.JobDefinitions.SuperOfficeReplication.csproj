@@ -150,6 +150,7 @@
     <Compile Include="SuperOffice\Models\Appointment.cs" />
     <Compile Include="SuperOffice\Models\Company.cs" />
     <Compile Include="SuperOffice\Models\Contact.cs" />
+    <Compile Include="SuperOffice\WebApi\CustomerState.cs" />
     <Compile Include="SuperOffice\Models\PersonOverview.cs" />
     <Compile Include="SuperOffice\Models\Person.cs" />
     <Compile Include="SuperOffice\Models\Project.cs" />

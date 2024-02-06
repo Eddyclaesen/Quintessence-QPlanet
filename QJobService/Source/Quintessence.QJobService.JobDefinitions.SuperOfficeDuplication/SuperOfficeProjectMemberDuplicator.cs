@@ -22,9 +22,18 @@ namespace Quintessence.QJobService.JobDefinitions.SuperOfficeDuplication
                 IDuplicationDataAccess duplicationDataAccess = new DuplicationDataAccess();
                 ISuperOfficeAccess superOfficeAccess = new SuperOfficeAccess();
 
-                List<string> superOfficeSettings = new List<string> { SuperOffice.Constants.SettingKeys.TicketServiceUri, SuperOffice.Constants.SettingKeys.TicketServiceApiKey, SuperOffice.Constants.SettingKeys.SuperOfficeBaseUri, SuperOffice.Constants.SettingKeys.SuperOfficeAppToken };
+                List<string> superOfficeSettings = new List<string>
+                {
+                    SuperOffice.Constants.SettingKeys.TicketServiceUri,
+                    SuperOffice.Constants.SettingKeys.TicketServiceApiKey,
+                    SuperOffice.Constants.SettingKeys.SuperOfficeCustomerStateUri,
+                    SuperOffice.Constants.SettingKeys.SuperOfficeAppToken
+                };
                 IDictionary<string, string> settings = duplicationDataAccess.RetrieveDuplicationSettingsByKeys(superOfficeSettings);
-                superOfficeAccess.Initialize(settings[SuperOffice.Constants.SettingKeys.TicketServiceUri], settings[SuperOffice.Constants.SettingKeys.TicketServiceApiKey], settings[SuperOffice.Constants.SettingKeys.SuperOfficeBaseUri], settings[SuperOffice.Constants.SettingKeys.SuperOfficeAppToken]);
+                superOfficeAccess.Initialize(settings[SuperOffice.Constants.SettingKeys.TicketServiceUri],
+                                             settings[SuperOffice.Constants.SettingKeys.TicketServiceApiKey],
+                                             settings[SuperOffice.Constants.SettingKeys.SuperOfficeCustomerStateUri],
+                                             settings[SuperOffice.Constants.SettingKeys.SuperOfficeAppToken]);
 
                 Run(jobControllerService, duplicationDataAccess, superOfficeAccess);
             }
@@ -104,7 +113,7 @@ namespace Quintessence.QJobService.JobDefinitions.SuperOfficeDuplication
                     }
                 } while (projectsFetched);
 
-                RegisterJobEnd(jobHistoryId, true, String.Format("{0} AppointmentDetail(s) duplicated", affected));
+                RegisterJobEnd(jobHistoryId, true, String.Format("{0} ProjectMember(s) duplicated", affected));
 
             }
             catch (Exception ex)
