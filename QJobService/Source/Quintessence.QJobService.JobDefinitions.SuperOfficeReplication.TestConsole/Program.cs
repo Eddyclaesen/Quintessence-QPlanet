@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Net;
 using Quintessence.QJobService.Interfaces;
 using Quintessence.QJobService.JobDefinitions.SuperOfficeReplication;
 
@@ -9,6 +9,9 @@ namespace Quintessence.QJobService.JobDefinitions.SuperOfficeReplication.TestCon
     {
         static int Main(string[] args)
         {
+            ServicePointManager.Expect100Continue = true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             if (args.Length != 1)
             {
                 WriteUsage();

@@ -8,7 +8,7 @@ namespace Quintessence.QJobService.JobDefinitions.SuperOfficeReplication.SuperOf
 {
     public interface ISuperOfficeAccess
     {
-        void Initialize(string ticketServiceUri, string ticketServiceApiKey, string superOfficeBaseUri, string superOfficeAppToken);
+        void Initialize(string ticketServiceUri, string ticketServiceApiKey, string superOfficeCustomerStateUri, string superOfficeAppToken);
         Task<bool> TestAccess();
 
         Task<IEnumerable<User>> RetrieveUsers();

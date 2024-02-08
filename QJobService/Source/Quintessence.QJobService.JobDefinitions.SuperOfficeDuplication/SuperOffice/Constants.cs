@@ -8,7 +8,7 @@ namespace Quintessence.QJobService.JobDefinitions.SuperOfficeDuplication.SuperOf
         {
             public const string TicketServiceUri = "SuperOfficeTicketServiceUri";
             public const string TicketServiceApiKey = "SuperOfficeTicketServiceApiKey";
-            public const string SuperOfficeBaseUri = "SuperOfficeBaseUri";
+            public const string SuperOfficeCustomerStateUri = "SuperOfficeCustomerStateUri";
             public const string SuperOfficeAppToken = "SuperOfficeAppToken";
 
             public const string EventBatchSize = "SuperOfficeEventReplicator_EventBatchSize";
