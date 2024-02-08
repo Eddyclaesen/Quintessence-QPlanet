@@ -61,5 +61,15 @@ else
 <td title="@Model.ProjectManagerFullName">@Model.ProjectManagerUserName</td>
 <td title="@Model.CustomerAssistantFullName">@Model.CustomerAssistantUserName</td>
 <td data-isdirty="@Html.IdFor(m => m.IsDiry)">@Html.TextBoxFor(m => m.PurchaseOrderNumber)</td>
-<td data-isdirty="@Html.IdFor(m => m.IsDiry)">@Html.DropDownListFor(m => m.BceEntity, Model.Bces, new { style = "width: 150px;" })</td>
+<td data-isdirty="@Html.IdFor(m => m.IsDiry)">
+    @if (Model.Bces.Count == 2)
+    {
+        @Html.HiddenFor(m => m.BceEntity)
+        @Model.Bces.LastOrDefault().Text
+    }
+    else
+    {
+        @Html.DropDownListFor(m => m.BceEntity, Model.Bces, new { style = "width: 150px;" })
+    }
+</td>
 <td><label id="lbl_@Model.Id" class="column-data" style="vertical-align:top; color: @(Model.InvoiceRemarks != null && Model.InvoiceRemarks.Length > 100 ? "red":"slategray"); margin-left:2px; font-size:smaller;">@(Model.InvoiceRemarks != null ? Model.InvoiceRemarks.Length:0)</label></td>
